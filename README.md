@@ -1,1 +1,1 @@
-# 8th-autoChess
+# 8th-game-project-3

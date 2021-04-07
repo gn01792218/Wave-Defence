@@ -1,8 +1,6 @@
 package gameobj;
-
 import utils.GameKernel;
 import utils.Global;
-
 import java.awt.*;
 
 //管理遊戲物件的抽象父類

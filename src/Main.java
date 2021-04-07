@@ -1,6 +1,6 @@
-import camera.MapInformation;
+
 import controllers.SceneController;
-import scene.OpenScene;
+import scene.GameScene;
 import utils.CommandSolver;
 import utils.GameKernel;
 
@@ -22,9 +22,8 @@ public class Main {
     //問題:1.延時器好像沒有起到作用?!!!
     public static void main(String[] args) {
         JFrame jframe=new JFrame();
-        MapInformation.setMapInfo(0,0, 800,600); //地圖大小(自行調整)
         SceneController sceneController=SceneController.getInstance(); //取得單例模式的控場實體
-        sceneController.changeScene(new OpenScene()); //一開始使用開場畫面
+        sceneController.changeScene(new GameScene()); //一開始使用開場畫面
         GameKernel gameKernel = new GameKernel.Builder().input(  //創建遊戲核心
                 new CommandSolver.BuildStream().mouseTrack().subscribe(sceneController).keyboardTrack()
                         .add(KeyEvent.VK_ENTER,1) //設置ENTER按鍵為 1

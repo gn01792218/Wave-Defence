@@ -40,7 +40,7 @@ public class Global {
     public static final int UNIT_X = 32;
     public static final int UNIT_Y = 32;
     //場地邊際
-    public static final int BOUNDARY_X1=36;
+    public static final int BOUNDARY_X1=360;
     public static final int BOUNDARY_X2=1060;
     public static final int BOUNDARY_Y1=180;
     public static final int BOUNDARY_Y2=700;

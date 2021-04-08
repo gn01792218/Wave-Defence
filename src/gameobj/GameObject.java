@@ -2,11 +2,13 @@ package gameobj;
 import utils.GameKernel;
 import utils.Global;
 import java.awt.*;
+import java.util.ArrayList;
 
 //管理遊戲物件的抽象父類
 public abstract class GameObject implements GameKernel.UpdateInterface,GameKernel.PaintInterface{
     private final Rect collider;
     private final Rect painter;
+
 
     public GameObject(int x, int y, int width, int height) {
         this(x, y, width, height, x, y, width, height);
@@ -84,17 +86,6 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         return painter;
     }
 
-    @Override
-    public final void paint(Graphics g) {
-        paintComponent(g);
-        if (Global.IS_DEBUG) {
-            g.setColor(Color.RED);
-            g.drawRect(this.painter.left(), this.painter.top(), this.painter.width(), this.painter.height());
-            g.setColor(Color.BLUE);
-            g.drawRect(this.collider.left(), this.collider.top(), this.collider.width(), this.collider.height());
-            g.setColor(Color.BLACK);
-        }
-    }
 
-    public abstract void paintComponent(Graphics g);
+
 }

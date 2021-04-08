@@ -39,8 +39,8 @@ public class Global {
     public static final int UNIT_X = 32;
     public static final int UNIT_Y = 32;
     // 視窗大小
-    public static final int WINDOW_WIDTH = 800;
-    public static final int WINDOW_HEIGHT = 600;
+    public static final int WINDOW_WIDTH = 1600;
+    public static final int WINDOW_HEIGHT = 1200;
     public static final int SCREEN_X = WINDOW_WIDTH - 8 - 8;
     public static final int SCREEN_Y = WINDOW_HEIGHT - 31 - 8;
     // 資料刷新時間

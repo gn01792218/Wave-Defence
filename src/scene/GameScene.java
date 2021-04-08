@@ -6,9 +6,11 @@ import controllers.ImageOperate;
 import gameobj.Actor;
 import gameobj.Enemy1;
 import gameobj.Tank1;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import utils.CommandSolver;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,11 +18,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GameScene extends Scene {
+    //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
-
-
 
     @Override
     public void sceneBegin() {
@@ -28,7 +29,7 @@ public class GameScene extends Scene {
         alliance=new ArrayList<>();
         alliance.add(new Tank1(500,350));
         enemys=new ArrayList<>();
-        enemys.add(new Enemy1(550,250));
+        enemys.add(new Enemy1(1060,700));
     }
 
     @Override
@@ -43,7 +44,23 @@ public class GameScene extends Scene {
 
     @Override
     public CommandSolver.MouseListener mouseListener() {
-        return null;
+        return new CommandSolver.MouseListener() {
+            @Override
+            public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
+                if (state != null) {
+                    switch (state) {
+                        case CLICKED:
+                            if (e.getButton() == e.BUTTON1) {
+                                System.out.println("左鍵");
+                            } else if (e.getButton() == e.BUTTON2) {
+                                System.out.println("中鍵");
+                            } else if (e.getButton() == 3) { //也可以這樣
+                                System.out.println("右鍵");
+                            }
+                    }
+                }
+            }
+        };
     }
 
     @Override

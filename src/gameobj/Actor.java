@@ -26,7 +26,7 @@ public abstract class Actor extends GameObject{
     public Actor(int x,int y,int width,int height){
         super(x,y,width,height);
     }
-    
+
     //基本方法區 set get
     public void setHp(double hp) {
         this.hp = hp;
@@ -86,9 +86,13 @@ public abstract class Actor extends GameObject{
     public void offsetSpeed(double speed){this.speed+=speed;}
     public void offsetDef(double def){this.def+=def;}
     public void offsetAtkdis(double atkdis){this.atkdis+=atkdis;}
-    
-    //核心方法區
-    public abstract void paint(Graphics g);
+    //角色移動
+    public void move(){
+        //整個移動範圍在x360-1060；y在180~700
 
+    }
+    
+    //核心方法區-->子類實現
+    public abstract void paint(Graphics g);
     public abstract void update();
 }

@@ -2,6 +2,7 @@ package utils;
 
 public class Global {
 
+
     public enum Direction {
         UP(3),
         DOWN(0),
@@ -38,6 +39,11 @@ public class Global {
     // 單位大小
     public static final int UNIT_X = 32;
     public static final int UNIT_Y = 32;
+    //場地邊際
+    public static final int BOUNDARY_X1=360;
+    public static final int BOUNDARY_X2=1060;
+    public static final int BOUNDARY_Y1=180;
+    public static final int BOUNDARY_Y2=700;
     // 視窗大小
     public static final int WINDOW_WIDTH = 1600;
     public static final int WINDOW_HEIGHT = 1200;

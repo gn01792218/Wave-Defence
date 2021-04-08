@@ -96,9 +96,8 @@ public abstract class Actor extends GameObject{
             dirY=0;
         }
     }
-
     //角色移動，translate的斜率即為兩邊差值相除
-    //朝著敵人移動
+    //朝著敵人移動-->尚未完成
     public void moveToEnemy(Actor enemy){ //和下面一樣，到時候傳入敵人座標即可
         changeDir(enemy.painter().centerX(),enemy.painter().centerY()); //依據flage的位置改變方向
         int x=Math.abs(painter().centerX()- enemy.painter().centerX());//x座標差值
@@ -107,25 +106,25 @@ public abstract class Actor extends GameObject{
     //朝著Flag移動
     public void moveToFlag(Flag flag){
         changeDir(flag.getPainter().centerX(),flag.getPainter().centerY()); //依據flage的位置改變方向
-        int x=Math.abs(painter().centerX()- flag.getPainter().centerX());//x座標差值
-        int y=Math.abs(painter().centerY()-flag.getPainter().centerY()); //y座標差值
         //角色的tranlate根據x/y的斜率來走
-        if(y!=0 && isTouchBattleEdge()) {
+            moveWhere(flag.getPainter().centerX(),flag.getPainter().centerY());
+    }
+    //判斷敵方位置的象限而移動
+    public void moveWhere(int x,int y){
+        int x1=Math.abs(painter().centerX()- x);//x座標差值
+        int y1=Math.abs(painter().centerY()-y); //y座標差值
+        if(y1!=0) {
             if (dirX == 1 && dirY == 1) {
-                this.painter().translate(x / y, x / y);//敵人在第四象限 (右下)-->xy方向為 11
+                this.painter().translate(x1/y1, x1/y1);//敵人在第四象限 (右下)-->xy方向為 11
             } else if (dirX == 0 && dirY == 0) {
-                this.painter().translate(-x / y, -x / y); //敵人在第二象限(左上)-->xy方向為 00
+                this.painter().translate(-x1/y1, -x1/y1); //敵人在第二象限(左上)-->xy方向為 00
             } else if (dirX == 1 && dirY == 0) {
-                this.painter().translate(x / y, -x / y); //敵人在第一象限(右上)-->xy方向為 10
+                this.painter().translate(x1/y1, -x1/y1); //敵人在第一象限(右上)-->xy方向為 10
             } else {
-                this.painter().translate(-x / y, x / y); //敵人在第三象限(左下)-->xy方向為 01
+                this.painter().translate(-x1/y1, x1/y1); //敵人在第三象限(左下)-->xy方向為 01
             }
         }
-//        if(isTouchBattleEdge()){ //如果碰到邊界就會停住
-//            this.painter().translate(-x/y,-x/y);
-//        }
     }
-
     //核心方法區-->子類實現
     public abstract void paint(Graphics g);
     public abstract void update();

@@ -13,16 +13,7 @@ public abstract class Actor extends GameObject{
     protected static double def;
     private static double atkdis;
     protected int dir;
-    protected Flag flag;
 
-    public class Flag{
-        private int x;
-        private int y;
-        public Flag(int x,int y){
-            this.x=x;
-            this.y=y;
-        }
-    }
     public Actor(int x,int y,int width,int height){
         super(x,y,width,height);
     }
@@ -49,9 +40,7 @@ public abstract class Actor extends GameObject{
     public void setDir(int dir) {
         this.dir = dir;
     }
-    public void setFlag(Flag flag) {
-        this.flag = flag;
-    }
+
     public double getHp() {
         return hp;
     }
@@ -72,9 +61,6 @@ public abstract class Actor extends GameObject{
     }
     public int getDir() {
         return dir;
-    }
-    public Flag getFlag() {
-        return flag;
     }
 
     //offset方法區

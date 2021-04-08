@@ -6,37 +6,36 @@ import controllers.ImageOperate;
 import gameobj.Actor;
 import gameobj.Enemy1;
 import gameobj.Tank1;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
 import utils.CommandSolver;
+import utils.Delay;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
-
+    private Delay delay;
     @Override
     public void sceneBegin() {
         image=ImageController.getInstance().tryGet("/m2.png");
         alliance=new ArrayList<>();
         alliance.add(new Tank1(500,350));
         enemys=new ArrayList<>();
-        enemys.add(new Enemy1(1060,700));
+        enemys.add(new Enemy1(400,700));
+        delay=new Delay(60);
     }
-
     @Override
     public void sceneEnd() {
 
     }
-
     @Override
     public CommandSolver.KeyListener keyListener() {
         return null;
@@ -72,6 +71,6 @@ public class GameScene extends Scene {
 
     @Override
     public void update() {
-
+            enemys.get(0).move();
     }
 }

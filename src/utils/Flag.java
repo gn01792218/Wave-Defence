@@ -1,61 +1,36 @@
 package utils;
 
 import controllers.ImageController;
+import gameobj.GameObject;
+import gameobj.Rect;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-//建立旗幟屬性儲存X與Y座標，用Setter封裝其屬性
 public class Flag implements GameKernel.PaintInterface,GameKernel.UpdateInterface{
-    private int x;
-    private int y;
-    private final Image image;
+    private final Rect collider;
+    private final Rect painter;
+    private BufferedImage image;
 
-    public Flag(){
+    public Flag(int x, int y, int width, int height,
+                int x2, int y2, int width2, int height2){
+        collider = Rect.genWithCenter(x, y, width, height);
+        painter = Rect.genWithCenter(x2, y2, width2, height2);
         this.image = ImageController.getInstance().tryGet("/Flag.png");
-        this.x =0;
-        this.y =0;
     }
 
-    public void setFlag(int x,int y){
-        setX(x);
-        setY(y);
+    public Rect getCollider(){
+        return this.collider;
     }
 
-    public void setX(int x) {
-        if(x<Global.BOUNDARY_X1){
-            this.x = 360;
-        }else if(x>Global.BOUNDARY_X2){
-            this.x = 1060;
-        }else {
-            this.x = x;
-        }
+    public Rect getPainter(){
+        return this.painter;
     }
 
-    public void setY(int y) {
-        if(y<Global.BOUNDARY_Y1){
-            this.y = 180;
-        }else if(y>Global.BOUNDARY_Y2){
-            this.y = 700;
-        }else {
-            this.y = y;
-        }
-    }
-
-    public int getFlagX(){
-        return this.x;
-    }
-
-    public int getFlagY(){
-        return y;
-    }
-
-    public void printFlag(){
-        System.out.println("Flag("+getFlagX()+","+getFlagY()+")");
-    }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(image,getFlagX(),getFlagY(),null);
+        g.drawImage(image,painter.centerX(),painter.centerY(),null);
     }
 
     @Override

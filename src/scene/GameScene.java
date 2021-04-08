@@ -15,15 +15,13 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
-    private static Flag flag = new Flag();
+    private static Flag flag = new Flag(0,0,50,50,0,0,50,50);
 
     @Override
     public void sceneBegin() {
@@ -58,7 +56,7 @@ public class GameScene extends Scene {
                                 System.out.println("中鍵");
                             } else if (e.getButton() == 3) {//也可以這樣
                                 System.out.println("右鍵");
-                                flag.setFlag(e.getX(),e.getY());
+                                flag.getPainter().setCenter(e.getX(),e.getY());
                             }
                     }
                 }

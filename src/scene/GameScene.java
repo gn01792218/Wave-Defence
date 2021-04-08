@@ -6,8 +6,9 @@ import controllers.ImageOperate;
 import gameobj.Actor;
 import gameobj.Enemy1;
 import gameobj.Tank1;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import utils.CommandSolver;
+import utils.Flag;
+import utils.Global;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,6 +23,7 @@ public class GameScene extends Scene {
     private BufferedImage image; //背景圖
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
+    private static Flag flag = new Flag();
 
     @Override
     public void sceneBegin() {
@@ -54,8 +56,9 @@ public class GameScene extends Scene {
                                 System.out.println("左鍵");
                             } else if (e.getButton() == e.BUTTON2) {
                                 System.out.println("中鍵");
-                            } else if (e.getButton() == 3) { //也可以這樣
+                            } else if (e.getButton() == 3) {//也可以這樣
                                 System.out.println("右鍵");
+                                flag.setFlag(e.getX(),e.getY());
                             }
                     }
                 }
@@ -68,6 +71,7 @@ public class GameScene extends Scene {
         g.drawImage(image,0,-150,null);
         alliance.get(0).paint(g);
         enemys.get(0).paint(g);
+        flag.paint(g);
     }
 
     @Override

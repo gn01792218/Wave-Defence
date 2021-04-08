@@ -42,6 +42,15 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         }
         return painter.top() >= Global.SCREEN_Y;
     }
+    //是否碰到場地邊界
+    public boolean isTouchBattleEdge(){
+        if(this.painter.centerX()<=Global.BOUNDARY_X1){return true;}
+        if(this.painter.centerX()>=Global.BOUNDARY_X2){return true;}
+        if(this.painter.centerY()<=Global.BOUNDARY_Y1){return true;}
+        if(this.painter.centerY()<=Global.BOUNDARY_Y2){return true;}
+        return false;
+    }
+
     //四個方向的碰撞
     public boolean touchTop() {
         return collider.top() <= 0;

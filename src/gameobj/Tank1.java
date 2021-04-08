@@ -10,8 +10,6 @@ public class Tank1 extends Actor{
     public Tank1(int x, int y){
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/tank1.png");
-        this.flag=null;
-        this.dir=1;
     }
 
 //    public GameObject getTarget(ArrayList<GameObject> enemys){

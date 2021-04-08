@@ -63,7 +63,6 @@ public class GameScene extends Scene {
             }
         };
     }
-
     @Override
     public void paint(Graphics g) {
         g.drawImage(image,0,-150,null);
@@ -74,6 +73,6 @@ public class GameScene extends Scene {
 
     @Override
     public void update() {
-
+        enemys.get(0).moveToFlag(flag);
     }
 }

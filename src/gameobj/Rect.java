@@ -68,6 +68,7 @@ public class Rect {
         this.bottom += dy;
         return this;
     }
+
     public final Rect translateX(int dx){
         this.left += dx;
         this.right += dx;

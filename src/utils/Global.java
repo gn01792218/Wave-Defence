@@ -108,10 +108,10 @@ public class Global {
     //飛彈飛行速度
     public static final int BULLET_SPEED = 4;
     //場地邊際
-    public static final int BOUNDARY_X1=360;
-    public static final int BOUNDARY_X2=1060;
+    public static final int BOUNDARY_X1=390;
+    public static final int BOUNDARY_X2=1150;
     public static final int BOUNDARY_Y1=180;
-    public static final int BOUNDARY_Y2=700;
+    public static final int BOUNDARY_Y2=750;
     // 視窗大小
     public static final int WINDOW_WIDTH = 1600;
     public static final int WINDOW_HEIGHT = 1200;

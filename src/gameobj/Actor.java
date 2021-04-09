@@ -88,22 +88,22 @@ public abstract class Actor extends GameObject{
         float y=Math.abs(painter().centerY()-enemy.painter().centerY()); //y座標差值
     }
     //朝著Flag移動
-    public void moveToFlag(Flag flag){
-        if(targetIsInBattleFeild(flag.getPainter().centerX(),flag.getPainter().centerY())) {
-            changeDir(flag.getPainter().centerX(), flag.getPainter().centerY()); //依據flage的位置改變方向
+    public void moveToTarget(float x,float y){
+        if(targetIsInBattleFeild(x,y)){
+            changeDir(x,y); //依據flage的位置改變方向
             //角色的tranlate根據x/y的斜率來走
-            float a = Math.abs(painter().centerX() - flag.getPainter().centerX());//x座標差值 對邊
-            float b = Math.abs(painter().centerY() - flag.getPainter().centerY()); //y座標差值 臨邊
+            float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
+            float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
             float d = (float) Math.sqrt(a * a + b * b); //斜邊
 
              //當d的距離大於1時才執行
             if(d>5) {
                 float xM = (float) a / d * speed;  //x向量
                 float yM = (float) b / d * speed; //y向量
-                if (painter().centerX() > flag.getPainter().centerX()) {
+                if (painter().centerX() > x) {
                     xM = -xM;
                 }
-                if (painter().centerY() > flag.getPainter().centerY()) {
+                if (painter().centerY() > y) {
                     yM = -yM;
                 }
                 if(a==0){ //表示在同一個直線上 x座標相同
@@ -112,7 +112,7 @@ public abstract class Actor extends GameObject{
                 this.painter().offSet((int) xM, (int) yM);
             }
 
-            System.out.println("xy座標"+flag.getPainter().centerX()+" "+flag.getPainter().centerY()+"x y距離:"+a+" "+b+" 我的座標點: "+painter().centerX()+" "+painter().centerY()+ " 斜率"+(b/a));
+            System.out.println("xy座標"+x+" "+y+"x y距離:"+a+" "+b+" 我的座標點: "+painter().centerX()+" "+painter().centerY()+ " 斜率"+(b/a));
             System.out.println("x方向"+dirX+"y方向"+dirY);
         }
 

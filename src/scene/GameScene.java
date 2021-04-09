@@ -84,7 +84,7 @@ public class GameScene extends Scene {
     }
     @Override
     public void update() {
-        enemys.get(0).moveToFlag(flag);
+        enemys.get(0).moveToTarget((int)flag.getPainter().centerX(),(int)flag.getPainter().centerY());
         for(int i=0;i<bullets.size();i++){
             bullets.get(i).update();
         }

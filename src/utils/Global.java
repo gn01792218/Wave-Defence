@@ -2,7 +2,6 @@ package utils;
 
 public class Global {
 
-
     public enum Direction {
         UP(3),
         DOWN(0),

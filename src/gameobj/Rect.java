@@ -1,12 +1,12 @@
 package gameobj;
 
 public class Rect {
-    private int left;
-    private int top;
-    private int right;
-    private int bottom;
+    private float left;
+    private float top;
+    private float right;
+    private float bottom;
 
-    public Rect(int left, int top, int right, int bottom) {
+    public Rect(float left, float top, float right, float bottom) {
         this.left = left;
         this.top = top;
         this.right = right;
@@ -20,15 +20,15 @@ public class Rect {
         this.bottom = rect.bottom;
     }
 
-    public static Rect genWithCenter(int x, int y, int width, int height){
-        int left = x - width / 2;
-        int right = left + width;
-        int top = y - height / 2;
-        int bottom = top + height;
+    public static Rect genWithCenter(float x, float y, float width, float height){
+        float left = x - width / 2;
+        float right = left + width;
+        float top = y - height / 2;
+        float bottom = top + height;
         return new Rect(left, top, right, bottom);
     }
 
-    public final boolean overlap(int left, int top, int right, int bottom){
+    public final boolean overlap(float left, float top, float right, float bottom){
         if (this.left() > right) {
             return false;
         }
@@ -48,10 +48,10 @@ public class Rect {
         return overlap(b.left, b.top, b.right, b.bottom);
     }
 
-    public int centerX(){
+    public float centerX(){
         return (left + right) / 2;
     }
-    public int centerY(){
+    public float centerY(){
         return (top + bottom) / 2;
     }
     public float exactCenterX(){
@@ -60,66 +60,69 @@ public class Rect {
     public float exactCenterY(){
         return (top + bottom) / 2f;
     }
-
-    public final Rect translate(int dx, int dy){
+    public final void offSet(float x,float y){
+        setCenter(centerX()+x,centerY()+y);
+    }
+    public final Rect translate(float dx, float dy){
         this.left += dx;
         this.right += dx;
         this.top += dy;
         this.bottom += dy;
         return this;
     }
-    public final Rect translateX(int dx){
+    public final Rect translateX(float dx){
         this.left += dx;
         this.right += dx;
         return this;
     }
-    public final Rect translateY(int dy){
+    public final Rect translateY(float dy){
         this.top += dy;
         this.bottom += dy;
         return this;
     }
 
-    public int left() {
+    public float left() {
         return left;
     }
 
-    public void setLeft(int left) {
+    public void setLeft(float left) {
         this.left = left;
     }
 
-    public int top() {
+    public float top() {
         return top;
     }
 
-    public void setTop(int top) {
+    public void setTop(float top) {
         this.top = top;
     }
 
-    public int right() {
+    public float right() {
         return right;
     }
 
-    public void setRight(int right) {
+    public void setRight(float right) {
         this.right = right;
     }
 
-    public int bottom() {
+    public float bottom() {
         return bottom;
     }
 
-    public void setBottom(int bottom) {
+    public void setBottom(float bottom) {
         this.bottom = bottom;
     }
 
-    public int width(){
+    public float width(){
         return this.right - this.left;
     }
 
-    public int height(){
+    public float height(){
         return this.bottom - this.top;
     }
 
-    public final void setCenter(int x, int y){
+    public final void setCenter(float x, float y){
         translate(x - centerX(), y - centerY());
     }
+
 }

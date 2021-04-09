@@ -27,9 +27,9 @@ public class GameScene extends Scene {
     public void sceneBegin() {
         image=ImageController.getInstance().tryGet("/m2.png");
         alliance=new ArrayList<>();
-        alliance.add(new Tank1(500,350));
+        alliance.add(new Tank1(700,850,true));
         enemys=new ArrayList<>();
-        enemys.add(new Enemy1(1060,700));
+        enemys.add(new Enemy1(1000,150,true));
     }
 
     @Override

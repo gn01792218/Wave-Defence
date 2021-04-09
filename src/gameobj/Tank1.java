@@ -7,9 +7,16 @@ import java.util.ArrayList;
 
 public class Tank1 extends Actor{
 
-    public Tank1(int x, int y){
+    public Tank1(int x, int y,boolean isenemy){
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/tank1.png");
+        hp=200; //血量
+        atk=80; //攻擊力
+        atkSpeed=5; //攻速
+        speed=5; //移動速度
+        def=100; //防禦力
+        atkdis=50; //攻擊距離
+        this.isenemy=isenemy; //敵我單位
     }
 
 //    public GameObject getTarget(ArrayList<GameObject> enemys){
@@ -29,8 +36,15 @@ public class Tank1 extends Actor{
 //    }
 
     @Override
-    public void paint(Graphics g) {
-        g.drawImage(image,this.painter().centerX(),this.painter().centerY(),null);
+    public void paint(Graphics g) { //5*2
+        if(this.isenemy==false){
+        g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
+                160,90,160+75,180,null);
+        }else if(this.isenemy==true){
+            g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
+                    160,0,160+75,90,null);
+        }
+
     }
 
     @Override

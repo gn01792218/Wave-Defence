@@ -3,22 +3,17 @@ import utils.GameKernel;
 import utils.Global;
 import java.awt.*;
 import java.util.ArrayList;
-
 //管理遊戲物件的抽象父類
 public abstract class GameObject implements GameKernel.UpdateInterface,GameKernel.PaintInterface{
-    private final Rect collider; //
-    private final Rect painter; //
-
-
+    private final Rect collider;
+    private final Rect painter;
     public GameObject(int x, int y, int width, int height) {
         this(x, y, width, height, x, y, width, height);
     }
-
     public GameObject(Rect rect) {
         collider = new Rect(rect);
         painter = new Rect(rect);
     }
-
     public GameObject(int x, int y, int width, int height,
                       int x2, int y2, int width2, int height2) {
         collider = Rect.genWithCenter(x, y, width, height);
@@ -88,7 +83,5 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
     public final Rect painter() {
         return painter;
     }
-
-
 
 }

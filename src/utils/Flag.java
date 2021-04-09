@@ -30,7 +30,7 @@ public class Flag implements GameKernel.PaintInterface,GameKernel.UpdateInterfac
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(image,painter.centerX(),painter.centerY(),null);
+        g.drawImage(image,(int)painter.centerX(),(int)painter.centerY(),null);
     }
 
     @Override

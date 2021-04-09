@@ -95,15 +95,23 @@ public abstract class Actor extends GameObject{
             float a = Math.abs(painter().centerX() - flag.getPainter().centerX());//x座標差值 對邊
             float b = Math.abs(painter().centerY() - flag.getPainter().centerY()); //y座標差值 臨邊
             float d = (float) Math.sqrt(a * a + b * b); //斜邊
-            float xM = (float) a/d * speed;  //x向量
-            float yM = (float) b/d * speed; //y向量
-            if (painter().centerX() > flag.getPainter().centerX()) {
-                xM = -xM;
+
+             //當d的距離大於1時才執行
+            if(d>5) {
+                float xM = (float) a / d * speed;  //x向量
+                float yM = (float) b / d * speed; //y向量
+                if (painter().centerX() > flag.getPainter().centerX()) {
+                    xM = -xM;
+                }
+                if (painter().centerY() > flag.getPainter().centerY()) {
+                    yM = -yM;
+                }
+                if(a==0){ //表示在同一個直線上 x座標相同
+
+                }
+                this.painter().offSet((int) xM, (int) yM);
             }
-            if (painter().centerY() > flag.getPainter().centerY()) {
-                yM = -yM;
-            }
-            this.painter().offSet((int) xM, (int) yM);
+
             System.out.println("xy座標"+flag.getPainter().centerX()+" "+flag.getPainter().centerY()+"x y距離:"+a+" "+b+" 我的座標點: "+painter().centerX()+" "+painter().centerY()+ " 斜率"+(b/a));
             System.out.println("x方向"+dirX+"y方向"+dirY);
         }

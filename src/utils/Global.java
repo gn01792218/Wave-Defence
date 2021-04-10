@@ -44,15 +44,15 @@ public class Global {
     public static class Trigonometric{
         private float dX;
         private float dY;
-        private boolean xIsPositive;
+        private  boolean xIsPositive;
         private boolean yIsPositive;
         private float k;
 
-        private float xVector;
+        private  float xVector;
         private float yVector;
         private int degree;
 
-        public Trigonometric(int x,int y,int targetX,int targetY){
+        public Trigonometric(float x,float y,float targetX,float targetY){
             dX = Math.abs(targetX - x);//x座標差值 對邊
             dY = Math.abs(targetY - y);//y座標差值 臨邊
             k = (float) Math.sqrt(dX*dX+dY*dY); //斜邊

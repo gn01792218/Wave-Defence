@@ -59,16 +59,10 @@ public class GameScene extends Scene {
                             } else if (e.getButton() == e.BUTTON2) {
                                 System.out.println("中鍵");
                             } else if (e.getButton() == 3) {//也可以這樣
-                              
+
                                 flag.getPainter().setCenter(e.getX(),e.getY());
                             }
                         case MOVED:
-<<<<<<< HEAD
-                            bullets.add(new Bullet(700,400,e.getX(),e.getY()));
-//                            AudioResourceController.getInstance().shot("/TankFiring.wav");
-=======
-
->>>>>>> gn01792218-2
                     }
                 }
             }
@@ -88,23 +82,6 @@ public class GameScene extends Scene {
     @Override
     public void update() {
         enemys.get(0).moveToTarget((int)flag.getPainter().centerX(),(int)flag.getPainter().centerY());
-<<<<<<< HEAD
-        for(int i=0;i<bullets.size();i++){
-            bullets.get(i).update();
-            //飛彈爆炸後一定時間後消失
-            if(bullets.get(i).isExplored()){
-                if(bullets.get(i).isTime()){
-                    bullets.remove(i);
-                    i--;
-                    continue;
-                }
-            }
-            //飛彈碰到邊界則爆炸
-            if(bullets.get(i).isTouchBattleEdge()){
-                bullets.get(i).explored();
-//                AudioResourceController.getInstance().shot("/Tank Bomb.wav");
-            }
-=======
         for(int i=0;i<alliance.size();i++){
             alliance.get(i).update();
             alliance.get(i).autoAttack(enemys); //到時候回合開始後30秒才要自動攻擊
@@ -112,7 +89,6 @@ public class GameScene extends Scene {
         for(int i=0;i<enemys.size();i++){
             enemys.get(i).update();
             enemys.get(i).autoAttack(alliance);
->>>>>>> gn01792218-2
         }
     }
 }

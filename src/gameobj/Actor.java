@@ -154,6 +154,20 @@ public abstract class Actor extends GameObject{
         if (isInAtkdis(x, y)) { //在攻擊範圍內，就開火
             //在自己的top產生子彈
             bullets.add(new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y));
+            //飛彈碰到邊界則爆炸
+            for(int i=0;i<bullets.size();i++) {
+                //飛彈爆炸後一定時間後消失
+                if (bullets.get(i).isExplored()) {
+                    if (bullets.get(i).isTime()) {
+                        bullets.remove(i);
+                        i--;
+                        continue;
+                    }
+                }
+                if (bullets.get(i).isTouchBattleEdge()) {
+                    bullets.get(i).explored();
+                }
+            }
         }
     }
     //受到傷害

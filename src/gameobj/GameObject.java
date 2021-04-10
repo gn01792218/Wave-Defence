@@ -4,6 +4,7 @@ import utils.Global;
 import java.awt.*;
 import java.util.ArrayList;
 //管理遊戲物件的抽象父類
+//新增outOfBattleScene方法
 public abstract class GameObject implements GameKernel.UpdateInterface,GameKernel.PaintInterface{
     private final Rect collider;
     private final Rect painter;
@@ -37,6 +38,7 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         }
         return painter.top() >= Global.SCREEN_Y;
     }
+<<<<<<< HEAD
     //是否碰到場地邊界
     public boolean isTouchBattleEdge(){
         if(this.painter.centerX()<=Global.BOUNDARY_X1){return true;}
@@ -46,6 +48,15 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         return false;
     }
 
+=======
+        public boolean outOfBattleScene(){
+        if(this.painter().left()<=Global.BOUNDARY_X1){return true;}
+        if(this.painter().right()>=Global.BOUNDARY_X2){return true;}
+        if(this.painter().top()<=Global.BOUNDARY_Y1){return true;}
+        if(this.painter().bottom()>=Global.BOUNDARY_Y2){return true;}
+        return false;
+    }
+>>>>>>> 3543b6226323450109415b8bb87d1c96e18ab941
     //四個方向的碰撞
     public boolean touchTop() {
         return collider.top() <= 0;

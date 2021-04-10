@@ -1,11 +1,13 @@
 package gameobj;
+<<<<<<< HEAD
 
 import utils.Flag;
 import utils.Global;
 
+=======
+>>>>>>> 3543b6226323450109415b8bb87d1c96e18ab941
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
 public abstract class Actor extends GameObject{
     //設基本屬性的g s 並且offset
     protected BufferedImage image;
@@ -67,6 +69,7 @@ public abstract class Actor extends GameObject{
     public void offsetSpeed(double speed){this.speed+=speed;}
     public void offsetDef(double def){this.def+=def;}
     public void offsetAtkdis(double atkdis){this.atkdis+=atkdis;}
+<<<<<<< HEAD
     //改變方向
     public void changeDir(float x,float y){  //依據敵人的座標  或是 Flag的座標改變方向
         if(x>this.painter().centerX()){
@@ -126,4 +129,24 @@ public abstract class Actor extends GameObject{
     //核心方法區-->子類實現
     public abstract void paint(Graphics g);
     public abstract void update();
+=======
+    //角色移動
+//    public void move(int x,int y){ //從外面傳進座標點然後移動
+//        this.painter().translate((int)this.getSpeed(),-(int)this.getSpeed());
+//        if(this.outOfBattleScene()){  //假如沒碰到邊界就可以一直走
+//            stop();
+//        }
+//    }
+    //movetoTarget
+    public void movetoFlag(Flag f){
+        this.painter().setCenter(f.x,f.y);
+    }
+//    //角色stop
+//    public void stop(){
+//        this.painter().translate(-(int)this.getSpeed(),(int)this.getSpeed());
+//    }
+//    //核心方法區-->子類實現
+//    public abstract void paint(Graphics g);
+//    public abstract void update();
+>>>>>>> 3543b6226323450109415b8bb87d1c96e18ab941
 }

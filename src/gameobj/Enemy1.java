@@ -2,6 +2,7 @@ package gameobj;
 
 import controllers.ImageController;
 import controllers.ImageOperate;
+import utils.Delay;
 
 import java.awt.*;
 
@@ -11,7 +12,7 @@ public class Enemy1 extends Actor{
         this.image= ImageController.getInstance().tryGet("/enemy1.png");
         hp=100; //血量
         atk=50; //攻擊力
-        atkSpeed=5; //功速
+        atkSpeed=new Delay(60); //功速
         speed=10; //移動速度
         def=50; //防禦力
         atkdis=100; //攻擊距離

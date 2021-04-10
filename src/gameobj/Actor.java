@@ -1,7 +1,6 @@
 package gameobj;
 
-import controllers.AudioResourceController;
-import utils.Flag;
+import utils.Delay;
 import utils.Global;
 
 import java.awt.*;
@@ -13,7 +12,7 @@ public abstract class Actor extends GameObject{
     protected BufferedImage image;
     protected double hp;
     protected double atk;
-    protected double atkSpeed;
+    protected Delay atkSpeed;
     protected float speed;
     protected double def;
     protected double  atkdis;
@@ -50,7 +49,7 @@ public abstract class Actor extends GameObject{
     public double getAtk() {
         return atk;
     }
-    public double getAtkSpeed() {
+    public Delay getAtkSpeed() {
         return atkSpeed;
     }
     public double getSpeed() {
@@ -67,7 +66,7 @@ public abstract class Actor extends GameObject{
         this.hp+=hp;
     }
     public void offsetAtk(double atk){this.atk+=atk;}
-    public void offsetAtkSpeed(double atkSpeed){this.atkSpeed+=atkSpeed;}
+    public void offsetAtkSpeed(int atkSpeed){this.atkSpeed = new Delay(atkSpeed);}
     public void offsetSpeed(double speed){this.speed+=speed;}
     public void offsetDef(double def){this.def+=def;}
     public void offsetAtkdis(double atkdis){this.atkdis+=atkdis;}
@@ -88,9 +87,9 @@ public abstract class Actor extends GameObject{
     }
     //朝目標移動
     public void moveToTarget(float x,float y){
-        if(targetIsInBattleFeild(x,y)){
-            changeDir(x,y); //依據flage的位置改變方向
-            //角色的tranlate根據x/y的斜率來走
+        if(targetIsInBattleField(x,y)){
+            changeDir(x,y); //依據flag的位置改變方向
+            //角色的translate根據x/y的斜率來走
             float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
             float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
             float d = (float) Math.sqrt(a * a + b * b); //斜邊
@@ -113,7 +112,7 @@ public abstract class Actor extends GameObject{
         }
     }
     //判斷目標在不在場內
-    public boolean targetIsInBattleFeild(float x,float y){
+    public boolean targetIsInBattleField(float x, float y){
         if(x< Global.BOUNDARY_X1 || x>Global.BOUNDARY_X2){return false;}
         if(y<Global.BOUNDARY_Y1 || y>Global.BOUNDARY_Y2){return false;}
         return true;
@@ -148,14 +147,20 @@ public abstract class Actor extends GameObject{
         }
         //使用座標點版本
         moveToTarget(actorX,actorY);
-        fire(actorX,actorY);
+        fire(actorX,actorY,actors);
     }
     //開火
-    public void fire(float x,float y){
+    public void fire(float x,float y,ArrayList<Actor> actors){
 
         if (isInAtkdis(x, y)) { //在攻擊範圍內，就開火
             //在自己的top產生子彈
-            bullets.add(new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y));
+            if(atkSpeed.isPause()){
+                atkSpeed.loop();
+                return;
+            }
+            if(atkSpeed.count()){
+                bullets.add(new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y));
+            }
             //飛彈碰到邊界則爆炸
             for(int i=0;i<bullets.size();i++) {
                 //飛彈爆炸後一定時間後消失
@@ -164,6 +169,13 @@ public abstract class Actor extends GameObject{
                         bullets.remove(i);
                         i--;
                         continue;
+                    }
+                }
+                //攻擊敵機並扣血
+                for(int j=0;j<actors.size();j++){
+                    if(bullets.get(i).isCollision(actors.get(j))){
+                        bullets.get(i).isExplored();
+                        actors.get(j).offsetHp(-this.atk);
                     }
                 }
                 if (bullets.get(i).isTouchBattleEdge()) {

@@ -59,10 +59,11 @@ public class GameScene extends Scene {
                             } else if (e.getButton() == e.BUTTON2) {
                                 System.out.println("中鍵");
                             } else if (e.getButton() == 3) {//也可以這樣
-
+                                AudioResourceController.getInstance().shot("/T.wav");
                                 flag.getPainter().setCenter(e.getX(),e.getY());
                             }
                         case MOVED:
+
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package gameobj;
 
+import controllers.AudioResourceController;
 import utils.Flag;
 import utils.Global;
 
@@ -151,6 +152,7 @@ public abstract class Actor extends GameObject{
     }
     //開火
     public void fire(float x,float y){
+
         if (isInAtkdis(x, y)) { //在攻擊範圍內，就開火
             //在自己的top產生子彈
             bullets.add(new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y));

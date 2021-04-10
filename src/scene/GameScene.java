@@ -9,6 +9,7 @@ import gameobj.Bullet;
 import gameobj.Enemy1;
 import gameobj.Tank1;
 import utils.CommandSolver;
+import utils.Delay;
 import utils.Flag;
 import utils.Global;
 
@@ -24,23 +25,19 @@ public class GameScene extends Scene {
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private static Flag flag = new Flag(1,1,50,50,1,1,50,50);
-
     @Override
     public void sceneBegin() {
         image=ImageController.getInstance().tryGet("/m2.png");
         alliance=new ArrayList<>();
-        alliance.add(new Tank1(700,700,false));
-        alliance.add(new Tank1(400,1000,false));
+        alliance.add(new Tank1(400,700,false));
+        alliance.add(new Tank1(800,700,false));
         enemys=new ArrayList<>();
-        enemys.add(new Enemy1(1000,550,true));
-        enemys.add(new Enemy1(600,550,true));
+        enemys.add(new Enemy1(800,250,true));
+        enemys.add(new Enemy1(450,250,true));
     }
-
     @Override
     public void sceneEnd() {
-
     }
-
     @Override
     public CommandSolver.KeyListener keyListener() {
         return null;
@@ -59,11 +56,9 @@ public class GameScene extends Scene {
                             } else if (e.getButton() == e.BUTTON2) {
                                 System.out.println("中鍵");
                             } else if (e.getButton() == 3) {//也可以這樣
-                                AudioResourceController.getInstance().shot("/T.wav");
                                 flag.getPainter().setCenter(e.getX(),e.getY());
                             }
                         case MOVED:
-
                     }
                 }
             }
@@ -82,14 +77,29 @@ public class GameScene extends Scene {
     }
     @Override
     public void update() {
-        enemys.get(0).moveToTarget((int)flag.getPainter().centerX(),(int)flag.getPainter().centerY());
+        //我軍的upfate
         for(int i=0;i<alliance.size();i++){
             alliance.get(i).update();
-            alliance.get(i).autoAttack(enemys); //到時候回合開始後30秒才要自動攻擊
+            if(!alliance.get(i).isAlive()){
+                alliance.remove(i);
+                i--;
+                break;
+            }
+            if(enemys.size()>0) {
+                alliance.get(i).autoAttack(enemys); //到時候回合開始後30秒才要自動攻擊
+            }
         }
+        //敵軍的update
         for(int i=0;i<enemys.size();i++){
             enemys.get(i).update();
-            enemys.get(i).autoAttack(alliance);
+            if(!enemys.get(i).isAlive()){
+                enemys.remove(i);
+                i--;
+                break;
+            }
+            if(alliance.size()>0) {
+                enemys.get(i).autoAttack(alliance);
+            }
         }
     }
 }

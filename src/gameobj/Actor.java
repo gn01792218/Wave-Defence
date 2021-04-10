@@ -1,5 +1,6 @@
 package gameobj;
 
+import controllers.AudioResourceController;
 import utils.Delay;
 import utils.Global;
 
@@ -19,7 +20,7 @@ public abstract class Actor extends GameObject{
     protected int dirX; //0左 1右
     protected int dirY; //0上 1下
     protected boolean isenemy; //標示此單位是敵是我
-    protected boolean isDeaded; //標示是否死亡
+    protected boolean isAlive; //標示是否死亡
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
 
 
@@ -28,6 +29,7 @@ public abstract class Actor extends GameObject{
         this.dirX=0;
         this.dirY=0;
         bullets=new ArrayList<>();
+        isAlive=true;
     }
 
     //基本方法區 get
@@ -44,7 +46,7 @@ public abstract class Actor extends GameObject{
         this.dirY = dirY;
     }
     public double getHp() {
-        return hp;
+        return this.hp;
     }
     public double getAtk() {
         return atk;
@@ -111,21 +113,6 @@ public abstract class Actor extends GameObject{
             }
         }
     }
-    //判斷目標在不在場內
-    public boolean targetIsInBattleField(float x, float y){
-        if(x< Global.BOUNDARY_X1 || x>Global.BOUNDARY_X2){return false;}
-        if(y<Global.BOUNDARY_Y1 || y>Global.BOUNDARY_Y2){return false;}
-        return true;
-    }
-    //判斷目標是否在射程內
-    public boolean isInAtkdis(float x,float y){
-        //判斷目標點是否在攻擊距離內:上下左右框框+atkdis
-        if(x>this.painter().right()+getAtkdis()){return false;}
-        if(x<this.painter().left()-getAtkdis()){return false;}
-        if(y>this.painter().bottom()+getAtkdis()){return false;}
-        if(y<this.painter().top()-getAtkdis()){return false;}
-        return true;
-    }
     //選最短距離者追蹤並攻擊，
     public void autoAttack(ArrayList<Actor> actors){ //傳敵軍陣列近來
         //先一一算出最短距離，存進數字陣列中
@@ -148,10 +135,12 @@ public abstract class Actor extends GameObject{
         //使用座標點版本
         moveToTarget(actorX,actorY);
         fire(actorX,actorY,actors);
+        if(atkSpeed.count()){
+            AudioResourceController.getInstance().play("/T.wav");
+        }
     }
     //開火
     public void fire(float x,float y,ArrayList<Actor> actors){
-
         if (isInAtkdis(x, y)) { //在攻擊範圍內，就開火
             //在自己的top產生子彈
             if(atkSpeed.isPause()){
@@ -161,37 +150,58 @@ public abstract class Actor extends GameObject{
             if(atkSpeed.count()){
                 bullets.add(new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y));
             }
-            //飛彈碰到邊界則爆炸
-            for(int i=0;i<bullets.size();i++) {
-                //飛彈爆炸後一定時間後消失
-                if (bullets.get(i).isExplored()) {
-                    if (bullets.get(i).isTime()) {
-                        bullets.remove(i);
-                        i--;
-                        continue;
-                    }
-                }
-                //攻擊敵機並扣血
-                for(int j=0;j<actors.size();j++){
+        }
+        for(int i=0;i<bullets.size();i++) {
+            //攻擊敵機並扣血
+            for(int j=0;j<actors.size();j++){
+                if(!bullets.get(i).isExplored()){
                     if(bullets.get(i).isCollision(actors.get(j))){
-                        bullets.get(i).isExplored();
-                        actors.get(j).offsetHp(-this.atk);
+                        bullets.get(i).explored();
+                        actors.get(j).offsetHp(-(this.atk)*(1-actors.get(j).def));
                     }
-                }
-                if (bullets.get(i).isTouchBattleEdge()) {
-                    bullets.get(i).explored();
                 }
             }
         }
     }
-    //受到傷害
-    public void Damaged(Actor actor){
-        offsetHp(-actor.getAtk());
+    //子彈更新
+    private void bulletsUpdate(){
+        ////飛彈爆炸後一定時間後消失
+        for(int i=0;i<this.bullets.size();i++){
+            if (bullets.get(i).isExplored()) {
+                if (bullets.get(i).isTime()) {
+                    bullets.remove(i);
+                    i--;
+                    continue;
+                }
+            }
+            //碰到邊界爆炸
+            if (bullets.get(i).isTouchBattleEdge()) {
+                bullets.get(i).explored();
+            }
+            this.bullets.get(i).update(); //子彈移動
+        }
     }
-    //是否死亡
-    public boolean isDeaded(){
-        return this.getHp()<=0;
+    //判斷是否死亡
+    public boolean isAlive(){
+        return this.getHp()>0;
+    }
+    //判斷目標在不在場內
+    public boolean targetIsInBattleField(float x, float y){
+        if(x< Global.BOUNDARY_X1 || x>Global.BOUNDARY_X2){return false;}
+        if(y<Global.BOUNDARY_Y1 || y>Global.BOUNDARY_Y2){return false;}
+        return true;
+    }
+    //判斷目標是否在射程內
+    public boolean isInAtkdis(float x,float y){
+        //判斷目標點是否在攻擊距離內:上下左右框框+atkdis
+        if(x>this.painter().right()+getAtkdis()){return false;}
+        if(x<this.painter().left()-getAtkdis()){return false;}
+        if(y>this.painter().bottom()+getAtkdis()){return false;}
+        if(y<this.painter().top()-getAtkdis()){return false;}
+        return true;
     }
     public abstract void paint(Graphics g);
-    public abstract void update();
+    public  void update(){
+        bulletsUpdate();
+    };
 }

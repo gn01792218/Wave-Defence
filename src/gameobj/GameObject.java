@@ -24,7 +24,6 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         collider = new Rect(rect);
         painter = new Rect(rect2);
     }
-
     public boolean outOfScreen() {
         if (painter.bottom() <= 0) {
             return true;
@@ -45,7 +44,6 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         if(this.painter.centerY()>=Global.BOUNDARY_Y2){return true;}
         return false;
     }
-
     //四個方向的碰撞
     public boolean touchTop() {
         return collider.top() <= 0;
@@ -61,7 +59,8 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
     }
 
     public boolean isCollision(GameObject obj) {
-        return collider.overlap(obj.collider);
+        //改成painter
+        return painter.overlap(obj.painter);
     }
     //移動
     public final void translate(int x, int y) {

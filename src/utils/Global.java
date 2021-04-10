@@ -7,17 +7,14 @@ public class Global {
         DOWN(0),
         LEFT(1),
         RIGHT(2);
-
         private int value;
 
         Direction(int value) {
             this.value = value;
         }
-
         public int getValue() {
             return value;
         }
-        
         public static Direction getDirection(int value){
             for(Direction d : Direction.values()){
                 if(d.getValue() == value){
@@ -27,7 +24,6 @@ public class Global {
             return null;
         }
     }
-
     //除法公式取到小數點之後，暫無使用後續可刪除
     public static float division(int a,int b){
         int result =a/b;
@@ -47,7 +43,6 @@ public class Global {
         private  boolean xIsPositive;
         private boolean yIsPositive;
         private float k;
-
         private  float xVector;
         private float yVector;
         private int degree;
@@ -56,11 +51,9 @@ public class Global {
             dX = Math.abs(targetX - x);//x座標差值 對邊
             dY = Math.abs(targetY - y);//y座標差值 臨邊
             k = (float) Math.sqrt(dX*dX+dY*dY); //斜邊
-
             xVector = dX/k;  //x向量
             yVector = dY/k; //y向量
             degree = (int)(Math.toDegrees(angleBetweenTwoPointsWithFixedPoint(targetX,targetY,x,y+1,x,y)));
-
             xIsPositive = targetX - x > 0;
             yIsPositive = targetY - y > 0;
         }

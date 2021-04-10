@@ -29,8 +29,10 @@ public class GameScene extends Scene {
         image=ImageController.getInstance().tryGet("/m2.png");
         alliance=new ArrayList<>();
         alliance.add(new Tank1(700,700,false));
+        alliance.add(new Tank1(400,1000,false));
         enemys=new ArrayList<>();
-        enemys.add(new Enemy1(1000,150,true));
+        enemys.add(new Enemy1(1000,550,true));
+        enemys.add(new Enemy1(600,550,true));
     }
 
     @Override
@@ -69,8 +71,12 @@ public class GameScene extends Scene {
     @Override
     public void paint(Graphics g) {
         g.drawImage(image,0,-150,null);
-        alliance.get(0).paint(g);
-        enemys.get(0).paint(g);
+        for(int i=0;i<alliance.size();i++){
+            alliance.get(i).paint(g);
+        }
+        for(int i=0;i<enemys.size();i++) {
+            enemys.get(i).paint(g);
+        }
         flag.paint(g);
     }
     @Override
@@ -78,11 +84,11 @@ public class GameScene extends Scene {
         enemys.get(0).moveToTarget((int)flag.getPainter().centerX(),(int)flag.getPainter().centerY());
         for(int i=0;i<alliance.size();i++){
             alliance.get(i).update();
-            alliance.get(i).attack(enemys.get(0).painter().centerX(),enemys.get(0).painter().centerY());
+            alliance.get(i).autoAttack(enemys); //到時候回合開始後30秒才要自動攻擊
         }
         for(int i=0;i<enemys.size();i++){
             enemys.get(i).update();
-            enemys.get(i).attack(alliance.get(0).painter().centerX(),alliance.get(0).painter().centerY());
+            enemys.get(i).autoAttack(alliance);
         }
     }
 }

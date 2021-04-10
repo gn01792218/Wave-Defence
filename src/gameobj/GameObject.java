@@ -42,7 +42,7 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         if(this.painter.centerX()<=Global.BOUNDARY_X1){return true;}
         if(this.painter.centerX()>=Global.BOUNDARY_X2){return true;}
         if(this.painter.centerY()<=Global.BOUNDARY_Y1){return true;}
-        if(this.painter.centerY()<=Global.BOUNDARY_Y2){return true;}
+        if(this.painter.centerY()>=Global.BOUNDARY_Y2){return true;}
         return false;
     }
 

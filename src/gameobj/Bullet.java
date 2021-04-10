@@ -6,15 +6,17 @@ import utils.Delay;
 import utils.GameKernel;
 import utils.Global;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Bullet extends GameObject implements GameKernel.UpdateInterface,GameKernel.PaintInterface {
 
-    private BufferedImage image1;
-    private BufferedImage image2;
+    private Image image1;
+    private Image image2;
     private Delay delay;
     private boolean isExplored;
+    private boolean isTime;
     public Global.Trigonometric trigonometric;
 
     public Bullet(int x, int y,int targetX,int targetY) {
@@ -24,10 +26,19 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
         this.image2 = ImageController.getInstance().tryGet("/boomb.png");
         delay = new Delay(120);
         isExplored = false;
+        isTime = false;
     }
 
     public void explored(){
         this.isExplored = true;
+    }
+
+    public boolean isExplored() {
+        return isExplored;
+    }
+
+    public boolean isTime(){
+        return isTime;
     }
 
     @Override
@@ -41,7 +52,13 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
 
     @Override
     public void update() {
-        this.painter().translate(Global.BULLET_SPEED * this.trigonometric.getxVector(),
-                Global.BULLET_SPEED * this.trigonometric.getyVector());
+        if(!isExplored) {
+            this.painter().translate(Global.BULLET_SPEED * this.trigonometric.getxVector(),
+                    Global.BULLET_SPEED * this.trigonometric.getyVector());
+        }else if(delay.isPause()){
+            delay.play();
+        }else if(delay.count()){
+            isTime = true;
+        }
     }
 }

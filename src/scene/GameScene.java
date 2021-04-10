@@ -1,5 +1,6 @@
 package scene;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 
 import controllers.ImageOperate;
@@ -67,6 +68,7 @@ public class GameScene extends Scene {
                             }
                         case MOVED:
                             bullets.add(new Bullet(700,400,e.getX(),e.getY()));
+//                            AudioResourceController.getInstance().shot("/TankFiring.wav");
                     }
                 }
             }
@@ -87,6 +89,19 @@ public class GameScene extends Scene {
         enemys.get(0).moveToTarget((int)flag.getPainter().centerX(),(int)flag.getPainter().centerY());
         for(int i=0;i<bullets.size();i++){
             bullets.get(i).update();
+            //飛彈爆炸後一定時間後消失
+            if(bullets.get(i).isExplored()){
+                if(bullets.get(i).isTime()){
+                    bullets.remove(i);
+                    i--;
+                    continue;
+                }
+            }
+            //飛彈碰到邊界則爆炸
+            if(bullets.get(i).isTouchBattleEdge()){
+                bullets.get(i).explored();
+//                AudioResourceController.getInstance().shot("/Tank Bomb.wav");
+            }
         }
     }
 }

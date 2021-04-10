@@ -27,6 +27,22 @@ public class Flag implements GameKernel.PaintInterface,GameKernel.UpdateInterfac
         return this.painter;
     }
 
+//    public final void setCenter (float x, float y){
+//        float newX = x - painter.centerX();
+//        float newY = y - painter.centerY();
+//        if(newX<Global.BOUNDARY_X1){
+//            newX = Global.BOUNDARY_X1;
+//        }else if(newX>Global.BOUNDARY_X2){
+//            newX = Global.BOUNDARY_X2;
+//        }
+//        if(newY<Global.BOUNDARY_Y1){
+//            newY = Global.BOUNDARY_Y1;
+//        }else if(newY > Global.BOUNDARY_Y2){
+//            newY = Global.BOUNDARY_Y2;
+//        }
+//        this.painter.translate(newX,newY);
+//    }
+
 
     @Override
     public void paint(Graphics g) {

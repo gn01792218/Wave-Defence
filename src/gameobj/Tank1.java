@@ -15,7 +15,7 @@ public class Tank1 extends Actor{
         atkSpeed=5; //攻速
         speed=5; //移動速度
         def=100; //防禦力
-        atkdis=50; //攻擊距離
+        atkdis=150; //攻擊距離
         this.isenemy=isenemy; //敵我單位
     }
 
@@ -44,11 +44,16 @@ public class Tank1 extends Actor{
             g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
                     160,0,160+75,90,null);
         }
-
+        for(int i=0;i<this.bullets.size();i++){
+            this.bullets.get(i).paint(g);
+        }
     }
 
     @Override
     public void update() {
+        for(int i=0;i<this.bullets.size();i++){
+            this.bullets.get(i).update();
+        }
 
     }
 

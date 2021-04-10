@@ -17,7 +17,7 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
     private boolean isExplored;
     public Global.Trigonometric trigonometric;
 
-    public Bullet(int x, int y,int targetX,int targetY) {
+    public Bullet(float x, float y,float targetX,float targetY) {
         super(x,y,35,70);
         trigonometric = new Global.Trigonometric(x,y,targetX,targetY);
         this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/bullet.png"),trigonometric.getDegree());
@@ -25,7 +25,6 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
         delay = new Delay(120);
         isExplored = false;
     }
-
     public void explored(){
         this.isExplored = true;
     }
@@ -38,7 +37,6 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
             g.drawImage(image1,(int)(this.painter().centerX()),(int)(this.painter().centerY()),null);
         }
     }
-
     @Override
     public void update() {
         this.painter().translate(Global.BULLET_SPEED * this.trigonometric.getxVector(),

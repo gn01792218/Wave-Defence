@@ -5,6 +5,7 @@ import utils.Global;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public abstract class Actor extends GameObject{
     //設基本屬性的g s 並且offset
@@ -18,11 +19,13 @@ public abstract class Actor extends GameObject{
     protected int dirX; //0左 1右
     protected int dirY; //0上 1下
     protected boolean isenemy; //標示此單位是敵是我
+    protected ArrayList<Bullet> bullets; //每個角色都有彈藥
 
     public Actor(int x, int y, int width, int height){
         super(x,y,width,height);
         this.dirX=0;
         this.dirY=0;
+        bullets=new ArrayList<>();
     }
 
     //基本方法區 get
@@ -80,14 +83,7 @@ public abstract class Actor extends GameObject{
             dirY=0;
         }
     }
-    //角色移動，translate的斜率即為兩邊差值相除
-    //朝著敵人移動-->尚未完成
-    public void moveToEnemy(Actor enemy){ //和下面一樣，到時候傳入敵人座標即可
-        changeDir(enemy.painter().centerX(),enemy.painter().centerY()); //依據flage的位置改變方向
-        float x=Math.abs(painter().centerX()- enemy.painter().centerX());//x座標差值
-        float y=Math.abs(painter().centerY()-enemy.painter().centerY()); //y座標差值
-    }
-    //朝著Flag移動
+    //朝著目標移動
     public void moveToTarget(float x,float y){
         if(targetIsInBattleFeild(x,y)){
             changeDir(x,y); //依據flage的位置改變方向
@@ -111,9 +107,6 @@ public abstract class Actor extends GameObject{
                 }
                 this.painter().offSet((int) xM, (int) yM);
             }
-
-            System.out.println("xy座標"+x+" "+y+"x y距離:"+a+" "+b+" 我的座標點: "+painter().centerX()+" "+painter().centerY()+ " 斜率"+(b/a));
-            System.out.println("x方向"+dirX+"y方向"+dirY);
         }
 
     }
@@ -122,6 +115,22 @@ public abstract class Actor extends GameObject{
         if(x< Global.BOUNDARY_X1 || x>Global.BOUNDARY_X2){return false;}
         if(y<Global.BOUNDARY_Y1 || y>Global.BOUNDARY_Y2){return false;}
         return true;
+    }
+    //判斷目標是否在射程內
+    public boolean isInAtkdis(float x,float y){
+        //判斷目標點是否在攻擊距離內:上下左右框框+atkdis
+        if(x>this.painter().right()+atkdis){return false;}
+        if(x<this.painter().left()-atkdis){return false;}
+        if(y>this.painter().bottom()+atkdis){return false;}
+        if(y<this.painter().top()-atkdis){return false;}
+            return true;
+    }
+    //攻擊
+    public void attack(float x,float y){
+        if(isInAtkdis(x,y)){ //在攻擊範圍內，就開火
+            //在自己的top產生子彈
+            bullets.add(new Bullet(this.painter().centerX()-30,this.painter().centerY()-80,x,y));
+        }
     }
     //核心方法區-->子類實現
     public abstract void paint(Graphics g);

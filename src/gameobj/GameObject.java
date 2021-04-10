@@ -7,15 +7,15 @@ import java.util.ArrayList;
 public abstract class GameObject implements GameKernel.UpdateInterface,GameKernel.PaintInterface{
     private final Rect collider;
     private final Rect painter;
-    public GameObject(int x, int y, int width, int height) {
+    public GameObject(float x, float y, float width, float height) {
         this(x, y, width, height, x, y, width, height);
     }
     public GameObject(Rect rect) {
         collider = new Rect(rect);
         painter = new Rect(rect);
     }
-    public GameObject(int x, int y, int width, int height,
-                      int x2, int y2, int width2, int height2) {
+    public GameObject(float x, float y, float width, float height,
+                      float x2, float y2, float width2, float height2) {
         collider = Rect.genWithCenter(x, y, width, height);
         painter = Rect.genWithCenter(x2, y2, width2, height2);
     }

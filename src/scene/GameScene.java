@@ -22,18 +22,15 @@ public class GameScene extends Scene {
     private BufferedImage image; //背景圖
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
-    private ArrayList<Bullet> bullets; //子彈
     private static Flag flag = new Flag(1,1,50,50,1,1,50,50);
 
     @Override
     public void sceneBegin() {
         image=ImageController.getInstance().tryGet("/m2.png");
         alliance=new ArrayList<>();
-        alliance.add(new Tank1(700,850,true));
+        alliance.add(new Tank1(700,700,false));
         enemys=new ArrayList<>();
         enemys.add(new Enemy1(1000,150,true));
-        bullets = new ArrayList<>();
-
     }
 
     @Override
@@ -56,9 +53,6 @@ public class GameScene extends Scene {
                         case CLICKED:
                             if (e.getButton() == e.BUTTON1) {
                                 System.out.println("左鍵");
-                                bullets.add(new Bullet(700,400,e.getX(),e.getY()));
-                                System.out.println(bullets.get(bullets.size()-1).trigonometric.getDegree());
-
                             } else if (e.getButton() == e.BUTTON2) {
                                 System.out.println("中鍵");
                             } else if (e.getButton() == 3) {//也可以這樣
@@ -66,7 +60,7 @@ public class GameScene extends Scene {
                                 flag.getPainter().setCenter(e.getX(),e.getY());
                             }
                         case MOVED:
-                            bullets.add(new Bullet(700,400,e.getX(),e.getY()));
+
                     }
                 }
             }
@@ -78,15 +72,17 @@ public class GameScene extends Scene {
         alliance.get(0).paint(g);
         enemys.get(0).paint(g);
         flag.paint(g);
-        for (int i=0;i<bullets.size();i++){
-            bullets.get(i).paint(g);
-        }
     }
     @Override
     public void update() {
         enemys.get(0).moveToTarget((int)flag.getPainter().centerX(),(int)flag.getPainter().centerY());
-        for(int i=0;i<bullets.size();i++){
-            bullets.get(i).update();
+        for(int i=0;i<alliance.size();i++){
+            alliance.get(i).update();
+            alliance.get(i).attack(enemys.get(0).painter().centerX(),enemys.get(0).painter().centerY());
+        }
+        for(int i=0;i<enemys.size();i++){
+            enemys.get(i).update();
+            enemys.get(i).attack(alliance.get(0).painter().centerX(),alliance.get(0).painter().centerY());
         }
     }
 }

@@ -12,7 +12,6 @@ import utils.CommandSolver;
 import utils.Delay;
 import utils.Flag;
 import utils.Global;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -25,15 +24,17 @@ public class GameScene extends Scene {
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private static Flag flag = new Flag(1,1,50,50,1,1,50,50);
+
     @Override
     public void sceneBegin() {
         image=ImageController.getInstance().tryGet("/m2.png");
         alliance=new ArrayList<>();
-        alliance.add(new Tank1(400,700,false));
-        alliance.add(new Tank1(800,700,false));
+            alliance.add(new Tank1(400, 650, false));
+        alliance.add(new Tank1(800, 650, false));
+        alliance.add(new Tank1(Global.random(400,1000), Global.random(200,650), false));
         enemys=new ArrayList<>();
-        enemys.add(new Enemy1(800,250,true));
-        enemys.add(new Enemy1(450,250,true));
+            enemys.add(new Enemy1(Global.random(400,1000), Global.random(200,650), true));
+        enemys.add(new Enemy1(Global.random(400,1000), Global.random(200,650), true));
     }
     @Override
     public void sceneEnd() {
@@ -77,28 +78,24 @@ public class GameScene extends Scene {
     }
     @Override
     public void update() {
-        //我軍的upfate
+        //我軍的update
         for(int i=0;i<alliance.size();i++){
+            alliance.get(i).autoAttack(enemys); //到時候回合開始後30秒才要自動攻擊
             alliance.get(i).update();
             if(!alliance.get(i).isAlive()){
                 alliance.remove(i);
                 i--;
                 break;
             }
-            if(enemys.size()>0) {
-                alliance.get(i).autoAttack(enemys); //到時候回合開始後30秒才要自動攻擊
-            }
         }
         //敵軍的update
         for(int i=0;i<enemys.size();i++){
+            enemys.get(i).autoAttack(alliance);
             enemys.get(i).update();
             if(!enemys.get(i).isAlive()){
                 enemys.remove(i);
                 i--;
                 break;
-            }
-            if(alliance.size()>0) {
-                enemys.get(i).autoAttack(alliance);
             }
         }
     }

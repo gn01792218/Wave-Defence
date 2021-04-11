@@ -7,15 +7,15 @@ import utils.Delay;
 import java.awt.*;
 
 public class Enemy1 extends Actor{
-    public Enemy1(int x,int y,boolean isenemy){
+    public Enemy1(float x,float y,boolean isenemy){
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/enemy1.png");
-        hp=150; //血量
-        atk=50; //攻擊力
+        hp=250; //血量
+        atk=100; //攻擊力
         atkSpeed=new Delay(120); //功速
-        speed=10; //移動速度
+        speed=3; //移動速度
         def=0.3; //防禦力
-        atkdis=100; //攻擊距離
+        atkdis=80; //攻擊距離
         this.isenemy=isenemy; //敵我單位
     }
     @Override

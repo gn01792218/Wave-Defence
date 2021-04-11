@@ -22,14 +22,17 @@ public abstract class Actor extends GameObject{
     protected boolean isenemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
+    protected float []strategyXY={0,0}; //我的戰略座標
 
 
-    public Actor(int x, int y, int width, int height){
+    public Actor(float x, float y, float width, float height){
         super(x,y,width,height);
         this.dirX=0;
         this.dirY=0;
         bullets=new ArrayList<>();
         isAlive=true;
+        this.strategyXY[0]=x; //剛開始是起始位置，之後在場景中可以set成旗幟位置
+        this.strategyXY[1]=y; //剛開始是起始位置，之後在場景中可以set成旗幟位置
     }
 
     //基本方法區 get
@@ -62,7 +65,11 @@ public abstract class Actor extends GameObject{
     }
     public double getAtkdis() { return this.atkdis;
     }
-
+    //set方法
+    public void setFlagXY(float x,float y){//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
+        this.strategyXY[0]=x;
+        this.strategyXY[1]=y;
+    }
     //offset方法區
     public void offsetHp(double hp){
         this.hp+=hp;
@@ -113,30 +120,37 @@ public abstract class Actor extends GameObject{
             }
         }
     }
-    //選最短距離者追蹤並攻擊，
+    //選最短距離者追蹤並攻擊，敵方死亡後回到原位
     public void autoAttack(ArrayList<Actor> actors){ //傳敵軍陣列近來
-        //先一一算出最短距離，存進數字陣列中
-        float a=0;
-        float b=0;
-        float d=0;
-        float mind=Integer.MAX_VALUE;
-        float actorX=0;
-        float actorY=0;
-        for(int i=0;i<actors.size();i++){
-            a=Math.abs(this.painter().centerX()-actors.get(i).painter().centerX());
-            b=Math.abs(this.painter().centerY()-actors.get(i).painter().centerY());
-            d=(float)Math.sqrt(a*a+b*b);
-            if(d<mind){ //最短距離者 ，取他的XY值
-                mind=d;
-                actorX=actors.get(i).painter().centerX();
-                actorY=actors.get(i).painter().centerY();
-            }
-        }
-        //使用座標點版本
-        moveToTarget(actorX,actorY);
-        fire(actorX,actorY,actors);
-        if(atkSpeed.count()){
-            AudioResourceController.getInstance().play("/T.wav");
+            if(actors.size()>0) {
+                //先一一算出最短距離，存進數字陣列中
+                float a = 0;
+                float b = 0;
+                float d = 0;
+                float mind = Integer.MAX_VALUE;
+                float actorX = 0;
+                float actorY = 0;
+                for (int i = 0; i < actors.size(); i++) {
+                    a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
+                    b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
+                    d = (float) Math.sqrt(a * a + b * b);
+                    if (d < mind) { //最短距離者 ，取他的XY值
+                        mind = d;
+                        actorX = actors.get(i).painter().centerX();
+                        actorY = actors.get(i).painter().centerY();
+                    }
+                }
+                //使用座標點版本
+                moveToTarget(actorX, actorY);
+                fire(actorX, actorY, actors);
+                if (atkSpeed.count()) {
+                    AudioResourceController.getInstance().play("/T.wav");
+                }
+            } if(actors.size()<=0 && !this.isenemy) {
+            //回到自己原本的位置
+                    moveToTarget(this.strategyXY[0], this.strategyXY[1]);
+//                    System.out.println("我的座標" + this.painter().centerX() + " " + this.painter().centerX() + //測試用輸出
+//                            " 戰略座標" + this.strategyXY[0] + " " + this.strategyXY[1]);
         }
     }
     //開火

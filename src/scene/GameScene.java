@@ -81,8 +81,8 @@ public class GameScene extends Scene {
         }
         flag.paint(g);
         if(alliance.size()<=0){
-            image2=ImageController.getInstance().tryGet("/fail.jpg");
-            g.drawImage(image2,450,350,null);
+            image2=ImageController.getInstance().tryGet("/fail2.png");
+            g.drawImage(image2,350,250,null);
         }
     }
     @Override

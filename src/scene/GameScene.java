@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
+    private BufferedImage image2; //失敗的圖片
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private static Flag flag = new Flag(1,1,50,50,1,1,50,50);
@@ -79,6 +80,10 @@ public class GameScene extends Scene {
             enemys.get(i).paint(g);
         }
         flag.paint(g);
+        if(alliance.size()<=0){
+            image2=ImageController.getInstance().tryGet("/fail.jpg");
+            g.drawImage(image2,450,350,null);
+        }
     }
     @Override
     public void update() {

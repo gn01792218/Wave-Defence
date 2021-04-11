@@ -24,17 +24,21 @@ public class GameScene extends Scene {
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private static Flag flag = new Flag(1,1,50,50,1,1,50,50);
+    private Delay delay; //目前用來控制敵人重新生成的時間
+
 
     @Override
     public void sceneBegin() {
         image=ImageController.getInstance().tryGet("/m2.png");
+        delay=new Delay(240);//目前用來控制敵人重新生成的時間
         alliance=new ArrayList<>();
-            alliance.add(new Tank1(400, 650, false));
-        alliance.add(new Tank1(800, 650, false));
-        alliance.add(new Tank1(Global.random(400,1000), Global.random(200,650), false));
+        for(int i=0;i<10;i++){
+            alliance.add(new Tank1(400+i*50, 650, false));}
         enemys=new ArrayList<>();
-            enemys.add(new Enemy1(Global.random(400,1000), Global.random(200,650), true));
-        enemys.add(new Enemy1(Global.random(400,1000), Global.random(200,650), true));
+        for(int i=0;i<10;i++) {
+            enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 650), true));
+        }
+
     }
     @Override
     public void sceneEnd() {
@@ -96,6 +100,15 @@ public class GameScene extends Scene {
                 enemys.remove(i);
                 i--;
                 break;
+            }
+        }
+        //測試用:假如敵軍全消滅，再生成敵軍出來
+        if(enemys.size()==0) {
+            delay.play();
+            if(delay.count()) {
+                for (int i = 0; i < 10; i++) {
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 650), true));
+                }
             }
         }
     }

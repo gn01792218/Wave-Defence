@@ -104,7 +104,7 @@ public abstract class Actor extends GameObject{
             float d = (float) Math.sqrt(a * a + b * b); //斜邊
             //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
             //但需要解決和我軍重疊的問題
-            if(d>this.getAtkdis()) {
+            if(d>this.getAtkdis()) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
                 float xM = (float) a / d * speed;  //x向量
                 float yM = (float) b / d * speed; //y向量
                 if (painter().centerX() > x) {
@@ -112,9 +112,6 @@ public abstract class Actor extends GameObject{
                 }
                 if (painter().centerY() > y) {
                     yM = -yM;
-                }
-                if(a==0){ //表示在同一個直線上 x座標相同
-
                 }
                 this.painter().offSet((int) xM, (int) yM);
             }

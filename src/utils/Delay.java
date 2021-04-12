@@ -14,6 +14,10 @@ public class Delay {
     }
 
     //方法區
+    //設置
+     public void setLimit(int limit){
+        this.countLimit=limit;
+     }
     //停止記時的方法
     public void stop(){
         count=0; //記時器歸0

@@ -23,6 +23,21 @@ public abstract class Actor extends GameObject{
     protected boolean isAlive; //標示是否死亡
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
     protected float []strategyXY={0,0}; //我的戰略座標
+    protected ATTACK_DIRECTION attackDirection;
+    protected enum ATTACK_DIRECTION{
+        LeftLeft(0),
+        MiddleLeft(1),
+        Middle(2),
+        MiddleRight(3),
+        RightRight(4);
+        private int value;
+        private ATTACK_DIRECTION(int value){
+            this.value = value;
+        }
+        public int getValue(){
+            return this.value;
+        }
+    }
 
 
     public Actor(float x, float y, float width, float height){
@@ -33,6 +48,7 @@ public abstract class Actor extends GameObject{
         isAlive=true;
         this.strategyXY[0]=x; //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.strategyXY[1]=y; //剛開始是起始位置，之後在場景中可以set成旗幟位置
+        this.attackDirection = ATTACK_DIRECTION.Middle;
     }
 
     //基本方法區 get
@@ -144,12 +160,18 @@ public abstract class Actor extends GameObject{
                     AudioResourceController.getInstance().play("/T.wav");
                 }
             } if(actors.size()<=0 && !this.isenemy) {
-            //回到自己原本的位置
+            //回到自己原本的位置並導正砲管
                     moveToTarget(this.strategyXY[0], this.strategyXY[1]);
+                    this.attackDirection = ATTACK_DIRECTION.Middle;
 //                    System.out.println("我的座標" + this.painter().centerX() + " " + this.painter().centerX() + //測試用輸出
 //                            " 戰略座標" + this.strategyXY[0] + " " + this.strategyXY[1]);
         }
     }
+
+    public void changeAtkDir(float x,float y){
+
+    }
+
     //開火
     public void fire(float x,float y,ArrayList<Actor> actors){
         if (isInAtkdis(x, y)) { //在攻擊範圍內，就開火
@@ -158,8 +180,23 @@ public abstract class Actor extends GameObject{
                 atkSpeed.loop();
                 return;
             }
+            Bullet bullet = new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y);
+            //根據角度變換砲管方向的狀態
+            int atkAngle = bullet.trigonometric.getDegree()+270;
+            if(atkAngle>= 270){
+                this.attackDirection = ATTACK_DIRECTION.LeftLeft;
+            }else if(atkAngle <60 ){
+                this.attackDirection = ATTACK_DIRECTION.MiddleLeft;
+            }else if(atkAngle >120 && atkAngle <180 ){
+                this.attackDirection = ATTACK_DIRECTION.MiddleRight;
+            }else if(atkAngle >= 180 && atkAngle<270){
+                this.attackDirection = ATTACK_DIRECTION.RightRight;
+            }else {
+                this.attackDirection = ATTACK_DIRECTION.Middle;
+            }
+
             if(atkSpeed.count()){
-                bullets.add(new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y));
+                bullets.add(bullet);
             }
         }
         for(int i=0;i<bullets.size();i++) {
@@ -212,7 +249,7 @@ public abstract class Actor extends GameObject{
         return true;
     }
     public abstract void paint(Graphics g);
-    public  void update(){
+    public void update(){
         bulletsUpdate();
     };
 }

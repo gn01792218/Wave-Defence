@@ -20,13 +20,16 @@ public class Tank1 extends Actor{
     }
     @Override
     public void paint(Graphics g) {
+        int moveDir;
         if(!this.isenemy){
-        g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
-                160,90,160+75,180,null);
-        }else if(this.isenemy){
-            g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
-                    160,0,160+75,90,null);
+            moveDir = 90;
+        }else {
+            moveDir = 0;
         }
+
+        g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
+                this.attackDirection.getValue()*75,moveDir,this.attackDirection.getValue()*75+75,moveDir+90,null);
+
         for(int i=0;i<this.bullets.size();i++){
             this.bullets.get(i).paint(g);
         }

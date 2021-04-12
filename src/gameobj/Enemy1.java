@@ -11,7 +11,7 @@ public class Enemy1 extends Actor{
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/enemy1.png");
         hp=250; //血量
-        atk=100; //攻擊力
+        atk=70; //攻擊力
         atkSpeed=new Delay(120); //功速
         speed=3; //移動速度
         def=0.3; //防禦力

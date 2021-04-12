@@ -11,12 +11,14 @@ public class Flag implements GameKernel.PaintInterface,GameKernel.UpdateInterfac
     private final Rect collider;
     private final Rect painter;
     private BufferedImage image;
+    private boolean flagUsable;
 
     public Flag(int x, int y, int width, int height,
                 int x2, int y2, int width2, int height2){
         collider = Rect.genWithCenter(x, y, width, height);
         painter = Rect.genWithCenter(x2, y2, width2, height2);
         this.image = ImageController.getInstance().tryGet("/Flag.png");
+        flagUsable=true;
     }
 
     public Rect getCollider(){
@@ -27,7 +29,14 @@ public class Flag implements GameKernel.PaintInterface,GameKernel.UpdateInterfac
         return this.painter;
     }
 
-//    public final void setCenter (float x, float y){
+    public boolean isFlagUsable() {
+        return flagUsable;
+    }
+
+    public void setFlagUsable(boolean flagUsable) {
+        this.flagUsable = flagUsable;
+    }
+    //    public final void setCenter (float x, float y){
 //        float newX = x - painter.centerX();
 //        float newY = y - painter.centerY();
 //        if(newX<Global.BOUNDARY_X1){

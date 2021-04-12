@@ -29,16 +29,16 @@ public class Rect {
     }
 
     public final boolean overlap(float left, float top, float right, float bottom) {
-        if (this.left() > right) {
+        if (this.left() >=right) {
             return false;
         }
-        if (this.right() < left) {
+        if (this.right() <= left) {
             return false;
         }
-        if (this.top() > bottom) {
+        if (this.top() >= bottom) {
             return false;
         }
-        if (this.bottom() < top) {
+        if (this.bottom() <= top) {
             return false;
         }
         return true;

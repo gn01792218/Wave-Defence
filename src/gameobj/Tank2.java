@@ -17,6 +17,7 @@ public class Tank2 extends Actor{
         speed=(float)3; //移動速度
         def=0.45; //防禦力
         atkdis=150; //攻擊距離
+        cost=300; //一隻300
         this.isenemy=isenemy; //敵我單位
     }
 

@@ -108,9 +108,6 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
             return this.styleNormal;
         }
     }
-    public void setText(String str){
-        this.text=str;
-    }
     public void setX(int x) {
         this.x = x;
     }

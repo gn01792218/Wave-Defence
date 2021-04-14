@@ -30,7 +30,7 @@ public class OpenScene extends Scene {
     @Override
     public void sceneBegin() {
         //背景圖
-        image =ImageController.getInstance().tryGet("/startScene.png");
+        image =ImageController.getInstance().tryGet("/Scene1-2.png");
         //Button的第三個參數可newStyle；Style的三個參數為寬 高 背景圖片。
         startButton=new Button(800,500,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/s-d.png"))));
         startButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/s-h.png"))));

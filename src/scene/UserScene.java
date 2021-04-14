@@ -7,6 +7,7 @@ import menu.Button;
 import menu.Label;
 import utils.CommandSolver;
 import utils.Global;
+import utils.Player;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -68,7 +69,21 @@ public class UserScene extends Scene{
                                     if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
                                         //產生確認框
                                         //購買軍隊
-                                        actorButtons.get(i).offSetNumber(1); //點一下增加一單位
+                                        if(Player.getInstance().getMoney()>0 && Player.getInstance().getMoney()>=actorButtons.get(i).getCostMoney()) { //金錢大於0才可以買唷!-->問題:必須要現有的錢>要買的單位的錢
+                                            actorButtons.get(i).offSetNumber(1); //點一下增加一單位
+                                                switch (actorButtons.get(i).getActorType()){
+                                                    case TANK1:
+                                                        Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                        break;
+                                                    case TANK2:
+                                                        Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                        break;
+                                                    case ENEMY1:
+                                                        Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                        break;
+                                                }
+
+                                        }
                                     }
                                 }
                             }
@@ -86,6 +101,7 @@ public class UserScene extends Scene{
 
     @Override
     public void paint(Graphics g) {
+        Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         for(int i=0;i<actorButtons.size();i++){
             actorButtons.get(i).paint(g);

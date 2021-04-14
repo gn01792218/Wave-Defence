@@ -17,6 +17,7 @@ public class Enemy1 extends Actor{
         speed=2.5f; //移動速度
         def=0.3; //防禦力
         atkdis=300; //攻擊距離
+        cost=350; //一隻450
         this.isenemy=isenemy; //敵我單位
     }
 

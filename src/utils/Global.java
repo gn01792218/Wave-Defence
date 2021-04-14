@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class Global {
     private static ArrayList<ActorButton> actorButtons;//角色按鈕，可以儲存玩家擁有的角色種類和數量；在選單中畫出來，在遊戲場景不畫出來，只是存放屬性。
+    //還需要一個計算$$和榮譽值的 labal-->放Player類內
     public enum ActorType{
         TANK1,
         TANK2,
@@ -21,11 +22,11 @@ public class Global {
 
     public static ArrayList<ActorButton> getActorButtons(){
         if(actorButtons==null){ //假如沒有 才做角色按鈕
-            actorButtons=new ArrayList<>();
+            actorButtons=new ArrayList<>();//角色參數: 座標 Style Type Cost
             ActorButton tank1=new ActorButton(600,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/M-Tank1.png"))),
-                    Global.ActorType.TANK1);
+                    Global.ActorType.TANK1,250);
             ActorButton tank2=new ActorButton(200,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/M-Tank2.png"))),
-                    Global.ActorType.TANK2);
+                    Global.ActorType.TANK2,350);
             actorButtons.add(tank1);
             actorButtons.add(tank2);
         }

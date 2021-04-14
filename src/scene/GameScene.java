@@ -10,10 +10,7 @@ import gameobj.Enemy1;
 import gameobj.Tank1;
 import gameobj.Tank2;
 
-import utils.CommandSolver;
-import utils.Delay;
-import utils.Flag;
-import utils.Global;
+import utils.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -26,6 +23,7 @@ import java.util.ArrayList;
 //問題:倒數10秒的動畫要重弄
 //每回合3波，完後 delay5秒換場
 //imageController有問題
+//判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
@@ -174,7 +172,7 @@ public class GameScene extends Scene {
                         }
                     }
                     alliance.remove(i);
-                    i--;
+
                     break;
                 }
             }
@@ -190,7 +188,8 @@ public class GameScene extends Scene {
                 enemys.get(i).update();
                 if (!enemys.get(i).isAlive()) {
                     enemys.remove(i);
-                    i--;
+                    Player.getInstance().offsetMoney(+250); //殺一隻敵軍250元
+
                     break;
                 }
             }
@@ -198,7 +197,6 @@ public class GameScene extends Scene {
             if(count<=2) {  //
                 System.out.println(count);
                 if (enemys.size() == 0) { //當敵軍
-                    System.out.println("生成敵軍");
                     delayEnemyBron.play();
                     if (delayEnemyBron.count()) {
                         for (int i = 0; i < 10; i++) {
@@ -210,6 +208,15 @@ public class GameScene extends Scene {
             }
             if(count>=2 && enemys.size()<=0){ //挑戰成功條件
                 SceneController.getInstance().changeScene(new UserScene());
+                Player.getInstance().offsetHonor(+300); //榮譽值+300
+                Player.getInstance().offsetMoney(1000); //金錢+1000
+            }else if(alliance.size()<=0){
+                delayEnemyBron.play();
+                if(delayEnemyBron.count()) { //等4秒後換場
+                    SceneController.getInstance().changeScene(new UserScene());
+                    Player.getInstance().offsetMoney(250); //榮譽值+250
+                    Player.getInstance().offsetHonor(150); //榮譽值+150
+                }
             }
         }
     }

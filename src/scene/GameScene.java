@@ -25,7 +25,6 @@ import java.util.ArrayList;
 //更新時，只有isInClik可以移動到旗子座標點
 //問題:倒數10秒的動畫要重弄
 //每回合3波，完後 delay5秒換場
-//我軍的數量沒有更新到
 //imageController有問題
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。

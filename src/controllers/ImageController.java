@@ -32,7 +32,6 @@ public class ImageController {
         BufferedImage img=null;
         try {
             img= ImageIO.read(getClass().getResource(path));
-
         } catch (IOException e) {
             e.printStackTrace();
         }

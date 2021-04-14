@@ -1,6 +1,8 @@
 
 import controllers.SceneController;
 import scene.GameScene;
+import scene.OpenScene;
+import scene.UserScene;
 import utils.CommandSolver;
 import utils.GameKernel;
 
@@ -22,7 +24,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame jframe=new JFrame();
         SceneController sceneController=SceneController.getInstance(); //取得單例模式的控場實體
-        sceneController.changeScene(new GameScene()); //一開始使用開場畫面
+        sceneController.changeScene(new UserScene()); //一開始使用開場畫面
         GameKernel gameKernel = new GameKernel.Builder().input(  //創建遊戲核心
                 new CommandSolver.BuildStream().mouseTrack().subscribe(sceneController).keyboardTrack()
                         .add(KeyEvent.VK_ENTER,1) //設置ENTER按鍵為 1

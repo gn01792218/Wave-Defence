@@ -1,6 +1,36 @@
 package utils;
 
+import controllers.ImageController;
+import gameobj.Actor;
+import gameobj.Enemy1;
+import gameobj.Tank1;
+import gameobj.Tank2;
+import menu.ActorButton;
+import menu.BackgroundType;
+import menu.Style;
+
+import java.util.ArrayList;
+
 public class Global {
+    private static ArrayList<ActorButton> actorButtons;//角色按鈕，可以儲存玩家擁有的角色種類和數量；在選單中畫出來，在遊戲場景不畫出來，只是存放屬性。
+    public enum ActorType{
+        TANK1,
+        TANK2,
+        ENEMY1,
+    }
+
+    public static ArrayList<ActorButton> getActorButtons(){
+        if(actorButtons==null){ //假如沒有 才做角色按鈕
+            actorButtons=new ArrayList<>();
+            ActorButton tank1=new ActorButton(600,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/M-Tank1.png"))),
+                    Global.ActorType.TANK1);
+            ActorButton tank2=new ActorButton(200,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/M-Tank2.png"))),
+                    Global.ActorType.TANK2);
+            actorButtons.add(tank1);
+            actorButtons.add(tank2);
+        }
+        return actorButtons;
+    }
 
     public enum Direction {
         UP(3),

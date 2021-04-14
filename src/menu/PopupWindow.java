@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import scene.Scene;
 import utils.CommandSolver;
-
+//彈跳視窗
 public abstract class PopupWindow extends Scene {
 
     private boolean isShow;

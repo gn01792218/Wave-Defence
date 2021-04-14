@@ -2,10 +2,12 @@ package gameobj;
 
 import controllers.ImageController;
 import utils.Delay;
+import utils.Global;
 
 import java.awt.*;
 
 public class Tank1 extends Actor{
+
 
     public Tank1(float x, float y,boolean isenemy){
         super(x,y,75,90);
@@ -18,6 +20,12 @@ public class Tank1 extends Actor{
         atkdis=300; //攻擊距離
         this.isenemy=isenemy; //敵我單位
     }
+
+    @Override
+    public Global.ActorType getType() {
+        return Global.ActorType.TANK1;
+    }
+
     @Override
     public void paint(Graphics g) {
         if(!this.isenemy){

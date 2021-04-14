@@ -40,7 +40,10 @@ public abstract class Style {
                 g.setColor(super.borderColor);
                 g.fillRect(x - super.borderThickness, y - super.borderThickness, width + super.borderThickness * 2, height + super.borderThickness * 2);
             }
-            objectBackground.paintBackground(g, false, isFill, x, y, width, height);
+            if(this.objectBackground!=null) {
+                objectBackground.paintBackground(g, false, isFill, x, y, width, height);
+            }
+
             if (super.text != null) {
                 g.setColor(super.textColor);
                 g.setFont(super.textFont);
@@ -79,7 +82,7 @@ public abstract class Style {
 
     public static class StyleOval extends StyleRect {
 
-        //建構子
+        //建構子，傳入寬高 和背景圖
         public StyleOval(int width, int height, boolean isFill, BackgroundType backgroundType) {
             super(width, height, isFill, backgroundType);
         }

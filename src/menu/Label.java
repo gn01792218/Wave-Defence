@@ -7,9 +7,9 @@ import java.awt.Graphics;
 public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterface {
 
     public interface ClickedAction {
-
         public void clickedActionPerformed(int x, int y);
     }
+
     private ClickedAction clickAction;
 
     public void setClickedActionPerformed(ClickedAction a) {
@@ -31,6 +31,7 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
     private Style styleFocus;
     private boolean isFocus;
     private boolean isHover;
+    private String text;
 
     public Label(int x, int y, Style styleNormal) {
         this.x = x;
@@ -48,7 +49,7 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
         isFocus = false;
     }
 
-    public Label(int x, int y) {
+    public Label(int x, int y) {  //假如只傳x,y就會套用預設的樣式!!!!很煩!!!
         this.x = x;
         this.y = y;
         this.styleFocus = Theme.DEFAULT_THEME.focus();
@@ -88,8 +89,9 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
     }
 
     //設定物件為hover狀態
-    public void isHover() {
-        this.isHover = true;
+    public void isHover(boolean isHover) {
+
+        this.isHover = isHover;
     }
 
     //解除物件hover狀態
@@ -106,7 +108,9 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
             return this.styleNormal;
         }
     }
-
+    public void setText(String str){
+        this.text=str;
+    }
     public void setX(int x) {
         this.x = x;
     }
@@ -146,18 +150,23 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
     public int bottom() {
         return getY() + height();
     }
-
+    public int getCenterX(){
+        return getX()+width()/2;
+    }
+    public int getCenterY(){
+        return getX()+height()/2;
+    }
     public boolean getIsHover() {
         return this.isHover;
     }
 
     @Override
     public void paint(Graphics g) {
+
         if (getPaintStyle() != null) {
-            getPaintStyle().paintComponent(g, x, y);
+            getPaintStyle().paintComponent(g, getCenterX(), getCenterY());
         }
     }
-
     @Override
     public void update() {
 

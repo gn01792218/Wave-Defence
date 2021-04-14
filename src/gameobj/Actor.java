@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public abstract class Actor extends GameObject{
     //設基本屬性的g s 並且offset
     protected BufferedImage image;
+    private double hpLimit;
     protected double hp;
     protected double atk;
     protected Delay atkSpeed;
@@ -36,6 +37,9 @@ public abstract class Actor extends GameObject{
     }
 
     //基本方法區 get
+    public double getHpLimit() {
+        return hpLimit;
+    }
     public int getDirX() {
         return dirX;
     }
@@ -66,9 +70,35 @@ public abstract class Actor extends GameObject{
     public double getAtkdis() { return this.atkdis;
     }
     //set方法
-    public void setFlagXY(float x,float y){//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
+
+    public void setHpLimit(double hpLimit) {
+        this.hpLimit = hpLimit;
+    }
+    public void setFlagXY(float x, float y){//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
         this.strategyXY[0]=x;
         this.strategyXY[1]=y;
+    }
+    public void setHp(double hp) {
+        this.hp = hp;
+    }
+    public void setAtk(double atk) {
+        this.atk = atk;
+    }
+    public void setAtkSpeed(Delay atkSpeed) {
+        this.atkSpeed = atkSpeed;
+    }
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+    public void setDef(double def) {
+        this.def = def;
+    }
+    public void setAtkdis(double atkdis) {
+        this.atkdis = atkdis;
+    }
+    public void setCenter(float x,float y){
+        this.painter().setCenter(x,y);
+        this.collider().setCenter(x,y);
     }
     //offset方法區
     public void offsetHp(double hp){
@@ -81,6 +111,8 @@ public abstract class Actor extends GameObject{
     public void offsetAtkdis(double atkdis){this.atkdis+=atkdis;}
 
     //核心方法區-->子類實現
+    //獲得種類的方法，回傳Global的enum
+    public abstract Global.ActorType getType();
     //改變方向
     public void changeDir(float x,float y){  //依據敵人的座標  或是 Flag的座標改變方向
         if(x>this.painter().centerX()){

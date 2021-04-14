@@ -30,15 +30,15 @@ public class MouseTriggerImpl {
         if (state == CommandSolver.MouseState.MOVED) {
             if (isOval) {
                 if (ovalOverlap(obj, e.getX(), e.getY())) {
-                    obj.isHover();
+                    obj.isHover(true);
                 } else {
-                    obj.unHover();
+                    obj.isHover(false);
                 }
             } else {
                 if (rectOverlap(obj, e.getX(), e.getY())) {
-                    obj.isHover();
+                    obj.isHover(true);
                 } else {
-                    obj.unHover();
+                    obj.isHover(false);
                 }
             }
         }

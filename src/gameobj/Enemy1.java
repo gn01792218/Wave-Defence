@@ -3,6 +3,7 @@ package gameobj;
 import controllers.ImageController;
 import controllers.ImageOperate;
 import utils.Delay;
+import utils.Global;
 
 import java.awt.*;
 
@@ -18,6 +19,12 @@ public class Enemy1 extends Actor{
         atkdis=100; //攻擊距離
         this.isenemy=isenemy; //敵我單位
     }
+
+    @Override
+    public Global.ActorType getType() {
+        return Global.ActorType.ENEMY1;
+    }
+
     @Override
     public void paint(Graphics g) {
         g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),

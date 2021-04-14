@@ -154,7 +154,7 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
         return getX()+width()/2;
     }
     public int getCenterY(){
-        return getX()+height()/2;
+        return getY()+height()/2;
     }
     public boolean getIsHover() {
         return this.isHover;
@@ -162,7 +162,6 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
 
     @Override
     public void paint(Graphics g) {
-
         if (getPaintStyle() != null) {
             getPaintStyle().paintComponent(g, getCenterX(), getCenterY());
         }

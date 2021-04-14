@@ -14,7 +14,7 @@ public class Tank2 extends Actor{
         hp=300; //血量
         atk=150; //攻擊力
         atkSpeed = new Delay(60);      //攻速
-        speed=(float)4; //移動速度
+        speed=(float)3; //移動速度
         def=0.45; //防禦力
         atkdis=150; //攻擊距離
         this.isenemy=isenemy; //敵我單位

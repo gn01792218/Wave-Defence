@@ -22,6 +22,8 @@ public abstract class Actor extends GameObject{
     protected int dirY; //0上 1下
     protected boolean isenemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
+    protected boolean isInControl; //是否 被點選
+
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
     protected float []strategyXY={0,0}; //我的戰略座標
 
@@ -32,6 +34,8 @@ public abstract class Actor extends GameObject{
         this.dirY=0;
         bullets=new ArrayList<>();
         isAlive=true;
+        isInControl=false;
+
         this.strategyXY[0]=x; //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.strategyXY[1]=y; //剛開始是起始位置，之後在場景中可以set成旗幟位置
     }
@@ -69,6 +73,10 @@ public abstract class Actor extends GameObject{
     }
     public double getAtkdis() { return this.atkdis;
     }
+    public boolean getIsInControl() {
+        return isInControl;
+    }
+
     //set方法
 
     public void setHpLimit(double hpLimit) {
@@ -100,6 +108,10 @@ public abstract class Actor extends GameObject{
         this.painter().setCenter(x,y);
         this.collider().setCenter(x,y);
     }
+    public void setControl(boolean cliced) {
+        isInControl = cliced;
+    }
+
     //offset方法區
     public void offsetHp(double hp){
         this.hp+=hp;
@@ -111,6 +123,15 @@ public abstract class Actor extends GameObject{
     public void offsetAtkdis(double atkdis){this.atkdis+=atkdis;}
 
     //核心方法區-->子類實現
+    //是否被點擊到
+    public boolean isTouch(float x,float y){
+        if(x<=painter().left()){return false;}
+        if(x>=painter().right()){return false;}
+        if(y<=painter().top()){return false;}
+        if(y>=painter().bottom()){return false;}
+        //否則就是被點到了
+        return true;
+    }
     //獲得種類的方法，回傳Global的enum
     public abstract Global.ActorType getType();
     //改變方向
@@ -126,27 +147,28 @@ public abstract class Actor extends GameObject{
             dirY=0;
         }
     }
+
     //朝目標移動
     public void moveToTarget(float x,float y){
         if(targetIsInBattleField(x,y)){
-            changeDir(x,y); //依據flag的位置改變方向
-            //角色的translate根據x/y的斜率來走
-            float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
-            float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
-            float d = (float) Math.sqrt(a * a + b * b); //斜邊
-            //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
-            //但需要解決和我軍重疊的問題
-            if(d>this.getAtkdis()-(this.getAtkdis()*0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
-                float xM = (float) a / d * speed;  //x向量
-                float yM = (float) b / d * speed; //y向量
-                if (painter().centerX() > x) {
-                    xM = -xM;
+                changeDir(x, y); //依據flag的位置改變方向
+                //角色的translate根據x/y的斜率來走
+                float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
+                float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
+                float d = (float) Math.sqrt(a * a + b * b); //斜邊
+                //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
+                //但需要解決和我軍重疊的問題
+                if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+                    float xM = (float) a / d * speed;  //x向量
+                    float yM = (float) b / d * speed; //y向量
+                    if (painter().centerX() > x) {
+                        xM = -xM;
+                    }
+                    if (painter().centerY() > y) {
+                        yM = -yM;
+                    }
+                    this.painter().offSet((int) xM, (int) yM);
                 }
-                if (painter().centerY() > y) {
-                    yM = -yM;
-                }
-                this.painter().offSet((int) xM, (int) yM);
-            }
         }
     }
     //選最短距離者追蹤並攻擊，敵方死亡後回到原位

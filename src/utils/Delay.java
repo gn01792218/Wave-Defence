@@ -1,6 +1,8 @@
 package utils;
 
 public class Delay {
+
+    //設計delay的COUNT的設置改變
     private int count; //計時器，計算當下經過的偵數
     private int countLimit;// 計數的上限(總共要記幾禎)
     private boolean isPause;//是否暫停記數
@@ -12,7 +14,6 @@ public class Delay {
         isPause=true; //剛開始的時候沒有要記時
         isLoop=false; //剛開始不要週期性延遲，需要時再用
     }
-
     //方法區
     //設置
      public void setLimit(int limit){
@@ -48,7 +49,6 @@ public class Delay {
     public boolean isPause(){
         return isPause;
     }
-
 
     // 這個方法需要反覆在更新中被呼叫，並通過被呼叫的次數來進行延遲的判斷
     public boolean count(){  //會回傳是否觸發目標動作 的計時器

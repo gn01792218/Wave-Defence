@@ -96,7 +96,7 @@ public class TestScene extends Scene{
         //我軍的update
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).autoAttack(enemys,alliance);
-            alliance.get(i).update();
+            alliance.get(i).bulletsUpdate(enemys);
             if (!alliance.get(i).isAlive()) {
                 alliance.remove(i);
                 i--;
@@ -106,7 +106,7 @@ public class TestScene extends Scene{
         //敵軍update
         for (int i = 0; i < enemys.size(); i++) {
             enemys.get(i).autoAttack(alliance,enemys);
-            enemys.get(i).update();
+            enemys.get(i).bulletsUpdate(alliance);
             if (!enemys.get(i).isAlive()) {
                 enemys.remove(i);
                 i--;

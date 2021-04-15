@@ -19,8 +19,6 @@ public abstract class Actor extends GameObject {
     protected float speed;
     protected double def;
     protected double atkdis;
-    //    protected int dirX; //0左 1右
-//    protected int dirY; //0上 1下
     protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
@@ -335,7 +333,7 @@ public abstract class Actor extends GameObject {
 
         }
         //子彈更新
-        private void bulletsUpdate (ArrayList < Actor > actors) {
+        public void bulletsUpdate (ArrayList < Actor > actors) {
             ////飛彈爆炸後一定時間後消失
             for (int i = 0; i < this.bullets.size(); i++) {
                 this.bullets.get(i).update(); //子彈移動

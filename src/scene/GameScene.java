@@ -171,7 +171,7 @@ public class GameScene extends Scene {
                     break;
                 } else {
                     alliance.get(i).autoAttack(enemys, alliance);
-                    alliance.get(i).update(); //發射子彈
+                    alliance.get(i).bulletsUpdate(enemys); //發射子彈
                     if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
                         for (int j = 0; j < Global.getActorButtons().size(); j++) { //和Glabl的角色類型作比對
                             if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType()) {
@@ -192,7 +192,7 @@ public class GameScene extends Scene {
                 //敵軍update
                 for (int i = 0; i < enemys.size(); i++) {
                     enemys.get(i).autoAttack(alliance, enemys);
-                    enemys.get(i).update();
+                    enemys.get(i).bulletsUpdate(alliance);
                     if (!enemys.get(i).isAlive()) {
                         enemys.remove(i);
                         Player.getInstance().offsetMoney(+200); //殺一隻敵軍200元

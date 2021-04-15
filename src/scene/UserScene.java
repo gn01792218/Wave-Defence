@@ -2,6 +2,7 @@ package scene;
 
 import controllers.ImageController;
 import controllers.SceneController;
+import gameobj.Actor;
 import menu.*;
 import menu.Button;
 import menu.Label;
@@ -27,10 +28,12 @@ public class UserScene extends Scene{
     private Button roundStart;// 進入回合的按鈕
 
 
+
     @Override
     public void sceneBegin() {
         //進入回合的按鈕
-        roundStart=new Button(900,500,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
+        roundStart=new Button(900,600,new Style.StyleRect(150,150,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
     }
 
     @Override
@@ -48,7 +51,8 @@ public class UserScene extends Scene{
                            for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
                                if(actorButtons.get(i).isTouch(e.getX(),e.getY())){ //移動到角色上會有訊息欄
                                    //座標產生資訊圖片-->把角色圖片資訊設成visabl
-                               }
+                                   actorButtons.get(i).setInfoVisable(true);
+                               }else{actorButtons.get(i).setInfoVisable(false);}
                            }
                            break;
                         case CLICKED:

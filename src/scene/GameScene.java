@@ -50,9 +50,8 @@ public class GameScene extends Scene {
         delayCount = new Delay(60);
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
         alliance = new ArrayList<>();
-        System.out.println("我軍初始數量"+alliance.size());
-        //問題; 做4-6隻 5-8隻 6-8?!  做10-15隻；只做某一種類就對，坦克1的數量不對?!  坦克1有幾隻 坦克2就會多幾隻
-        //畫出來位置都一樣
+        System.out.println("我軍初始數量"+alliance.size()); //測試用
+
         for (int i = 0; i <Global.getActorButtons().size(); i++) { //從Global中的角色按鈕取得選單下的訂單
             System.out.println("現在是"+Global.getActorButtons().get(i).getActorType());
             for(int j=0;j<Global.getActorButtons().get(i).getNumber();j++) { //跑某個角色的數量次
@@ -76,7 +75,7 @@ public class GameScene extends Scene {
         }
         System.out.println("我軍數量"+alliance.size());
         enemys = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {  //第一波敵人
+        for (int i = 0; i < Global.random(5,10); i++) {  //第一波敵人5-10隻
             enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
         }
         enemysMove=false; //剛開始敵軍不能移動
@@ -188,7 +187,7 @@ public class GameScene extends Scene {
                 enemys.get(i).update();
                 if (!enemys.get(i).isAlive()) {
                     enemys.remove(i);
-                    Player.getInstance().offsetMoney(+250); //殺一隻敵軍250元
+                    Player.getInstance().offsetMoney(+200); //殺一隻敵軍200元
 
                     break;
                 }
@@ -214,8 +213,8 @@ public class GameScene extends Scene {
                 delayEnemyBron.play();
                 if(delayEnemyBron.count()) { //等4秒後換場
                     SceneController.getInstance().changeScene(new UserScene());
-                    Player.getInstance().offsetMoney(250); //榮譽值+250
-                    Player.getInstance().offsetHonor(150); //榮譽值+150
+                    Player.getInstance().offsetMoney(250); //錢值+250
+                    Player.getInstance().offsetHonor(50); //榮譽值+50
                 }
             }
         }

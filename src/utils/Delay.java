@@ -4,7 +4,7 @@ public class Delay {
 
     //設計delay的COUNT的設置改變
     private int count; //計時器，計算當下經過的偵數
-    private int countLimit;// 計數的上限(總共要記幾禎)
+    private float countLimit;// 計數的上限(總共要記幾禎)
     private boolean isPause;//是否暫停記數
     private boolean isLoop;//是否進行週期性的延遲
     //建構子
@@ -14,6 +14,11 @@ public class Delay {
         isPause=true; //剛開始的時候沒有要記時
         isLoop=false; //剛開始不要週期性延遲，需要時再用
     }
+
+    public float getCountLimit() {
+        return countLimit;
+    }
+
     //方法區
     //設置
      public void setLimit(int limit){

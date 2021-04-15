@@ -9,17 +9,31 @@ import menu.ActorButton;
 import menu.BackgroundType;
 import menu.Style;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Global {
     private static ArrayList<ActorButton> actorButtons;//角色按鈕，可以儲存玩家擁有的角色種類和數量；在選單中畫出來，在遊戲場景不畫出來，只是存放屬性。
+    private static ArrayList<Actor> allianceActors;//我軍角色陣列，提供選單的角色資訊用
+    private static DecimalFormat frmt ;
+    private  static ArrayList<Actor> enemyActors;//敵軍角色陣列，提供選單角色資訊用
     //還需要一個計算$$和榮譽值的 labal-->放Player類內
     public enum ActorType{
         TANK1,
         TANK2,
         ENEMY1,
     }
-
+    public static ArrayList<Actor> getAllianceActors(){
+        allianceActors=new ArrayList<>(); //每次需要的時候new新的以更新資訊
+        allianceActors.add(new Tank1(0,0,false));
+        allianceActors.add(new Tank2(0,0,false));
+        return allianceActors;
+    }
+    public static ArrayList<Actor> getEnemyActors(){
+        enemyActors=new ArrayList<>(); //每次需要的時候new新的以更新資訊
+        enemyActors.add(new Enemy1(0,0,false));
+        return allianceActors;
+    }
     public static ArrayList<ActorButton> getActorButtons(){
         if(actorButtons==null){ //假如沒有 才做角色按鈕
             actorButtons=new ArrayList<>();//角色參數: 座標 Style Type Cost
@@ -31,6 +45,12 @@ public class Global {
             actorButtons.add(tank2);
         }
         return actorButtons;
+    }
+    public static DecimalFormat getFrmt(){  //單例化
+        if(frmt==null){
+            frmt=new DecimalFormat();
+        }
+        return frmt;
     }
 
     public enum Direction {

@@ -11,7 +11,8 @@ public class Enemy1 extends Actor{
     public Enemy1(float x,float y,boolean isenemy){
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/enemy1.png");
-        hp=250; //血量
+        hpLimit=300;//血量上限
+        hp=300; //血量
         atk=70; //攻擊力
         atkSpeed=new Delay(100); //功速
         speed=2.5f; //移動速度

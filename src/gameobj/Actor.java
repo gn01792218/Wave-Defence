@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public abstract class Actor extends GameObject{
     //設基本屬性的g s 並且offset
     protected BufferedImage image;
-    private double hpLimit;
+    protected double hpLimit;
     protected double hp;
     protected double atk;
     protected Delay atkSpeed;
+
     protected float speed;
     protected double def;
     protected double  atkdis;

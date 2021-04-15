@@ -20,7 +20,6 @@ public class Main {
         //子類自己有的屬性:例如 速度 方向 圖片屬性
     //5.建立場景類-->
        //5-1 Scene類是抽象父類(必要方法有繪畫和update以及開場和閉場)  //5-2 SceneController控制換場，實現繪畫及更新，及滑鼠鍵盤的介面 //5-3 GameScene繼承Scene，作為遊戲主場
-    //問題:1.延時器好像沒有起到作用?!!!
     public static void main(String[] args) {
         JFrame jframe=new JFrame();
         SceneController sceneController=SceneController.getInstance(); //取得單例模式的控場實體

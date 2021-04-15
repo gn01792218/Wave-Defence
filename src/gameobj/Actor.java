@@ -17,21 +17,22 @@ public abstract class Actor extends GameObject{
     protected float speed;
     protected double def;
     protected double  atkdis;
-    protected int dirX; //0左 1右
-    protected int dirY; //0上 1下
-    protected boolean isenemy; //標示此單位是敵是我
+//    protected int dirX; //0左 1右
+//    protected int dirY; //0上 1下
+    protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
-    protected float []strategyXY={0,0}; //我的戰略座標
-    protected ATTACK_DIRECTION attackDirection;
-    protected enum ATTACK_DIRECTION{
-        LeftLeft(0),
-        MiddleLeft(1),
-        Middle(2),
-        MiddleRight(3),
-        RightRight(4);
+    protected Rect strategyXY; //我的戰略座標
+    protected CANNON_DIRECTION cannonDirection;
+    protected enum CANNON_DIRECTION{
+        FrontLeft(3),
+        FrontMiddle(4),
+        FrontRight(5),
+        BackLeft(0),
+        BackMiddle(1),
+        BackRight(2);
         private int value;
-        private ATTACK_DIRECTION(int value){
+        private CANNON_DIRECTION(int value){
             this.value = value;
         }
         public int getValue(){
@@ -42,28 +43,28 @@ public abstract class Actor extends GameObject{
 
     public Actor(float x, float y, float width, float height){
         super(x,y,width,height);
-        this.dirX=0;
-        this.dirY=0;
+//        this.dirX=0;
+//        this.dirY=0;
         bullets=new ArrayList<>();
         isAlive=true;
-        this.strategyXY[0]=x; //剛開始是起始位置，之後在場景中可以set成旗幟位置
-        this.strategyXY[1]=y; //剛開始是起始位置，之後在場景中可以set成旗幟位置
-        this.attackDirection = ATTACK_DIRECTION.Middle;
+        strategyXY = this.collider();
+        //剛開始是起始位置，之後在場景中可以set成旗幟位置
+        this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
     }
 
     //基本方法區 get
-    public int getDirX() {
-        return dirX;
-    }
-    public int getDirY() {
-        return dirY;
-    }
-    public void setDirX(int dirX) {
-        this.dirX = dirX;
-    }
-    public void setDirY(int dirY) {
-        this.dirY = dirY;
-    }
+//    public int getDirX() {
+//        return dirX;
+//    }
+//    public int getDirY() {
+//        return dirY;
+//    }
+//    public void setDirX(int dirX) {
+//        this.dirX = dirX;
+//    }
+//    public void setDirY(int dirY) {
+//        this.dirY = dirY;
+//    }
     public double getHp() {
         return this.hp;
     }
@@ -83,8 +84,7 @@ public abstract class Actor extends GameObject{
     }
     //set方法
     public void setFlagXY(float x,float y){//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
-        this.strategyXY[0]=x;
-        this.strategyXY[1]=y;
+        strategyXY.setCenter(x,y);
     }
     //offset方法區
     public void offsetHp(double hp){
@@ -98,22 +98,34 @@ public abstract class Actor extends GameObject{
 
     //核心方法區-->子類實現
     //改變方向
-    public void changeDir(float x,float y){  //依據敵人的座標  或是 Flag的座標改變方向
-        if(x>this.painter().centerX()){
-            dirX=1; //向右
-        }else {
-            dirX=0;
-        }
-        if(y>this.painter().centerY()){
-            dirY=1; //向下
-        }else{
-            dirY=0;
-        }
-    }
+//    public void changeDir(float x,float y){  //依據敵人的座標  或是 Flag的座標改變方向
+//        if(x>this.painter().centerX()){
+//            dirX=1; //向右
+//        }else {
+//            dirX=0;
+//        }
+//        if(y>this.painter().centerY()){
+//            dirY=1; //向下
+//        }else{
+//            dirY=0;
+//        }
+//    }
     //朝目標移動
-    public void moveToTarget(float x,float y){
+    public void move(Rect rect,ArrayList<Actor> actors){
+        //根據目標位置移動
+        Global.Trigonometric trigonometric = new Global.Trigonometric(this.collider().centerX(),this.collider().centerY(),
+                rect.centerX(), rect.centerY());
+        int atkAngle = trigonometric.getDegree()+270;
+        if(atkAngle<=180){
+            this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
+        }else{
+            this.cannonDirection = CANNON_DIRECTION.BackMiddle;
+        }
+
+        float x = rect.centerX();
+        float y = rect.centerY();
         if(targetIsInBattleField(x,y)){
-            changeDir(x,y); //依據flag的位置改變方向
+//            changeDir(x,y); //依據flag的位置改變方向
             //角色的translate根據x/y的斜率來走
             float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
             float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
@@ -121,84 +133,121 @@ public abstract class Actor extends GameObject{
             //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
             //但需要解決和我軍重疊的問題
             if(d>this.getAtkdis()-(this.getAtkdis()*0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
-                float xM = (float) a / d * speed;  //x向量
+                float xM = (float) a / d * speed; //x向量
                 float yM = (float) b / d * speed; //y向量
-                if (painter().centerX() > x) {
-                    xM = -xM;
+
+                boolean xArisIsNoTouch = true;
+                boolean yArisIsNoTouch = true;
+
+                //檢查跟友軍是否碰撞
+                for(int i=0;i<actors.size();i++){
+                    if(this.collider().centerX() == actors.get(i).collider().centerX() &&
+                    this.collider().centerY() == actors.get(i).collider().centerY()){
+                        continue;
+                    }
+                    if(this.leftIsCollision(actors.get(i))  || this.rightIsCollision(actors.get(i))){
+                        xArisIsNoTouch = false;
+                    }
+                    if(this.topIsCollision(actors.get(i)) || this.bottomIsCollision(actors.get(i))){
+                        yArisIsNoTouch = false;
+                    }
                 }
-                if (painter().centerY() > y) {
-                    yM = -yM;
+
+                if (xArisIsNoTouch){
+                    if(painter().centerX()>x){
+                        this.offSet((int) -xM,0);
+                    }else{
+                        this.offSet((int) xM,0);
+                    }
                 }
-                this.painter().offSet((int) xM, (int) yM);
+
+                if(yArisIsNoTouch){
+                    if(painter().centerY()>y){
+                        this.offSet(0,(int) -yM);
+                    }else {
+                        this.offSet(0,(int) yM);
+                    }
+                }
             }
         }
     }
     //選最短距離者追蹤並攻擊，敵方死亡後回到原位
-    public void autoAttack(ArrayList<Actor> actors){ //傳敵軍陣列近來
-            if(actors.size()>0) {
-                //先一一算出最短距離，存進數字陣列中
-                float a = 0;
-                float b = 0;
-                float d = 0;
-                float mind = Integer.MAX_VALUE;
-                float actorX = 0;
-                float actorY = 0;
-                for (int i = 0; i < actors.size(); i++) {
-                    a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
-                    b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
-                    d = (float) Math.sqrt(a * a + b * b);
-                    if (d < mind) { //最短距離者 ，取他的XY值
-                        mind = d;
-                        actorX = actors.get(i).painter().centerX();
-                        actorY = actors.get(i).painter().centerY();
-                    }
+    public void autoAttack(ArrayList<Actor> actors,ArrayList<Actor> alliance){ //傳敵軍陣列近來
+        if(atkSpeed.isPause()){
+            atkSpeed.loop();
+        }
+
+        if(actors.size()>0) {
+            //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
+            float a = 0;
+            float b = 0;
+            float d = 0;
+            float mind = Integer.MAX_VALUE;
+            Rect target =null;
+            for (int i = 0; i < actors.size(); i++) {
+                a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
+                b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
+                d = (float) Math.sqrt(a * a + b * b);
+                if (d < mind) { //最短距離者 ，取他的XY值
+                    mind = d;
+                    target = actors.get(i).collider();
                 }
-                //使用座標點版本
-                moveToTarget(actorX, actorY);
-                fire(actorX, actorY, actors);
-                if (atkSpeed.count()) {
-                    AudioResourceController.getInstance().play("/T.wav");
-                }
-            } if(actors.size()<=0 && !this.isenemy) {
+            }
+            //移動至攻擊範圍內則開火
+
+            if(isInAtkdis(target)){
+                    fire(target, actors);
+            }else {
+                move(target,alliance);
+            }
+        }
+
+        if(actors.size()<=0 && !this.isEnemy) {
             //回到自己原本的位置並導正砲管
-                    moveToTarget(this.strategyXY[0], this.strategyXY[1]);
-                    this.attackDirection = ATTACK_DIRECTION.Middle;
+            if(collider().centerX() == strategyXY.centerX() && collider().centerY() == strategyXY.centerY()){
+                if(atkSpeed.getCount()<119){
+                    atkSpeed.count();
+                }
+            }else {
+                move(strategyXY,actors);
+            }
+            this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
 //                    System.out.println("我的座標" + this.painter().centerX() + " " + this.painter().centerX() + //測試用輸出
 //                            " 戰略座標" + this.strategyXY[0] + " " + this.strategyXY[1]);
         }
     }
 
-    public void changeAtkDir(float x,float y){
-
-    }
-
     //開火
-    public void fire(float x,float y,ArrayList<Actor> actors){
-        if (isInAtkdis(x, y)) { //在攻擊範圍內，就開火
-            //在自己的top產生子彈
-            if(atkSpeed.isPause()){
-                atkSpeed.loop();
-                return;
-            }
-            Bullet bullet = new Bullet(this.painter().centerX() - 30, this.painter().centerY() - 80, x, y);
-            //根據角度變換砲管方向的狀態
-            int atkAngle = bullet.trigonometric.getDegree()+270;
-            if(atkAngle>= 270){
-                this.attackDirection = ATTACK_DIRECTION.LeftLeft;
-            }else if(atkAngle <60 ){
-                this.attackDirection = ATTACK_DIRECTION.MiddleLeft;
-            }else if(atkAngle >120 && atkAngle <180 ){
-                this.attackDirection = ATTACK_DIRECTION.MiddleRight;
-            }else if(atkAngle >= 180 && atkAngle<270){
-                this.attackDirection = ATTACK_DIRECTION.RightRight;
-            }else {
-                this.attackDirection = ATTACK_DIRECTION.Middle;
-            }
-
-            if(atkSpeed.count()){
-                bullets.add(bullet);
-            }
+    public void fire(Rect rect,ArrayList<Actor> actors){
+        float x = rect.centerX();
+        float y = rect.centerY();
+//        if(atkSpeed.isPause()){
+//            atkSpeed.loop();
+//            return;
+//        }
+//        atkSpeed.loop();
+        Bullet bullet = new Bullet(this.painter().centerX(), this.painter().centerY(), x, y);
+//        根據角度變換砲管方向的狀態
+        int atkAngle = bullet.trigonometric.getDegree()+270;
+        if(atkAngle<60){
+            this.cannonDirection = CANNON_DIRECTION.FrontLeft;
+        }else if(atkAngle<=120){
+            this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
+        }else if(atkAngle<=180){
+            this.cannonDirection = CANNON_DIRECTION.FrontRight;
+        }else if(atkAngle<240){
+            this.cannonDirection = CANNON_DIRECTION.BackRight;
+        }else if(atkAngle<=300) {
+            this.cannonDirection = CANNON_DIRECTION.BackMiddle;
+        }else if(atkAngle<360) {
+            this.cannonDirection = CANNON_DIRECTION.BackLeft;
         }
+
+        if(atkSpeed.count()){
+            bullets.add(bullet);
+            AudioResourceController.getInstance().play("/T.wav");
+        }
+
         for(int i=0;i<bullets.size();i++) {
             //攻擊敵機並扣血
             for(int j=0;j<actors.size();j++){
@@ -240,7 +289,9 @@ public abstract class Actor extends GameObject{
         return true;
     }
     //判斷目標是否在射程內
-    public boolean isInAtkdis(float x,float y){
+    public boolean isInAtkdis(Rect rect){
+        float x = rect.centerX();
+        float y = rect.centerY();
         //判斷目標點是否在攻擊距離內:上下左右框框+atkdis
         if(x>this.painter().right()+getAtkdis()){return false;}
         if(x<this.painter().left()-getAtkdis()){return false;}

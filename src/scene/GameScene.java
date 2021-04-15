@@ -31,6 +31,7 @@ public class GameScene extends Scene {
     private Delay delayRound;//回合前X秒的delay
     private Delay delayCount;//倒數10秒的週期播放
     private int countNum; //倒數的播放號碼
+    private int changePic =50; //倒數動畫
     private boolean enemysMove; //敵軍是否可以移動
 
     @Override
@@ -42,6 +43,7 @@ public class GameScene extends Scene {
         delayRound.play();//開場就倒數
         delayCount = new Delay(60);
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
+        AudioResourceController.getInstance().play("boomy-sizzling.wav");
         alliance = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             if (i < 5) {
@@ -55,7 +57,7 @@ public class GameScene extends Scene {
             enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
         }
         enemysMove=false; //剛開始敵軍不能移動
-        flag = new Flag(1, 1, 50, 50, 1, 1, 50, 50);
+        flag = new Flag(1, 1, 50, 50);
     }
 
     @Override
@@ -82,7 +84,7 @@ public class GameScene extends Scene {
                             } else if (e.getButton() == 3) {//也可以這樣
                                 //旗子在可以使用的狀態才接收座標
                                 if (flag.isFlagUsable()) {
-                                    flag.getPainter().setCenter(e.getX(), e.getY());
+                                    flag.setCenter(e.getX(), e.getY());
                                 }
                             }
                         case MOVED:
@@ -96,9 +98,11 @@ public class GameScene extends Scene {
         g.drawImage(image, 0, -150, null);
         if (delayCount.count()) {  //每1秒播放圖片
             countNum++;
+            changePic =50;
         }
+        changePic --;
         int tx =this.countNum*74;  //0-74 1-74*2 2-74*3
-        g.drawImage(image3, 750, 100, 750 + 74, 100 + 90,
+        g.drawImage(image3, 750-changePic, 100-changePic, 750 + 74+changePic, 100 + 90+changePic,
                 tx,0,tx+74,90, null); //倒數的圖片
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).paint(g);
@@ -122,10 +126,10 @@ public class GameScene extends Scene {
         //我軍的update
         for (int i = 0; i < alliance.size(); i++) {
             if (flag.isFlagUsable()) { //旗子可用時，到旗子的指定位置
-                alliance.get(i).moveToTarget(flag.getPainter().centerX(), flag.getPainter().centerY());
+                alliance.get(i).move(flag.getCollider(),alliance);
                 continue; //然後繼續
             }
-            alliance.get(i).autoAttack(enemys);
+            alliance.get(i).autoAttack(enemys,alliance);
             alliance.get(i).update();
             if (!alliance.get(i).isAlive()) {
                 alliance.remove(i);
@@ -140,7 +144,7 @@ public class GameScene extends Scene {
         if(enemysMove) { //敵軍可以移動時
             //敵軍update
             for (int i = 0; i < enemys.size(); i++) {
-                enemys.get(i).autoAttack(alliance);
+                enemys.get(i).autoAttack(alliance,enemys);
                 enemys.get(i).update();
                 if (!enemys.get(i).isAlive()) {
                     enemys.remove(i);

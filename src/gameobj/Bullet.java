@@ -45,7 +45,7 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
     @Override
     public void update() {
         if(!isExplored) {
-            this.painter().translate(Global.BULLET_SPEED * this.trigonometric.getxVector(),
+            this.translate(Global.BULLET_SPEED * this.trigonometric.getxVector(),
                     Global.BULLET_SPEED * this.trigonometric.getyVector());
         }else if(delay.isPause()){
             delay.play();

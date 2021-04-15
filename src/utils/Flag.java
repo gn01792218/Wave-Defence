@@ -13,10 +13,9 @@ public class Flag implements GameKernel.PaintInterface,GameKernel.UpdateInterfac
     private BufferedImage image;
     private boolean flagUsable;
 
-    public Flag(int x, int y, int width, int height,
-                int x2, int y2, int width2, int height2){
+    public Flag(int x, int y, int width, int height){
         collider = Rect.genWithCenter(x, y, width, height);
-        painter = Rect.genWithCenter(x2, y2, width2, height2);
+        painter = Rect.genWithCenter(x, y, width, height);
         this.image = ImageController.getInstance().tryGet("/Flag.png");
         flagUsable=true;
     }
@@ -51,6 +50,11 @@ public class Flag implements GameKernel.PaintInterface,GameKernel.UpdateInterfac
 //        }
 //        this.painter.translate(newX,newY);
 //    }
+
+    public void setCenter(float x,float y){
+        this.collider.setCenter(x,y);
+        this.painter.setCenter(x,y);
+    }
 
 
     @Override

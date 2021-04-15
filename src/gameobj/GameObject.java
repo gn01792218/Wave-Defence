@@ -58,10 +58,45 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         return collider.bottom() >= Global.SCREEN_Y;
     }
 
-    public boolean isCollision(GameObject obj) {
-        //改成painter
-        return painter.overlap(obj.painter);
+    public void setCenter(float x,float y){
+        this.collider.setCenter(x,y);
+        this.painter.setCenter(x,y);
     }
+
+    public void translate(float dx,float dy){
+        this.collider.translate(dx,dy);
+        this.painter.translate(dx,dy);
+    }
+
+    public boolean isCollision(GameObject obj) {
+        return collider.overlap(obj.collider);
+    }
+
+    public boolean topIsCollision(GameObject obj) {
+        return collider.top()<=obj.collider.bottom() &&
+                obj.collider.left()<collider.right()&&
+                obj.collider.right()>collider.left()&&
+                obj.collider.top()<collider.bottom();
+    }
+    public boolean leftIsCollision(GameObject obj) {
+        return collider.left()<=obj.collider.right() &&
+                obj.collider.bottom()>collider.top()&&
+                obj.collider.top()<collider.bottom()&&
+                obj.collider.left()<collider.left();
+    }
+    public boolean rightIsCollision(GameObject obj) {
+        return collider.right()>=obj.collider.left()&&
+                obj.collider.bottom()>collider.top()&&
+                obj.collider.top()<collider.bottom()&&
+                obj.collider.right()>collider.right();
+    }
+    public boolean bottomIsCollision(GameObject obj) {
+        return collider.bottom()>=obj.collider.top() &&
+                obj.collider.left()<collider.right()&&
+                obj.collider.right()>collider.left()&&
+                obj.collider.bottom()>collider.top();
+    }
+
     //移動
     public final void translate(int x, int y) {
         collider.translate(x, y);
@@ -75,6 +110,13 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         collider.translateY(y);
         painter.translateY(y);
     }
+
+    public void offSet(float x,float y){
+        this.collider.offSet(x,y);
+        this.painter.offSet(x,y);
+    }
+
+
     //碰撞
     public final Rect collider() {
         return collider;

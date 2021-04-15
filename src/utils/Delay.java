@@ -13,6 +13,10 @@ public class Delay {
         isLoop=false; //剛開始不要週期性延遲，需要時再用
     }
 
+    public int getCount() {
+        return count;
+    }
+
     //方法區
     //停止記時的方法
     public void stop(){

@@ -122,9 +122,6 @@ public class UserScene extends Scene{
 
     @Override
     public void update() {
-        for(int i=0;i<actorButtons.size();i++) {
-            System.out.println(Global.getActorButtons().get(i).getNumber()); //測試用
-        }
 
     }
 

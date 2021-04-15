@@ -25,14 +25,15 @@ public class UserScene extends Scene{
     private ArrayList<ActorButton> actorButtons=Global.getActorButtons(); //得到Global的角色按鈕
     private Map<Global.ActorType,Integer> allianceMap;// 儲存要什麼角色，要幾隻的訊息
     private Button roundStart;// 進入回合的按鈕
-
-
+    private Button secrt;//機密檔案(敵軍資料)按鈕
 
     @Override
     public void sceneBegin() {
         //進入回合的按鈕
         roundStart=new Button(900,600,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
+        secrt=new Button(1100, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
+        secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
     }
 
     @Override
@@ -53,6 +54,9 @@ public class UserScene extends Scene{
                                    actorButtons.get(i).setInfoVisable(true);
                                }else{actorButtons.get(i).setInfoVisable(false);}
                            }
+                           if(secrt.isTouch(e.getX(),e.getY())){ //機密文件
+                               secrt.isHover(true);
+                           }else{secrt.isHover(false);}
                            break;
                         case CLICKED:
                             if(e.getButton()==1){ //點擊左鍵升級
@@ -106,6 +110,7 @@ public class UserScene extends Scene{
     public void paint(Graphics g) {
         Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
+        secrt.paint(g);//化機密檔案
         for(int i=0;i<actorButtons.size();i++){
             actorButtons.get(i).paint(g);
         }

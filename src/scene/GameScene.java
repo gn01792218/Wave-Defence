@@ -51,7 +51,7 @@ public class GameScene extends Scene {
         delayRound.play();//開場就倒數
         delayCount = new Delay(60);
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
-        AudioResourceController.getInstance().play("boomy-sizzling.wav");
+        AudioResourceController.getInstance().play("/boomy-sizzling.wav");
         alliance = new ArrayList<>();
         System.out.println("我軍初始數量" + alliance.size()); //測試用
 
@@ -61,20 +61,15 @@ public class GameScene extends Scene {
                 System.out.println("做出第" + j + "隻");
                 switch (Global.getActorButtons().get(i).getActorType()) { //依據該型號做出該數量的戰隊
                     case TANK1: //畫j才不會疊在一起!!!
-                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 60, Global.BOUNDARY_Y2, false));
+                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
                         System.out.println("產生" + "Tank1");
                         break;
                     case TANK2:
-                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 60, Global.BOUNDARY_Y2, false));
+                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
                         System.out.println("產生" + "Tank2");
                         break;
                 }
             }
-//            if (i < 5) { //測試用
-//                alliance.add(new Tank1(500 + i * 50, 450 + i * 30, false));
-//            } else if (i >= 5) {
-//                alliance.add(new Tank2(650 + i * 50, 850 - i * 50, false));
-//            }
         }
         System.out.println("我軍數量" + alliance.size());
         enemys = new ArrayList<>();
@@ -138,7 +133,6 @@ public class GameScene extends Scene {
         changePic--;
         //最後10秒畫
         if (delayCount.count()) {  //每1秒播放圖片
-            System.out.println("每一秒倒數");
             countNum++;
         }
         int tx = this.countNum * 74;  //0-74 1-74*2 2-74*3
@@ -165,23 +159,16 @@ public class GameScene extends Scene {
     @Override
     public void update() {
         //我軍的update
+        if(flag.isFlagUsable() && allianceControl!=null){
+            allianceControl.move(flag.getPainter().centerX(), flag.getPainter().centerY(),alliance);
+        }
         for (int i = 0; i < alliance.size(); i++) {
-            if (flag.isFlagUsable()) { //旗子可用時，到旗子的指定位置
-                alliance.get(i).move(flag.getPainter().centerX(), flag.getPainter().centerY(), alliance);
-                continue; //然後繼續
-            }
-            alliance.get(i).autoAttack(enemys, alliance);
-            alliance.get(i).update();
-            if (!alliance.get(i).isAlive()) {
-                alliance.remove(i);
-                i--;
-                break;
-            }
-                if (flag.isFlagUsable()) { //只有開場10秒可以
-                    //旗子可用時
-                    if (allianceControl != null) {
-                        allianceControl.moveToTarget(flag.getPainter().centerX(), flag.getPainter().centerY());
-                    }
+            if (!flag.isFlagUsable()) {
+                alliance.get(i).autoAttack(enemys, alliance);
+                alliance.get(i).update();
+                if (!alliance.get(i).isAlive()) {
+                    alliance.remove(i);
+                    break;
                 } else {
                     alliance.get(i).autoAttack(enemys, alliance);
                     alliance.get(i).update(); //發射子彈
@@ -196,6 +183,7 @@ public class GameScene extends Scene {
                     }
                 }
             }
+        }
             if (delayRound.count()) { //開場20秒後
                 flag.setFlagUsable(false); //旗子不能用
                 enemysMove = true; //10秒後敵軍可以移動
@@ -213,7 +201,6 @@ public class GameScene extends Scene {
                 }
                 //測試用:假如敵軍全消滅，再生成敵軍出來
                 if (count <= 2) {  //
-                    System.out.println(count);
                     if (enemys.size() == 0) { //當敵軍
                         delayEnemyBron.play();
                         if (delayEnemyBron.count()) {

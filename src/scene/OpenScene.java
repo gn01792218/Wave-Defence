@@ -39,7 +39,6 @@ public class OpenScene extends Scene {
 
     @Override
     public void sceneEnd() {
-
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {

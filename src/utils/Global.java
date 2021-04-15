@@ -113,7 +113,6 @@ public class Global {
         public double angleBetweenTwoPointsWithFixedPoint(double point1X, double point1Y,
                                                                  double point2X, double point2Y,
                                                                  double fixedX, double fixedY) {
-
             double angle1 = Math.atan2(point1Y - fixedY, point1X - fixedX);
             double angle2 = Math.atan2(point2Y - fixedY, point2X - fixedX);
 
@@ -146,9 +145,6 @@ public class Global {
             System.out.println(str);
         }
     }
-    // 單位大小
-    public static final int UNIT_X = 32;
-    public static final int UNIT_Y = 32;
     //飛彈飛行速度
     public static final int BULLET_SPEED = 4;
     //場地邊際
@@ -162,10 +158,10 @@ public class Global {
     public static final int SCREEN_X = WINDOW_WIDTH - 8 - 8;
     public static final int SCREEN_Y = WINDOW_HEIGHT - 31 - 8;
     // 資料刷新時間
-    public static final int UPDATE_TIMES_PER_SEC = 60;// 每秒更新60次遊戲邏輯
+    public static final int UPDATE_TIMES_PER_SEC = 30;// 每秒更新60次遊戲邏輯
     public static final int NANOSECOND_PER_UPDATE = 1000000000 / UPDATE_TIMES_PER_SEC;// 每一次要花費的奈秒數
     // 畫面更新時間
-    public static final int FRAME_LIMIT = 60;
+    public static final int FRAME_LIMIT = 30;
     public static final int LIMIT_DELTA_TIME = 1000000000 / FRAME_LIMIT;
 
     public static int random(int min, int max) {

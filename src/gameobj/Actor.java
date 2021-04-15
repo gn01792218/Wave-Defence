@@ -225,7 +225,6 @@ public abstract class Actor extends GameObject {
                         yArisIsNoTouch = false;
                     }
                 }
-
                 if (xArisIsNoTouch) {
                     if (painter().centerX() > x) {
                         this.offSet((int) -xM, 0);
@@ -233,7 +232,6 @@ public abstract class Actor extends GameObject {
                         this.offSet((int) xM, 0);
                     }
                 }
-
                 if (yArisIsNoTouch) {
                     if (painter().centerY() > y) {
                         this.offSet(0, (int) -yM);
@@ -244,7 +242,6 @@ public abstract class Actor extends GameObject {
             }
         }
     }
-
         //朝目標移動
         public void moveToTarget ( float x, float y){
             if (targetIsInBattleField(x, y)) {
@@ -310,7 +307,6 @@ public abstract class Actor extends GameObject {
 //                            " 戰略座標" + this.strategyXY[0] + " " + this.strategyXY[1]);
             }
         }
-
         //開火
         public void fire (float x,float y, ArrayList < Actor > actors){
             Bullet bullet = new Bullet(this.painter().centerX(), this.painter().centerY(), x, y);

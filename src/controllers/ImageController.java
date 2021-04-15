@@ -41,7 +41,7 @@ public class ImageController {
     //取得陣列中圖片的方法-->根據路徑找該圖片
     public BufferedImage tryGet(String path){
         if(this.imageMap.containsKey(path)){
-            imageMap.get(path);
+            return imageMap.get(path);
         }
         return add(path);
     }

@@ -23,7 +23,6 @@ import java.util.Map;
 
 public class UserScene extends Scene{
     private ArrayList<ActorButton> actorButtons=Global.getActorButtons(); //得到Global的角色按鈕
-
     private Map<Global.ActorType,Integer> allianceMap;// 儲存要什麼角色，要幾隻的訊息
     private Button roundStart;// 進入回合的按鈕
 
@@ -123,25 +122,6 @@ public class UserScene extends Scene{
         }
 
     }
-//    private class InfoImage{ //有角色按鈕；和角色資訊圖片
-//        private String imageName; //圖片名稱
-//        private boolean Visible;//可以看見否
-//        private Map<Button,BufferedImage> actors;
-//        public InfoImage(String imageName,BufferedImage image){
-//            this.imageName=imageName;
-//            this.Visible=false;
-//        }
-//        //設成顯示或不顯示
-//        public void setVisible(boolean visible) {
-//            Visible = visible;
-//        }
-//        public boolean isVisible() {
-//            return Visible;
-//        }
-//        //取得圖片名稱
-//        public String getImageName() {
-//            return imageName;
-//        }
-//    }
+
 
 }

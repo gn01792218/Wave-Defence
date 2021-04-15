@@ -3,6 +3,7 @@ package gameobj;
 import controllers.ImageController;
 import controllers.ImageOperate;
 import utils.Delay;
+import utils.Global;
 
 import java.awt.*;
 
@@ -10,14 +11,26 @@ public class Enemy1 extends Actor{
     public Enemy1(float x,float y,boolean isEnemy){
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/enemy1.png");
-        hp=250; //血量
+        hpLimit=300;//血量上限
+        hp=300; //血量
         atk=70; //攻擊力
         atkSpeed=new Delay(120); //攻速
         speed=3; //移動速度
         def=0.3; //防禦力
         atkdis= 100; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
+        speed=2.5f; //移動速度
+        def=0.3; //防禦力
+        atkdis=300; //攻擊距離
+        cost=350; //一隻450
+        this.isEnemy=isEnemy; //敵我單位
     }
+
+    @Override
+    public Global.ActorType getType() {
+        return Global.ActorType.ENEMY1;
+    }
+
     @Override
     public void paint(Graphics g) {
         g.drawImage(image,(int)this.collider().left(),(int)this.collider().top(),(int)this.collider().right(),(int)this.collider().bottom(),

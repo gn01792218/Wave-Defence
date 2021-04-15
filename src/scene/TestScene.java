@@ -19,7 +19,6 @@ public class TestScene extends Scene{
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private static Flag flag; //指揮旗
-
     @Override
     public void sceneBegin() {
         image = ImageController.getInstance().tryGet("/m2.png"); //場景圖
@@ -27,12 +26,9 @@ public class TestScene extends Scene{
         enemys = new ArrayList();
         flag = new Flag(1, 1, 50, 50);
     }
-
     @Override
     public void sceneEnd() {
-
     }
-
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return new CommandSolver.MouseListener() {

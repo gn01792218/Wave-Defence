@@ -2,27 +2,23 @@ package scene;
 
 import controllers.ImageController;
 import controllers.SceneController;
-import gameobj.Actor;
 import menu.*;
 import menu.Button;
-import menu.Label;
 import utils.CommandSolver;
 import utils.Global;
 import utils.Player;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 //角色資訊欄位-->裡面有多個labl(放攻擊 防禦 等等)。
-//如何存放進Map? -->把角色按鈕放在Global中(自帶type和數量)，之後遊戲場景中也要有-->角色按鈕圖片要顯示目前數量
-
-//需要角色物件陣列-->以取得角色資訊
+//需要技能顯示資訊
+//做確認訊息視窗
 
 public class UserScene extends Scene{
-    private ArrayList<ActorButton> actorButtons=Global.getActorButtons(); //得到Global的角色按鈕
+    private ArrayList<ActorButton> actorButtons;
+    private ArrayList<SkillButton> skillButtons;
     private Map<Global.ActorType,Integer> allianceMap;// 儲存要什麼角色，要幾隻的訊息
     private Button roundStart;// 進入回合的按鈕
     private Button secrt;//機密檔案(敵軍資料)按鈕
@@ -32,13 +28,13 @@ public class UserScene extends Scene{
         //進入回合的按鈕
         roundStart=new Button(900,600,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
-        secrt=new Button(1100, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
+        secrt=new Button(1350, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
+            actorButtons=Global.getActorButtons();//得到Global的角色按鈕
+            skillButtons=Global.getSkillButtons();//得到Global的技能按鈕
     }
-
     @Override
     public void sceneEnd() {
-
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {
@@ -47,7 +43,7 @@ public class UserScene extends Scene{
             public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
                 if(state!=null){
                     switch (state){
-                        case MOVED:
+                        case MOVED: //負責監聽浮現的資訊欄
                            for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
                                if(actorButtons.get(i).isTouch(e.getX(),e.getY())){ //移動到角色上會有訊息欄
                                    //座標產生資訊圖片-->把角色圖片資訊設成visabl
@@ -58,39 +54,44 @@ public class UserScene extends Scene{
                                secrt.isHover(true);
                            }else{secrt.isHover(false);}
                            break;
-                        case CLICKED:
-                            if(e.getButton()==1){ //點擊左鍵升級
-                                if(roundStart.isTouch(e.getX(),e.getY())){
-                                    SceneController.getInstance().changeScene(new GameScene()); //觸發換場的按鈕
+                        case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵升級
+                            if(e.getButton()==1){ //左鍵
+                                if(roundStart.isTouch(e.getX(),e.getY())){//1.觸發換場的按鈕
+                                    SceneController.getInstance().changeScene(new GameScene());
                                 }
-                                for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
-                                    if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
-                                        //產生確認框
-                                        //升級軍隊
-
-                                    }
-                                }
-                            }
-                            if(e.getButton()==3){//點擊右鍵購買軍隊
-                                for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
+                                for(int i=0;i<actorButtons.size();i++){ //2.角色購買
                                     if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
                                         //產生確認框
                                         //購買軍隊
                                         if(Player.getInstance().getMoney()>0 && Player.getInstance().getMoney()>=actorButtons.get(i).getCostMoney()) { //金錢大於0才可以買唷!-->問題:必須要現有的錢>要買的單位的錢
                                             actorButtons.get(i).offSetNumber(1); //點一下增加一單位
-                                                switch (actorButtons.get(i).getActorType()){
-                                                    case TANK1:
-                                                        Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                        break;
-                                                    case TANK2:
-                                                        Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                        break;
-                                                    case ENEMY1:
-                                                        Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                        break;
-                                                }
-
+                                            switch (actorButtons.get(i).getActorType()){
+                                                case TANK1:
+                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                    break;
+                                                case TANK2:
+                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                    break;
+                                                case ENEMY1:
+                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                    break;
+                                            }
                                         }
+                                    }
+                                }
+                                for(int i=0;i<skillButtons.size();i++){ //3.技能購買
+                                    if(skillButtons.get(i).isTouch(e.getX(),e.getY())){
+                                        System.out.println("我被選中了");
+                                        skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
+                                    }
+                                }
+                            }
+                            if(e.getButton()==3){//點擊右鍵
+                                for(int i=0;i<actorButtons.size();i++){ //1.角色升級
+                                    if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
+                                        //產生確認框
+                                        //升級軍隊
+
                                     }
                                 }
                             }
@@ -114,19 +115,13 @@ public class UserScene extends Scene{
         for(int i=0;i<actorButtons.size();i++){
             actorButtons.get(i).paint(g);
         }
-//        for(int i=0;i<actorInfoImage.size();i++){
-//          //畫角色訊息圖片，if角色訊息圖是Visebal的時候
-//
-//        }
+        for(int i=0;i<skillButtons.size();i++){
+            skillButtons.get(i).paint(g);
+        }
     }
-
     @Override
     public void update() {
-        for(int i=0;i<actorButtons.size();i++) {
-            System.out.println(Global.getActorButtons().get(i).getNumber()); //測試用
-        }
 
     }
-
 
 }

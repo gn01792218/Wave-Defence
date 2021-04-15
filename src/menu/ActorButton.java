@@ -98,18 +98,14 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
 
     @Override
     public void paint(Graphics g){
-        //需求:
-        //1.顯示資訊欄時其他文字都要被蓋在後面-->調整字體大小和角色按鈕間距
-        //不要印出浮點數!!!!!!!!!
-
         if (super.getPaintStyle() != null) {
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
-        if(numberLabel!=null && !infoVisable){
+        if(numberLabel!=null){
             numberLabel.getPaintStyle().setText("目前數量"+this.number+"");  //一定要用Style設置，才會顯示文字唷!!
             numberLabel.paint(g);
         }
-        if(costLabel!=null && !infoVisable) {
+        if(costLabel!=null) {
             costLabel.paint(g);
         }
         if(infoVisable){ //是顯示的時候才要畫出來

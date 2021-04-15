@@ -34,4 +34,5 @@ public class Tank2 extends Actor{
             this.bullets.get(i).paint(g);
         }
     }
+
 }

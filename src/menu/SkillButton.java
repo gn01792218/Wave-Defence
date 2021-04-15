@@ -37,6 +37,9 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     public  void setSkillInfo(Label skillInfo){this.skillInfo=skillInfo;};
     @Override
     public void paint(Graphics g){
+        if (super.getPaintStyle() != null) {
+            super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+        }
         if(info!=null){info.paint(g);}
         if(skillInfo!=null){skillInfo.paint(g);}
     }

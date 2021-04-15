@@ -19,7 +19,6 @@ import java.util.Map;
 public class UserScene extends Scene{
     private ArrayList<ActorButton> actorButtons;
     private ArrayList<SkillButton> skillButtons;
-    private Map<Global.ActorType,Integer> allianceMap;// 儲存要什麼角色，要幾隻的訊息
     private Button roundStart;// 進入回合的按鈕
     private Button secrt;//機密檔案(敵軍資料)按鈕
 

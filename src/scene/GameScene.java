@@ -65,7 +65,7 @@ public class GameScene extends Scene {
                         System.out.println("產生" + "Tank1");
                         break;
                     case TANK2:
-                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
+                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-200, false));
                         System.out.println("產生" + "Tank2");
                         break;
                 }
@@ -102,7 +102,7 @@ public class GameScene extends Scene {
                                     for (int i = 0; i < alliance.size(); i++) { //控制權現在在誰身上
                                         if (alliance.get(i).isTouch(e.getX(), e.getY())) { //假如被點到了
                                             allianceControl = alliance.get(i);  //被點到的人會變被控制者
-                                            System.out.println("點到了!!!!!!!!!!!!!!!!");  //不好點到
+                                            System.out.println("第"+i+"台被點到"+"種類是"+allianceControl.getType());  //很不好點
                                         }
                                     }
                                 }

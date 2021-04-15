@@ -198,7 +198,6 @@ public abstract class Actor extends GameObject {
             this.cannonDirection = CANNON_DIRECTION.BackMiddle;
         }
         if (targetIsInBattleField(x, y)) {
-//            changeDir(x,y); //依據flag的位置改變方向
             //角色的translate根據x/y的斜率來走
             float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
             float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
@@ -286,11 +285,13 @@ public abstract class Actor extends GameObject {
                     }
                 }
                 //移動至攻擊範圍內則開火
+                float targetX = target.centerX();
+                float targetY = target.centerY();
 
-                if (isInAtkdis(target.centerX(),target.centerY())) {
-                    fire(target.centerX(),target.centerY(),actors);
+                if (isInAtkdis(targetX,targetY)) {
+                    fire(targetX,targetY);
                 } else {
-                    move(target.centerX(),target.centerY(),alliance);
+                    move(targetX,targetY,alliance);
                 }
             }
             if (actors.size() <= 0 && !this.isEnemy) {
@@ -308,7 +309,7 @@ public abstract class Actor extends GameObject {
             }
         }
         //開火
-        public void fire (float x,float y, ArrayList < Actor > actors){
+        public void fire (float x,float y){
             Bullet bullet = new Bullet(this.painter().centerX(), this.painter().centerY(), x, y);
 //        根據角度變換砲管方向的狀態
             int atkAngle = bullet.trigonometric.getDegree() + 270;
@@ -331,34 +332,30 @@ public abstract class Actor extends GameObject {
                 AudioResourceController.getInstance().play("/T.wav");
             }
 
-            for (int i = 0; i < bullets.size(); i++) {
-                //攻擊敵機並扣血
-                for (int j = 0; j < actors.size(); j++) {
-                    if (!bullets.get(i).isExplored()) {
-                        if (bullets.get(i).isCollision(actors.get(j))) {
-                            bullets.get(i).explored();
-                            actors.get(j).offsetHp(-(this.atk) * (1 - actors.get(j).def));
-                        }
-                    }
-                }
-            }
+
         }
         //子彈更新
-        private void bulletsUpdate () {
+        private void bulletsUpdate (ArrayList < Actor > actors) {
             ////飛彈爆炸後一定時間後消失
             for (int i = 0; i < this.bullets.size(); i++) {
+                this.bullets.get(i).update(); //子彈移動
                 if (bullets.get(i).isExplored()) {
                     if (bullets.get(i).isTime()) {
                         bullets.remove(i);
                         i--;
                         continue;
                     }
+                }else if(bullets.get(i).isTouchBattleEdge()){
+                        bullets.get(i).explored();
+                }else {
+                    //攻擊敵機並扣血
+                    for (int j = 0; j < actors.size(); j++) {
+                        if (bullets.get(i).isCollision(actors.get(j))) {
+                            bullets.get(i).explored();
+                            actors.get(j).offsetHp(-(this.atk) * (1 - actors.get(j).def));
+                        }
+                    }
                 }
-                //碰到邊界爆炸
-                if (bullets.get(i).isTouchBattleEdge()) {
-                    bullets.get(i).explored();
-                }
-                this.bullets.get(i).update(); //子彈移動
             }
         }
         //判斷是否死亡
@@ -394,6 +391,6 @@ public abstract class Actor extends GameObject {
         }
         public abstract void paint (Graphics g);
         public void update () {
-            bulletsUpdate();
+
         }
     }

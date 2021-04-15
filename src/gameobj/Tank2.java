@@ -12,7 +12,7 @@ public class Tank2 extends Actor{
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/tank2.png");
         hpLimit=400;//血量上限
-        hp=400; //血量
+        hp=hpLimit; //初始血量
         atk=150; //攻擊力
         atkSpeed = new Delay(60);      //攻速
         speed=3.3f; //移動速度

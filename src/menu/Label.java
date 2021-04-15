@@ -156,6 +156,15 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
     public boolean getIsHover() {
         return this.isHover;
     }
+    public Style getStyleNormal(){return this.styleNormal;}
+
+    public Style getStyleHover() {
+        return styleHover;
+    }
+
+    public Style getStyleFocus() {
+        return styleFocus;
+    }
 
     @Override
     public void paint(Graphics g) {

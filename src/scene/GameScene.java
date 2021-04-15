@@ -11,6 +11,7 @@ import gameobj.Enemy1;
 import gameobj.Tank1;
 import gameobj.Tank2;
 
+import menu.*;
 import utils.*;
 
 import java.awt.*;
@@ -23,9 +24,8 @@ import java.util.ArrayList;
 //更新時，只有isInClik可以移動到旗子座標點
 //問題:倒數10秒的動畫要重弄
 //每回合3波，完後 delay5秒換場
-//imageController有問題
 //判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
-//做單位被點到變色的paint
+//技能開場就被啟動了!!???
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
@@ -33,6 +33,7 @@ public class GameScene extends Scene {
     private BufferedImage image3;//倒數10秒圖片
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
+    private ArrayList<SkillButton> skill;//技能陣列
     private static Flag flag; //指揮旗
     private Delay delayEnemyBron; //目前用來控制敵人重新生成的間隔時間
     private Delay delayRound;//回合前20秒的delay
@@ -53,26 +54,50 @@ public class GameScene extends Scene {
         delayCount = new Delay(60);
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
         AudioResourceController.getInstance().play("/boomy-sizzling.wav");
-        alliance = new ArrayList<>();
-        System.out.println("我軍初始數量" + alliance.size()); //測試用
-
-        for (int i = 0; i < Global.getActorButtons().size(); i++) { //從Global中的角色按鈕取得選單下的訂單
-            System.out.println("現在是" + Global.getActorButtons().get(i).getActorType());
-            for (int j = 0; j < Global.getActorButtons().get(i).getNumber(); j++) { //跑某個角色的數量次
-                System.out.println("做出第" + j + "隻");
-                switch (Global.getActorButtons().get(i).getActorType()) { //依據該型號做出該數量的戰隊
-                    case TANK1: //畫j才不會疊在一起!!!
-                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
-                        System.out.println("產生" + "Tank1");
+        //作技能
+        skill=new ArrayList<>();
+        ArrayList<SkillButton> temp=Global.getSkillButtons(); //從世界技能紐中下訂單
+        for(int i=0;i<temp.size();i++){
+            if(temp.get(i).getIsSelect()) { //有被選中的才new出來
+                switch (temp.get(i).getSkillName()) {
+                    case ATTACKUP:
+                        skill.add(new AttackUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setSelect(false); //把Global的技能按鈕設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
-                    case TANK2:
-                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100, false));
-                        System.out.println("產生" + "Tank2");
+                    case HPUP:
+                        skill.add(new HpUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        break;
+                    case DEFUP:
+                        skill.add(new DefUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        break;
+                    case MOVESPEEDUP:
+                        skill.add(new SpeedUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                 }
             }
         }
-        System.out.println("我軍數量" + alliance.size());
+        //做軍隊
+        alliance = new ArrayList<>();
+        for (int i = 0; i < Global.getActorButtons().size(); i++) { //從Global中的角色按鈕取得選單下的訂單
+
+            for (int j = 0; j < Global.getActorButtons().get(i).getNumber(); j++) { //跑某個角色的數量次
+
+                switch (Global.getActorButtons().get(i).getActorType()) { //依據該型號做出該數量的戰隊
+                    case TANK1: //畫j才不會疊在一起!!!
+                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
+
+                        break;
+                    case TANK2:
+                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100, false));
+
+                        break;
+                }
+            }
+        }
+      //做敵軍第一波
         enemys = new ArrayList<>();
         for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
             enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
@@ -89,7 +114,6 @@ public class GameScene extends Scene {
     public CommandSolver.KeyListener keyListener() {
         return null;
     }
-
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return new CommandSolver.MouseListener() {
@@ -108,6 +132,14 @@ public class GameScene extends Scene {
                                         }else{
                                                alliance.get(i).setControl(false);
                                             }
+                                    }
+                                }
+                                for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
+                                    if(skill.get(i).isTouch(e.getX(),e.getY()) && skill.size()>0 && !skill.get(i).isUsed()){ //按鈕被點時 且 還有按鈕時
+                                        skill.get(i).skillBufftimePlay();// 才啟動技能
+                                        skill.get(i).skillExection(alliance); //執行技能~
+                                        skill.get(i).setUsed(true);
+                                        System.out.println("技能已經啟動一次，不會再有下一次~~");
                                     }
                                 }
                                 System.out.println("左鍵");
@@ -143,11 +175,18 @@ public class GameScene extends Scene {
         g.drawImage(image3, 750 - changePic, 100 - changePic, 750 + 74 + changePic, 100 + 90 + changePic,
                 tx, 0, tx + 74, 90, null); //倒數的圖片
         for (int i = 0; i < alliance.size(); i++) {
-            alliance.get(i).paint(g);
+            alliance.get(i).paint(g); //畫我軍
         }
         for (int i = 0; i < enemys.size(); i++) {
             if (enemysMove) { //敵軍可以移動時才畫
-                enemys.get(i).paint(g);
+                enemys.get(i).paint(g); //畫敵軍
+            }
+        }
+        if(skill.size()>0) {
+            for (int i = 0; i < skill.size(); i++) {
+                if(!skill.get(i).isUsed()) {
+                    skill.get(i).paint(g); //畫技能
+                }
             }
         }
         if (flag.isFlagUsable()) {
@@ -162,6 +201,18 @@ public class GameScene extends Scene {
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
+        if(skill.size()>0) {
+            for (int i = 0; i < skill.size(); i++) {
+                if (skill.get(i).isUsed()) { //沒有被施放過
+                    if (skill.get(i).getBuffTime().count()) {
+                        skill.get(i).skillReset(alliance); //時間到全軍恢復原廠設置~!
+                        System.out.println("我進來了"+i+"次");
+                        skill.remove(i); //移除技能~
+                        System.out.println("移除技能");
+                    }
+                }
+            }
+        }
         //我軍的update
         if(flag.isFlagUsable() && allianceControl!=null){
             allianceControl.move(flag.getPainter().centerX(), flag.getPainter().centerY(),alliance);
@@ -188,7 +239,7 @@ public class GameScene extends Scene {
                 }
             }
         }
-            if (delayRound.count()) { //開場20秒後
+            if (delayRound.count() && allianceControl!=null) { //開場20秒後
                 flag.setFlagUsable(false); //旗子不能用
                 enemysMove = true; //10秒後敵軍可以移動
                 allianceControl.setControl(false);

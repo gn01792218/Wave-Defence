@@ -25,7 +25,7 @@ import java.util.ArrayList;
 //問題:倒數10秒的動畫要重弄
 //每回合3波，完後 delay5秒換場
 //判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
-//技能開場就被啟動了!!???
+//部隊卡住時，會無法移動(敵軍也是)-->解方 控制敵軍出生時候的位置不要距離太近(開啟deBug模式)
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
@@ -214,19 +214,14 @@ public class GameScene extends Scene {
             }
         }
         //我軍的update
-        if(flag.isFlagUsable() && allianceControl!=null){
+        if(flag.isFlagUsable() && allianceControl!=null){  //開場前玩家控制的單位移動
             allianceControl.move(flag.getPainter().centerX(), flag.getPainter().centerY(),alliance);
         }
-        for (int i = 0; i < alliance.size(); i++) {
-            if (!flag.isFlagUsable()) {
+        for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
+            if (!flag.isFlagUsable()) { //旗子不能使用時
                 alliance.get(i).autoAttack(enemys, alliance);
                 alliance.get(i).update();
-                if (!alliance.get(i).isAlive()) {
-                    alliance.remove(i);
-                    break;
-                } else {
-                    alliance.get(i).autoAttack(enemys, alliance);
-                    alliance.get(i).bulletsUpdate(enemys); //發射子彈
+                alliance.get(i).bulletsUpdate(enemys); //發射子彈
                     if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
                         for (int j = 0; j < Global.getActorButtons().size(); j++) { //和Glabl的角色類型作比對
                             if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType()) {
@@ -236,13 +231,14 @@ public class GameScene extends Scene {
                         alliance.remove(i);
                         break;
                     }
-                }
             }
         }
-            if (delayRound.count() && allianceControl!=null) { //開場20秒後
+            if (delayRound.count()) { //開場20秒後
                 flag.setFlagUsable(false); //旗子不能用
                 enemysMove = true; //10秒後敵軍可以移動
-                allianceControl.setControl(false);
+                if(allianceControl!=null) {
+                    allianceControl.setControl(false);
+                }
             }
             if (enemysMove) { //敵軍可以移動時
                 //敵軍update
@@ -251,7 +247,7 @@ public class GameScene extends Scene {
                     enemys.get(i).bulletsUpdate(alliance);
                     if (!enemys.get(i).isAlive()) {
                         enemys.remove(i);
-                        Player.getInstance().offsetMoney(+200); //殺一隻敵軍200元
+                        Player.getInstance().offsetMoney(+100); //殺一隻敵軍200元
                         break;
                     }
                 }

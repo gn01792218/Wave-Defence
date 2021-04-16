@@ -11,8 +11,8 @@ public class Tank1 extends Actor{
 
     public Tank1(float x, float y,boolean isenemy){
         super(x,y,75,90);
-        this.image= ImageController.getInstance().tryGet("/tank1.png");
-        this.image2=ImageController.getInstance().tryGet("/tank1B.png");
+        this.image= ImageController.getInstance().tryGet("/AAtank1.png");
+        this.image2=ImageController.getInstance().tryGet("/AAtank1B.png");
         hpLimit=300;//血量上限
         hp=hpLimit; //初始血量
         atk=250; //攻擊力

@@ -24,6 +24,7 @@ public class Global {
     public enum ActorType {
         TANK1,
         TANK2,
+        LASERCAR,
         ENEMY1,
     }
 

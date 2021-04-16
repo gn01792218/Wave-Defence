@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 //帶有角色種類的Button
 //6種labl再加上可以++的標籤，點下去直接+Gloabl的Actor該屬性
+//6種屬性label都有自己的Label顯示會+多少技能-->自身 XX力 +XX-->要做成達到上限時
+
 public class ActorButton extends Button{
     private ArrayList<Actor> alliances=Global.getAllianceActors();//得到Global的角色
     private ArrayList<Actor> enemys=Global.getEnemyActors();//得到Enemy的角色
@@ -36,7 +38,6 @@ public class ActorButton extends Button{
         info=new Button(this.left(),this.bottom()-200,new Style.StyleRect(300,468
                 ,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/InfoB2-300.png"))));
         infoVisable=false;
-
         for(int i=0;i<this.alliances.size();i++){
             if(alliances.get(i).getType()==this.actorType){
                 for(int j=0;j<6;j++) {

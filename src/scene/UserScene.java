@@ -50,6 +50,11 @@ public class UserScene extends Scene{
                                    actorButtons.get(i).setInfoVisable(true);
                                }else{actorButtons.get(i).setInfoVisable(false);}
                            }
+                           for(int i=0;i<skillButtons.size();i++){
+                               if(skillButtons.get(i).isTouch(e.getX(),e.getY())){
+                                   skillButtons.get(i).setInfoVisable(true);
+                               }else{ skillButtons.get(i).setInfoVisable(false);}
+                           }
                            if(secrt.isTouch(e.getX(),e.getY())){ //機密文件
                                secrt.isHover(true);
                            }else{secrt.isHover(false);}
@@ -119,12 +124,13 @@ public class UserScene extends Scene{
         Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
-        for(int i=0;i<actorButtons.size();i++){
-            actorButtons.get(i).paint(g);
-        }
         for(int i=0;i<skillButtons.size();i++){
             skillButtons.get(i).paint(g);
         }
+        for(int i=0;i<actorButtons.size();i++){
+            actorButtons.get(i).paint(g);
+        }
+
     }
     @Override
     public void update() {

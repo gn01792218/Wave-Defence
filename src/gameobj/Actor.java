@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class Actor extends GameObject {
+    //maby再做個血條~~
     //設基本屬性的g s 並且offset
     protected BufferedImage image;
     protected BufferedImage image2;// 變色圖片

@@ -5,11 +5,7 @@ import controllers.AudioResourceController;
 import controllers.ImageController;
 
 import controllers.SceneController;
-import gameobj.Actor;
-
-import gameobj.Enemy1;
-import gameobj.Tank1;
-import gameobj.Tank2;
+import gameobj.*;
 
 import menu.*;
 import utils.*;
@@ -82,21 +78,18 @@ public class GameScene extends Scene {
         //做軍隊
         alliance = new ArrayList<>();
         for (int i = 0; i < Global.getActorButtons().size(); i++) { //從Global中的角色按鈕取得選單下的訂單
-
             for (int j = 0; j < Global.getActorButtons().get(i).getNumber(); j++) { //跑某個角色的數量次
-
                 switch (Global.getActorButtons().get(i).getActorType()) { //依據該型號做出該數量的戰隊
                     case TANK1: //畫j才不會疊在一起!!!
                         alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
-
                         break;
                     case TANK2:
                         alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100, false));
-
                         break;
                 }
             }
         }
+        alliance.add(new LaserCar(500,650,false));
       //做敵軍第一波
         enemys = new ArrayList<>();
         for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
@@ -198,6 +191,7 @@ public class GameScene extends Scene {
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
+        //技能updat
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
@@ -260,6 +254,7 @@ public class GameScene extends Scene {
                         }
                     }
                 }
+                //破關
                 if (count >= 2 && enemys.size() <= 0) { //挑戰成功條件
                     SceneController.getInstance().changeScene(new UserScene());
                     Player.getInstance().offsetHonor(+300); //榮譽值+300

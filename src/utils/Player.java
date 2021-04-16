@@ -15,7 +15,7 @@ public class Player implements GameKernel.UpdateInterface,GameKernel.PaintInterf
     private  Label  moneyLabel;
     private  Label honorLabel;
     private static Player player;
-    
+
     private Player(){
         money=1000;
         honor=2000;

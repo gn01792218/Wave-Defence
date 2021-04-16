@@ -7,9 +7,11 @@ import utils.Global;
 import java.util.ArrayList;
 
 public class HpUp extends SkillButton{
+
     public HpUp(int x, int y, Style style, Global.SkillName skillName, int cost){
         super(x,y,style,skillName,cost);
         this.buffTime=new Delay(0); //就算不用記時也要設置否則會nullPoint
+        info.getPaintStyle().setText("全體回復血量到最大上限");
     }
 
     @Override

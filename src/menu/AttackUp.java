@@ -1,26 +1,32 @@
 package menu;
 
+import controllers.ImageController;
 import gameobj.Actor;
 
 import utils.Delay;
 import utils.Global;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class AttackUp extends SkillButton {
     private float atk;
+    private final float atkEffect=1.5f;//要把攻擊力*幾倍
+    private final int bufftime=300; //持續X/60秒
 
-
+    //圖畫的怪怪的!!!!!!
     public AttackUp(int x, int y, Style style, Global.SkillName skillName, int cost){
         super(x,y,style,skillName,cost);
-        this.buffTime=new Delay(180);//增基攻擊力時間持續3秒
+        this.buffTime=new Delay(bufftime);//增基攻擊力時間持續5秒
+        info.getPaintStyle().setText("全體攻擊力*"+atkEffect+"倍，持續"+bufftime/60+"秒");
+        infoVisable=false; //一開始不顯現
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {  //施放技能，場景中會用到
         for (int i = 0; i < actors.size(); i++) {
             System.out.println("第"+(i+1)+"台原始攻擊力為"+actors.get(i).getAtk());
             this.atk=(float)actors.get(i).getAtk();
-            actors.get(i).offsetAtk(actors.get(i).getAtk()*1.5); //本身攻擊力*0.5  x+x*1.5
+            actors.get(i).offsetAtk(actors.get(i).getAtk()*atkEffect); //本身攻擊力*0.5  x+x*1.5
             System.out.println("第"+(i+1)+"台增加攻擊力為"+actors.get(i).getAtk()); //測試用，外面要記得打印攻擊力測試時間內的攻擊力
         }
     }
@@ -30,7 +36,7 @@ public class AttackUp extends SkillButton {
         for(int i=0;i<actors.size();i++){
             System.out.println("攻擊力目前為"+actors.get(i).getAtk());
 
-            actors.get(i).offsetAtk(-atk*1.5); //把atk回復原廠設定 公式:(625-625*0.4=375)要減去的值
+            actors.get(i).offsetAtk(-atk*atkEffect); //把atk回復原廠設定 公式:(625-625*0.4=375)要減去的值
             System.out.println("攻擊力回復原廠設定"+actors.get(i).getAtk());
         }
         setUsed(true); //被施放過了

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 //每回合3波，完後 delay5秒換場
 //imageController有問題
 //判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
+//做單位被點到變色的paint
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
@@ -65,7 +66,7 @@ public class GameScene extends Scene {
                         System.out.println("產生" + "Tank1");
                         break;
                     case TANK2:
-                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
+                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100, false));
                         System.out.println("產生" + "Tank2");
                         break;
                 }
@@ -102,8 +103,11 @@ public class GameScene extends Scene {
                                     for (int i = 0; i < alliance.size(); i++) { //控制權現在在誰身上
                                         if (alliance.get(i).isTouch(e.getX(), e.getY())) { //假如被點到了
                                             allianceControl = alliance.get(i);  //被點到的人會變被控制者
-                                            System.out.println("點到了!!!!!!!!!!!!!!!!");  //不好點到
-                                        }
+                                            allianceControl.setControl(true); //設成被控制中
+                                            System.out.println("第"+i+"台被點到"+"種類是"+allianceControl.getType());  //很不好點
+                                        }else{
+                                               alliance.get(i).setControl(false);
+                                            }
                                     }
                                 }
                                 System.out.println("左鍵");
@@ -187,6 +191,7 @@ public class GameScene extends Scene {
             if (delayRound.count()) { //開場20秒後
                 flag.setFlagUsable(false); //旗子不能用
                 enemysMove = true; //10秒後敵軍可以移動
+                allianceControl.setControl(false);
             }
             if (enemysMove) { //敵軍可以移動時
                 //敵軍update

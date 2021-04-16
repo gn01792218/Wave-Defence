@@ -8,7 +8,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 //帶有角色種類的Button
-public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!!!!!!!!!!!
+//6種labl再加上可以++的標籤，點下去直接+Gloabl的Actor該屬性
+public class ActorButton extends Button{
     private ArrayList<Actor> alliances=Global.getAllianceActors();//得到Global的角色
     private ArrayList<Actor> enemys=Global.getEnemyActors();//得到Enemy的角色
 

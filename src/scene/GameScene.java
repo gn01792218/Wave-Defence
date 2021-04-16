@@ -60,20 +60,20 @@ public class GameScene extends Scene {
         for(int i=0;i<temp.size();i++){
             if(temp.get(i).getIsSelect()) { //有被選中的才new出來
                 switch (temp.get(i).getSkillName()) {
-                    case ATTACKUP:
-                        skill.add(new AttackUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                    case ATTACKUP:  //使用skill的size來控制他要放在第幾格~~~~~~~~~~~~
+                        skill.add(new AttackUp(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //把Global的技能按鈕設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case HPUP:
-                        skill.add(new HpUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new HpUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case DEFUP:
-                        skill.add(new DefUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new DefUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case MOVESPEEDUP:
-                        skill.add(new SpeedUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new SpeedUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                 }

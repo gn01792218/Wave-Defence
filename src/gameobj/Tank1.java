@@ -19,7 +19,7 @@ public class Tank1 extends Actor{
         atkSpeed = new Delay(120);      //攻速
         speed=2.2f; //移動速度
         def=0.5; //防禦力
-        atkdis=200; //攻擊距離
+        atkdis=150; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
 
     }

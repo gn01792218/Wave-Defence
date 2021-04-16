@@ -10,9 +10,9 @@ public class LaserCar extends Actor{
         super(x,y,50,50,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AALaserCar.png");
 //        this.image2=ImageController.getInstance().tryGet("/AAtank1B.png");
-        hpLimit=400;//血量上限
+        hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
-        atk=300; //攻擊力
+        atk=250; //攻擊力
         atkSpeed = new Delay(30);      //攻速
         speed=5f; //移動速度
         def=0.3; //防禦力

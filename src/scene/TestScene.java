@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 
 public class TestScene extends Scene{
     private BufferedImage image; //背景圖
@@ -23,7 +22,7 @@ public class TestScene extends Scene{
     private static Flag flag; //指揮旗
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/m2.png"); //場景圖
+        image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         alliance = new ArrayList();
         enemys = new ArrayList();
         flag = new Flag(1, 1, 50, 50);

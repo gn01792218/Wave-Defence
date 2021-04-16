@@ -7,9 +7,7 @@ import utils.Global;
 import java.awt.*;
 
 public class Tank2 extends Actor{
-
     public Tank2(float x, float y,boolean isenemy){
-
         super(x,y,60,72,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AATank2.png");
         this.image2=ImageController.getInstance().tryGet("/AATank2B.png");
@@ -19,7 +17,7 @@ public class Tank2 extends Actor{
         atkSpeed = new Delay(60);      //攻速
         speed=3.3f; //移動速度
         def=0.45; //防禦力
-        atkdis=150; //攻擊距離
+        atkdis=80; //攻擊距離
         this.isEnemy=isenemy; //敵我單位
     }
 

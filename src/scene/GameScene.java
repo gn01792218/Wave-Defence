@@ -42,7 +42,7 @@ public class GameScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/m2.png"); //場景圖
+        image = ImageController.getInstance().tryGet("/GameScene2.png"); //場景圖
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
         delayEnemyBron = new Delay(240);//目前用來控制敵人重新生成的時間
         delayRound = new Delay((600)); //開場前delay前20秒
@@ -84,7 +84,10 @@ public class GameScene extends Scene {
                         alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
                         break;
                     case TANK2:
-                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100, false));
+                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
+                        break;
+                    case LASERCAR:
+                        alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-100,false));
                         break;
                 }
             }
@@ -93,7 +96,7 @@ public class GameScene extends Scene {
       //做敵軍第一波
         enemys = new ArrayList<>();
         for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
-            enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+            enemys.add(new Enemy1(500+i*75, Global.random(200, 350), true));
         }
         enemysMove = false; //剛開始敵軍不能移動
         flag = new Flag(1, 1, 50, 50);
@@ -153,6 +156,13 @@ public class GameScene extends Scene {
     @Override
     public void paint(Graphics g) {
         g.drawImage(image, 0, -150, null);
+        if(skill.size()>0) {
+            for (int i = 0; i < skill.size(); i++) {
+                if(!skill.get(i).isUsed()) {
+                    skill.get(i).paint(g); //畫技能
+                }
+            }
+        }
         if (delayCount.count()) {  //每1秒播放圖片
             countNum++;
             changePic = 50;
@@ -171,13 +181,6 @@ public class GameScene extends Scene {
         for (int i = 0; i < enemys.size(); i++) {
             if (enemysMove) { //敵軍可以移動時才畫
                 enemys.get(i).paint(g); //畫敵軍
-            }
-        }
-        if(skill.size()>0) {
-            for (int i = 0; i < skill.size(); i++) {
-                if(!skill.get(i).isUsed()) {
-                    skill.get(i).paint(g); //畫技能
-                }
             }
         }
         if (flag.isFlagUsable()) {
@@ -227,8 +230,10 @@ public class GameScene extends Scene {
             if (delayRound.count()) { //開場20秒後
                 flag.setFlagUsable(false); //旗子不能用
                 enemysMove = true; //10秒後敵軍可以移動
+
                 if(allianceControl!=null) {
                     allianceControl.setControl(false);
+                    allianceControl=null;
                 }
             }
             if (enemysMove) { //敵軍可以移動時
@@ -248,7 +253,7 @@ public class GameScene extends Scene {
                         delayEnemyBron.play();
                         if (delayEnemyBron.count()) {
                             for (int i = 0; i < 10; i++) {
-                                enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                                enemys.add(new Enemy1(400+i*85, Global.random(200, 350), true));
                             }
                             count++; //底類完才觸發++
                         }

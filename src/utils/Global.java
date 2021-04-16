@@ -32,6 +32,7 @@ public class Global {
         allianceActors = new ArrayList<>(); //每次需要的時候new新的以更新資訊
         allianceActors.add(new Tank1(0, 0, false));
         allianceActors.add(new Tank2(0, 0, false));
+        allianceActors.add(new LaserCar(0,0,false));
         return allianceActors;
     }
 
@@ -66,11 +67,14 @@ public class Global {
         if (actorButtons == null) { //假如沒有 才做角色按鈕
             actorButtons = new ArrayList<>();//角色參數: 座標 Style Type Cost
             ActorButton tank1 = new ActorButton(600, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
-                    Global.ActorType.TANK1, 100);
+                    Global.ActorType.TANK1, 250);
             ActorButton tank2 = new ActorButton(200, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
-                    Global.ActorType.TANK2, 100);
+                    Global.ActorType.TANK2, 280);
+            ActorButton LaserCar=new ActorButton(650,450,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
+                    Global.ActorType.LASERCAR,300);
             actorButtons.add(tank1);
             actorButtons.add(tank2);
+            actorButtons.add(LaserCar);
         }
         return actorButtons;
     }

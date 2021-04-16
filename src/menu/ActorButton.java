@@ -12,7 +12,8 @@ import java.util.ArrayList;
 //6種屬性label都有自己的Label顯示會+多少技能-->自身 XX力 +XX-->要做成達到上限時
 
 public class ActorButton extends Button{
-    private ArrayList<Actor> alliances=Global.getAllianceActors();//得到Global的角色
+
+    private ArrayList<Actor> alliances=Global.getAllianceActors();//得到Global的角色  !!! 增加新按鈕時也要增加Global的我軍角色!!!!!!!!!!!!
     private ArrayList<Actor> enemys=Global.getEnemyActors();//得到Enemy的角色
 
     private Global.ActorType actorType;
@@ -32,10 +33,10 @@ public class ActorButton extends Button{
     public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost) { //輸入的xy是左上角
         super(x, y, style);
         this.actorType=actorType;
-        numberLabel=new Label(this.right()-200,this.top(),new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
+        numberLabel=new Label(this.right()-200,this.top()+100,new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
         this.costMoney=cost;
-        costLabel=new Label(this.right()-200,this.top()+100,new Style.StyleRect(0,0,true,null));
-        info=new Button(this.left(),this.bottom()-200,new Style.StyleRect(300,468
+        costLabel=new Label(this.right()-200,this.top()+200,new Style.StyleRect(0,0,true,null));
+        info=new Button(this.left()+50,this.top(),new Style.StyleRect(300,468
                 ,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/InfoB2-300.png"))));
         infoVisable=false;
         for(int i=0;i<this.alliances.size();i++){
@@ -43,30 +44,28 @@ public class ActorButton extends Button{
                 for(int j=0;j<6;j++) {
                     if(j==0) {
                         Global.getFrmt().setMaximumFractionDigits(0);
-                        hpLimit = new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        hpLimit = new Label(this.left()+100, this.top() +25+ j * 338 / 6, new Style.StyleRect(100, 100, true, null).
                                 setText("血量上限 :" + Global.getFrmt().format(alliances.get(i).getHpLimit())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==1) {
                         Global.getFrmt().setMaximumFractionDigits(0);
-                        atk = new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        atk = new Label(this.left()+100 , this.top() + 25+(j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("攻擊力 :" + Global.getFrmt().format(alliances.get(i).getAtk())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==2){
-                        def=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        def=new Label(this.left()+100, this.top() +25+ (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("防禦力 :" + alliances.get(i).getDef()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==3){
                         Global.getFrmt().setMaximumFractionDigits(0);
-                        atkdis=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        atkdis=new Label(this.left()+100 , this.top() +25+ (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("攻擊距離 :" + Global.getFrmt().format(alliances.get(i).getAtkdis())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==4){
-                        atkSpeed=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        atkSpeed=new Label(this.left() +100, this.top() + 25+ (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("攻擊速度 :" + 60/alliances.get(i).getAtkSpeed().getCountLimit()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else{
                         Global.getFrmt().setMaximumFractionDigits(2);
-                        speed=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        speed=new Label(this.left()+100, this.top() +25+ (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("移動速度 :"+Global.getFrmt().format(alliances.get(i).getSpeed())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }
                 }
-
-
             }
         }
     }
@@ -112,12 +111,14 @@ public class ActorButton extends Button{
         if(infoVisable){ //是顯示的時候才要畫出來
             info.paint(g);
             //畫出訊息
-            hpLimit.paint(g);
-            atk.paint(g);
-            def.paint(g);
-            atkdis.paint(g);
-            atkSpeed.paint(g);
-            speed.paint(g);
+            if(hpLimit!=null && atk!=null && def!=null && atkdis!=null && speed!=null) {
+                hpLimit.paint(g);
+                atk.paint(g);
+                def.paint(g);
+                atkdis.paint(g);
+                atkSpeed.paint(g);
+                speed.paint(g);
+            }
         }
     }
 }

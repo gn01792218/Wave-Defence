@@ -208,39 +208,98 @@ public abstract class Actor extends GameObject {
                 float xM = (float) a / d * speed; //x向量
                 float yM = (float) b / d * speed; //y向量
 
-                boolean xArisIsNoTouch = true;
-                boolean yArisIsNoTouch = true;
+                boolean leftIsTouch = false;
+                boolean rightIsTouch = false;
+                boolean topIsTouch = false;
+                boolean bottomIsTouch = false;
 
                 //檢查跟友軍是否碰撞
                 for (int i = 0; i < alliance.size(); i++) {
+                    //排除自己
                     if (this.collider().centerX() == alliance.get(i).collider().centerX() &&
                             this.collider().centerY() == alliance.get(i).collider().centerY()) {
                         continue;
                     }
-                    if (this.leftIsCollision(alliance.get(i)) || this.rightIsCollision(alliance.get(i))) {
-                        xArisIsNoTouch = false;
+
+                    if (this.leftIsCollision(alliance.get(i))){
+                        leftIsTouch = true;
+                        System.out.println("Left");
                     }
-                    if (this.topIsCollision(alliance.get(i)) || this.bottomIsCollision(alliance.get(i))) {
-                        yArisIsNoTouch = false;
+                    if (this.rightIsCollision(alliance.get(i))){
+                        rightIsTouch = true;
+                        System.out.println("Right");
                     }
-                }
-                if (xArisIsNoTouch) {
-                    if (painter().centerX() > x) {
-                        this.offSet((int) -xM, 0);
-                    } else {
-                        this.offSet((int) xM, 0);
+                    if (this.bottomIsCollision(alliance.get(i))){
+                        bottomIsTouch = true;
+                        System.out.println("Bottom");
                     }
-                }
-                if (yArisIsNoTouch) {
-                    if (painter().centerY() > y) {
-                        this.offSet(0, (int) -yM);
-                    } else {
-                        this.offSet(0, (int) yM);
+                    if (this.topIsCollision(alliance.get(i))) {
+                        topIsTouch = true;
+                        System.out.println("Top");
                     }
                 }
+                //假設只有一個方面沒有碰撞
+                if(leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
+                    offSet(0,0);
+                    return;
+                }else if(leftIsTouch && rightIsTouch && !topIsTouch && bottomIsTouch){
+                    offSet(0,-speed);
+                    return;
+                }else if(leftIsTouch && !rightIsTouch && topIsTouch && bottomIsTouch){
+                    offSet(speed,0);
+                    return;
+                }else if(!leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
+                    offSet(-speed,0);
+                    return;
+                }else if(leftIsTouch && rightIsTouch && topIsTouch && !bottomIsTouch){
+                    offSet(0,speed);
+                    return;
+                }
+
+                if(leftIsTouch && rightIsTouch){
+                    xM=0;
+                    yM=speed;
+                }else if(topIsTouch && rightIsTouch){
+                    xM=speed;
+                    yM=0;
+                }else if(leftIsTouch && topIsTouch){
+                    xM=0;
+                    yM=speed;
+                }else if(rightIsTouch && topIsTouch){
+                    xM=0;
+                    yM=speed;
+                }else if(leftIsTouch && bottomIsTouch){
+                    xM=speed;
+                    yM=0;
+                }else if(rightIsTouch && bottomIsTouch){
+                    xM=speed;
+                    yM=0;
+                }else if(topIsTouch && y<this.collider().centerY()){
+                    xM=speed;
+                    yM=0;
+                }else if(bottomIsTouch && y>this.collider().centerY()){
+                    xM=speed;
+                    yM=0;
+                }else if(leftIsTouch && x<this.collider().centerX()){
+                    xM=0;
+                    yM=speed;
+                }else if(rightIsTouch && x>this.collider().centerX()){
+                    xM=0;
+                    yM=speed;
+                }
+
+                if(x<this.collider().centerX()){
+                    xM = -xM;
+                }
+                if(y<this.collider().centerY()){
+                    yM = -yM;
+                }
+
+                this.offSet(xM,yM);
+
             }
         }
-    }
+        }
         //朝目標移動
 //        public void moveToTarget ( float x, float y){
 //            if (targetIsInBattleField(x, y)) {

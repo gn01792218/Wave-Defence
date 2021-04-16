@@ -26,7 +26,7 @@ public class UserScene extends Scene{
     @Override
     public void sceneBegin() {
         //進入回合的按鈕
-        roundStart=new Button(900,600,new Style.StyleRect(150,150,
+        roundStart=new Button(1350,400,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         secrt=new Button(1350, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
@@ -75,6 +75,9 @@ public class UserScene extends Scene{
                                                     Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
                                                     break;
                                                 case TANK2:
+                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                    break;
+                                                case LASERCAR:
                                                     Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
                                                     break;
                                                 case ENEMY1:

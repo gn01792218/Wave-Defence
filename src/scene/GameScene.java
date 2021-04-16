@@ -195,7 +195,6 @@ public class GameScene extends Scene {
             g.drawImage(image2, 350, 250, null);
         }
     }
-
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {

@@ -3,11 +3,9 @@ package menu;
 import controllers.ImageController;
 import gameobj.Actor;
 import utils.Global;
-
 import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 //帶有角色種類的Button
 public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!!!!!!!!!!!
@@ -24,7 +22,7 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
     private Label atkdis;//攻擊距離
     private Label atkSpeed;//攻擊速度
     private Label speed;// 移動速度
-    private int costMoney;//這種角色要花多少錢
+    private int costMoney;//這種角色要花多少錢-->要改的話去Global改唷~~~~
     private Button info;//角色資訊欄位。在User監聽滑鼠移動後，將角色按鈕設置成顯示Info true，否則為false；資訊欄都固定畫在左側。
     private boolean infoVisable; //是否顯示資訊欄
 
@@ -33,7 +31,7 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
         this.actorType=actorType;
         numberLabel=new Label(this.right()-200,this.top(),new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
         this.costMoney=cost;
-        costLabel=new Label(this.right()-200,this.top()+100,new Style.StyleRect(0,0,true,null).setText("花費: "+costMoney));
+        costLabel=new Label(this.right()-200,this.top()+100,new Style.StyleRect(0,0,true,null));
         info=new Button(this.left(),this.bottom()-200,new Style.StyleRect(300,468
                 ,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/InfoB2-300.png"))));
         infoVisable=false;
@@ -106,6 +104,7 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
             numberLabel.paint(g);
         }
         if(costLabel!=null) {
+            costLabel.getPaintStyle().setText("花費: "+costMoney);
             costLabel.paint(g);
         }
         if(infoVisable){ //是顯示的時候才要畫出來

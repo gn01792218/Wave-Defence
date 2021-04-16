@@ -65,9 +65,9 @@ public class Global {
         if (actorButtons == null) { //假如沒有 才做角色按鈕
             actorButtons = new ArrayList<>();//角色參數: 座標 Style Type Cost
             ActorButton tank1 = new ActorButton(600, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
-                    Global.ActorType.TANK1, 250);
+                    Global.ActorType.TANK1, 100);
             ActorButton tank2 = new ActorButton(200, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
-                    Global.ActorType.TANK2, 350);
+                    Global.ActorType.TANK2, 100);
             actorButtons.add(tank1);
             actorButtons.add(tank2);
         }

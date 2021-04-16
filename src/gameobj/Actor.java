@@ -23,7 +23,7 @@ public abstract class Actor extends GameObject {
     protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
-    protected int cost; //每隻要花多少錢
+
 
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
     protected float strategyX;//我的戰略座標

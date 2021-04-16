@@ -13,7 +13,7 @@ public class Tank1 extends Actor{
         super(x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AAtank1.png");
         this.image2=ImageController.getInstance().tryGet("/AAtank1B.png");
-        hpLimit=300;//血量上限
+        hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=250; //攻擊力
         atkSpeed = new Delay(120);      //攻速
@@ -21,7 +21,7 @@ public class Tank1 extends Actor{
         def=0.5; //防禦力
         atkdis=300; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
-        cost=250; //一隻250元
+
     }
 
     @Override

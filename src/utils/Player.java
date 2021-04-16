@@ -19,7 +19,7 @@ public class Player implements GameKernel.UpdateInterface,GameKernel.PaintInterf
 
     private Player(){
         money=1000;
-        honor=500;
+        honor=2000;
         moneyLabel=new Label(1050,150,new Style.StyleRect(483,82,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/500.png"))));
         honorLabel=new Label(1050,250,new Style.StyleRect(483,82,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/500.png"))));
     }

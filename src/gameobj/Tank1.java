@@ -8,11 +8,8 @@ import java.awt.*;
 
 public class Tank1 extends Actor{
 
-
-
-
     public Tank1(float x, float y,boolean isenemy){
-        super(x,y,75,90);
+        super(x,y,50,50,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/tank1.png");
         hpLimit=300;//血量上限
         hp=300; //目前血量
@@ -30,8 +27,7 @@ public class Tank1 extends Actor{
         return Global.ActorType.TANK1;
     }
 
-    @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g){
         g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
                 this.cannonDirection.getValue()%3*75,cannonDirection.getValue()/3*90,
                 this.cannonDirection.getValue()%3*75+75,cannonDirection.getValue()/3*90+90,null);

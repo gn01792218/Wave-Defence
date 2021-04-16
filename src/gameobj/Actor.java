@@ -47,8 +47,8 @@ public abstract class Actor extends GameObject {
         }
     }
 
-    public Actor(float x, float y, float width, float height) {
-        super(x, y, width, height);
+    public Actor(float x1, float y1, float width1, float height1,float x2, float y2, float width2, float height2) {
+        super(x1, y1, width1, height1,x2, y2, width2, height2);
         bullets = new ArrayList<>();
         isAlive = true;
         strategyX = this.collider().centerX();
@@ -56,8 +56,8 @@ public abstract class Actor extends GameObject {
         //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
         isInControl = false;
-        this.strategyX = x; //剛開始是起始位置，之後在場景中可以set成旗幟位置
-        this.strategyY = y; //剛開始是起始位置，之後在場景中可以set成旗幟位置
+        this.strategyX = x1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
+        this.strategyY = y1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
     }
 
 
@@ -95,7 +95,7 @@ public abstract class Actor extends GameObject {
     }
 
     //set方法
-    public void setFlagXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
+    public void setStrategyXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
         strategyX = x;
         strategyY = y;
     }
@@ -185,7 +185,7 @@ public abstract class Actor extends GameObject {
     public abstract Global.ActorType getType();
 
     //朝目標移動
-    public void move(float x ,float y, ArrayList<Actor> actors) {
+    public void move(float x ,float y, ArrayList<Actor> alliance) {
         //根據目標位置移動
         Global.Trigonometric trigonometric = new Global.Trigonometric(this.collider().centerX(), this.collider().centerY(),
                 x,y);
@@ -210,15 +210,15 @@ public abstract class Actor extends GameObject {
                 boolean yArisIsNoTouch = true;
 
                 //檢查跟友軍是否碰撞
-                for (int i = 0; i < actors.size(); i++) {
-                    if (this.collider().centerX() == actors.get(i).collider().centerX() &&
-                            this.collider().centerY() == actors.get(i).collider().centerY()) {
+                for (int i = 0; i < alliance.size(); i++) {
+                    if (this.collider().centerX() == alliance.get(i).collider().centerX() &&
+                            this.collider().centerY() == alliance.get(i).collider().centerY()) {
                         continue;
                     }
-                    if (this.leftIsCollision(actors.get(i)) || this.rightIsCollision(actors.get(i))) {
+                    if (this.leftIsCollision(alliance.get(i)) || this.rightIsCollision(alliance.get(i))) {
                         xArisIsNoTouch = false;
                     }
-                    if (this.topIsCollision(actors.get(i)) || this.bottomIsCollision(actors.get(i))) {
+                    if (this.topIsCollision(alliance.get(i)) || this.bottomIsCollision(alliance.get(i))) {
                         yArisIsNoTouch = false;
                     }
                 }
@@ -240,27 +240,27 @@ public abstract class Actor extends GameObject {
         }
     }
         //朝目標移動
-        public void moveToTarget ( float x, float y){
-            if (targetIsInBattleField(x, y)) {
-                //角色的translate根據x/y的斜率來走
-                float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
-                float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
-                float d = (float) Math.sqrt(a * a + b * b); //斜邊
-                //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
-                //但需要解決和我軍重疊的問題
-                if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
-                    float xM = (float) a / d * speed;  //x向量
-                    float yM = (float) b / d * speed; //y向量
-                    if (painter().centerX() > x) {
-                        xM = -xM;
-                    }
-                    if (painter().centerY() > y) {
-                        yM = -yM;
-                    }
-                    this.painter().offSet((int) xM, (int) yM);
-                }
-            }
-        }
+//        public void moveToTarget ( float x, float y){
+//            if (targetIsInBattleField(x, y)) {
+//                //角色的translate根據x/y的斜率來走
+//                float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
+//                float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
+//                float d = (float) Math.sqrt(a * a + b * b); //斜邊
+//                //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
+//                //但需要解決和我軍重疊的問題
+//                if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+//                    float xM = (float) a / d * speed;  //x向量
+//                    float yM = (float) b / d * speed; //y向量
+//                    if (painter().centerX() > x) {
+//                        xM = -xM;
+//                    }
+//                    if (painter().centerY() > y) {
+//                        yM = -yM;
+//                    }
+//                    this.painter().offSet((int) xM, (int) yM);
+//                }
+//            }
+//        }
         //選最短距離者追蹤並攻擊，敵方死亡後回到原位
         public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
             if (atkSpeed.isPause()) {
@@ -299,11 +299,9 @@ public abstract class Actor extends GameObject {
                         atkSpeed.count();
                     }
                 } else {
-                    move(strategyX,strategyY, actors);
+                    move(strategyX,strategyY, alliance);
                 }
-                this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
-//                    System.out.println("我的座標" + this.painter().centerX() + " " + this.painter().centerX() + //測試用輸出
-//                            " 戰略座標" + this.strategyXY[0] + " " + this.strategyXY[1]);
+//                this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
             }
         }
         //開火
@@ -343,13 +341,15 @@ public abstract class Actor extends GameObject {
                         i--;
                         continue;
                     }
-                }else if(bullets.get(i).isTouchBattleEdge()){
+                }else if(isTouchBattleEdge(bullets.get(i).collider().centerX(),bullets.get(i).collider().centerY())){
                         bullets.get(i).explored();
+                        AudioResourceController.getInstance().play("/explosion.wav");
                 }else {
                     //攻擊敵機並扣血
                     for (int j = 0; j < actors.size(); j++) {
                         if (bullets.get(i).isCollision(actors.get(j))) {
                             bullets.get(i).explored();
+                            AudioResourceController.getInstance().play("/explosion.wav");
                             actors.get(j).offsetHp(-(this.atk) * (1 - actors.get(j).def));
                         }
                     }
@@ -387,8 +387,8 @@ public abstract class Actor extends GameObject {
             }
             return true;
         }
-        public abstract void paint (Graphics g);
-        public void update () {
+        
+        public void update(){
 
         }
     }

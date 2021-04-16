@@ -2,6 +2,7 @@ package scene;
 
 import controllers.ImageController;
 import gameobj.Actor;
+import gameobj.Bullet;
 import gameobj.Enemy1;
 import gameobj.Tank1;
 import utils.CommandSolver;
@@ -18,6 +19,7 @@ public class TestScene extends Scene{
     private BufferedImage image; //背景圖
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
+    private ArrayList<Bullet> bullets;
     private static Flag flag; //指揮旗
     @Override
     public void sceneBegin() {
@@ -25,6 +27,7 @@ public class TestScene extends Scene{
         alliance = new ArrayList();
         enemys = new ArrayList();
         flag = new Flag(1, 1, 50, 50);
+        bullets = new ArrayList();
     }
     @Override
     public void sceneEnd() {
@@ -39,12 +42,16 @@ public class TestScene extends Scene{
                     switch (state){
                         case CLICKED:
                             if(e.getButton() == e.BUTTON1){
-
+                                alliance.get(0).setStrategyXY(e.getX(),e.getY());
                             }else if(e.getButton() == e.BUTTON2){
 
                             }else if(e.getButton() == e.BUTTON3){
                                 flag.setCenter(e.getX(),e.getY());
                             }
+                            break;
+                        case MOVED:
+
+
                     }
                 }
             }
@@ -88,6 +95,9 @@ public class TestScene extends Scene{
         for (int i = 0; i < enemys.size(); i++) {
             enemys.get(i).paint(g);
         }
+        for(int i=0;i<bullets.size();i++){
+            bullets.get(i).paint(g);
+        }
         flag.paint(g); //旗子可以使用的時候才畫出來
     }
 
@@ -112,6 +122,9 @@ public class TestScene extends Scene{
                 i--;
                 break;
             }
+        }
+        for (int i=0;i<bullets.size();i++){
+            bullets.get(i).update();
         }
     }
 }

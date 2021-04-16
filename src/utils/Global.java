@@ -152,6 +152,18 @@ public class Global {
     public static final int BOUNDARY_X2=1150;
     public static final int BOUNDARY_Y1=180;
     public static final int BOUNDARY_Y2=750;
+    public static final boolean isTouchY1(float x,float y){
+        return y<=200;
+    }
+    public static final boolean isTouchY2(float x,float y){
+        return y>=790;
+    }
+    public static final boolean isTouchX1(float x,float y){
+        return 19*y <=52530-112*x;
+    }
+    public static final boolean isTouchX2(float x,float y){
+        return 21*y <= 112*x-124530;
+    }
     // 視窗大小
     public static final int WINDOW_WIDTH = 1600;
     public static final int WINDOW_HEIGHT = 1200;

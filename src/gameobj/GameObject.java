@@ -37,13 +37,22 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         return painter.top() >= Global.SCREEN_Y;
     }
     //是否碰到場地邊界
-    public boolean isTouchBattleEdge(){
-        if(this.painter.centerX()<=Global.BOUNDARY_X1){return true;}
-        if(this.painter.centerX()>=Global.BOUNDARY_X2){return true;}
-        if(this.painter.centerY()<=Global.BOUNDARY_Y1){return true;}
-        if(this.painter.centerY()>=Global.BOUNDARY_Y2){return true;}
+//    public boolean isTouchBattleEdge(){
+//        if(this.painter.centerX()<=Global.BOUNDARY_X1){return true;}
+//        if(this.painter.centerX()>=Global.BOUNDARY_X2){return true;}
+//        if(this.painter.centerY()<=Global.BOUNDARY_Y1){return true;}
+//        if(this.painter.centerY()>=Global.BOUNDARY_Y2){return true;}
+//        return false;
+//    }
+
+    public boolean isTouchBattleEdge(float x,float y){
+        if(Global.isTouchX1(x,y)){return true;}
+        if(Global.isTouchX2(x,y)){return true;}
+        if(Global.isTouchY1(x,y)){return true;}
+        if(Global.isTouchY2(x,y)){return true;}
         return false;
     }
+
     //四個方向的碰撞
     public boolean touchTop() {
         return collider.top() <= 0;
@@ -124,5 +133,18 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
     public final Rect painter() {
         return painter;
     }
+
+    public void paint(Graphics g){
+        paintComponent(g);
+        if (Global.IS_DEBUG) {
+            g.setColor(Color.RED);
+            g.drawRect((int)this.painter.left(), (int)this.painter.top(), (int)this.painter.width(), (int)this.painter.height());
+            g.setColor(Color.BLUE);
+            g.drawRect((int)this.collider.left(), (int)this.collider.top(), (int)this.collider.width(), (int)this.collider.height());
+            g.setColor(Color.BLACK);
+        }
+    }
+
+    public abstract void paintComponent(Graphics g);
 
 }

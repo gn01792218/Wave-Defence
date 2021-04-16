@@ -180,7 +180,6 @@ public class Global {
     //飛彈飛行速度
     public static final int BULLET_SPEED = 4;
     //場地邊際
-<<<<<<< HEAD
     public static final int BOUNDARY_X1=390;
     public static final int BOUNDARY_X2=1150;
     public static final int BOUNDARY_Y1=180;
@@ -197,12 +196,6 @@ public class Global {
     public static final boolean isTouchX2(float x,float y){
         return 21*y <= 112*x-124530;
     }
-=======
-    public static final int BOUNDARY_X1 = 390;
-    public static final int BOUNDARY_X2 = 1150;
-    public static final int BOUNDARY_Y1 = 180;
-    public static final int BOUNDARY_Y2 = 750;
->>>>>>> 4dda26047685ec3a13971c9c09c6caff31faa8d9
     // 視窗大小
     public static final int WINDOW_WIDTH = 1600;
     public static final int WINDOW_HEIGHT = 1200;
@@ -218,7 +211,6 @@ public class Global {
     public static int random(int min, int max) {
         return (int) (Math.random() * (max - min + 1) + min);
     }
-
     public static boolean random(int rate) {
         return random(1, 100) <= rate;
     }

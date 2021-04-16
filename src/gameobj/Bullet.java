@@ -37,8 +37,7 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
         return isTime;
     }
 
-    @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g){
         if(isExplored){
             if(trigonometric.getyVector()<0){
                 g.drawImage(image2,(int)(this.painter().centerX()),(int)(this.painter().centerY())-45,null);
@@ -53,15 +52,8 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
 //            g2.setTransform(t);
             g.drawImage(image1,(int)(this.painter().centerX()),(int)(this.painter().centerY()),null);
         }
-        if (Global.IS_DEBUG) {
-            g.setColor(Color.RED);
-            g.drawRect((int)this.painter().left(), (int)this.painter().top(), (int)this.painter().width(), (int)this.painter().height());
-            g.setColor(Color.BLUE);
-            g.drawRect((int)this.collider().left(), (int)this.collider().top(), (int)this.collider().width(), (int)this.collider().height());
-            g.setColor(Color.BLACK);
-        }
-
     }
+
     @Override
     public void update() {
         if(!isExplored) {
@@ -72,6 +64,5 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
         }else if(delay.count()){
             isTime = true;
         }
-
     }
 }

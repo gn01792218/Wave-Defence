@@ -23,7 +23,7 @@ public abstract class Actor extends GameObject {
     protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
-    protected int cost; //每隻要花多少錢
+
 
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
     protected float strategyX;//我的戰略座標
@@ -326,7 +326,7 @@ public abstract class Actor extends GameObject {
 
             if (atkSpeed.count()) {
                 bullets.add(bullet);
-                AudioResourceController.getInstance().play("/T.wav");
+                AudioResourceController.getInstance().shot("/T.wav");
             }
 
 
@@ -344,13 +344,14 @@ public abstract class Actor extends GameObject {
                     }
                 }else if(isTouchBattleEdge(bullets.get(i).collider().centerX(),bullets.get(i).collider().centerY())){
                         bullets.get(i).explored();
-                        AudioResourceController.getInstance().play("/explosion.wav");
+                        AudioResourceController.getInstance().shot("/explosion.wav");
+                    System.out.println("測試爆炸聲");
                 }else {
                     //攻擊敵機並扣血
                     for (int j = 0; j < actors.size(); j++) {
                         if (bullets.get(i).isCollision(actors.get(j))) {
                             bullets.get(i).explored();
-                            AudioResourceController.getInstance().play("/explosion.wav");
+                            AudioResourceController.getInstance().shot("/explosion.wav");
                             actors.get(j).offsetHp(-(this.atk) * (1 - actors.get(j).def));
                         }
                     }

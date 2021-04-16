@@ -15,6 +15,7 @@ import java.util.Map;
 //角色資訊欄位-->裡面有多個labl(放攻擊 防禦 等等)。
 //需要技能顯示資訊
 //做確認訊息視窗
+//買技能要扣榮譽值
 
 public class UserScene extends Scene{
     private ArrayList<ActorButton> actorButtons;
@@ -79,10 +80,18 @@ public class UserScene extends Scene{
                                     }
                                 }
                                 for(int i=0;i<skillButtons.size();i++){ //3.技能購買
-                                    if(skillButtons.get(i).isTouch(e.getX(),e.getY())){
-                                        System.out.println("我被選中了");
+                                    if(skillButtons.get(i).isTouch(e.getX(),e.getY()) && Player.getInstance().getHonor()>=skillButtons.get(i).getCost() &&
+                                            !skillButtons.get(i).getIsSelect()){ //被點中 且有榮譽職 且還沒被點過時
                                         skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
+                                        Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
+                                        System.out.println("我被選中了");
                                     }
+                                    //若榮譽值夠，要可以重複買同樣技能，開啟此
+//                                    if(skillButtons.get(i).isTouch(e.getX(),e.getY()) && Player.getInstance().getHonor()>=skillButtons.get(i).getCost()){ //被點中 且有榮譽職 且還沒被點過時
+//                                        skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
+//                                        Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
+//                                        System.out.println("我被選中了");
+//                                    }
                                 }
                             }
                             if(e.getButton()==3){//點擊右鍵
@@ -90,7 +99,6 @@ public class UserScene extends Scene{
                                     if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
                                         //產生確認框
                                         //升級軍隊
-
                                     }
                                 }
                             }

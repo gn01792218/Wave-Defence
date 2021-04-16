@@ -1,6 +1,7 @@
 package menu;
 
 import gameobj.Actor;
+import utils.Delay;
 import utils.Global;
 
 import java.awt.*;
@@ -12,17 +13,27 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     private Label skillInfo;// 技能介紹。
     protected int cost;//技能所需榮譽點數
     protected boolean isSelect;// 被選中否
+    protected Delay buffTime;//技能持續時間
+    protected boolean isUsed; //是否被施放過了
+
 
     //在User場景中new就好了
     private Global.SkillName skillName;
-    public SkillButton(int x, int y, Style style, Global.SkillName skillName, int cost) {
+
+    public SkillButton(int x, int y, Style style, Global.SkillName skillName, int cost) { //專門給指揮所使用
         super(x, y, style);
         this.skillName = skillName;
         this.cost=cost;
         this.isSelect=false;
+        this.isUsed=false; //還沒被施放
     }
     public void setSelect(boolean isSelect){
         this.isSelect=isSelect;
+    }
+    public void setUsed(boolean used){this.isUsed=used;}
+
+    public boolean isUsed() {
+        return isUsed;
     }
 
     public boolean getIsSelect(){
@@ -31,10 +42,22 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     public Global.SkillName getSkillName() {
         return skillName;
     }
+
+    public Delay getBuffTime() {
+        return buffTime;
+    }
     //放技能的方式
+
     public abstract void skillExection(ArrayList<Actor> actors);
+    public abstract void skillReset(ArrayList<Actor> actors);
+    public void skillBufftimePlay(){
+        this.buffTime.play();//開啟技能播放
+    }
+    public int getCost(){return this.cost;}
     public  void setInfo(Button info){this.info=info;};
     public  void setSkillInfo(Label skillInfo){this.skillInfo=skillInfo;};
+
+
     @Override
     public void paint(Graphics g){
         if (super.getPaintStyle() != null) {
@@ -43,4 +66,5 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
         if(info!=null){info.paint(g);}
         if(skillInfo!=null){skillInfo.paint(g);}
     }
+
 }

@@ -105,11 +105,9 @@ public class GameScene extends Scene {
         enemysMove = false; //剛開始敵軍不能移動
         flag = new Flag(1, 1, 50, 50);
     }
-
     @Override
     public void sceneEnd() {
     }
-
     @Override
     public CommandSolver.KeyListener keyListener() {
         return null;

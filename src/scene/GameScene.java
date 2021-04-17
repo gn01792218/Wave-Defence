@@ -1,9 +1,7 @@
 package scene;
 
 import controllers.AudioResourceController;
-
 import controllers.ImageController;
-
 import controllers.SceneController;
 import gameobj.*;
 
@@ -21,13 +19,15 @@ import java.util.ArrayList;
 //問題:倒數10秒的動畫要重弄
 //每回合3波，完後 delay5秒換場
 //判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
-//問題:我軍沒有回到 旗幟的位置
+//問題:打了三波，播放過勝利圖片後，又有一波怪產生
+//問題:援軍會扣到Player的單位數量
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
     private BufferedImage image1_1;
     private BufferedImage image2; //失敗的圖片
     private BufferedImage image3;//倒數10秒圖片
+    private BufferedImage image4;// 挑戰成功的圖片
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
@@ -192,6 +192,10 @@ public class GameScene extends Scene {
         if (flag.isFlagUsable()) {
             flag.paint(g); //旗子可以使用的時候才畫出來
         }
+        if (count >= 2 && enemys.size() <= 0){ //破關時的畫面
+            image4=ImageController.getInstance().tryGet("/Victory.png");
+            g.drawImage(image4,350,250,null);
+        }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);
@@ -225,7 +229,7 @@ public class GameScene extends Scene {
                 alliance.get(i).bulletsUpdate(enemys); //發射子彈
                     if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
                         for (int j = 0; j < Global.getActorButtons().size(); j++) { //和Glabl的角色類型作比對
-                            if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType()) {
+                            if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType() && !alliance.get(i).isReinforcement() ) { //重要!!!且不是援軍，才-1
                                 Global.getActorButtons().get(j).offSetNum(-1); //該類型的角色數量-1
                             }
                         }
@@ -259,7 +263,7 @@ public class GameScene extends Scene {
                     if (enemys.size() == 0) { //當敵軍
                         delayEnemyBron.play();
                         if (delayEnemyBron.count()) {
-                            for (int i = 0; i < 10; i++) {
+                            for (int i = 0; i < Global.random(3,5); i++) {
                                 enemys.add(new Enemy1(400+i*85, Global.random(200, 350), true));
                             }
                             count++; //底類完才觸發++
@@ -268,9 +272,13 @@ public class GameScene extends Scene {
                 }
                 //破關
                 if (count >= 2 && enemys.size() <= 0) { //挑戰成功條件
-                    SceneController.getInstance().changeScene(new UserScene());
-                    Player.getInstance().offsetHonor(+300); //榮譽值+300
-                    Player.getInstance().offsetMoney(1000); //金錢+1000
+                    delayEnemyBron.play();
+                    if(delayEnemyBron.count()) {
+                        Player.getInstance().offsetHonor(+300); //榮譽值+300
+                        Player.getInstance().offsetMoney(1000); //金錢+1000
+                        SceneController.getInstance().changeScene(new UserScene());
+                    }
+
                 } else if (alliance.size() <= 0) {
                     delayEnemyBron.play();
                     if (delayEnemyBron.count()) { //等4秒後換場

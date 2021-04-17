@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public abstract class SkillButton extends Button { //目前只有UserScene場景中會用到，所以放在UserScene就好
 
     protected Button info;//技能資訊欄位。在User監聽滑鼠移動後，將角色按鈕設置成顯示Info true，否則為false；資訊欄都固定畫在左側。
-    protected Label skillInfo;// 技能介紹。
     protected boolean infoVisable; //是否顯示資訊欄
     protected int cost;//技能所需榮譽點數
     protected boolean isSelect;// 被選中否
@@ -28,8 +27,8 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
         this.cost=cost;
         this.isSelect=false;
         this.isUsed=false; //還沒被施放
-        info=new Button(this.left(),this.top()-50,new Style.StyleRect(339,57,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))).setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        info=new Button(this.left(),this.top()-50,new Style.StyleRect(350,350,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350-1.png"))).setTextFont(new Font("標楷體",Font.ITALIC,22)));
     }
     public void setSelect(boolean isSelect){
         this.isSelect=isSelect;
@@ -62,16 +61,11 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     public void setInfoVisable(boolean visable){
         this.infoVisable=visable;
     }
-    public  void setSkillInfo(Label skillInfo){this.skillInfo=skillInfo;};
 
 
     @Override
     public void paint(Graphics g){
-        if (super.getPaintStyle() != null) {
-            super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
-        }
-        if(info!=null && infoVisable){info.paint(g);}
-        if(skillInfo!=null){skillInfo.paint(g);}
+
     }
 
 }

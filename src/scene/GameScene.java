@@ -21,10 +21,11 @@ import java.util.ArrayList;
 //問題:倒數10秒的動畫要重弄
 //每回合3波，完後 delay5秒換場
 //判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
-//部隊卡住時，會無法移動(敵軍也是)-->解方 控制敵軍出生時候的位置不要距離太近(開啟deBug模式)
+//問題:我軍沒有回到 旗幟的位置
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
+    private BufferedImage image1_1;
     private BufferedImage image2; //失敗的圖片
     private BufferedImage image3;//倒數10秒圖片
     private ArrayList<Actor> alliance; //角色陣列
@@ -42,7 +43,8 @@ public class GameScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/GameScene2.png"); //場景圖
+        image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
+        image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
         delayEnemyBron = new Delay(240);//目前用來控制敵人重新生成的時間
         delayRound = new Delay((600)); //開場前delay前20秒
@@ -92,10 +94,9 @@ public class GameScene extends Scene {
                 }
             }
         }
-        alliance.add(new LaserCar(500,650,false));
       //做敵軍第一波
         enemys = new ArrayList<>();
-        for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
+        for (int i = 0; i < Global.random(3, 5); i++) {  //第一波敵人5-10隻
             enemys.add(new Enemy1(500+i*75, Global.random(200, 350), true));
         }
         enemysMove = false; //剛開始敵軍不能移動
@@ -130,6 +131,7 @@ public class GameScene extends Scene {
                                 }
                                 for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
                                     if(skill.get(i).isTouch(e.getX(),e.getY()) && skill.size()>0 && !skill.get(i).isUsed()){ //按鈕被點時 且 還有按鈕時
+                                        AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                                         skill.get(i).skillBufftimePlay();// 才啟動技能
                                         skill.get(i).skillExection(alliance); //執行技能~
                                         skill.get(i).setUsed(true);
@@ -156,7 +158,7 @@ public class GameScene extends Scene {
     @Override
     public void paint(Graphics g) {
         g.drawImage(image, 0, -150, null);
-        if(skill.size()>0) {
+        if(skill.size()>0 && !flag.isFlagUsable()) { //回合進行中才畫
             for (int i = 0; i < skill.size(); i++) {
                 if(!skill.get(i).isUsed()) {
                     skill.get(i).paint(g); //畫技能
@@ -190,17 +192,17 @@ public class GameScene extends Scene {
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);
         }
+        g.drawImage(image1_1,0,-150,null);
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
         //技能updat
-        if(skill.size()>0) {
+        if(skill.size()>0  && !flag.isFlagUsable()) { //有技能，且不是旗幟時間時，才可以使用
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
                     if (skill.get(i).getBuffTime().count()) {
                         skill.get(i).skillReset(alliance); //時間到全軍恢復原廠設置~!
-                        System.out.println("我進來了"+i+"次");
                         skill.remove(i); //移除技能~
                         System.out.println("移除技能");
                     }
@@ -210,6 +212,7 @@ public class GameScene extends Scene {
         //我軍的update
         if(flag.isFlagUsable() && allianceControl!=null){  //開場前玩家控制的單位移動
             allianceControl.move(flag.getPainter().centerX(), flag.getPainter().centerY(),alliance);
+            allianceControl.setStrategyXY(flag.getPainter().centerX(),flag.getPainter().centerY()); //設置戰略位置，才會回到旗幟位置，而非原位
         }
         for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
             if (!flag.isFlagUsable()) { //旗子不能使用時
@@ -228,13 +231,12 @@ public class GameScene extends Scene {
             }
         }
             if (delayRound.count()) { //開場20秒後
-                flag.setFlagUsable(false); //旗子不能用
-                enemysMove = true; //10秒後敵軍可以移動
-
                 if(allianceControl!=null) {
                     allianceControl.setControl(false);
                     allianceControl=null;
                 }
+                flag.setFlagUsable(false); //旗子不能用
+                enemysMove = true; //10秒後敵軍可以移動
             }
             if (enemysMove) { //敵軍可以移動時
                 //敵軍update
@@ -244,6 +246,7 @@ public class GameScene extends Scene {
                     if (!enemys.get(i).isAlive()) {
                         enemys.remove(i);
                         Player.getInstance().offsetMoney(+100); //殺一隻敵軍200元
+                        Player.getInstance().offsetHonor(+50);
                         break;
                     }
                 }

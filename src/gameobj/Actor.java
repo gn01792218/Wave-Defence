@@ -13,6 +13,10 @@ public abstract class Actor extends GameObject {
     //設基本屬性的g s 並且offset
     protected BufferedImage image;
     protected BufferedImage image2;// 變色圖片
+    protected BufferedImage image_S1;//技能1圖片
+    protected BufferedImage image_S2;// 技能2圖片
+    protected BufferedImage image_S3;//技能3圖片
+    protected BufferedImage image_S4;//技能4圖片
     protected double hpLimit;
     protected double hp;
     protected double atk;
@@ -24,6 +28,8 @@ public abstract class Actor extends GameObject {
     protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
+    protected boolean isOnBuff;//是否是Buff狀態
+    protected Global.SkillName skillName;// 會顯示最後施放的招式特效
 
 
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
@@ -68,6 +74,10 @@ public abstract class Actor extends GameObject {
         return hpLimit;
     }
 
+    public boolean isOnBuff() {
+        return isOnBuff;
+    }
+
     public double getHp() {
         return this.hp;
     }
@@ -100,6 +110,14 @@ public abstract class Actor extends GameObject {
     public void setStrategyXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
         strategyX = x;
         strategyY = y;
+    }
+
+    public void setSkillName(Global.SkillName skillName) {
+        this.skillName = skillName;
+    }
+
+    public void setOnBuff(boolean onBuff) {
+        isOnBuff = onBuff;
     }
 
     public void setHpLimit(float hpLimit) {
@@ -296,7 +314,6 @@ public abstract class Actor extends GameObject {
                 }
 
                 this.offSet(xM,yM);
-
             }
         }
         }
@@ -322,7 +339,7 @@ public abstract class Actor extends GameObject {
 //                }
 //            }
 //        }
-        //選最短距離者追蹤並攻擊，敵方死亡後回到原位
+        //選最短距離者追蹤並攻擊，敵方死亡後回到原位-->得回到 旗幟指定地點
         public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
             if (atkSpeed.isPause()) {
                 atkSpeed.loop();

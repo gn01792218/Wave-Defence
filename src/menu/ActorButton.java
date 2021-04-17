@@ -12,7 +12,6 @@ import java.util.ArrayList;
 //6種屬性label都有自己的Label顯示會+多少技能-->自身 XX力 +XX-->要做成達到上限時
 
 public class ActorButton extends Button{
-
     private ArrayList<Actor> alliances=Global.getAllianceActors();//得到Global的角色  !!! 增加新按鈕時也要增加Global的我軍角色!!!!!!!!!!!!
     private ArrayList<Actor> enemys=Global.getEnemyActors();//得到Enemy的角色
 
@@ -33,9 +32,9 @@ public class ActorButton extends Button{
     public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost) { //輸入的xy是左上角
         super(x, y, style);
         this.actorType=actorType;
-        numberLabel=new Label(this.right()-200,this.top()+100,new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
+        numberLabel=new Label(this.right()-200,this.top()+250,new Style.StyleRect(0,0,true,null).setTextFont(new Font("標楷體",Font.ITALIC,32)));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
         this.costMoney=cost;
-        costLabel=new Label(this.right()-200,this.top()+200,new Style.StyleRect(0,0,true,null));
+        costLabel=new Label(this.right()-200,this.top()+200,new Style.StyleRect(0,0,true,null).setTextFont(new Font("標楷體",Font.ITALIC,32)));
         info=new Button(this.left()+50,this.top(),new Style.StyleRect(300,468
                 ,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/InfoB2-300.png"))));
         infoVisable=false;

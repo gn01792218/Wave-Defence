@@ -1,11 +1,13 @@
 package scene;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
 import menu.BackgroundType;
 import menu.Button;
 import menu.Style;
 import utils.CommandSolver;
+import utils.Delay;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -15,10 +17,12 @@ public class OpenScene extends Scene {
     private Button startButton; //開始遊戲的按鈕
     private Button endButton; //結束遊戲的按鈕
     private BufferedImage image;//背景圖
+    private Delay delay;//按下去音效的計時器
 
     @Override
     public void paint(Graphics g) {
         g.drawImage(image,350,80,null);
+        delay=new Delay(30); //按下按鈕後0.5秒換場
         startButton.paint(g);
         endButton.paint(g);
     }
@@ -48,7 +52,7 @@ public class OpenScene extends Scene {
                         case CLICKED:
                             if(e.getButton()==1) {
                                 if (startButton.isTouch(e.getX(),e.getY())) { //開始遊戲按鈕
-                                    SceneController.getInstance().changeScene(new UserScene());
+                                        SceneController.getInstance().changeScene(new UserScene());
                                 }
                                 if(endButton.isTouch(e.getX(),e.getY())){  //離開按鈕
                                     System.exit(0);
@@ -63,7 +67,6 @@ public class OpenScene extends Scene {
             }
         };
     }
-
     @Override
     public CommandSolver.KeyListener keyListener() {
         return null;

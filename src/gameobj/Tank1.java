@@ -9,16 +9,21 @@ import java.awt.*;
 public class Tank1 extends Actor{
 
 
+
     public Tank1(float x, float y,boolean isenemy){
         super(x,y,50,50,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AAtank1.png");
         this.image2=ImageController.getInstance().tryGet("/AAtank1B.png");
-        hpLimit=300;//血量上限
+        this.image_S1=ImageController.getInstance().tryGet("/AATank1_S1.png");
+        this.image_S2=ImageController.getInstance().tryGet("/AATank1_S2.png");
+        this.image_S3=ImageController.getInstance().tryGet("/AATank1_S3.png");
+        this.image_S4=ImageController.getInstance().tryGet("/AATank1_S4.png");
+        hpLimit=380;//血量上限
         hp=hpLimit; //初始血量
         atk=250; //攻擊力
-        atkSpeed = new Delay(120);      //攻速
+        atkSpeed = new Delay(180);      //攻速
         speed=2.2f; //移動速度
-        def=0.5; //防禦力
+        def=0.27; //防禦力
         atkdis=150; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
 
@@ -35,9 +40,35 @@ public class Tank1 extends Actor{
                     this.cannonDirection.getValue()%3*75,cannonDirection.getValue()/3*90,
                     this.cannonDirection.getValue()%3*75+75,cannonDirection.getValue()/3*90+90,null);
         }else{
-            g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
-                    this.cannonDirection.getValue()%3*75,cannonDirection.getValue()/3*90,
-                    this.cannonDirection.getValue()%3*75+75,cannonDirection.getValue()/3*90+90,null);
+            if(isOnBuff()){ //buff狀態時候的畫圖
+                switch (skillName) {
+                    case ATTACKUP:
+                    g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                            this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                            this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                    break;
+                    case DEFUP:
+                        g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                        break;
+                    case MOVESPEEDUP:
+                        g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                        break;
+                    case HPUP:
+                        g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                        break;
+                }
+
+            }else { //平常時候
+                g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                        this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                        this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+            }
         }
         for(int i=0;i<this.bullets.size();i++){
             this.bullets.get(i).paint(g);

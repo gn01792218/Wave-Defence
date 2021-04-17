@@ -54,7 +54,7 @@ public class AttackUp extends SkillButton {
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
         if(info!=null && infoVisable){info.paint(g);}
-        if(label!=null){
+        if(label!=null  && infoVisable){
             label.paint(g);
         }
     }

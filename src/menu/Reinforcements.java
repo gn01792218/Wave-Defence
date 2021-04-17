@@ -69,7 +69,7 @@ public class Reinforcements extends SkillButton{
             if(actors.get(i).isReinforcement()){
                 actors.get(i).moveToTarget(500,1000); //從場地邊緣離開
                 actors.remove(i);
-//                i--;
+                i--;
                 System.out.println("刪除了第"+i+1+"隻援軍");
             }
         }
@@ -79,9 +79,8 @@ public class Reinforcements extends SkillButton{
         if (super.getPaintStyle() != null) {
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
-        if(info!=null && infoVisable){
-            System.out.println("化了嗎");info.paint(g);}
-        if(label!=null){
+        if(info!=null && infoVisable){ info.paint(g);}
+        if(label!=null && infoVisable){
             label.paint(g);
         }
     }

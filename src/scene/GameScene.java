@@ -20,7 +20,6 @@ import java.util.ArrayList;
 //每回合3波，完後 delay5秒換場
 //判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
 //問題:打了三波，播放過勝利圖片後，又有一波怪產生
-//問題:援軍會扣到Player的單位數量
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
@@ -39,7 +38,7 @@ public class GameScene extends Scene {
     private int changePic = 50; //倒數動畫
     private boolean enemysMove; //敵軍是否可以移動
     private Actor allianceControl;//受旗子控制的我軍
-    private int count = 0;//共三波(SceneBegin+2)
+    private int count = 0;
 
     @Override
     public void sceneBegin() {
@@ -104,6 +103,7 @@ public class GameScene extends Scene {
             enemys.add(new Enemy1(500+i*75, Global.random(200, 350), true));
         }
         enemysMove = false; //剛開始敵軍不能移動
+        count++; //算一波
         flag = new Flag(1, 1, 50, 50);
     }
     @Override
@@ -192,7 +192,7 @@ public class GameScene extends Scene {
         if (flag.isFlagUsable()) {
             flag.paint(g); //旗子可以使用的時候才畫出來
         }
-        if (count >= 2 && enemys.size() <= 0){ //破關時的畫面
+        if (count > 2 && enemys.size() <= 0){ //破關時的畫面
             image4=ImageController.getInstance().tryGet("/Victory.png");
             g.drawImage(image4,350,250,null);
         }
@@ -268,6 +268,7 @@ public class GameScene extends Scene {
                             }
                             count++; //底類完才觸發++
                         }
+
                     }
                 }
                 //破關

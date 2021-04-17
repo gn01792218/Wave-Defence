@@ -41,27 +41,34 @@ public class Tank1 extends Actor{
                     this.cannonDirection.getValue()%3*75+75,cannonDirection.getValue()/3*90+90,null);
         }else{
             if(isOnBuff()){ //buff狀態時候的畫圖
-                switch (skillName) {
-                    case ATTACKUP:
-                    g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                            this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                            this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                    break;
-                    case DEFUP:
-                        g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                        break;
-                    case MOVESPEEDUP:
-                        g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                        break;
-                    case HPUP:
-                        g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                        break;
+                if(this.skillName!=null) {
+                    switch (skillName) {
+                        case ATTACKUP:
+                            g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                            break;
+                        case DEFUP:
+                            g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                            break;
+                        case MOVESPEEDUP:
+                            g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                            break;
+                        case HPUP:
+                            g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                            break;
+//                    case REINFORCEMENTS:
+//                        g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+//                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+//                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+//                        break;
+                    }
                 }
 
             }else { //平常時候

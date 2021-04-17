@@ -74,6 +74,10 @@ public class GameScene extends Scene {
                         skill.add(new SpeedUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
+                    case REINFORCEMENTS:
+                        skill.add(new Reinforcements(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        break;
                 }
             }
         }
@@ -201,7 +205,7 @@ public class GameScene extends Scene {
         if(skill.size()>0  && !flag.isFlagUsable()) { //有技能，且不是旗幟時間時，才可以使用
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
-                    if (skill.get(i).getBuffTime().count()) {
+                    if (skill.get(i).getBuffTime().count()) { //技能開始自己的倒數
                         skill.get(i).skillReset(alliance); //時間到全軍恢復原廠設置~!
                         skill.remove(i); //移除技能~
                         System.out.println("移除技能");

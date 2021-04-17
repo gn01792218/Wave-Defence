@@ -41,7 +41,8 @@ public class HpUp extends SkillButton{
         if (super.getPaintStyle() != null) {
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
-        if(info!=null && infoVisable){info.paint(g);}
+        if(info!=null && infoVisable){
+            System.out.println("!!!!!!!!畫");info.paint(g);}
         if(label!=null){
             label.paint(g);
         }

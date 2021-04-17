@@ -29,6 +29,7 @@ public abstract class Actor extends GameObject {
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
     protected boolean isOnBuff;//是否是Buff狀態
+    protected boolean isReinforcement;//是否是增援部隊
     protected Global.SkillName skillName;// 會顯示最後施放的招式特效
 
 
@@ -64,6 +65,7 @@ public abstract class Actor extends GameObject {
         //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
         isInControl = false;
+        isReinforcement=false;
         this.strategyX = x1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.strategyY = y1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
     }
@@ -72,6 +74,10 @@ public abstract class Actor extends GameObject {
     //基本方法區 get
     public double getHpLimit() {
         return hpLimit;
+    }
+
+    public boolean isReinforcement() {
+        return isReinforcement;
     }
 
     public boolean isOnBuff() {
@@ -107,9 +113,13 @@ public abstract class Actor extends GameObject {
     }
 
     //set方法
-    public void setStrategyXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
+    public void setStrategyXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)-->記得在場景中將戰略位置設置為其子起點，否則會回到出生位置!!!!!!!
         strategyX = x;
         strategyY = y;
+    }
+
+    public void setReinforcement(boolean reinforcement) {
+        isReinforcement = reinforcement;
     }
 
     public void setSkillName(Global.SkillName skillName) {
@@ -318,27 +328,27 @@ public abstract class Actor extends GameObject {
         }
         }
         //朝目標移動
-//        public void moveToTarget ( float x, float y){
-//            if (targetIsInBattleField(x, y)) {
-//                //角色的translate根據x/y的斜率來走
-//                float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
-//                float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
-//                float d = (float) Math.sqrt(a * a + b * b); //斜邊
-//                //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
-//                //但需要解決和我軍重疊的問題
-//                if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
-//                    float xM = (float) a / d * speed;  //x向量
-//                    float yM = (float) b / d * speed; //y向量
-//                    if (painter().centerX() > x) {
-//                        xM = -xM;
-//                    }
-//                    if (painter().centerY() > y) {
-//                        yM = -yM;
-//                    }
-//                    this.painter().offSet((int) xM, (int) yM);
-//                }
-//            }
-//        }
+        public void moveToTarget ( float x, float y){
+            if (targetIsInBattleField(x, y)) {
+                //角色的translate根據x/y的斜率來走
+                float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
+                float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
+                float d = (float) Math.sqrt(a * a + b * b); //斜邊
+                //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
+                //但需要解決和我軍重疊的問題
+                if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+                    float xM = (float) a / d * speed;  //x向量
+                    float yM = (float) b / d * speed; //y向量
+                    if (painter().centerX() > x) {
+                        xM = -xM;
+                    }
+                    if (painter().centerY() > y) {
+                        yM = -yM;
+                    }
+                    this.painter().offSet((int) xM, (int) yM);
+                }
+            }
+        }
         //選最短距離者追蹤並攻擊，敵方死亡後回到原位-->得回到 旗幟指定地點
         public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
             if (atkSpeed.isPause()) {

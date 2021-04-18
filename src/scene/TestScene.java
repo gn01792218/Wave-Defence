@@ -1,10 +1,7 @@
 package scene;
 
 import controllers.ImageController;
-import gameobj.Actor;
-import gameobj.Bullet;
-import gameobj.Enemy1;
-import gameobj.Tank1;
+import gameobj.*;
 import utils.CommandSolver;
 import utils.Flag;
 import utils.Global;
@@ -20,14 +17,17 @@ public class TestScene extends Scene{
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<Bullet> bullets;
-    private static Flag flag; //指揮旗
+    private Actor allianceControl;//受旗子控制的我軍
+    private boolean isFlagUsable;
+    private int egetx;
+    private int egety;
     @Override
     public void sceneBegin() {
         image = ImageController.getInstance().tryGet("/m2.png"); //場景圖
         alliance = new ArrayList();
         enemys = new ArrayList();
-        flag = new Flag(1, 1, 50, 50);
         bullets = new ArrayList();
+        isFlagUsable = true;
     }
     @Override
     public void sceneEnd() {
@@ -42,14 +42,28 @@ public class TestScene extends Scene{
                     switch (state){
                         case CLICKED:
                             if(e.getButton() == e.BUTTON1){
-                                alliance.get(0).setStrategyXY(e.getX(),e.getY());
+                                if (isFlagUsable) {  //當旗子還可以使用的時候
+                                    for (int i = 0; i < alliance.size(); i++) { //控制權現在在誰身上
+                                        if (alliance.get(i).isTouch(e.getX(), e.getY())) { //假如被點到了
+                                            allianceControl = alliance.get(i);  //被點到的人會變被控制者
+                                            allianceControl.setControl(true); //設成被控制中
+                                            System.out.println("第"+i+"台被點到"+"種類是"+allianceControl.getType());  //很不好點
+                                        }else{
+                                            alliance.get(i).setControl(false);
+                                        }
+                                    }
+                                }
                             }else if(e.getButton() == e.BUTTON2){
 
                             }else if(e.getButton() == e.BUTTON3){
-                                flag.setCenter(e.getX(),e.getY());
+                                if(isFlagUsable && allianceControl!=null){
+                                    allianceControl.getFlag().setCenter(e.getX(),e.getY());
+                                }
                             }
                             break;
                         case MOVED:
+                            egetx = e.getX();
+                            egety = e.getY();
 
 
                     }
@@ -65,7 +79,7 @@ public class TestScene extends Scene{
             public void keyPressed(int commandCode, long trigTime) {
                 switch (commandCode) {
                     case 5:
-                        alliance.add(new Tank1(flag.getPainter().centerX(), flag.getPainter().centerY(), false));
+                        alliance.add(new Tank1(egetx,egety, false));
                         break;
                     case 6:
                         enemys.add(new Enemy1(Global.random(Global.BOUNDARY_X1,Global.BOUNDARY_X2),200,true));
@@ -98,7 +112,10 @@ public class TestScene extends Scene{
         for(int i=0;i<bullets.size();i++){
             bullets.get(i).paint(g);
         }
-        flag.paint(g); //旗子可以使用的時候才畫出來
+        if(allianceControl!=null){
+            allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
+        }
+
     }
 
     @Override

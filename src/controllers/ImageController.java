@@ -32,10 +32,10 @@ public class ImageController {
         BufferedImage img=null;
         try {
             img= ImageIO.read(getClass().getResource(path));
+            this.imageMap.put(path,img);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.imageMap.put(path,img);
         return img;
     }
     //取得陣列中圖片的方法-->根據路徑找該圖片

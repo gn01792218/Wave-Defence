@@ -2,7 +2,7 @@ package gameobj;
 import utils.GameKernel;
 import utils.Global;
 import java.awt.*;
-import java.util.ArrayList;
+
 //管理遊戲物件的抽象父類
 public abstract class GameObject implements GameKernel.UpdateInterface,GameKernel.PaintInterface{
     private final Rect collider;
@@ -10,10 +10,12 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
     public GameObject(float x, float y, float width, float height) {
         this(x, y, width, height, x, y, width, height);
     }
+
     public GameObject(Rect rect) {
         collider = new Rect(rect);
         painter = new Rect(rect);
     }
+
     public GameObject(float x, float y, float width, float height,
                       float x2, float y2, float width2, float height2) {
         collider = Rect.genWithCenter(x, y, width, height);
@@ -36,6 +38,7 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         }
         return painter.top() >= Global.SCREEN_Y;
     }
+
     //是否碰到場地邊界
 //    public boolean isTouchBattleEdge(){
 //        if(this.painter.centerX()<=Global.BOUNDARY_X1){return true;}

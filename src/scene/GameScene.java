@@ -34,7 +34,8 @@ public class GameScene extends Scene {
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
-    private static Flag flag; //指揮旗
+//    private static Flag flag; //指揮旗
+    private boolean isFlagUsable;
     private Delay delayEnemyBron; //目前用來控制敵人重新生成的間隔時間
     private Delay delayRound;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
@@ -54,6 +55,7 @@ public class GameScene extends Scene {
         delayCount = new Delay(60);
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
         AudioResourceController.getInstance().play("/boomy-sizzling.wav");
+        isFlagUsable = true;
         //作技能
         skill=new ArrayList<>();
         ArrayList<SkillButton> temp=Global.getSkillButtons(); //從世界技能紐中下訂單
@@ -81,6 +83,7 @@ public class GameScene extends Scene {
         }
         //做軍隊
         alliance = new ArrayList<>();
+        enemys = new ArrayList<>();
         for (int i = 0; i < Global.getActorButtons().size(); i++) { //從Global中的角色按鈕取得選單下的訂單
 
             for (int j = 0; j < Global.getActorButtons().get(i).getNumber(); j++) { //跑某個角色的數量次
@@ -97,13 +100,6 @@ public class GameScene extends Scene {
                 }
             }
         }
-      //做敵軍第一波
-        enemys = new ArrayList<>();
-        for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
-            enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
-        }
-        enemysMove = false; //剛開始敵軍不能移動
-        flag = new Flag(1, 1, 50, 50);
     }
     @Override
     public void sceneEnd() {
@@ -121,15 +117,15 @@ public class GameScene extends Scene {
                     switch (state) {
                         case CLICKED:
                             if (e.getButton() == e.BUTTON1) {
-                                if (flag.isFlagUsable()) {  //當旗子還可以使用的時候
+                                if (isFlagUsable) {  //當旗子還可以使用的時候
                                     for (int i = 0; i < alliance.size(); i++) { //控制權現在在誰身上
                                         if (alliance.get(i).isTouch(e.getX(), e.getY())) { //假如被點到了
                                             allianceControl = alliance.get(i);  //被點到的人會變被控制者
                                             allianceControl.setControl(true); //設成被控制中
                                             System.out.println("第"+i+"台被點到"+"種類是"+allianceControl.getType());  //很不好點
                                         }else{
-                                               alliance.get(i).setControl(false);
-                                            }
+                                           alliance.get(i).setControl(false);
+                                        }
                                     }
                                 }
                                 for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
@@ -146,8 +142,8 @@ public class GameScene extends Scene {
                             } else if (e.getButton() == 3) {//也可以這樣
                                 //旗子在可以使用的狀態才接收座標
                                 System.out.println("右鍵");
-                                if (flag.isFlagUsable()) {
-                                    flag.setCenter(e.getX(), e.getY());
+                                if (isFlagUsable) {
+                                    allianceControl.getFlag().setCenter(e.getX(), e.getY());
                                 }
                             }
                         case MOVED:
@@ -187,8 +183,8 @@ public class GameScene extends Scene {
                 }
             }
         }
-        if (flag.isFlagUsable()) {
-            flag.paint(g); //旗子可以使用的時候才畫出來
+        if (isFlagUsable && allianceControl!=null) {
+            allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");
@@ -211,33 +207,34 @@ public class GameScene extends Scene {
             }
         }
         //我軍的update
-        if(flag.isFlagUsable() && allianceControl!=null){  //開場前玩家控制的單位移動
-            allianceControl.move(flag.getPainter().centerX(), flag.getPainter().centerY(),alliance);
-        }
         for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
-            if (!flag.isFlagUsable()) { //旗子不能使用時
-                alliance.get(i).autoAttack(enemys, alliance);
-                alliance.get(i).update();
-                alliance.get(i).bulletsUpdate(enemys); //發射子彈
-                    if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
-                        for (int j = 0; j < Global.getActorButtons().size(); j++) { //和Glabl的角色類型作比對
-                            if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType()) {
-                                Global.getActorButtons().get(j).offSetNum(-1); //該類型的角色數量-1
-                            }
+            alliance.get(i).autoAttack(enemys, alliance);
+            alliance.get(i).update();
+            alliance.get(i).bulletsUpdate(enemys); //發射子彈
+                if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
+                    for (int j = 0; j < Global.getActorButtons().size(); j++) { //和Glabl的角色類型作比對
+                        if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType()) {
+                            Global.getActorButtons().get(j).offSetNum(-1); //該類型的角色數量-1
                         }
-                        alliance.remove(i);
-                        break;
                     }
-            }
+                    alliance.remove(i);
+                    break;
+                }
         }
             if (delayRound.count()) { //開場20秒後
-                flag.setFlagUsable(false); //旗子不能用
+                isFlagUsable = false; //旗子不能用
                 enemysMove = true; //10秒後敵軍可以移動
                 if(allianceControl!=null) {
                     allianceControl.setControl(false);
                 }
             }
             if (enemysMove) { //敵軍可以移動時
+                //做敵軍第一波
+                enemys = new ArrayList<>();
+                for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                }
+                enemysMove = false; //剛開始敵軍不能移動
                 //敵軍update
                 for (int i = 0; i < enemys.size(); i++) {
                     enemys.get(i).autoAttack(alliance, enemys);

@@ -2,9 +2,8 @@ package gameobj;
 
 import controllers.AudioResourceController;
 import utils.Delay;
+import utils.Flag;
 import utils.Global;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -23,11 +22,10 @@ public abstract class Actor extends GameObject {
     protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
+    protected Flag flag;
 
 
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
-    protected float strategyX;//我的戰略座標
-    protected float strategyY;
     protected CANNON_DIRECTION cannonDirection;
 
     protected enum CANNON_DIRECTION {
@@ -37,9 +35,9 @@ public abstract class Actor extends GameObject {
         BackLeft(0),
         BackMiddle(1),
         BackRight(2);
-        private int value;
+        private final int value;
 
-        private CANNON_DIRECTION(int value) {
+        CANNON_DIRECTION(int value) {
             this.value = value;
         }
 
@@ -52,13 +50,10 @@ public abstract class Actor extends GameObject {
         super(x1, y1, width1, height1,x2, y2, width2, height2);
         bullets = new ArrayList<>();
         isAlive = true;
-        strategyX = this.collider().centerX();
-        strategyY = this.collider().centerY();
+        flag = new Flag(x1,y1);
         //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
         isInControl = false;
-        this.strategyX = x1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
-        this.strategyY = y1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
     }
 
 
@@ -95,10 +90,13 @@ public abstract class Actor extends GameObject {
         return isInControl;
     }
 
+    public Flag getFlag() {
+        return flag;
+    }
+
     //set方法
     public void setStrategyXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
-        strategyX = x;
-        strategyY = y;
+        flag.setCenter(x,y);
     }
 
     public void setHpLimit(float hpLimit) {
@@ -203,40 +201,96 @@ public abstract class Actor extends GameObject {
             float d = (float) Math.sqrt(a * a + b * b); //斜邊
             //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
             //但需要解決和我軍重疊的問題
-            if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
-                float xM = (float) a / d * speed; //x向量
-                float yM = (float) b / d * speed; //y向量
+            if ((this.collider().centerX()<x-speed || this.collider().centerX()>x+speed) ||
+                    (this.collider().centerY()<y-speed || this.collider().centerY()>y+speed)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+                float xM = a / d * speed; //x向量
+                float yM = b / d * speed; //y向量
 
-                boolean xArisIsNoTouch = true;
-                boolean yArisIsNoTouch = true;
+                boolean leftIsTouch = false;
+                boolean rightIsTouch = false;
+                boolean topIsTouch = false;
+                boolean bottomIsTouch = false;
 
                 //檢查跟友軍是否碰撞
                 for (int i = 0; i < alliance.size(); i++) {
+                    //排除自己
                     if (this.collider().centerX() == alliance.get(i).collider().centerX() &&
                             this.collider().centerY() == alliance.get(i).collider().centerY()) {
                         continue;
                     }
-                    if (this.leftIsCollision(alliance.get(i)) || this.rightIsCollision(alliance.get(i))) {
-                        xArisIsNoTouch = false;
+
+                    if (this.leftIsCollision(alliance.get(i))){
+                        leftIsTouch = true;
                     }
-                    if (this.topIsCollision(alliance.get(i)) || this.bottomIsCollision(alliance.get(i))) {
-                        yArisIsNoTouch = false;
+                    if (this.rightIsCollision(alliance.get(i))){
+                        rightIsTouch = true;
                     }
-                }
-                if (xArisIsNoTouch) {
-                    if (painter().centerX() > x) {
-                        this.offSet((int) -xM, 0);
-                    } else {
-                        this.offSet((int) xM, 0);
+                    if (this.bottomIsCollision(alliance.get(i))){
+                        bottomIsTouch = true;
                     }
-                }
-                if (yArisIsNoTouch) {
-                    if (painter().centerY() > y) {
-                        this.offSet(0, (int) -yM);
-                    } else {
-                        this.offSet(0, (int) yM);
+                    if (this.topIsCollision(alliance.get(i))) {
+                        topIsTouch = true;
                     }
                 }
+                //假設只有一個方面沒有碰撞
+                if(leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
+                    offSet(0,0);
+                    return;
+                }else if(leftIsTouch && rightIsTouch && !topIsTouch && bottomIsTouch){
+                    offSet(0,-speed);
+                    return;
+                }else if(leftIsTouch && !rightIsTouch && topIsTouch && bottomIsTouch){
+                    offSet(speed,0);
+                    return;
+                }else if(!leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
+                    offSet(-speed,0);
+                    return;
+                }else if(leftIsTouch && rightIsTouch && topIsTouch && !bottomIsTouch){
+                    offSet(0,speed);
+                    return;
+                }
+
+                if(leftIsTouch && rightIsTouch){
+                    xM=0;
+                    yM=speed;
+                }else if(topIsTouch && rightIsTouch){
+                    xM=speed;
+                    yM=0;
+                }else if(leftIsTouch && topIsTouch){
+                    xM=0;
+                    yM=speed;
+                }else if(rightIsTouch && topIsTouch){
+                    xM=0;
+                    yM=speed;
+                }else if(leftIsTouch && bottomIsTouch){
+                    xM=speed;
+                    yM=0;
+                }else if(rightIsTouch && bottomIsTouch){
+                    xM=speed;
+                    yM=0;
+                }else if(topIsTouch && y<this.collider().centerY()){
+                    xM=speed;
+                    yM=0;
+                }else if(bottomIsTouch && y>this.collider().centerY()){
+                    xM=speed;
+                    y=0;
+                }else if(leftIsTouch && x<this.collider().centerX()){
+                    xM=0;
+                    y=speed;
+                }else if(rightIsTouch && x>this.collider().centerX()){
+                    xM=0;
+                    y=speed;
+                }
+
+                if(x<this.collider().centerX()){
+                    xM = -xM;
+                }
+                if(y<this.collider().centerY()){
+                    yM = -yM;
+                }
+
+                this.offSet(xM,yM);
+
             }
         }
     }
@@ -269,9 +323,9 @@ public abstract class Actor extends GameObject {
             }
             if (actors.size() > 0) {
                 //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
-                float a = 0;
-                float b = 0;
-                float d = 0;
+                float a ;
+                float b ;
+                float d ;
                 float mind = Integer.MAX_VALUE;
                 Rect target = null;
                 for (int i = 0; i < actors.size(); i++) {
@@ -295,12 +349,12 @@ public abstract class Actor extends GameObject {
             }
             if (actors.size() <= 0 && !this.isEnemy) {
                 //回到自己原本的位置並導正砲管
-                if (collider().centerX() == strategyX && collider().centerY() == strategyY) {
+                if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
                     if (atkSpeed.getCount() < 119) {
                         atkSpeed.count();
                     }
                 } else {
-                    move(strategyX,strategyY, alliance);
+                    move(flag.collider().centerX(),flag.collider().centerY(), alliance);
                 }
 //                this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
             }
@@ -340,12 +394,10 @@ public abstract class Actor extends GameObject {
                     if (bullets.get(i).isTime()) {
                         bullets.remove(i);
                         i--;
-                        continue;
                     }
                 }else if(isTouchBattleEdge(bullets.get(i).collider().centerX(),bullets.get(i).collider().centerY())){
                         bullets.get(i).explored();
                         AudioResourceController.getInstance().shot("/explosion.wav");
-                    System.out.println("測試爆炸聲");
                 }else {
                     //攻擊敵機並扣血
                     for (int j = 0; j < actors.size(); j++) {
@@ -358,8 +410,26 @@ public abstract class Actor extends GameObject {
                 }
             }
         }
+
+    //是否碰到場地邊界
+//    public boolean isTouchBattleEdge(){
+//        if(this.painter.centerX()<=Global.BOUNDARY_X1){return true;}
+//        if(this.painter.centerX()>=Global.BOUNDARY_X2){return true;}
+//        if(this.painter.centerY()<=Global.BOUNDARY_Y1){return true;}
+//        if(this.painter.centerY()>=Global.BOUNDARY_Y2){return true;}
+//        return false;
+//    }
+
+    public boolean isTouchBattleEdge(float x,float y){
+        if(Global.isTouchX1(x,y)){return true;}
+        if(Global.isTouchX2(x,y)){return true;}
+        if(Global.isTouchY1(x,y)){return true;}
+        if(Global.isTouchY2(x,y)){return true;}
+        return false;
+    }
+
         //判斷是否死亡
-        public boolean isAlive () {
+        public boolean isAlive() {
             return this.getHp() > 0;
         }
         //判斷目標在不在場內

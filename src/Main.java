@@ -1,12 +1,9 @@
 
 import controllers.SceneController;
-
 import scene.TestScene;
-
 import scene.OpenScene;
 import utils.CommandSolver;
 import utils.GameKernel;
-
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 

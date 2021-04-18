@@ -27,8 +27,8 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
         this.cost=cost;
         this.isSelect=false;
         this.isUsed=false; //還沒被施放
-        info=new Button(this.left(),this.top()-50,new Style.StyleRect(350,350,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350-1.png"))).setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        info=new Button(this.left(),this.top()-50,new Style.StyleRect(100,60,
+                null).setTextFont(new Font("標楷體",Font.ITALIC,22)));
     }
     public void setSelect(boolean isSelect){
         this.isSelect=isSelect;

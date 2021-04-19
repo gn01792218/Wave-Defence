@@ -15,11 +15,10 @@ public class Player implements GameKernel.UpdateInterface,GameKernel.PaintInterf
     private  Label  moneyLabel;
     private  Label honorLabel;
     private static Player player;
-
-
+    
     private Player(){
-        money=1000;
-        honor=500;
+        money=2000;
+        honor=2000;
         moneyLabel=new Label(1050,150,new Style.StyleRect(483,82,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/500.png"))));
         honorLabel=new Label(1050,250,new Style.StyleRect(483,82,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/500.png"))));
     }

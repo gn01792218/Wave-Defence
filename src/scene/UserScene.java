@@ -16,7 +16,6 @@ import java.util.Map;
 //需要技能顯示資訊
 //做確認訊息視窗
 //買技能要扣榮譽值
-
 public class UserScene extends Scene{
     private ArrayList<ActorButton> actorButtons;
     private ArrayList<SkillButton> skillButtons;

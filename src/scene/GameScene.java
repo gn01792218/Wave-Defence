@@ -4,7 +4,6 @@ import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
 import gameobj.*;
-
 import menu.*;
 import utils.*;
 
@@ -30,7 +29,7 @@ public class GameScene extends Scene {
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
-    private static Flag flag; //指揮旗
+    private boolean  playerControll; //指揮旗
     private Delay delayEnemyBron; //目前用來控制敵人重新生成的間隔時間
     private Delay delayRound;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
@@ -42,6 +41,7 @@ public class GameScene extends Scene {
 
     @Override
     public void sceneBegin() {
+        playerControll=true;
         image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
@@ -104,7 +104,6 @@ public class GameScene extends Scene {
         }
         enemysMove = false; //剛開始敵軍不能移動
         count++; //算一波
-        flag = new Flag(1, 1, 50, 50);
     }
     @Override
     public void sceneEnd() {
@@ -122,7 +121,7 @@ public class GameScene extends Scene {
                     switch (state) {
                         case CLICKED:
                             if (e.getButton() == e.BUTTON1) {
-                                if (flag.isFlagUsable()) {  //當旗子還可以使用的時候
+                                if (playerControll) {  //玩家有控制權的時候
                                     for (int i = 0; i < alliance.size(); i++) { //控制權現在在誰身上
                                         if (alliance.get(i).isTouch(e.getX(), e.getY())) { //假如被點到了
                                             allianceControl = alliance.get(i);  //被點到的人會變被控制者
@@ -148,8 +147,8 @@ public class GameScene extends Scene {
                             } else if (e.getButton() == 3) {//也可以這樣
                                 //旗子在可以使用的狀態才接收座標
                                 System.out.println("右鍵");
-                                if (flag.isFlagUsable()) {
-                                    flag.setCenter(e.getX(), e.getY());
+                                if (playerControll) {
+                                    allianceControl.getFlag().setCenter(e.getX(),e.getY());
                                 }
                             }
                         case MOVED:
@@ -158,11 +157,10 @@ public class GameScene extends Scene {
             }
         };
     }
-
     @Override
     public void paint(Graphics g) {
         g.drawImage(image, 0, -150, null);
-        if(skill.size()>0 && !flag.isFlagUsable()) { //回合進行中才畫
+        if(skill.size()>0) { //回合進行中才畫
             for (int i = 0; i < skill.size(); i++) {
                 if(!skill.get(i).isUsed()) {
                     skill.get(i).paint(g); //畫技能
@@ -189,8 +187,8 @@ public class GameScene extends Scene {
                 enemys.get(i).paint(g); //畫敵軍
             }
         }
-        if (flag.isFlagUsable()) {
-            flag.paint(g); //旗子可以使用的時候才畫出來
+        if (allianceControl!=null && playerControll) {
+          allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
         if (count > 2 && enemys.size() <= 0){ //破關時的畫面
             image4=ImageController.getInstance().tryGet("/Victory.png");
@@ -206,7 +204,7 @@ public class GameScene extends Scene {
     @Override
     public void update() {
         //技能updat
-        if(skill.size()>0  && !flag.isFlagUsable()) { //有技能，且不是旗幟時間時，才可以使用
+        if(skill.size()>0) { //有技能，且不是旗幟時間時，才可以使用
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
                     if (skill.get(i).getBuffTime().count()) { //技能開始自己的倒數
@@ -218,12 +216,11 @@ public class GameScene extends Scene {
             }
         }
         //我軍的update
-        if(flag.isFlagUsable() && allianceControl!=null){  //開場前玩家控制的單位移動
-            allianceControl.move(flag.getPainter().centerX(), flag.getPainter().centerY(),alliance);
-            allianceControl.setStrategyXY(flag.getPainter().centerX(),flag.getPainter().centerY()); //設置戰略位置，才會回到旗幟位置，而非原位
+        if(playerControll && allianceControl!=null){  //開場前玩家控制的單位移動
+            allianceControl.move(allianceControl.getFlag().getPainter().centerX(),allianceControl.getFlag().getPainter().centerY(),alliance);
         }
         for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
-            if (!flag.isFlagUsable()) { //旗子不能使用時
+            if (!playerControll) {
                 alliance.get(i).autoAttack(enemys, alliance);
                 alliance.get(i).update();
                 alliance.get(i).bulletsUpdate(enemys); //發射子彈
@@ -243,7 +240,7 @@ public class GameScene extends Scene {
                     allianceControl.setControl(false);
                     allianceControl=null;
                 }
-                flag.setFlagUsable(false); //旗子不能用
+                playerControll=false;
                 enemysMove = true; //10秒後敵軍可以移動
             }
             if (enemysMove) { //敵軍可以移動時
@@ -262,13 +259,14 @@ public class GameScene extends Scene {
                 if (count <= 2) {  //
                     if (enemys.size() == 0) { //當敵軍
                         delayEnemyBron.play();
+                        playerControll=true;
                         if (delayEnemyBron.count()) {
+                            playerControll=false;
                             for (int i = 0; i < Global.random(3,5); i++) {
                                 enemys.add(new Enemy1(400+i*85, Global.random(200, 350), true));
                             }
                             count++; //底類完才觸發++
                         }
-
                     }
                 }
                 //破關

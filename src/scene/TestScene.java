@@ -25,7 +25,7 @@ public class TestScene extends Scene{
         image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         alliance = new ArrayList();
         enemys = new ArrayList();
-        flag = new Flag(1, 1, 50, 50);
+        flag = new Flag(1, 1);
         bullets = new ArrayList();
     }
     @Override

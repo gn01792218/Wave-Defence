@@ -16,11 +16,9 @@ public class Reinforcements extends SkillButton{
     private Label label;
     private final int reinforcementsNum=2; //召喚兩隻援軍
     private final int bufftime=600; //持續X/60秒
-
     public int getReinforcementsNum() {
         return reinforcementsNum;
     }
-
     public Reinforcements(int x, int y, Style style, Global.SkillName skillName, int cost){
         super(x,y,style,skillName,cost);
         buffTime=new Delay(bufftime); //30秒後離開
@@ -65,7 +63,6 @@ public class Reinforcements extends SkillButton{
             }
         }
     }
-
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         //換場了，援軍還沒死的話，會影響到Global中的actortButton數量-->解方，遊戲場景中，按下這個技能，就直接扣2
@@ -91,4 +88,5 @@ public class Reinforcements extends SkillButton{
             label.paint(g);
         }
     }
+
 }

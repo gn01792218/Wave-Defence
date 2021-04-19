@@ -112,7 +112,6 @@ public class Global {
             return null;
         }
     }
-
     //除法公式取到小數點之後，暫無使用後續可刪除
     public static float division(int a, int b) {
         int result = a / b;

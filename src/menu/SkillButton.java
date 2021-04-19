@@ -1,6 +1,5 @@
 package menu;
 
-import controllers.ImageController;
 import gameobj.Actor;
 import utils.Delay;
 import utils.Global;

@@ -3,9 +3,9 @@ package gameobj;
 import controllers.AudioResourceController;
 import controllers.ImageController;
 import utils.Delay;
+import utils.Flag;
 import utils.Global;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public abstract class Actor extends GameObject {
     protected double hp;
     protected double atk;
     protected Delay atkSpeed;
-
+    protected Flag flag;
     protected float speed;
     protected double def;
     protected double atkdis;
@@ -33,13 +33,10 @@ public abstract class Actor extends GameObject {
     protected boolean isOnBuff;//是否是Buff狀態
     protected boolean isReinforcement;//是否是增援部隊
     protected Global.SkillName skillName;// 會顯示最後施放的招式特效
-
-
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
     protected float strategyX;//我的戰略座標
     protected float strategyY;
     protected CANNON_DIRECTION cannonDirection;
-
     protected enum CANNON_DIRECTION {
         FrontLeft(3),
         FrontMiddle(4),
@@ -57,7 +54,6 @@ public abstract class Actor extends GameObject {
             return this.value;
         }
     }
-
     public Actor(float x1, float y1, float width1, float height1,float x2, float y2, float width2, float height2) {
         super(x1, y1, width1, height1,x2, y2, width2, height2);
         bullets = new ArrayList<>();
@@ -71,45 +67,39 @@ public abstract class Actor extends GameObject {
         this.strategyX = x1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.strategyY = y1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.image_hp= ImageController.getInstance().tryGet("/hp2.png"); //血條大家都一樣
+        flag=new Flag(x1,y1);
     }
-
     //基本方法區 get
     public double getHpLimit() {
         return hpLimit;
     }
-
+    public Flag getFlag() {
+        return flag;
+    }
     public boolean isReinforcement() {
         return isReinforcement;
     }
-
     public boolean isOnBuff() {
         return isOnBuff;
     }
-
     public double getHp() {
         return this.hp;
     }
-
     public double getAtk() {
         return atk;
     }
-
     public Delay getAtkSpeed() {
         return atkSpeed;
     }
-
     public double getSpeed() {
         return this.speed;
     }
-
     public double getDef() {
         return def;
     }
-
     public double getAtkdis() {
         return this.atkdis;
     }
-
     public boolean getIsInControl() {
         return isInControl;
     }
@@ -164,7 +154,6 @@ public abstract class Actor extends GameObject {
         this.painter().setCenter(x, y);
         this.collider().setCenter(x, y);
     }
-
     public void setControl(boolean cliced) {
         isInControl = cliced;
     }

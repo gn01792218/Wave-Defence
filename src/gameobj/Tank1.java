@@ -35,7 +35,6 @@ public class Tank1 extends Actor{
     }
 
     public void paintComponent(Graphics g){
-
         if(isInControl){ //被控制時要畫藍色的圖
             g.drawImage(image2,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
                     this.cannonDirection.getValue()%3*75,cannonDirection.getValue()/3*90,

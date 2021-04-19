@@ -30,8 +30,8 @@ public class Enemy1 extends Actor{
         g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
                 this.cannonDirection.getValue()/3*75,0,
                 this.cannonDirection.getValue()/3*75+75,90,null);
-        g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(6.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom(),
-                (int)(this.painter().left()+(6.5F*(this.hp*10/hpLimit))),6,0,0,null);
+        g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(6.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom()+13,
+                65,13,0,0,null);
 
         for(int i=0;i<this.bullets.size();i++){
             this.bullets.get(i).paint(g);

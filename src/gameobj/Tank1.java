@@ -11,7 +11,7 @@ public class Tank1 extends Actor{
 
 
     public Tank1(float x, float y,boolean isenemy){
-        super(x,y,50,50,x,y,75,90);
+        super(x,y,50,50,x,y,74,89);
         this.image= ImageController.getInstance().tryGet("/AAtank1.png");
         this.image2=ImageController.getInstance().tryGet("/AAtank1B.png");
         this.image_S1=ImageController.getInstance().tryGet("/AATank1_S1.png");
@@ -35,6 +35,7 @@ public class Tank1 extends Actor{
     }
 
     public void paintComponent(Graphics g){
+
         if(isInControl){ //被控制時要畫藍色的圖
             g.drawImage(image2,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
                     this.cannonDirection.getValue()%3*75,cannonDirection.getValue()/3*90,
@@ -77,6 +78,8 @@ public class Tank1 extends Actor{
                         this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
             }
         }
+        g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(6.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom()+13,
+                65,13,0,0,null);
         for(int i=0;i<this.bullets.size();i++){
             this.bullets.get(i).paint(g);
         }

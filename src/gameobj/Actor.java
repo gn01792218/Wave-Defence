@@ -1,6 +1,7 @@
 package gameobj;
 
 import controllers.AudioResourceController;
+import controllers.ImageController;
 import utils.Delay;
 import utils.Global;
 
@@ -17,6 +18,7 @@ public abstract class Actor extends GameObject {
     protected BufferedImage image_S2;// 技能2圖片
     protected BufferedImage image_S3;//技能3圖片
     protected BufferedImage image_S4;//技能4圖片
+    protected BufferedImage image_hp;// 血條
     protected double hpLimit;
     protected double hp;
     protected double atk;
@@ -68,8 +70,8 @@ public abstract class Actor extends GameObject {
         isReinforcement=false;
         this.strategyX = x1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.strategyY = y1; //剛開始是起始位置，之後在場景中可以set成旗幟位置
+        this.image_hp= ImageController.getInstance().tryGet("/hp2.png"); //血條大家都一樣
     }
-
 
     //基本方法區 get
     public double getHpLimit() {
@@ -476,8 +478,6 @@ public abstract class Actor extends GameObject {
             }
             return true;
         }
-        
         public void update(){
-
         }
     }

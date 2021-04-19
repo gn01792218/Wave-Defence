@@ -57,8 +57,9 @@ public class ActorButton extends Button{
                         atkdis=new Label(this.left()+100 , this.top() +25+ (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("攻擊距離 :" + Global.getFrmt().format(alliances.get(i).getAtkdis())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==4){
+                        Global.getFrmt().setMaximumFractionDigits(1);
                         atkSpeed=new Label(this.left() +100, this.top() + 25+ (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
-                                setText("攻擊速度 :" + 60/alliances.get(i).getAtkSpeed().getCountLimit()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
+                                setText("攻擊速度 :" + Global.getFrmt().format(60/alliances.get(i).getAtkSpeed().getCountLimit())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else{
                         Global.getFrmt().setMaximumFractionDigits(2);
                         speed=new Label(this.left()+100, this.top() +25+ (j * 338 / 6), new Style.StyleRect(100, 100, true, null).

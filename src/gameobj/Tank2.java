@@ -73,6 +73,8 @@ public class Tank2 extends Actor{
                         this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
             }
         }
+        g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(6.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom()+13,
+                65,13,0,0,null);
         for (int i = 0; i < this.bullets.size(); i++) { //畫子彈
             this.bullets.get(i).paint(g);
         }

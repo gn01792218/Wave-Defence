@@ -20,7 +20,7 @@ public class Rocket extends Actor{
 //        this.image_S4=ImageController.getInstance().tryGet("/AARocket_S4.png");
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
-        atk=350; //攻擊力-->全域傷害~!!!!!
+        atk=300; //攻擊力-->全域傷害~!!!!!
         atkSpeed = new Delay(240); //4秒一發
         speed=1.2f; //移動速度
         def=0.1; //防禦力

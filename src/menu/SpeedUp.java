@@ -1,6 +1,5 @@
 package menu;
 
-import controllers.ImageController;
 import gameobj.Actor;
 import utils.Delay;
 import utils.Global;
@@ -21,8 +20,6 @@ public class SpeedUp extends SkillButton{
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost).setTextFont(new Font("標楷體",Font.ITALIC,22)));
 
     }
-
-
     @Override
     public void skillExection(ArrayList<Actor> actors) {
             for (int i = 0; i < actors.size(); i++) {
@@ -33,7 +30,6 @@ public class SpeedUp extends SkillButton{
                 System.out.println("第"+(i+1)+"台移動加到"+actors.get(i).getSpeed());
             }
     }
-
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class DefUp extends SkillButton{
     private Label label;
-
     private final float defEffect=0.2f; //要增加幾成的防禦力
     private final int bufftime=300; //持續X/60秒
 

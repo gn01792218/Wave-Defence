@@ -21,7 +21,7 @@ public class OpenScene extends Scene {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(image,350,80,null);
+        g.drawImage(image,150,0,null);
         delay=new Delay(30); //按下按鈕後0.5秒換場
         startButton.paint(g);
         endButton.paint(g);
@@ -34,7 +34,7 @@ public class OpenScene extends Scene {
         //背景圖
         image =ImageController.getInstance().tryGet("/OpenScene.png");
         //Button的第三個參數可newStyle；Style的三個參數為寬 高 背景圖片。
-        startButton=new Button(880,500,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart1.png"))));
+        startButton=new Button(880,550,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart1.png"))));
         startButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart2.png"))));
         endButton=new Button(860,600,new Style.StyleRect(300,300,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
     }

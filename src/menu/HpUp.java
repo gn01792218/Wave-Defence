@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class HpUp extends SkillButton{
     private Label label;
-
     public HpUp(int x, int y, Style style, Global.SkillName skillName, int cost){
         super(x,y,style,skillName,cost);
         this.buffTime=new Delay(60); //就算不用記時也要設置否則會nullPoint；且可以標示Buff圖示
@@ -17,7 +16,6 @@ public class HpUp extends SkillButton{
         infoVisable=false; //一開始不顯現
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost).setTextFont(new Font("標楷體",Font.ITALIC,22)));
     }
-
     @Override
     public void skillExection(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){

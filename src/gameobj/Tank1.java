@@ -17,6 +17,7 @@ public class Tank1 extends Actor{
         this.image_S2=ImageController.getInstance().tryGet("/AATank1_S2.png");
         this.image_S3=ImageController.getInstance().tryGet("/AATank1_S3.png");
         this.image_S4=ImageController.getInstance().tryGet("/AATank1_S4.png");
+        this.image_S5=ImageController.getInstance().tryGet("/AATank1_S5.png");
         hpLimit=300;//血量上限
         hp=hpLimit; //初始血量
         atk=250; //攻擊力
@@ -62,15 +63,15 @@ public class Tank1 extends Actor{
                                     this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                                     this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;
-//                    case REINFORCEMENTS:
-//                        g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-//                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-//                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-//                        break;
                     }
                 }
 
-            }else { //平常時候
+            }else if(isReinforcement){
+                g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                        this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                        this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+            }
+            else { //平常時候
                 g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                         this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                         this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
@@ -78,6 +79,7 @@ public class Tank1 extends Actor{
         }
         g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(7.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom()+11,
                 0,0,75,11,null);
+
         for(int i=0;i<this.bullets.size();i++){
             this.bullets.get(i).paint(g);
         }

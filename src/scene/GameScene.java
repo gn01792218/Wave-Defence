@@ -87,7 +87,6 @@ public class GameScene extends Scene {
         alliance = new ArrayList<>();
         enemys = new ArrayList<>();
         for (int i = 0; i < Global.getActorButtons().size(); i++) { //從Global中的角色按鈕取得選單下的訂單
-
             for (int j = 0; j < Global.getActorButtons().get(i).getNumber(); j++) { //跑某個角色的數量次
                 switch (Global.getActorButtons().get(i).getActorType()) { //依據該型號做出該數量的戰隊
                     case TANK1: //畫j才不會疊在一起!!!
@@ -183,6 +182,7 @@ public class GameScene extends Scene {
         if (isFlagUsable && allianceControl!=null) {
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
+        g.drawImage(image1_1,0,-150,null);
         if (count > 2 && enemys.size() <= 0) { //挑戰成功條件
             image4=ImageController.getInstance().tryGet("/Victory.png");
             g.drawImage(image4,350,250,null);
@@ -191,7 +191,7 @@ public class GameScene extends Scene {
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);
         }
-        g.drawImage(image1_1,0,-150,null);
+
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
@@ -201,7 +201,6 @@ public class GameScene extends Scene {
                 if (skill.get(i).isUsed()) { //沒有被施放過
                     if (skill.get(i).getBuffTime().count()) {
                         skill.get(i).skillReset(alliance); //時間到全軍恢復原廠設置~!
-                        System.out.println("我進來了"+i+"次");
                         skill.remove(i); //移除技能~
                         System.out.println("移除技能");
                     }
@@ -228,7 +227,7 @@ public class GameScene extends Scene {
             enemys.get(i).bulletsUpdate(alliance);
             if (!enemys.get(i).isAlive()) {
                 enemys.remove(i);
-                Player.getInstance().offsetMoney(+100); //殺一隻敵軍200元
+                Player.getInstance().offsetMoney(+100); //殺一隻敵軍100元
                 break;
             }
         }
@@ -236,7 +235,7 @@ public class GameScene extends Scene {
         if (step == 3 && enemys.size() <= 0) { //挑戰成功條件
             delay.play();
             if(delay.count()) {
-                Player.getInstance().offsetHonor(+300); //榮譽值+300
+                Player.getInstance().offsetHonor(+1000); //榮譽值+1000
                 Player.getInstance().offsetMoney(1000); //金錢+1000
                 SceneController.getInstance().changeScene(new UserScene());
             }
@@ -244,7 +243,7 @@ public class GameScene extends Scene {
             delay.play();
             if(delay.count()) {
                 Player.getInstance().offsetMoney(250); //錢值+250
-                Player.getInstance().offsetHonor(50); //榮譽值+50
+                Player.getInstance().offsetHonor(250); //榮譽值+50
                 SceneController.getInstance().changeScene(new UserScene());
             }
         }
@@ -274,14 +273,14 @@ public class GameScene extends Scene {
             if(count==1){
                 //做敵軍第一波
                 for (int i = 0; i < Global.random(5, 6); i++) {  //第一波敵人5-10隻
-                    enemys.add(new Enemy3(Global.random(500, 1000), Global.random(350, 400), true));
+                    enemys.add(new Enemy4(Global.random(500, 1000), Global.random(350, 400), true));
                 }
             }
             //測試用:假如敵軍全消滅，再生成敵軍出來
             if (count == 2) {  //
                 if (enemys.size() == 0) { //當敵軍
                     for (int i = 0; i < 10; i++) {
-                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
                     }
                 }
             }

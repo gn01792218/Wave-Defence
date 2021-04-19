@@ -30,6 +30,7 @@ public class Global {
         ENEMY1,
         ENEMY2,
         ENEMY3,
+        ENEMY4,
 
     }
 
@@ -68,6 +69,8 @@ public class Global {
         enemyActors = new ArrayList<>(); //每次需要的時候new新的以更新資訊
         enemyActors.add(new Enemy1(0, 0, true));
         enemyActors.add(new Enemy2(0,0,true));
+        enemyActors.add(new Enemy3(0,0,true));
+        enemyActors.add(new Enemy4(0,0,true));
         return enemyActors;
     }
 

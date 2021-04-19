@@ -17,6 +17,7 @@ public class Tank2 extends Actor{
         this.image_S2=ImageController.getInstance().tryGet("/AATank2_S2.png");
         this.image_S3=ImageController.getInstance().tryGet("/AATank2_S3.png");
         this.image_S4=ImageController.getInstance().tryGet("/AATank2_S4.png");
+        this.image_S5=ImageController.getInstance().tryGet("/AATank2_S5.png");
         hpLimit=350;//血量上限
         hp=hpLimit; //初始血量
         atk=150; //攻擊力
@@ -61,15 +62,15 @@ public class Tank2 extends Actor{
                                     this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                                     this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;
-//                    case REINFORCEMENTS:
-//                        g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-//                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-//                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-//                        break;
                     }
                 }
 
-            }else { //平常時候
+            }else if(isReinforcement){
+                g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                        this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                        this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+            }
+            else { //平常時候
                 g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                         this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                         this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);

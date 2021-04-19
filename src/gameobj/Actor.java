@@ -16,6 +16,7 @@ public abstract class Actor extends GameObject {
     protected BufferedImage image_S2;// 技能2圖片
     protected BufferedImage image_S3;//技能3圖片
     protected BufferedImage image_S4;//技能4圖片
+    protected BufferedImage image_S5;//技能5圖片
     protected BufferedImage image_hp;// 血條
     protected double hpLimit;
     protected double hp;

@@ -1,9 +1,6 @@
 package menu;
 
-import gameobj.Actor;
-import gameobj.LaserCar;
-import gameobj.Tank1;
-import gameobj.Tank2;
+import gameobj.*;
 import utils.Delay;
 import utils.Global;
 
@@ -42,7 +39,7 @@ public class Reinforcements extends SkillButton{
                     System.out.println("呼叫"+actor1.getType());
                     break;
                 case TANK2:
-                    Actor actor2=new Tank2(400+i*100,800,false);
+                    Actor actor2=new Tank2(600+i*100,800,false);
 //                    actor2.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor2.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
@@ -51,7 +48,7 @@ public class Reinforcements extends SkillButton{
                     System.out.println("呼叫"+actor2.getType());
                     break;
                 case LASERCAR:
-                    Actor actor3= new LaserCar(400, 800, false);
+                    Actor actor3= new LaserCar(600, 800, false);
 //                    actor3.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor3.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
@@ -59,6 +56,14 @@ public class Reinforcements extends SkillButton{
                     actors.add(actor3);
                     System.out.println("呼叫"+actor3.getType());
                     break;
+                case ROCKET:
+                    Actor actor4=new Rocket(600+i*100,800,false);
+//                    actor4.setOnBuff(true);
+                    actor4.setReinforcement(true);
+                    actors.get(i).setSkillName(this.getSkillName());
+                    System.out.println(this.getSkillName());
+                    actors.add(actor4);
+                    System.out.println("呼叫"+actor4.getType());
             }
         }
 
@@ -70,10 +75,10 @@ public class Reinforcements extends SkillButton{
         //從陣列中刪除增援的部隊
         for(int i=0;i<actors.size();i++){
             if(actors.get(i).isReinforcement()){
-                actors.get(i).moveToTarget(500,1000); //從場地邊緣離開
+                actors.get(i).moveToTarget(500,1080); //從場地邊緣離開
                 actors.remove(i);
-                i--;
-                System.out.println("刪除了第"+i+1+"隻援軍");
+//                i--;
+                System.out.println("刪除了第"+(i+1)+"隻援軍");
             }
 
         }

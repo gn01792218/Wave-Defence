@@ -13,11 +13,12 @@ public class Rocket extends Actor{
     public Rocket(float x,float y,boolean isEnemy){
         super(x,y,50,50,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AARocket.png");
-//        this.image2=ImageController.getInstance().tryGet("/AARocketB.png");
-//        this.image_S1=ImageController.getInstance().tryGet("/AARocket_S1.png");
-//        this.image_S2=ImageController.getInstance().tryGet("/AARocket_S2.png");
-//        this.image_S3=ImageController.getInstance().tryGet("/AARocket_S3.png");
-//        this.image_S4=ImageController.getInstance().tryGet("/AARocket_S4.png");
+        this.image2=ImageController.getInstance().tryGet("/AARocketB.png");
+        this.image_S1=ImageController.getInstance().tryGet("/AARocket_S1.png");
+        this.image_S2=ImageController.getInstance().tryGet("/AARocket_S2.png");
+        this.image_S3=ImageController.getInstance().tryGet("/AARocket_S3.png");
+        this.image_S4=ImageController.getInstance().tryGet("/AARocket_S4.png");
+        this.image_S5=ImageController.getInstance().tryGet("/AARocket_S5.png");
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=300; //攻擊力-->全域傷害~!!!!!
@@ -86,42 +87,42 @@ public class Rocket extends Actor{
     @Override
     public void paintComponent(Graphics g) {
         if(isInControl){ //被控制時要畫藍色的圖
-            g.drawImage(image2,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
-                    this.cannonDirection.getValue()%3*140,cannonDirection.getValue()/3*90,
-                    this.cannonDirection.getValue()%3*140+75,cannonDirection.getValue()/3*90+90,null);
+            g.drawImage(image2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                    0, 0,
+                    140, 180, null);
         }else{
             if(isOnBuff()){ //buff狀態時候的畫圖
                 if(this.skillName!=null) {
                     switch (skillName) {
                         case ATTACKUP:
                             g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    0, 0,
+                                    140, 180, null);
                             break;
                         case DEFUP:
                             g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    0, 0,
+                                    140, 180, null);
                             break;
                         case MOVESPEEDUP:
                             g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    0, 0,
+                                    140, 180, null);
                             break;
                         case HPUP:
                             g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    0, 0,
+                                    140, 180, null);
                             break;
-//                    case REINFORCEMENTS:
-//                        g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-//                                this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-//                                this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-//                        break;
                     }
                 }
 
-            }else { //平常時候
+            }else if(isReinforcement){
+                g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                        0, 0,
+                        140, 180, null);
+            }
+            else { //平常時候
                 g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                         0, 0,
                         140, 180, null);

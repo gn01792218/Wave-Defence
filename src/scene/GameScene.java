@@ -89,18 +89,15 @@ public class GameScene extends Scene {
         for (int i = 0; i < Global.getActorButtons().size(); i++) { //從Global中的角色按鈕取得選單下的訂單
 
             for (int j = 0; j < Global.getActorButtons().get(i).getNumber(); j++) { //跑某個角色的數量次
-
                 switch (Global.getActorButtons().get(i).getActorType()) { //依據該型號做出該數量的戰隊
                     case TANK1: //畫j才不會疊在一起!!!
-                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100*i, false));
-
+                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-90*i, false));
                         break;
                     case TANK2:
-                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100*i, false));
-
+                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-90*i, false));
                         break;
                     case LASERCAR:
-                        alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-100*i,false));
+                        alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-90*i,false));
                         break;
                 }
             }
@@ -234,7 +231,7 @@ public class GameScene extends Scene {
             }
         }
 
-        if (count > 2 && enemys.size() <= 0) { //挑戰成功條件
+        if (step == 3 && enemys.size() <= 0) { //挑戰成功條件
             delay.play();
             if(delay.count()) {
                 Player.getInstance().offsetHonor(+300); //榮譽值+300
@@ -277,7 +274,7 @@ public class GameScene extends Scene {
             if(count==1){
                 //做敵軍第一波
                 for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy1(Global.random(500, 1000), Global.random(350, 400), true));
                 }
             }
 

@@ -25,8 +25,10 @@ public class Global {
     public enum ActorType {
         TANK1,
         TANK2,
-        ENEMY1,
         LASERCAR,
+        ENEMY1,
+        ENEMY2,
+
     }
 
     public static ArrayList<Actor> getAllianceActors() {
@@ -61,7 +63,8 @@ public class Global {
 
     public static ArrayList<Actor> getEnemyActors() {
         enemyActors = new ArrayList<>(); //每次需要的時候new新的以更新資訊
-        enemyActors.add(new Enemy1(0, 0, false));
+        enemyActors.add(new Enemy1(0, 0, true));
+        enemyActors.add(new Enemy2(0,0,true));
         return enemyActors;
     }
 

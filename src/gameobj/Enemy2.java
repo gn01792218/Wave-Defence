@@ -16,7 +16,7 @@ public class Enemy2 extends Actor{
         hp=hpLimit; //血量
         atk=100; //攻擊力
         atkSpeed=new Delay(60); //攻速
-        speed=4f; //移動速度
+        speed=4.5f; //移動速度
         def=0.3; //防禦力
         atkdis= 150; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
@@ -74,7 +74,7 @@ public class Enemy2 extends Actor{
                 this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                 this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
         g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(7.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom()+11,
-                0,0,75,11,null);
+                75,11,0,0,null);
 
         for(int i=0;i<this.bullets.size();i++){
             this.bullets.get(i).paint(g);

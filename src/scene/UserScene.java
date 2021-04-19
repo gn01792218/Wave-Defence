@@ -82,6 +82,9 @@ public class UserScene extends Scene{
                                                 case LASERCAR:
                                                     Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
                                                     break;
+                                                case ROCKET:
+                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                    break;
                                                 case ENEMY1:
                                                     Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
                                                     break;
@@ -94,7 +97,6 @@ public class UserScene extends Scene{
                                             !skillButtons.get(i).getIsSelect()){ //被點中 且有榮譽職 且還沒被點過時
                                         skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
                                         Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
-                                        System.out.println("我被選中了");
                                     }
 
                                 }

@@ -26,6 +26,7 @@ public class Global {
         TANK1,
         TANK2,
         LASERCAR,
+        ROCKET,
         ENEMY1,
         ENEMY2,
         ENEMY3,
@@ -37,6 +38,7 @@ public class Global {
         allianceActors.add(new Tank1(0, 0, false));
         allianceActors.add(new Tank2(0, 0, false));
         allianceActors.add(new LaserCar(0,0,false));
+        allianceActors.add(new Rocket(0,0,false));
         return allianceActors;
     }
 
@@ -51,8 +53,8 @@ public class Global {
             SkillButton attackSkillButton = new AttackUp(100, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.gif"))), Global.SkillName.ATTACKUP, 500);
             SkillButton defSkillButton = new DefUp(100 + SkillButtonDis, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-def.gif"))), Global.SkillName.DEFUP, 500);
             SkillButton speedButton = new SpeedUp(100 + SkillButtonDis * 2, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-speed.gif"))), Global.SkillName.MOVESPEEDUP, 450);
-            SkillButton hpButton = new HpUp(100 + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/S-hp.gif"))), Global.SkillName.HPUP, 500);
-            SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/S-hp.gif"))), Global.SkillName.REINFORCEMENTS, 550);
+            SkillButton hpButton = new HpUp(100 + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.HPUP, 500);
+            SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.REINFORCEMENTS, 550);
             skillButtons.add(attackSkillButton);
             skillButtons.add(defSkillButton);
             skillButtons.add(speedButton);
@@ -76,11 +78,14 @@ public class Global {
                     Global.ActorType.TANK1, 250);
             ActorButton tank2 = new ActorButton(200, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
                     Global.ActorType.TANK2, 280);
-            ActorButton LaserCar=new ActorButton(650,450,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
-                    Global.ActorType.LASERCAR,300);
+//            ActorButton laserCar=new ActorButton(650,450,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
+//                    Global.ActorType.LASERCAR,300);
+            ActorButton rocket=new ActorButton(650,450,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
+                    ActorType.ROCKET,500);
             actorButtons.add(tank1);
             actorButtons.add(tank2);
-            actorButtons.add(LaserCar);
+//            actorButtons.add(laserCar);
+            actorButtons.add(rocket);
         }
         return actorButtons;
     }
@@ -146,7 +151,7 @@ public class Global {
             k = (float) Math.sqrt(dX * dX + dY * dY); //斜邊
             xVector = dX / k;  //x向量
             yVector = dY / k; //y向量
-            degree = (int) (Math.toDegrees(angleBetweenTwoPointsWithFixedPoint(targetX, targetY, x, y + 1, x, y)));
+            degree = (int) (Math.toDegrees(angleBetweenTwoPointsWithFixedPoint(targetX, targetY, x, y +1, x, y)));
             xIsPositive = targetX - x > 0;
             yIsPositive = targetY - y > 0;
         }

@@ -12,7 +12,7 @@ public class Enemy3 extends Actor{
         this.image= ImageController.getInstance().tryGet("/AE-Enemy3.png");
         hpLimit=600;//血量上限
         hp=hpLimit; //血量
-        atk=450; //攻擊力
+        atk=500; //攻擊力
         atkSpeed=new Delay(150); //攻速  2.5秒
         speed=1.5f; //移動速度
         def=0.5; //防禦力

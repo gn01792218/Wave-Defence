@@ -10,11 +10,11 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 public class Bullet extends GameObject implements GameKernel.UpdateInterface,GameKernel.PaintInterface {
-    private Image image1;
-    private Image image2;
-    private Delay delay;
-    private boolean isExplored;
-    private boolean isTime;
+    protected Image image1;
+    protected Image image2;
+    protected Delay delay;
+    protected boolean isExplored;
+    protected boolean isTime;
     public Global.Trigonometric trigonometric;
     public Bullet(float x, float y,float targetX,float targetY) {
         super(x,y,1,1,x,y,35,70);
@@ -27,6 +27,7 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
         isExplored = false;
         isTime = false;
     }
+
     public void explored(){
         this.isExplored = true;
     }

@@ -416,7 +416,6 @@ public abstract class Actor extends GameObject {
                 AudioResourceController.getInstance().shot("/T.wav");
             }
 
-
         }
         //子彈更新
         public void bulletsUpdate (ArrayList < Actor > actors) {
@@ -492,7 +491,6 @@ public abstract class Actor extends GameObject {
             }
             return true;
         }
-        
         public void update(){
 
         }

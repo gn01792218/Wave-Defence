@@ -99,6 +99,8 @@ public class GameScene extends Scene {
                     case LASERCAR:
                         alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-90*i,false));
                         break;
+                    case ROCKET:
+                        alliance.add(new Rocket(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-90*i,false));
                 }
             }
         }
@@ -266,8 +268,6 @@ public class GameScene extends Scene {
                 step++;
             }
         }
-
-
 
         //產生敵軍
         if (step==2) { //敵軍可以移動時

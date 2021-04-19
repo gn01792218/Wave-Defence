@@ -13,6 +13,10 @@ public class Tank2 extends Actor{
         super(x,y,60,72,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AATank2.png");
         this.image2=ImageController.getInstance().tryGet("/AATank2B.png");
+        this.image_S1=ImageController.getInstance().tryGet("/AATank2_S1.png");
+        this.image_S2=ImageController.getInstance().tryGet("/AATank2_S2.png");
+        this.image_S3=ImageController.getInstance().tryGet("/AATank2_S3.png");
+        this.image_S4=ImageController.getInstance().tryGet("/AATank2_S4.png");
         hpLimit=350;//血量上限
         hp=hpLimit; //初始血量
         atk=150; //攻擊力

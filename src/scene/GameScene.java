@@ -36,6 +36,7 @@ public class GameScene extends Scene {
     private int step;
     private Delay delayRound;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
+    private Delay delay; //過場秒數
     private int countNum; //倒數的播放號碼
     private int changePic = 50; //倒數動畫
     private Actor allianceControl;//受旗子控制的我軍
@@ -48,6 +49,7 @@ public class GameScene extends Scene {
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
         delayRound = new Delay(600); //開場前delay前20秒
         delayCount = new Delay(60);
+        delay=new Delay(240); //過場delay
         delayRound.play();
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
         isFlagUsable = true;
@@ -90,15 +92,15 @@ public class GameScene extends Scene {
 
                 switch (Global.getActorButtons().get(i).getActorType()) { //依據該型號做出該數量的戰隊
                     case TANK1: //畫j才不會疊在一起!!!
-                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2, false));
+                        alliance.add(new Tank1(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100*i, false));
 
                         break;
                     case TANK2:
-                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100, false));
+                        alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100*i, false));
 
                         break;
                     case LASERCAR:
-                        alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-100,false));
+                        alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-100*i,false));
                         break;
                 }
             }
@@ -233,13 +235,19 @@ public class GameScene extends Scene {
         }
 
         if (count > 2 && enemys.size() <= 0) { //挑戰成功條件
-            SceneController.getInstance().changeScene(new UserScene());
-            Player.getInstance().offsetHonor(+300); //榮譽值+300
-            Player.getInstance().offsetMoney(1000); //金錢+1000
-        } else if (alliance.size() <= 0) {
+            delay.play();
+            if(delay.count()) {
+                Player.getInstance().offsetHonor(+300); //榮譽值+300
+                Player.getInstance().offsetMoney(1000); //金錢+1000
                 SceneController.getInstance().changeScene(new UserScene());
+            }
+        } else if (alliance.size() <= 0) { //挑戰失敗
+            delay.play();
+            if(delay.count()) {
                 Player.getInstance().offsetMoney(250); //錢值+250
                 Player.getInstance().offsetHonor(50); //榮譽值+50
+                SceneController.getInstance().changeScene(new UserScene());
+            }
         }
 
         if(step ==1){
@@ -283,7 +291,6 @@ public class GameScene extends Scene {
             }
             step++;
         }
-
         if (step == 3) {
             if(enemys.size()==0){
                 step=1;

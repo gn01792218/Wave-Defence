@@ -273,16 +273,15 @@ public class GameScene extends Scene {
         if (step==2) { //敵軍可以移動時
             if(count==1){
                 //做敵軍第一波
-                for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
-                    enemys.add(new Enemy1(Global.random(500, 1000), Global.random(350, 400), true));
+                for (int i = 0; i < Global.random(5, 6); i++) {  //第一波敵人5-10隻
+                    enemys.add(new Enemy3(Global.random(500, 1000), Global.random(350, 400), true));
                 }
             }
-
             //測試用:假如敵軍全消滅，再生成敵軍出來
             if (count == 2) {  //
                 if (enemys.size() == 0) { //當敵軍
                     for (int i = 0; i < 10; i++) {
-                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
                     }
                 }
             }

@@ -28,6 +28,7 @@ public class Global {
         LASERCAR,
         ENEMY1,
         ENEMY2,
+        ENEMY3,
 
     }
 

@@ -119,11 +119,11 @@ public class UserScene extends Scene{
         Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
-        for(int i=0;i<actorButtons.size();i++){
-            actorButtons.get(i).paint(g);
-        }
         for(int i=0;i<skillButtons.size();i++){
             skillButtons.get(i).paint(g);
+        }
+        for(int i=0;i<actorButtons.size();i++){
+            actorButtons.get(i).paint(g);
         }
     }
     @Override

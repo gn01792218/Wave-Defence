@@ -17,7 +17,7 @@ public class Enemy1 extends Actor{
         atkSpeed=new Delay(120); //攻速
         speed=3; //移動速度
         def=0.3; //防禦力
-        atkdis= 300; //攻擊距離
+        atkdis= 150; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
     }
 

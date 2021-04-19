@@ -1,6 +1,7 @@
 package gameobj;
 
 import controllers.AudioResourceController;
+import controllers.ImageController;
 import utils.Delay;
 import utils.Flag;
 import utils.Global;
@@ -11,6 +12,11 @@ public abstract class Actor extends GameObject {
     //設基本屬性的g s 並且offset
     protected BufferedImage image;
     protected BufferedImage image2;// 變色圖片
+    protected BufferedImage image_S1;//技能1圖片
+    protected BufferedImage image_S2;// 技能2圖片
+    protected BufferedImage image_S3;//技能3圖片
+    protected BufferedImage image_S4;//技能4圖片
+    protected BufferedImage image_hp;// 血條
     protected double hpLimit;
     protected double hp;
     protected double atk;
@@ -22,6 +28,7 @@ public abstract class Actor extends GameObject {
     protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
+    protected boolean isOnBuff;//是否是Buff狀態
     protected Flag flag;
 
 
@@ -46,6 +53,9 @@ public abstract class Actor extends GameObject {
         }
     }
 
+    protected boolean isReinforcement;//是否是增援部隊
+    protected Global.SkillName skillName;// 會顯示最後施放的招式特效
+
     public Actor(float x1, float y1, float width1, float height1,float x2, float y2, float width2, float height2) {
         super(x1, y1, width1, height1,x2, y2, width2, height2);
         bullets = new ArrayList<>();
@@ -54,6 +64,9 @@ public abstract class Actor extends GameObject {
         //剛開始是起始位置，之後在場景中可以set成旗幟位置
         this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
         isInControl = false;
+        isReinforcement=false;
+        this.image_hp= ImageController.getInstance().tryGet("/hp2.png"); //血條大家都一樣
+        flag=new Flag(x1,y1);
     }
 
 
@@ -92,6 +105,14 @@ public abstract class Actor extends GameObject {
 
     public Flag getFlag() {
         return flag;
+    }
+
+    public boolean isReinforcement() {
+        return isReinforcement;
+    }
+
+    public boolean isOnBuff() {
+        return isOnBuff;
     }
 
     //set方法
@@ -134,6 +155,18 @@ public abstract class Actor extends GameObject {
 
     public void setControl(boolean cliced) {
         isInControl = cliced;
+    }
+
+    public void setReinforcement(boolean reinforcement) {
+        isReinforcement = reinforcement;
+    }
+
+    public void setSkillName(Global.SkillName skillName) {
+        this.skillName = skillName;
+    }
+
+    public void setOnBuff(boolean onBuff) {
+        isOnBuff = onBuff;
     }
 
     //offset方法區
@@ -295,27 +328,27 @@ public abstract class Actor extends GameObject {
         }
     }
         //朝目標移動
-//        public void moveToTarget ( float x, float y){
-//            if (targetIsInBattleField(x, y)) {
-//                //角色的translate根據x/y的斜率來走
-//                float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
-//                float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
-//                float d = (float) Math.sqrt(a * a + b * b); //斜邊
-//                //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
-//                //但需要解決和我軍重疊的問題
-//                if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
-//                    float xM = (float) a / d * speed;  //x向量
-//                    float yM = (float) b / d * speed; //y向量
-//                    if (painter().centerX() > x) {
-//                        xM = -xM;
-//                    }
-//                    if (painter().centerY() > y) {
-//                        yM = -yM;
-//                    }
-//                    this.painter().offSet((int) xM, (int) yM);
-//                }
-//            }
-//        }
+        public void moveToTarget ( float x, float y){
+            if (targetIsInBattleField(x, y)) {
+                //角色的translate根據x/y的斜率來走
+                float a = Math.abs(painter().centerX() - x);//x座標差值 對邊
+                float b = Math.abs(painter().centerY() - y); //y座標差值 臨邊
+                float d = (float) Math.sqrt(a * a + b * b); //斜邊
+                //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
+                //但需要解決和我軍重疊的問題
+                if (d > this.getAtkdis() - (this.getAtkdis() * 0.5)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+                    float xM = (float) a / d * speed;  //x向量
+                    float yM = (float) b / d * speed; //y向量
+                    if (painter().centerX() > x) {
+                        xM = -xM;
+                    }
+                    if (painter().centerY() > y) {
+                        yM = -yM;
+                    }
+                    this.painter().offSet((int) xM, (int) yM);
+                }
+            }
+        }
         //選最短距離者追蹤並攻擊，敵方死亡後回到原位
         public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
             if (atkSpeed.isPause()) {

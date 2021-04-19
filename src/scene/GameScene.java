@@ -29,33 +29,33 @@ import java.util.ArrayList;
 public class GameScene extends Scene {
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
+    private BufferedImage image1_1;
     private BufferedImage image2; //失敗的圖片
     private BufferedImage image3;//倒數10秒圖片
+    private BufferedImage image4;// 挑戰成功的圖片
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
-//    private static Flag flag; //指揮旗
     private boolean isFlagUsable;
-    private Delay delayEnemyBron; //目前用來控制敵人重新生成的間隔時間
+    private int step;
     private Delay delayRound;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
     private int countNum; //倒數的播放號碼
     private int changePic = 50; //倒數動畫
-    private boolean enemysMove; //敵軍是否可以移動
     private Actor allianceControl;//受旗子控制的我軍
     private int count = 0;//共三波(SceneBegin+2)
 
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/m2.png"); //場景圖
+        image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
+        image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
-        delayEnemyBron = new Delay(240);//目前用來控制敵人重新生成的時間
-        delayRound = new Delay((600)); //開場前delay前20秒
-        delayRound.play();//開場就倒數
+        delayRound = new Delay(600); //開場前delay前20秒
         delayCount = new Delay(60);
+        delayRound.play();
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
-        AudioResourceController.getInstance().play("/boomy-sizzling.wav");
         isFlagUsable = true;
+        step=1;
         //作技能
         skill=new ArrayList<>();
         ArrayList<SkillButton> temp=Global.getSkillButtons(); //從世界技能紐中下訂單
@@ -142,7 +142,7 @@ public class GameScene extends Scene {
                             } else if (e.getButton() == 3) {//也可以這樣
                                 //旗子在可以使用的狀態才接收座標
                                 System.out.println("右鍵");
-                                if (isFlagUsable) {
+                                if (isFlagUsable&&allianceControl!=null) {
                                     allianceControl.getFlag().setCenter(e.getX(), e.getY());
                                 }
                             }
@@ -156,25 +156,17 @@ public class GameScene extends Scene {
     @Override
     public void paint(Graphics g) {
         g.drawImage(image, 0, -150, null);
-        if (delayCount.count()) {  //每1秒播放圖片
-            countNum++;
-            changePic = 50;
-        }
-        changePic--;
-        //最後10秒畫
-        if (delayCount.count()) {  //每1秒播放圖片
-            countNum++;
-        }
+
         int tx = this.countNum * 74;  //0-74 1-74*2 2-74*3
-        g.drawImage(image3, 750 - changePic, 100 - changePic, 750 + 74 + changePic, 100 + 90 + changePic,
-                tx, 0, tx + 74, 90, null); //倒數的圖片
+        if(delayCount.isPlaying()){
+            g.drawImage(image3, 750 - changePic, 100 - changePic, 750 + 74 + changePic, 100 + 90 + changePic,
+                    tx, 0, tx + 74, 90, null); //倒數的圖片
+        }
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).paint(g); //畫我軍
         }
         for (int i = 0; i < enemys.size(); i++) {
-            if (enemysMove) { //敵軍可以移動時才畫
                 enemys.get(i).paint(g); //畫敵軍
-            }
         }
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
@@ -186,10 +178,15 @@ public class GameScene extends Scene {
         if (isFlagUsable && allianceControl!=null) {
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
+        if (count > 2 && enemys.size() <= 0) { //挑戰成功條件
+            image4=ImageController.getInstance().tryGet("/Victory.png");
+            g.drawImage(image4,350,250,null);
+        }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);
         }
+        g.drawImage(image1_1,0,-150,null);
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
@@ -209,11 +206,10 @@ public class GameScene extends Scene {
         //我軍的update
         for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
             alliance.get(i).autoAttack(enemys, alliance);
-            alliance.get(i).update();
             alliance.get(i).bulletsUpdate(enemys); //發射子彈
                 if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
                     for (int j = 0; j < Global.getActorButtons().size(); j++) { //和Glabl的角色類型作比對
-                        if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType()) {
+                        if (Global.getActorButtons().get(j).getActorType() == alliance.get(i).getType() && !alliance.get(i).isReinforcement() ) { //重要!!!且不是援軍，才-1
                             Global.getActorButtons().get(j).offSetNum(-1); //該類型的角色數量-1
                         }
                     }
@@ -221,55 +217,77 @@ public class GameScene extends Scene {
                     break;
                 }
         }
+        //敵軍update
+        for (int i = 0; i < enemys.size(); i++) {
+            enemys.get(i).autoAttack(alliance, enemys);
+            enemys.get(i).bulletsUpdate(alliance);
+            if (!enemys.get(i).isAlive()) {
+                enemys.remove(i);
+                Player.getInstance().offsetMoney(+100); //殺一隻敵軍200元
+                break;
+            }
+        }
+
+        if (count > 2 && enemys.size() <= 0) { //挑戰成功條件
+            SceneController.getInstance().changeScene(new UserScene());
+            Player.getInstance().offsetHonor(+300); //榮譽值+300
+            Player.getInstance().offsetMoney(1000); //金錢+1000
+        } else if (alliance.size() <= 0) {
+                SceneController.getInstance().changeScene(new UserScene());
+                Player.getInstance().offsetMoney(250); //錢值+250
+                Player.getInstance().offsetHonor(50); //榮譽值+50
+        }
+
+        if(step ==1){
+            AudioResourceController.getInstance().play("/boomy-sizzling.wav");
+            if (delayCount.count()) {  //每1秒播放圖片
+                countNum++;
+                changePic = 50;
+            }
+            changePic--;
             if (delayRound.count()) { //開場20秒後
                 isFlagUsable = false; //旗子不能用
-                enemysMove = true; //10秒後敵軍可以移動
+                count++;
+                delayRound.stop();
+                countNum=0;
+                delayCount.stop();
                 if(allianceControl!=null) {
                     allianceControl.setControl(false);
                 }
+                step++;
             }
-            if (enemysMove) { //敵軍可以移動時
+        }
+
+
+
+        //產生敵軍
+        if (step==2) { //敵軍可以移動時
+            if(count==1){
                 //做敵軍第一波
-                enemys = new ArrayList<>();
                 for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
                 }
-                enemysMove = false; //剛開始敵軍不能移動
-                //敵軍update
-                for (int i = 0; i < enemys.size(); i++) {
-                    enemys.get(i).autoAttack(alliance, enemys);
-                    enemys.get(i).bulletsUpdate(alliance);
-                    if (!enemys.get(i).isAlive()) {
-                        enemys.remove(i);
-                        Player.getInstance().offsetMoney(+100); //殺一隻敵軍200元
-                        break;
-                    }
-                }
-                //測試用:假如敵軍全消滅，再生成敵軍出來
-                if (count <= 2) {  //
-                    if (enemys.size() == 0) { //當敵軍
-                        delayEnemyBron.play();
-                        if (delayEnemyBron.count()) {
-                            for (int i = 0; i < 10; i++) {
-                                enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
-                            }
-                            count++; //底類完才觸發++
-                        }
-                    }
-                }
-                if (count >= 2 && enemys.size() <= 0) { //挑戰成功條件
-                    SceneController.getInstance().changeScene(new UserScene());
-                    Player.getInstance().offsetHonor(+300); //榮譽值+300
-                    Player.getInstance().offsetMoney(1000); //金錢+1000
-                } else if (alliance.size() <= 0) {
-                    delayEnemyBron.play();
-                    if (delayEnemyBron.count()) { //等4秒後換場
-                        SceneController.getInstance().changeScene(new UserScene());
-                        Player.getInstance().offsetMoney(250); //錢值+250
-                        Player.getInstance().offsetHonor(50); //榮譽值+50
+            }
+
+            //測試用:假如敵軍全消滅，再生成敵軍出來
+            if (count == 2) {  //
+                if (enemys.size() == 0) { //當敵軍
+                    for (int i = 0; i < 10; i++) {
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
                     }
                 }
             }
+            step++;
+        }
+
+        if (step == 3) {
+            if(enemys.size()==0){
+                step=1;
+                delayRound.play();
+                delayCount.loop();//倒數計時每1秒觸發一次換圖片
+                isFlagUsable = true;
+            }
         }
     }
+}
 

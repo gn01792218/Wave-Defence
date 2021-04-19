@@ -19,18 +19,21 @@ public class Global {
         DEFUP,
         MOVESPEEDUP,
         HPUP,
+        REINFORCEMENTS,
     }
 
     public enum ActorType {
         TANK1,
         TANK2,
         ENEMY1,
+        LASERCAR,
     }
 
     public static ArrayList<Actor> getAllianceActors() {
         allianceActors = new ArrayList<>(); //每次需要的時候new新的以更新資訊
         allianceActors.add(new Tank1(0, 0, false));
         allianceActors.add(new Tank2(0, 0, false));
+        allianceActors.add(new LaserCar(0,0,false));
         return allianceActors;
     }
 
@@ -40,17 +43,18 @@ public class Global {
         final int SkillButtonDis = 128;
         final int skillButtonHeight = 700;
         if (skillButtons == null) {
-            System.out.println("888");
             //技能按鈕
             skillButtons = new ArrayList<>();
-            SkillButton attackSkillButton = new AttackUp(100, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.gif"))), Global.SkillName.ATTACKUP, 550);
-            SkillButton defSkillButton = new DefUp(100 + SkillButtonDis, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-def.gif"))), Global.SkillName.DEFUP, 600);
+            SkillButton attackSkillButton = new AttackUp(100, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.gif"))), Global.SkillName.ATTACKUP, 500);
+            SkillButton defSkillButton = new DefUp(100 + SkillButtonDis, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-def.gif"))), Global.SkillName.DEFUP, 500);
             SkillButton speedButton = new SpeedUp(100 + SkillButtonDis * 2, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-speed.gif"))), Global.SkillName.MOVESPEEDUP, 450);
             SkillButton hpButton = new HpUp(100 + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/S-hp.gif"))), Global.SkillName.HPUP, 500);
+            SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/S-hp.gif"))), Global.SkillName.REINFORCEMENTS, 550);
             skillButtons.add(attackSkillButton);
             skillButtons.add(defSkillButton);
             skillButtons.add(speedButton);
             skillButtons.add(hpButton);
+            skillButtons.add(reinforcement);
         }
         return skillButtons;
     }
@@ -58,18 +62,21 @@ public class Global {
     public static ArrayList<Actor> getEnemyActors() {
         enemyActors = new ArrayList<>(); //每次需要的時候new新的以更新資訊
         enemyActors.add(new Enemy1(0, 0, false));
-        return allianceActors;
+        return enemyActors;
     }
 
     public static ArrayList<ActorButton> getActorButtons() {
         if (actorButtons == null) { //假如沒有 才做角色按鈕
             actorButtons = new ArrayList<>();//角色參數: 座標 Style Type Cost
             ActorButton tank1 = new ActorButton(600, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
-                    Global.ActorType.TANK1, 100);
+                    Global.ActorType.TANK1, 250);
             ActorButton tank2 = new ActorButton(200, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
-                    Global.ActorType.TANK2, 100);
+                    Global.ActorType.TANK2, 280);
+            ActorButton LaserCar=new ActorButton(650,450,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
+                    Global.ActorType.LASERCAR,300);
             actorButtons.add(tank1);
             actorButtons.add(tank2);
+            actorButtons.add(LaserCar);
         }
         return actorButtons;
     }

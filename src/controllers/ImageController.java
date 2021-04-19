@@ -26,7 +26,6 @@ public class ImageController {
         }
         return imageController;
     }
-
     //加入圖片的方法，傳入路徑，創建圖片-->私有化
     private BufferedImage add(String path){
         BufferedImage img=null;
@@ -38,6 +37,7 @@ public class ImageController {
         }
         return img;
     }
+
     //取得陣列中圖片的方法-->根據路徑找該圖片
     public BufferedImage tryGet(String path){
         if(this.imageMap.containsKey(path)){

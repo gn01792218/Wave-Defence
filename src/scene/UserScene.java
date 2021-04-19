@@ -10,6 +10,7 @@ import utils.Player;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Map;
 //角色資訊欄位-->裡面有多個labl(放攻擊 防禦 等等)。
@@ -26,6 +27,7 @@ public class UserScene extends Scene{
     @Override
     public void sceneBegin() {
         //進入回合的按鈕
+
         roundStart=new Button(900,600,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         secrt=new Button(1350, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
@@ -119,6 +121,7 @@ public class UserScene extends Scene{
 
     @Override
     public void paint(Graphics g) {
+
         Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案

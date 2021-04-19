@@ -16,6 +16,7 @@ public class OpenScene extends Scene {
     private Button endButton; //結束遊戲的按鈕
     private BufferedImage image;//背景圖
 
+
     @Override
     public void paint(Graphics g) {
         g.drawImage(image,150,0,null);

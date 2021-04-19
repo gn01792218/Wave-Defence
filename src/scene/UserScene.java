@@ -44,16 +44,21 @@ public class UserScene extends Scene{
                 if(state!=null){
                     switch (state){
                         case MOVED: //負責監聽浮現的資訊欄
-                           for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
-                               if(actorButtons.get(i).isTouch(e.getX(),e.getY())){ //移動到角色上會有訊息欄
-                                   //座標產生資訊圖片-->把角色圖片資訊設成visabl
-                                   actorButtons.get(i).setInfoVisable(true);
-                               }else{actorButtons.get(i).setInfoVisable(false);}
-                           }
-                           if(secrt.isTouch(e.getX(),e.getY())){ //機密文件
-                               secrt.isHover(true);
-                           }else{secrt.isHover(false);}
-                           break;
+                            for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
+                                if(actorButtons.get(i).isTouch(e.getX(),e.getY())){ //移動到角色上會有訊息欄
+                                    //座標產生資訊圖片-->把角色圖片資訊設成visabl
+                                    actorButtons.get(i).setInfoVisable(true);
+                                }else{actorButtons.get(i).setInfoVisable(false);}
+                            }
+                            for(int i=0;i<skillButtons.size();i++){
+                                if(skillButtons.get(i).isTouch(e.getX(),e.getY())){
+                                    skillButtons.get(i).setInfoVisable(true);
+                                }else{ skillButtons.get(i).setInfoVisable(false);}
+                            }
+                            if(secrt.isTouch(e.getX(),e.getY())){ //機密文件
+                                secrt.isHover(true);
+                            }else{secrt.isHover(false);}
+                            break;
                         case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵升級
                             if(e.getButton()==1){ //左鍵
                                 if(roundStart.isTouch(e.getX(),e.getY())){//1.觸發換場的按鈕
@@ -72,6 +77,9 @@ public class UserScene extends Scene{
                                                 case TANK2:
                                                     Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
                                                     break;
+                                                case LASERCAR:
+                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
+                                                    break;
                                                 case ENEMY1:
                                                     Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
                                                     break;
@@ -86,12 +94,7 @@ public class UserScene extends Scene{
                                         Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
                                         System.out.println("我被選中了");
                                     }
-                                    //若榮譽值夠，要可以重複買同樣技能，開啟此
-//                                    if(skillButtons.get(i).isTouch(e.getX(),e.getY()) && Player.getInstance().getHonor()>=skillButtons.get(i).getCost()){ //被點中 且有榮譽職 且還沒被點過時
-//                                        skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
-//                                        Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
-//                                        System.out.println("我被選中了");
-//                                    }
+
                                 }
                             }
                             if(e.getButton()==3){//點擊右鍵

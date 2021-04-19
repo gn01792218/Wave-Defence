@@ -5,11 +5,7 @@ import controllers.AudioResourceController;
 import controllers.ImageController;
 
 import controllers.SceneController;
-import gameobj.Actor;
-
-import gameobj.Enemy1;
-import gameobj.Tank1;
-import gameobj.Tank2;
+import gameobj.*;
 
 import menu.*;
 import utils.*;
@@ -78,6 +74,10 @@ public class GameScene extends Scene {
                         skill.add(new SpeedUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
+                    case REINFORCEMENTS:
+                        skill.add(new Reinforcements(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        break;
                 }
             }
         }
@@ -96,6 +96,9 @@ public class GameScene extends Scene {
                     case TANK2:
                         alliance.add(new Tank2(Global.BOUNDARY_X1 + j * 100, Global.BOUNDARY_Y2-100, false));
 
+                        break;
+                    case LASERCAR:
+                        alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-100,false));
                         break;
                 }
             }
@@ -130,6 +133,7 @@ public class GameScene extends Scene {
                                 }
                                 for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
                                     if(skill.get(i).isTouch(e.getX(),e.getY()) && skill.size()>0 && !skill.get(i).isUsed()){ //按鈕被點時 且 還有按鈕時
+                                        AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                                         skill.get(i).skillBufftimePlay();// 才啟動技能
                                         skill.get(i).skillExection(alliance); //執行技能~
                                         skill.get(i).setUsed(true);

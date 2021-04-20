@@ -20,6 +20,7 @@ public class Global {
         MOVESPEEDUP,
         HPUP,
         REINFORCEMENTS,
+        ELECTWAVE,
     }
 
     public enum ActorType {
@@ -31,6 +32,7 @@ public class Global {
         ENEMY2,
         ENEMY3,
         ENEMY4,
+        BOSS,
 
     }
 
@@ -56,11 +58,13 @@ public class Global {
             SkillButton speedButton = new SpeedUp(100 + SkillButtonDis * 2, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-speed.gif"))), Global.SkillName.MOVESPEEDUP, 450);
             SkillButton hpButton = new HpUp(100 + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.HPUP, 500);
             SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.REINFORCEMENTS, 550);
+            SkillButton electWave=new ElectWave(100+SkillButtonDis, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), SkillName.ELECTWAVE, 550);
             skillButtons.add(attackSkillButton);
             skillButtons.add(defSkillButton);
             skillButtons.add(speedButton);
             skillButtons.add(hpButton);
             skillButtons.add(reinforcement);
+            skillButtons.add(electWave);
         }
         return skillButtons;
     }
@@ -71,6 +75,7 @@ public class Global {
         enemyActors.add(new Enemy2(0,0,true));
         enemyActors.add(new Enemy3(0,0,true));
         enemyActors.add(new Enemy4(0,0,true));
+        enemyActors.add(new Boss(0,0,true));
         return enemyActors;
     }
 

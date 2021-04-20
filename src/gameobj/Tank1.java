@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class Tank1 extends Actor{
 
-
     public Tank1(float x, float y,boolean isenemy){
         super(x,y,50,50,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AAtank1.png");

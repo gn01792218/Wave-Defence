@@ -30,6 +30,7 @@ public abstract class Actor extends GameObject {
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
     protected boolean isOnBuff;//是否是Buff狀態
+    protected boolean isOnDebuff;//是否是減益狀態
     protected Flag flag;
 
 
@@ -66,6 +67,7 @@ public abstract class Actor extends GameObject {
         this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
         isInControl = false;
         isReinforcement=false;
+        this.isOnDebuff=false;
         this.image_hp= ImageController.getInstance().tryGet("/Blood3.png"); //血條大家都一樣
         flag=new Flag(x1,y1);
     }
@@ -74,6 +76,10 @@ public abstract class Actor extends GameObject {
     //基本方法區 get
     public double getHpLimit() {
         return hpLimit;
+    }
+
+    public boolean isOnDebuff() {
+        return isOnDebuff;
     }
 
     public double getHp() {
@@ -119,6 +125,10 @@ public abstract class Actor extends GameObject {
     //set方法
     public void setStrategyXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
         flag.setCenter(x,y);
+    }
+
+    public void setOnDebuff(boolean onDebuff) {
+        isOnDebuff = onDebuff;
     }
 
     public void setHpLimit(float hpLimit) {
@@ -347,11 +357,15 @@ public abstract class Actor extends GameObject {
                         yM = -yM;
                     }
                     this.painter().offSet((int) xM, (int) yM);
+                    this.collider().offSet((int) xM, (int) yM);
                 }
             }
         }
         //選最短距離者追蹤並攻擊，敵方死亡後回到原位
         public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
+        if(this.isOnDebuff && this.skillName== Global.SkillName.ELECTWAVE){
+            return; //中deBuff，且是ELECTWAVE時，就直接停止移動和攻擊
+        }
             if (atkSpeed.isPause()) {
                 atkSpeed.loop();
             }
@@ -411,12 +425,10 @@ public abstract class Actor extends GameObject {
             } else if (atkAngle < 360) {
                 this.cannonDirection = CANNON_DIRECTION.BackLeft;
             }
-
             if (atkSpeed.count()) {
                 bullets.add(bullet);
                 AudioResourceController.getInstance().shot("/T.wav");
             }
-
         }
         //子彈更新
         public void bulletsUpdate (ArrayList < Actor > actors) {

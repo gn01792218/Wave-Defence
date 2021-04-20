@@ -19,6 +19,7 @@ public class Rocket extends Actor{
     private BufferedImage empty_ES3;
     private BufferedImage empty_ES4;
     private BufferedImage empty_ES5;
+    private BufferedImage empty_EB;
 
     public Rocket(float x,float y,boolean isEnemy){
         super(x,y,50,50,x,y,75,90);
@@ -35,6 +36,7 @@ public class Rocket extends Actor{
         this.empty_ES3=ImageController.getInstance().tryGet("/AARocket_ES3.png");
         this.empty_ES4=ImageController.getInstance().tryGet("/AARocket_ES4.png");
         this.empty_ES5=ImageController.getInstance().tryGet("/AARocket_ES5.png");
+        this.empty_EB=ImageController.getInstance().tryGet("/AARocket_EB.png");
         reloaddelay=new Delay(120);
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
@@ -119,7 +121,6 @@ public class Rocket extends Actor{
         }
         if(!isempty){
             if (atkSpeed.count()) {
-                System.out.println("!!!!!");
                 setIsempty(true);
                 reloaddelay.play();
                 bullets.add(bullet);
@@ -169,7 +170,7 @@ public class Rocket extends Actor{
     public void paintComponent(Graphics g) {
         if(isInControl){ //被控制時要畫藍色的圖
             if(isempty){
-                g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                g.drawImage(empty_EB,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                         0, 0,
                         140, 180, null);
             }else{
@@ -245,7 +246,6 @@ public class Rocket extends Actor{
                     g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                             0, 0,
                             140, 180, null);
-                    System.out.println("換成空子彈圖");
             }else{
                     g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                             0, 0,

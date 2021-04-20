@@ -80,6 +80,8 @@ public class GameScene extends Scene {
                         skill.add(new Reinforcements(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
+                    case  ELECTWAVE:
+                        skill.add(new ElectWave(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost()));
                 }
             }
         }
@@ -135,7 +137,11 @@ public class GameScene extends Scene {
                                     if(skill.get(i).isTouch(e.getX(),e.getY()) && skill.size()>0 && !skill.get(i).isUsed()){ //按鈕被點時 且 還有按鈕時
                                         AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                                         skill.get(i).skillBufftimePlay();// 才啟動技能
-                                        skill.get(i).skillExection(alliance); //執行技能~
+                                        if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){
+                                            skill.get(i).skillExection(enemys);
+                                        }else{
+                                            skill.get(i).skillExection(alliance); //執行技能~
+                                        }
                                         skill.get(i).setUsed(true);
                                         System.out.println("技能已經啟動一次，不會再有下一次~~");
                                     }
@@ -200,7 +206,9 @@ public class GameScene extends Scene {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
                     if (skill.get(i).getBuffTime().count()) {
-                        skill.get(i).skillReset(alliance); //時間到全軍恢復原廠設置~!
+                        if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){//電磁波的~!
+                            skill.get(i).skillReset(enemys);
+                        }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
                         skill.remove(i); //移除技能~
                         System.out.println("移除技能");
                     }
@@ -272,8 +280,8 @@ public class GameScene extends Scene {
         if (step==2) { //敵軍可以移動時
             if(count==1){
                 //做敵軍第一波
-                for (int i = 0; i < Global.random(5, 6); i++) {  //第一波敵人5-10隻
-                    enemys.add(new Enemy4(Global.random(500, 1000), Global.random(350, 400), true));
+                for (int i = 0; i < 1; i++) {  //第一波敵人5-10隻
+                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
                 }
             }
             //測試用:假如敵軍全消滅，再生成敵軍出來

@@ -317,8 +317,8 @@ public class GameScene extends Scene {
         if (Global.getLevel()==2 && step==2) {//敵軍可 以移動時
             if(count==1){
                 //做敵軍第一波
-                for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
-                    enemys.add(new Enemy1(Global.random(400, 1200), Global.random(300, 450), true));
+                for (int i = 0; i < Global.random(1, 2); i++) {  //第一波敵人5-10隻
+                    enemys.add(new Boss(Global.random(400, 1200), Global.random(300, 450), true));
                 }
                 for (int i = 0; i < Global.random(2, 4); i++) {  //第一波敵人5-10隻
                     enemys.add(new Enemy2(Global.random(400, 1200), Global.random(300, 450), true));

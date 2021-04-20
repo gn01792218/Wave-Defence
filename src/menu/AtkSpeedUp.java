@@ -21,7 +21,7 @@ public class AtkSpeedUp extends SkillButton{
     @Override
     public void skillExection(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
-            if(actors.get(i).getAtkSpeed().getCountLimit()<=60){
+            if(actors.get(i).getAtkSpeed().getCountLimit()-60<=0){
                 System.out.println("原本攻擊速度"+actors.get(i).getAtkSpeed().getCountLimit());
                 actors.get(i).setAtkSpeed(new Delay(6));
                 System.out.println("提升為"+actors.get(i).getAtkSpeed().getCountLimit());

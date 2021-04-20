@@ -15,9 +15,9 @@ public class RocketBullet extends Bullet{
     public void paintComponent(Graphics g){
         if(isExplored){
             if(trigonometric.getyVector()<0){
-                g.drawImage(image2,(int)(this.painter().centerX()),(int)(this.painter().centerY())-45,null);
+                g.drawImage(image2,(int)(this.painter().centerX()),(int)(this.painter().centerY()-50)-45,null);
             }else {
-                g.drawImage(image2,(int)(this.painter().centerX()),(int)(this.painter().centerY()),null);
+                g.drawImage(image2,(int)(this.painter().centerX()),(int)(this.painter().centerY()-50),null);
             }
         }else{
             g.drawImage(image1,(int)(this.painter().centerX()),(int)(this.painter().centerY()),null);

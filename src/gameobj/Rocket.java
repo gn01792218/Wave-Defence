@@ -14,6 +14,12 @@ public class Rocket extends Actor{
     private boolean isempty;
     private Delay reloaddelay;
 
+    private BufferedImage empty_ES1;
+    private BufferedImage empty_ES2;
+    private BufferedImage empty_ES3;
+    private BufferedImage empty_ES4;
+    private BufferedImage empty_ES5;
+
     public Rocket(float x,float y,boolean isEnemy){
         super(x,y,50,50,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AARocket.png");
@@ -24,6 +30,11 @@ public class Rocket extends Actor{
         this.image_S3=ImageController.getInstance().tryGet("/AARocket_S3.png");
         this.image_S4=ImageController.getInstance().tryGet("/AARocket_S4.png");
         this.image_S5=ImageController.getInstance().tryGet("/AARocket_S5.png");
+        this.empty_ES1=ImageController.getInstance().tryGet("/AARocket_ES1.png");
+        this.empty_ES2=ImageController.getInstance().tryGet("/AARocket_ES2.png");
+        this.empty_ES3=ImageController.getInstance().tryGet("/AARocket_ES3.png");
+        this.empty_ES4=ImageController.getInstance().tryGet("/AARocket_ES4.png");
+        this.empty_ES5=ImageController.getInstance().tryGet("/AARocket_ES5.png");
         reloaddelay=new Delay(120);
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
@@ -172,7 +183,7 @@ public class Rocket extends Actor{
                     switch (skillName) {
                         case ATTACKUP:
                             if(isempty){ //要換圖，下面都要
-                                g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                g.drawImage(empty_ES1,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                                         0, 0,
                                         140, 180, null);
                             }else{
@@ -182,9 +193,8 @@ public class Rocket extends Actor{
                             }
                             break;
                         case DEFUP:
-
                             if(isempty){
-                                g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                g.drawImage(empty_ES2,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                                         0, 0,
                                         140, 180, null);
                             }else{
@@ -195,7 +205,7 @@ public class Rocket extends Actor{
                             break;
                         case MOVESPEEDUP:
                             if(isempty){
-                                g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                g.drawImage(empty_ES3,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                                         0, 0,
                                         140, 180, null);
                             }else{
@@ -206,7 +216,7 @@ public class Rocket extends Actor{
                             break;
                         case HPUP:
                             if(isempty){
-                                g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                g.drawImage(empty_ES4,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                                         0, 0,
                                         140, 180, null);
                             }else{
@@ -219,17 +229,17 @@ public class Rocket extends Actor{
                 }
 
             }else if(isReinforcement){ //要換圖
-                g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                        0, 0,
-                        140, 180, null);
                 if(isempty){
-                    g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                    g.drawImage(empty_ES5,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                            0, 0,
+                            140, 180, null);
+                }else{
+                    g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                             0, 0,
                             140, 180, null);
                 }
             }
             else { //平常時候
-
             }
                 if(isempty){
                     g.drawImage(emptyBullet,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),

@@ -23,6 +23,7 @@ public class Boss extends Actor{
         super(x,y,80,150,x,y,150,180);
         this.image= ImageController.getInstance().tryGet("/AE-Boss.png");
         this.image2=ImageController.getInstance().tryGet("/AE-Boss_S1.png");
+        this.image_S5=ImageController.getInstance().tryGet("/AE-Boss_S6.png");
         hpLimit=6000;//血量上限
         hp=hpLimit; //血量
         atk=100; //攻擊力
@@ -146,6 +147,10 @@ public class Boss extends Actor{
             g.drawImage(image2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                     this.cannonDirection.getValue() / 3 * 150, 0,
                     this.cannonDirection.getValue() / 3 * 150 + 150, 180, null);
+        }else  if(isOnDebuff){
+            g.drawImage(image_S5,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
+                    this.cannonDirection.getValue()/3*150,0,
+                    this.cannonDirection.getValue()/3*150+150,180,null);
         }else {
             g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                     this.cannonDirection.getValue() / 3 * 150, 0,

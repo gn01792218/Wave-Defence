@@ -13,7 +13,7 @@ public class Boss extends Actor{
     private float chargeSpeed;//衝鋒速度
     private int skillNum=0; //招式switch
     private Delay delay; //隨機選招的Delay
-    private Delay delayCharge;
+    private Delay delayCharge; //音效的delay
     public float tempX; //儲存上一動的位置
     public float tempY; //儲存上一動的位置
     private boolean isCharge;//假如使用了衝鋒攻擊後，就馬上改成普通攻擊
@@ -39,7 +39,8 @@ public class Boss extends Actor{
         this.delay=new Delay(240);
         this.tempX=this.painter().centerX();
         this.tempY=this.painter().centerY();
-        delayCharge=new Delay(30);
+        delayCharge=new Delay(60);
+        delayCharge.loop();
     }
 
     //衝撞直線上的敵人，隨機向戰場底部衝鋒，然後回到原位，並且對路徑上碰撞的敵人造成傷害
@@ -93,12 +94,10 @@ public class Boss extends Actor{
                         fire(targetX,targetY);
                         tempx=this.painter().centerX();
                         tempy=this.painter().centerY();
-                        System.out.println("上一棟座標"+tempx+" "+tempy);
                     }else{
                         move(targetX,targetY,alliance);
                     }
                 }
-                System.out.println("使用普通攻擊");
                 break;
             case 1: //隨機衝鋒攻擊，要回到原本的位置
                 this.isCharge=true;
@@ -120,18 +119,13 @@ public class Boss extends Actor{
                     }
                     final float targetX = target.centerX();
                     final float targetY = target.centerY();
-                    moveToTarget(targetX,targetY);
-                    System.out.println("移動到"+targetX+" "+targetY);
+                    move(targetX,targetY,alliance);
                     delayCharge.play();
                     charge(actors);
-                    moveToTarget(tempx,tempy);
-//                    if(delayCharge.count()) {
-//                        moveToTarget(tempx,tempy);
-//                        this.isCharge=false;
-//                        System.out.println("返回位置" + tempx + " " + tempy);
-//                    }
+                    if(delayCharge.count()){
+                        AudioResourceController.getInstance().shot("/AE-BossSound2.wav");
+                    }
                 }
-                System.out.println("使用衝鋒攻擊");
                 break;
         }
     }

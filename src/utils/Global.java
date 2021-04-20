@@ -14,14 +14,12 @@ public class Global {
     private static ArrayList<Actor> enemyActors;//敵軍角色陣列，提供選單角色資訊用
     private static DecimalFormat frmt; //用來格式化浮點數輸出的工具
     private static int level=1;
-
     public static int getLevel() {
         return level;
     }
     public static void addLevel(){
         level++;
     }
-
     public enum SkillName {
         ATTACKUP,
         DEFUP,
@@ -91,17 +89,17 @@ public class Global {
     public static ArrayList<ActorButton> getActorButtons() {
         if (actorButtons == null) { //假如沒有 才做角色按鈕
             actorButtons = new ArrayList<>();//角色參數: 座標 Style Type Cost
-            ActorButton tank1 = new ActorButton(600, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
+            ActorButton tank1 = new ActorButton(500, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
                     Global.ActorType.TANK1, 250);
-            ActorButton tank2 = new ActorButton(200, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
+            ActorButton tank2 = new ActorButton(1000, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
                     Global.ActorType.TANK2, 280);
-//            ActorButton laserCar=new ActorButton(650,450,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
-//                    Global.ActorType.LASERCAR,300);
-            ActorButton rocket=new ActorButton(650,450,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
+            ActorButton laserCar=new ActorButton(1500,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
+                    Global.ActorType.LASERCAR,300);
+            ActorButton rocket=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
                     ActorType.ROCKET,500);
             actorButtons.add(tank1);
             actorButtons.add(tank2);
-//            actorButtons.add(laserCar);
+            actorButtons.add(laserCar);
             actorButtons.add(rocket);
         }
         return actorButtons;

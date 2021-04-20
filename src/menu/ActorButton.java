@@ -29,10 +29,10 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
     public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost) { //輸入的xy是左上角
         super(x, y, style);
         this.actorType=actorType;
-        numberLabel=new Label(this.right()-200,this.top(),new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
+        numberLabel=new Label(850,150,new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
         this.costMoney=cost;
-        costLabel=new Label(this.right()-200,this.top()+100,new Style.StyleRect(0,0,true,null));
-        info=new Button(this.left(),this.bottom()-200,new Style.StyleRect(300,468
+        costLabel=new Label(850,250,new Style.StyleRect(0,0,true,null));
+        info=new Button(350,100,new Style.StyleRect(300,468
                 ,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/InfoB2-300.png"))));
         infoVisable=false;
 
@@ -41,25 +41,25 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
                 for(int j=0;j<6;j++) {
                     if(j==0) {
                         Global.getFrmt().setMaximumFractionDigits(0);
-                        hpLimit = new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        hpLimit = new Label(340+ 60,  125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("血量上限 :" + Global.getFrmt().format(alliances.get(i).getHpLimit())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==1) {
                         Global.getFrmt().setMaximumFractionDigits(0);
-                        atk = new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        atk = new Label(340+ 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("攻擊力 :" + Global.getFrmt().format(alliances.get(i).getAtk())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==2){
-                        def=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        def=new Label(340+ 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("防禦力 :" + alliances.get(i).getDef()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==3){
                         Global.getFrmt().setMaximumFractionDigits(0);
-                        atkdis=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        atkdis=new Label(340+ 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("攻擊距離 :" + Global.getFrmt().format(alliances.get(i).getAtkdis())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else if(j==4){
-                        atkSpeed=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        atkSpeed=new Label(340+ 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("攻擊速度 :" + 60/alliances.get(i).getAtkSpeed().getCountLimit()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }else{
                         Global.getFrmt().setMaximumFractionDigits(2);
-                        speed=new Label(this.left() + 60, this.top() + 330 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
+                        speed=new Label(340+ 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                 setText("移動速度 :"+Global.getFrmt().format(alliances.get(i).getSpeed())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                     }
                 }
@@ -100,11 +100,11 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
         if(numberLabel!=null){
-            numberLabel.getPaintStyle().setText("目前數量"+this.number+"");  //一定要用Style設置，才會顯示文字唷!!
+            numberLabel.getPaintStyle().setText("目前數量"+this.number+"").setTextFont(new Font("標楷體",Font.ITALIC,42));  //一定要用Style設置，才會顯示文字唷!!
             numberLabel.paint(g);
         }
         if(costLabel!=null) {
-            costLabel.getPaintStyle().setText("花費: "+costMoney);
+            costLabel.getPaintStyle().setText("花費: "+costMoney).setTextFont(new Font("標楷體",Font.ITALIC,42));
             costLabel.paint(g);
         }
         if(infoVisable){ //是顯示的時候才要畫出來

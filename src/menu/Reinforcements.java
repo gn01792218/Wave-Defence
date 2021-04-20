@@ -95,7 +95,6 @@ public class Reinforcements extends SkillButton{
         if(info!=null && infoVisable){ info.paint(g);}
 
         if(!isUnLocked && lockLabel!=null){
-            System.out.println("畫了ELECTWAVE");
             lockLabel.paint(g);
             label.getPaintStyle().setText("解鎖花費:"+this.unLockCost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
         }else{

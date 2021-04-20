@@ -24,17 +24,20 @@ public class UserScene extends Scene{
     private ArrayList<SkillButton> skillButtons;
     private Button roundStart;// 進入回合的按鈕
     private Button secrt;//機密檔案(敵軍資料)按鈕
+    private Button arrowR;
+    private Button arrowL;
 
     @Override
     public void sceneBegin() {
         //進入回合的按鈕
-
         roundStart=new Button(900,600,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         secrt=new Button(1350, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
             skillButtons=Global.getSkillButtons();//得到Global的技能按鈕
+        arrowR=new Button(1200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/ButtonR.png"))));
+        arrowL=new Button(200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/ButtonL.png"))));
     }
     @Override
     public void sceneEnd() {
@@ -47,6 +50,7 @@ public class UserScene extends Scene{
                 if(state!=null){
                     switch (state){
                         case MOVED: //負責監聽浮現的資訊欄
+                            System.out.println(e.getX()+" "+e.getY());
                             for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
                                 if(actorButtons.get(i).isTouch(e.getX(),e.getY())){ //移動到角色上會有訊息欄
                                     //座標產生資訊圖片-->把角色圖片資訊設成visabl
@@ -93,7 +97,7 @@ public class UserScene extends Scene{
                                         }
                                     }
                                 }
-                                for(int i=0;i<skillButtons.size();i++){         //3.技能購買
+                                for(int i=0;i<skillButtons.size();i++){  //3.技能購買
                                     if(skillButtons.get(i).isTouch(e.getX(),e.getY()) &&
                                             !skillButtons.get(i).getIsSelect()){ //被點中 且還沒被點過時
                                          if(skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor()>=skillButtons.get(i).getCost()) { //且已經解鎖了  且有榮譽職
@@ -107,7 +111,25 @@ public class UserScene extends Scene{
                                          }
                                     }
                                 }
+                                if(arrowR.isTouch(e.getX(),e.getY())){//右箭頭-->最底是火箭
+                                    if(actorButtons.get(0).left()<500 ) {
+                                        for (int i = 0; i < actorButtons.size(); i++) {//全部都不能動
+                                            System.out.println("右鍵+++");
+                                            actorButtons.get(i).offSetXY(500, 0);
+                                        }
+                                    }
+
+                                }
+                                if(arrowL.isTouch(e.getX(),e.getY())){ //左箭頭-->最底是Tank1
+                                    if(actorButtons.get(3).left()>500) {
+                                        for (int i = 0; i < actorButtons.size(); i++) {
+                                            System.out.println("左鍵+++++");
+                                            actorButtons.get(i).offSetXY(-500, 0);
+                                        }
+                                    }
+                                }
                             }
+
                             if(e.getButton()==3){//點擊右鍵
                                 for(int i=0;i<actorButtons.size();i++){ //1.角色升級
                                     if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
@@ -137,9 +159,14 @@ public class UserScene extends Scene{
         for(int i=0;i<skillButtons.size();i++){
             skillButtons.get(i).paint(g);
         }
+
         for(int i=0;i<actorButtons.size();i++){
-            actorButtons.get(i).paint(g);
+            if(actorButtons.get(i).left()<900 && actorButtons.get(i).right()>500) {
+                actorButtons.get(i).paint(g);
+            }
         }
+        arrowR.paint(g);
+        arrowL.paint(g);
     }
     @Override
     public void update() {

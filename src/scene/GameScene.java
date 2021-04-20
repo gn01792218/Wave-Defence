@@ -95,9 +95,6 @@ public class GameScene extends Scene {
                 }
             }
         }
-        for(int i=0;i<skill.size();i++){
-            System.out.println(skill.get(i).getSkillName());
-        }
         //做軍隊
         alliance = new ArrayList<>();
         enemys = new ArrayList<>();
@@ -210,7 +207,7 @@ public class GameScene extends Scene {
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);
         }
-
+        Player.getInstance().paint(g);
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override

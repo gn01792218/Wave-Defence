@@ -93,10 +93,16 @@ public class UserScene extends Scene{
                                     }
                                 }
                                 for(int i=0;i<skillButtons.size();i++){         //3.技能購買
-                                    if(skillButtons.get(i).isTouch(e.getX(),e.getY()) && Player.getInstance().getHonor()>=skillButtons.get(i).getCost() &&
-                                            !skillButtons.get(i).getIsSelect()){ //被點中 且有榮譽職 且還沒被點過時
-                                        skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
-                                        Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
+                                    if(skillButtons.get(i).isTouch(e.getX(),e.getY()) &&
+                                            !skillButtons.get(i).getIsSelect()){ //被點中 且還沒被點過時
+                                         if(skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor()>=skillButtons.get(i).getCost()) { //且已經解鎖了  且有榮譽職
+                                             skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
+                                             Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
+                                         }else if(!skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor()>=skillButtons.get(i).getUnLockCost()){
+                                             //還沒解鎖 且 榮譽值大於等於解鎖的錢時
+                                             skillButtons.get(i).setUnLocked(true); //設定成已經解鎖
+                                             Player.getInstance().offsetHonor(-skillButtons.get(i).getUnLockCost()); //扣榮譽值!
+                                         }
                                     }
 
                                 }

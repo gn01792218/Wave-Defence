@@ -18,6 +18,7 @@ public class DefUp extends SkillButton{
         info.getPaintStyle().setText("全體防禦力+"+defEffect+"("+defEffect*10+"成)，持續"+bufftime/60+"秒");
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost).setTextFont(new Font("標楷體",Font.ITALIC,22)));
         infoVisable=false; //一開始不顯現
+        this.isUnLocked=true;//一開始就是被解鎖的
     }
 
     @Override

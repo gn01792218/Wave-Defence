@@ -1,5 +1,6 @@
 package menu;
 
+import controllers.ImageController;
 import gameobj.*;
 import utils.Delay;
 import utils.Global;
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Reinforcements extends SkillButton{
-
+    private Label lockLabel;// 鎖住的圖片
     private Label label;
     private final int reinforcementsNum=2; //召喚兩隻援軍
     private final int bufftime=600; //持續X/60秒
@@ -21,7 +22,10 @@ public class Reinforcements extends SkillButton{
         info.getPaintStyle().setText("隨機呼叫"+reinforcementsNum+"個援軍"+bufftime/60+"秒後離開").
                 setTextFont(new Font("標楷體",Font.ITALIC,22));
         infoVisable=false; //一開始不顯現
-        this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費"+this.cost).setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        this.lockLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock1.png"))));
+        this.unLockCost=250;//花250可以解鎖
+        this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null));
+        this.isUnLocked=false;//需要解鎖
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {
@@ -91,6 +95,13 @@ public class Reinforcements extends SkillButton{
         if(info!=null && infoVisable){ info.paint(g);}
         if(label!=null && infoVisable){
             label.paint(g);
+        }
+        if(!isUnLocked && lockLabel!=null){
+            System.out.println("畫了ELECTWAVE");
+            lockLabel.paint(g);
+            label.getPaintStyle().setText("解鎖花費:"+this.unLockCost).setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
+        }else{
+            label.getPaintStyle().setText("花費:"+this.cost).setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
         }
     }
 }

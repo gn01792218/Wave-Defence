@@ -15,6 +15,7 @@ public class HpUp extends SkillButton{
         info.getPaintStyle().setText("全體回復血量到最大上限");
         infoVisable=false; //一開始不顯現
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost).setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        this.isUnLocked=true;//一開始就是被解鎖的
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {

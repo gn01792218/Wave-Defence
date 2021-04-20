@@ -5,6 +5,7 @@ import utils.Delay;
 import utils.Global;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class SkillButton extends Button { //目前只有UserScene場景中會用到，所以放在UserScene就好
@@ -14,6 +15,9 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     protected boolean isSelect;// 被選中否
     protected Delay buffTime;//技能持續時間
     protected boolean isUsed; //是否被施放過了
+    protected boolean isUnLocked;// 是否被解鎖了-->需要再弄
+    protected int unLockCost;//解鎖的錢-->需要再弄
+
 
     //在User場景中new就好了
     private Global.SkillName skillName;
@@ -28,6 +32,15 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
         info=new Button(this.left(),this.top()-50,new Style.StyleRect(100,60,
                 null).setTextFont(new Font("標楷體",Font.ITALIC,22)));
     }
+
+    public boolean isUnLocked() {
+        return isUnLocked;
+    }
+
+    public int getUnLockCost() {
+        return unLockCost;
+    }
+
     public void setSelect(boolean isSelect){
         this.isSelect=isSelect;
     }
@@ -42,6 +55,15 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     }
     public Global.SkillName getSkillName() {
         return skillName;
+    }
+
+    public void setUnLocked(boolean unLocked) {
+        isUnLocked = unLocked;
+    }
+
+
+    public void setUnLockCost(int unLockCost) {
+        this.unLockCost = unLockCost;
     }
 
     public Delay getBuffTime() {

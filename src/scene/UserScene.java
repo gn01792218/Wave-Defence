@@ -92,7 +92,7 @@ public class UserScene extends Scene{
                                         }
                                     }
                                 }
-                                for(int i=0;i<skillButtons.size();i++){ //3.技能購買
+                                for(int i=0;i<skillButtons.size();i++){         //3.技能購買
                                     if(skillButtons.get(i).isTouch(e.getX(),e.getY()) && Player.getInstance().getHonor()>=skillButtons.get(i).getCost() &&
                                             !skillButtons.get(i).getIsSelect()){ //被點中 且有榮譽職 且還沒被點過時
                                         skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可

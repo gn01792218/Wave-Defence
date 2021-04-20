@@ -3,12 +3,12 @@ package utils;
 public class Delay {
 
     //設計delay的COUNT的設置改變
-    private int count; //計時器，計算當下經過的偵數
+    private float count; //計時器，計算當下經過的偵數
     private float countLimit;// 計數的上限(總共要記幾禎)
     private boolean isPause;//是否暫停記數
     private boolean isLoop;//是否進行週期性的延遲
     //建構子
-    public Delay(int countLimit){
+    public Delay(float countLimit){
         this.countLimit=countLimit;
         count=0;
         isPause=true; //剛開始的時候沒有要記時
@@ -16,7 +16,7 @@ public class Delay {
     }
 
 
-    public int getCount() {
+    public float getCount() {
         return count;
     }
     public float getCountLimit() {

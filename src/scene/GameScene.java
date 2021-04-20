@@ -44,7 +44,11 @@ public class GameScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
+        if(Global.getLevel()==1){
+            image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
+        }else if(Global.getLevel()==2){
+            image = ImageController.getInstance().tryGet("/GameScene2.png");
+        }
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
         delayRound = new Delay(600); //開場前delay前20秒
@@ -61,19 +65,19 @@ public class GameScene extends Scene {
             if(temp.get(i).getIsSelect()) { //有被選中的才new出來
                 switch (temp.get(i).getSkillName()) {
                     case ATTACKUP:
-                        skill.add(new AttackUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new AttackUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //把Global的技能按鈕設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case HPUP:
-                        skill.add(new HpUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new HpUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case DEFUP:
-                        skill.add(new DefUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new DefUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case MOVESPEEDUP:
-                        skill.add(new SpeedUp(500+i*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new SpeedUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case REINFORCEMENTS:
@@ -82,8 +86,17 @@ public class GameScene extends Scene {
                         break;
                     case  ELECTWAVE:
                         skill.add(new ElectWave(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost()));
+                        temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        break;
+                    case ATKSPEEDUP:
+                        skill.add(new AtkSpeedUp(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost()));
+                        temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        break;
                 }
             }
+        }
+        for(int i=0;i<skill.size();i++){
+            System.out.println(skill.get(i).getSkillName());
         }
         //做軍隊
         alliance = new ArrayList<>();
@@ -206,7 +219,7 @@ public class GameScene extends Scene {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
                     if (skill.get(i).getBuffTime().count()) {
-                        if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){//電磁波的~!
+                        if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
                             skill.get(i).skillReset(enemys);
                         }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
                         skill.remove(i); //移除技能~
@@ -277,23 +290,43 @@ public class GameScene extends Scene {
         }
 
         //產生敵軍
-        if (step==2) { //敵軍可以移動時
+        if (Global.getLevel()==1 && step==2) {//敵軍可 以移動時
             if(count==1){
                 //做敵軍第一波
-                for (int i = 0; i < 1; i++) {  //第一波敵人5-10隻
-                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
+                for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
+                    enemys.add(new Enemy1(Global.random(500, 1000), Global.random(350, 400), true));
                 }
             }
-            //測試用:假如敵軍全消滅，再生成敵軍出來
+
             if (count == 2) {  //
                 if (enemys.size() == 0) { //當敵軍
                     for (int i = 0; i < 10; i++) {
-                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                    }
+                }
+            }
+            if(count ==3){
+                if (enemys.size() == 0) { //當敵軍
+                    for (int i = 0; i < 10; i++) {
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
                     }
                 }
             }
             step++;
         }
+        if (Global.getLevel()==2 && step==2) {//敵軍可 以移動時
+            if(count==1){
+                //做敵軍第一波
+                for (int i = 0; i < Global.random(5, 10); i++) {  //第一波敵人5-10隻
+                    enemys.add(new Enemy1(Global.random(400, 1200), Global.random(300, 450), true));
+                }
+                for (int i = 0; i < Global.random(2, 4); i++) {  //第一波敵人5-10隻
+                    enemys.add(new Enemy2(Global.random(400, 1200), Global.random(300, 450), true));
+                }
+            }
+            step++;
+        }
+        //戰鬥中
         if (step == 3) {
             if(enemys.size()==0){
                 step=1;

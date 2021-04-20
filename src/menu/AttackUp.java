@@ -30,8 +30,6 @@ public class AttackUp extends SkillButton {
             actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
             actors.get(i).offsetAtk(actors.get(i).getAtk()*atkEffect); //本身攻擊力*0.5  x+x*1.5
             actors.get(i).setOnBuff(true); //標示為Buff狀態
-
-
             System.out.println("第"+(i+1)+"台增加攻擊力為"+actors.get(i).getAtk()); //測試用，外面要記得打印攻擊力測試時間內的攻擊力
         }
     }

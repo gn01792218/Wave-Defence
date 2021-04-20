@@ -13,6 +13,14 @@ public class Global {
     private static ArrayList<Actor> allianceActors;//我軍角色陣列，提供選單的角色資訊用
     private static ArrayList<Actor> enemyActors;//敵軍角色陣列，提供選單角色資訊用
     private static DecimalFormat frmt; //用來格式化浮點數輸出的工具
+    private static int level=1;
+
+    public static int getLevel() {
+        return level;
+    }
+    public static void addLevel(){
+        level++;
+    }
 
     public enum SkillName {
         ATTACKUP,
@@ -21,8 +29,8 @@ public class Global {
         HPUP,
         REINFORCEMENTS,
         ELECTWAVE,
+        ATKSPEEDUP,
     }
-
     public enum ActorType {
         TANK1,
         TANK2,
@@ -35,7 +43,6 @@ public class Global {
         BOSS,
 
     }
-
     public static ArrayList<Actor> getAllianceActors() {
         allianceActors = new ArrayList<>(); //每次需要的時候new新的以更新資訊
         allianceActors.add(new Tank1(0, 0, false));
@@ -57,14 +64,16 @@ public class Global {
             SkillButton defSkillButton = new DefUp(100 + SkillButtonDis, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-def.gif"))), Global.SkillName.DEFUP, 500);
             SkillButton speedButton = new SpeedUp(100 + SkillButtonDis * 2, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-speed.gif"))), Global.SkillName.MOVESPEEDUP, 450);
             SkillButton hpButton = new HpUp(100 + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.HPUP, 500);
-            SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.REINFORCEMENTS, 550);
-            SkillButton electWave=new ElectWave(100+SkillButtonDis, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), SkillName.ELECTWAVE, 550);
+            SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.gif"))), Global.SkillName.REINFORCEMENTS, 550);
+            SkillButton electWave=new ElectWave(100+SkillButtonDis, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-electWave.gif"))), SkillName.ELECTWAVE, 550);
+            SkillButton atkSpeedUp=new AtkSpeedUp(100+SkillButtonDis*2, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-atkSpeedUp.gif"))), SkillName.ATKSPEEDUP, 550);
             skillButtons.add(attackSkillButton);
             skillButtons.add(defSkillButton);
             skillButtons.add(speedButton);
             skillButtons.add(hpButton);
             skillButtons.add(reinforcement);
             skillButtons.add(electWave);
+            skillButtons.add(atkSpeedUp);
         }
         return skillButtons;
     }
@@ -209,16 +218,40 @@ public class Global {
     public static final int BOUNDARY_Y1=180;
     public static final int BOUNDARY_Y2=750;
     public static final boolean isTouchY1(float x,float y){
-        return y<=200;
+        Boolean result=false;
+        if(Global.getLevel()==1){
+            result = (y<=200);
+        }else if(Global.getLevel()==2){
+            result= (y<=308);
+        }
+        return result;
     }
     public static final boolean isTouchY2(float x,float y){
-        return y>=790;
+        Boolean result=false;
+        if(Global.getLevel()==1){
+            result = (y>=790);
+        }else if(Global.getLevel()==2){
+            result= (103*y>=x+73474);
+        }
+        return result;
     }
     public static final boolean isTouchX1(float x,float y){
-        return 19*y <=52530-112*x;
+        Boolean result=false;
+        if(Global.getLevel()==1){
+            result= (19*y <=52530-112*x);
+        }else if(Global.getLevel()==2){
+            result= (73*y >=204*x-42376);
+        }
+        return result;
     }
     public static final boolean isTouchX2(float x,float y){
-        return 21*y <= 112*x-124530;
+        Boolean result=false;
+        if(Global.getLevel()==1){
+            result= (21*y <= 112*x-124530);
+        }else if(Global.getLevel()==2){
+            result= (163*y>=597120-446*x);
+        }
+        return result;
     }
     // 視窗大小
     public static final int WINDOW_WIDTH = 1600;

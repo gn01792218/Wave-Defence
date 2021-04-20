@@ -83,7 +83,11 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
     public boolean isCollision(GameObject obj) {
         return collider.overlap(obj.collider);
     }
-
+    public boolean offsetRect(float x, float y,Rect actor){
+        Rect result = new Rect(this.collider);
+        result.offSet(x,y);
+        return result.overlap(actor);
+    }
     public boolean topIsCollision(GameObject obj) {
         return collider.top()<=obj.collider.bottom() &&
                 obj.collider.left()<collider.right()&&
@@ -127,7 +131,6 @@ public abstract class GameObject implements GameKernel.UpdateInterface,GameKerne
         this.collider.offSet(x,y);
         this.painter.offSet(x,y);
     }
-
 
     //碰撞
     public final Rect collider() {

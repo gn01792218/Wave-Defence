@@ -22,6 +22,7 @@ public abstract class Actor extends GameObject {
     protected double hp;
     protected double atk;
     protected Delay atkSpeed;
+    protected float atkSpeedLimit;
 
     protected float speed;
     protected double def;
@@ -78,6 +79,10 @@ public abstract class Actor extends GameObject {
         return hpLimit;
     }
 
+    public float getAtkSpeedLimit() {
+        return atkSpeedLimit;
+    }
+
     public boolean isOnDebuff() {
         return isOnDebuff;
     }
@@ -123,6 +128,11 @@ public abstract class Actor extends GameObject {
     }
 
     //set方法
+
+    public void setAtkSpeedLimit(float atkSpeedLimit) {
+        this.atkSpeedLimit = atkSpeedLimit;
+    }
+
     public void setStrategyXY(float x, float y) {//傳入座標點(flag旗幟，或是出生的起始位置等等來設定要他固守的位置)
         flag.setCenter(x,y);
     }
@@ -227,11 +237,10 @@ public abstract class Actor extends GameObject {
     //獲得種類的方法，回傳Global的enum
     public abstract Global.ActorType getType();
 
-    //朝目標移動
     public void move(float x ,float y, ArrayList<Actor> alliance) {
         //根據目標位置移動
         Global.Trigonometric trigonometric = new Global.Trigonometric(this.collider().centerX(), this.collider().centerY(),
-                x,y);
+                x, y);
         int atkAngle = trigonometric.getDegree() + 270;
         if (atkAngle <= 180) {
             this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
@@ -245,96 +254,172 @@ public abstract class Actor extends GameObject {
             float d = (float) Math.sqrt(a * a + b * b); //斜邊
             //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
             //但需要解決和我軍重疊的問題
-            if ((this.collider().centerX()<x-speed || this.collider().centerX()>x+speed) ||
-                    (this.collider().centerY()<y-speed || this.collider().centerY()>y+speed)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+            if ((this.collider().centerX() < x - speed || this.collider().centerX() > x + speed) ||
+                    (this.collider().centerY() < y - speed || this.collider().centerY() > y + speed)) {  //大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
                 float xM = a / d * speed; //x向量
                 float yM = b / d * speed; //y向量
+
+                if (x < this.collider().centerX()) {
+                    xM =-xM;
+                }
+                if (y < this.collider().centerY()) {
+                    yM =-yM;
+                }
 
                 boolean leftIsTouch = false;
                 boolean rightIsTouch = false;
                 boolean topIsTouch = false;
                 boolean bottomIsTouch = false;
+                Rect left = null;
+                Rect right = null;
+                Rect top = null;
+                Rect bottom = null;
 
-                //檢查跟友軍是否碰撞
-                for (int i = 0; i < alliance.size(); i++) {
-                    //排除自己
+                for(int i=0;i<alliance.size();i++) {
                     if (this.collider().centerX() == alliance.get(i).collider().centerX() &&
                             this.collider().centerY() == alliance.get(i).collider().centerY()) {
                         continue;
-                    }
-
-                    if (this.leftIsCollision(alliance.get(i))){
-                        leftIsTouch = true;
-                    }
-                    if (this.rightIsCollision(alliance.get(i))){
+                    } else if (this.offsetRect(this.speed, 0, alliance.get(i).collider())) {
                         rightIsTouch = true;
-                    }
-                    if (this.bottomIsCollision(alliance.get(i))){
+                        right = new Rect(alliance.get(i).collider());
+                    } else if (this.offsetRect(-this.speed, 0, alliance.get(i).collider())) {
+                        leftIsTouch = true;
+                        left = new Rect(alliance.get(i).collider());
+                    } else if (this.offsetRect(0, this.speed, alliance.get(i).collider())) {
                         bottomIsTouch = true;
-                    }
-                    if (this.topIsCollision(alliance.get(i))) {
+                        bottom = new Rect(alliance.get(i).collider());
+                    } else if (this.offsetRect(0, -this.speed, alliance.get(i).collider())){
                         topIsTouch = true;
+                        top = new Rect(alliance.get(i).collider());
                     }
                 }
+
                 //假設只有一個方面沒有碰撞
                 if(leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
                     offSet(0,0);
+                    System.out.println("leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch");
                     return;
                 }else if(leftIsTouch && rightIsTouch && !topIsTouch && bottomIsTouch){
                     offSet(0,-speed);
+                    System.out.println("leftIsTouch && rightIsTouch && !topIsTouch && bottomIsTouch");
                     return;
                 }else if(leftIsTouch && !rightIsTouch && topIsTouch && bottomIsTouch){
                     offSet(speed,0);
+                    System.out.println("leftIsTouch && !rightIsTouch && topIsTouch && bottomIsTouch");
                     return;
                 }else if(!leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
                     offSet(-speed,0);
+                    System.out.println("!leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch");
                     return;
                 }else if(leftIsTouch && rightIsTouch && topIsTouch && !bottomIsTouch){
                     offSet(0,speed);
+                    System.out.println("leftIsTouch && rightIsTouch && topIsTouch && !bottomIsTouch");
                     return;
                 }
 
                 if(leftIsTouch && rightIsTouch){
+                    if(xM>0){
+                        if(y>right.centerY()){
+                            yM=speed;
+                        }else {
+                            yM=-speed;
+                        }
+                    }else{
+                        if(y>left.centerY()){
+                            yM=speed;
+                        }else {
+                            yM=-speed;
+                        }
+                    }
                     xM=0;
-                    yM=speed;
+                    System.out.println("eftIsTouch && rightIsTouch");
                 }else if(topIsTouch && rightIsTouch){
-                    xM=speed;
+                    if(xM<0){
+                        xM=-speed;
+                        yM=0;
+                    }else{
+                        xM=0;
+                        yM=-speed;
+                    }
+                    System.out.println("topIsTouch && rightIsTouch");
+                }else if(topIsTouch && leftIsTouch){
+                    if(xM>0){
+                        xM=speed;
+                        yM=0;
+                    }else{
+                        xM=0;
+                        yM=-speed;
+                    }
+                    System.out.println("leftIsTouch && topIsTouch");
+                }else if(topIsTouch && bottomIsTouch){
+                    if(xM>0){
+                        xM=speed;
+                    }else {
+                        xM=-speed;
+                    }
                     yM=0;
-                }else if(leftIsTouch && topIsTouch){
-                    xM=0;
-                    yM=speed;
-                }else if(rightIsTouch && topIsTouch){
-                    xM=0;
-                    yM=speed;
+                    System.out.println("rightIsTouch && topIsTouch");
                 }else if(leftIsTouch && bottomIsTouch){
-                    xM=speed;
-                    yM=0;
+                    if(xM>0){
+                        if(yM>0){
+                            xM=speed;
+                            yM=0;
+                        }
+                    }else{
+                        xM=0;
+                        yM=-speed;
+                    }
+                    System.out.println("leftIsTouch && bottomIsTouch");
                 }else if(rightIsTouch && bottomIsTouch){
-                    xM=speed;
+                    if(xM<0){
+                        if(yM>0){
+                            xM=-speed;
+                            yM=0;
+                        }
+                    }else{
+                        xM=0;
+                        yM=speed;
+                    }
+                    System.out.println("rightIsTouch && bottomIsTouch");
+                }else if(topIsTouch){
+                    if(x>top.centerX()){
+                        xM=speed;
+                    }else {
+                        xM=-speed;
+                    }
                     yM=0;
-                }else if(topIsTouch && y<this.collider().centerY()){
-                    xM=speed;
+                    System.out.println("topIsTouch");
+                }else if(bottomIsTouch){
+                    if(x>bottom.centerX()){
+                        xM=speed;
+                    }else {
+                        xM=-speed;
+                    }
                     yM=0;
-                }else if(bottomIsTouch && y>this.collider().centerY()){
-                    xM=speed;
-                    y=0;
-                }else if(leftIsTouch && x<this.collider().centerX()){
+                    System.out.println("bottomIsTouch");
+                }else if(leftIsTouch){
+                    if(y>left.centerY()){
+                        yM=speed;
+                    }else {
+                        yM=-speed;
+                    }
                     xM=0;
-                    y=speed;
-                }else if(rightIsTouch && x>this.collider().centerX()){
+                    System.out.println("leftIsTouch");
+                }else if(rightIsTouch){
+                    if(y>right.centerY()){
+                        yM=speed;
+                    }else {
+                        yM=-speed;
+                    }
                     xM=0;
-                    y=speed;
+                    System.out.println("rightIsTouch");
+                }
+                if(!leftIsTouch &&!rightIsTouch &&!topIsTouch &&!bottomIsTouch){
+                    System.out.println("SAFE");
                 }
 
-                if(x<this.collider().centerX()){
-                    xM = -xM;
-                }
-                if(y<this.collider().centerY()){
-                    yM = -yM;
-                }
-
+                System.out.println("X："+xM+"/Y:"+yM);
                 this.offSet(xM,yM);
-
             }
         }
     }

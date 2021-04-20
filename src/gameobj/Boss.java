@@ -22,11 +22,13 @@ public class Boss extends Actor{
     public Boss(float x,float y,boolean isEnemy){
         super(x,y,80,150,x,y,150,180);
         this.image= ImageController.getInstance().tryGet("/AE-Boss.png");
+        this.image2=ImageController.getInstance().tryGet("/AE-Boss_S1.png");
         hpLimit=6000;//血量上限
         hp=hpLimit; //血量
         atk=100; //攻擊力
         this.chargeAtk=1;//衝鋒攻擊傷害 每秒扣60
         atkSpeed=new Delay(210); //攻速
+        this.atkSpeedLimit=atkSpeed.getCountLimit();
         chargeSpeed=6;//衝鋒速度
         speed=1.2f; //移動速度
         def=0.55; //防禦力
@@ -274,9 +276,15 @@ public class Boss extends Actor{
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(image,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
-                this.cannonDirection.getValue()/3*150,0,
-                this.cannonDirection.getValue()/3*150+150,180,null);
+        if(isCharge){
+            g.drawImage(image2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                    this.cannonDirection.getValue() / 3 * 150, 0,
+                    this.cannonDirection.getValue() / 3 * 150 + 150, 180, null);
+        }else {
+            g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                    this.cannonDirection.getValue() / 3 * 150, 0,
+                    this.cannonDirection.getValue() / 3 * 150 + 150, 180, null);
+        }
         //血條
         g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(7.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom()+11,
                 0,0,75,11,null);

@@ -8,8 +8,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ElectWave extends SkillButton{
-    private int bufftime=180; //敵軍全體暫停3秒
+
+    private int bufftime=240; //敵軍全體暫停4秒
     private Label label;
+
     public ElectWave(int x, int y, Style style, Global.SkillName skillName, int cost){
         super(x,y,style,skillName,cost);
         this.buffTime=new Delay(bufftime);//增基攻擊力時間持續5秒
@@ -29,9 +31,9 @@ public class ElectWave extends SkillButton{
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
-            actors.get(i).setSkillName(null);
             actors.get(i).setOnDebuff(false);
         }
+        setUsed(true); //被施放過了
     }
     @Override
     public void paint(Graphics g){

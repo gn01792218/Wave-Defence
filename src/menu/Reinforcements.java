@@ -23,7 +23,7 @@ public class Reinforcements extends SkillButton{
                 setTextFont(new Font("標楷體",Font.ITALIC,22));
         infoVisable=false; //一開始不顯現
         this.lockLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock1.png"))));
-        this.unLockCost=250;//花250可以解鎖
+        this.unLockCost=650;//花500可以解鎖
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null));
         this.isUnLocked=false;//需要解鎖
     }
@@ -93,15 +93,16 @@ public class Reinforcements extends SkillButton{
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
         if(info!=null && infoVisable){ info.paint(g);}
-        if(label!=null && infoVisable){
-            label.paint(g);
-        }
+
         if(!isUnLocked && lockLabel!=null){
             System.out.println("畫了ELECTWAVE");
             lockLabel.paint(g);
-            label.getPaintStyle().setText("解鎖花費:"+this.unLockCost).setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
+            label.getPaintStyle().setText("解鎖花費:"+this.unLockCost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
         }else{
-            label.getPaintStyle().setText("花費:"+this.cost).setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
+            label.getPaintStyle().setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
+        }
+        if(label!=null && infoVisable){
+            label.paint(g);
         }
     }
 }

@@ -1,5 +1,6 @@
 package scene;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
 import menu.*;
@@ -100,11 +101,11 @@ public class UserScene extends Scene{
                                              Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
                                          }else if(!skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor()>=skillButtons.get(i).getUnLockCost()){
                                              //還沒解鎖 且 榮譽值大於等於解鎖的錢時
+                                             AudioResourceController.getInstance().shot("/skillSound.wav");
                                              skillButtons.get(i).setUnLocked(true); //設定成已經解鎖
                                              Player.getInstance().offsetHonor(-skillButtons.get(i).getUnLockCost()); //扣榮譽值!
                                          }
                                     }
-
                                 }
                             }
                             if(e.getButton()==3){//點擊右鍵

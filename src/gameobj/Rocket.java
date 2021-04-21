@@ -20,6 +20,12 @@ public class Rocket extends Actor{
     private BufferedImage empty_ES4;
     private BufferedImage empty_ES5;
     private BufferedImage empty_EB;
+    protected BufferedImage image_S1;//技能1圖片
+    protected BufferedImage image_S2;// 技能2圖片
+    protected BufferedImage image_S3;//技能3圖片
+    protected BufferedImage image_S4;//技能4圖片
+    protected BufferedImage image_S5;//技能5圖片
+    protected BufferedImage image_S7;//技能7圖片
 
     public Rocket(float x,float y,boolean isEnemy){
         super(x,y,50,50,x,y,75,90);
@@ -37,6 +43,7 @@ public class Rocket extends Actor{
         this.empty_ES4=ImageController.getInstance().tryGet("/AARocket_ES4.png");
         this.empty_ES5=ImageController.getInstance().tryGet("/AARocket_ES5.png");
         this.empty_EB=ImageController.getInstance().tryGet("/AARocket_EB.png");
+        this.image_S7=ImageController.getInstance().tryGet("/AARocket_S7.png");
         reloaddelay=new Delay(120);
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
@@ -226,6 +233,11 @@ public class Rocket extends Actor{
                                         0, 0,
                                         140, 180, null);
                             }
+                            break;
+                        case ATKSPEEDUP:
+                            g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;
                     }
                 }

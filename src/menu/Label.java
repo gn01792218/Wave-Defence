@@ -115,6 +115,7 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
     public void setY(int y) {
         this.y = y;
     }
+    public void offSetXY(int x,int y){this.x+=x;this.y+=y;}
 
     public int getX() {
         return this.x;

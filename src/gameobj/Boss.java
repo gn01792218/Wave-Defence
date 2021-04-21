@@ -126,7 +126,26 @@ public class Boss extends Actor{
                 break;
         }
     }
-
+    //開火
+    @Override
+    public void fire (float x,float y){
+        Bullet bullet = new BossHornBullet(this.painter().centerX(), this.painter().centerY(), x, y);
+//        根據角度變換砲管方向的狀態
+        int atkAngle = bullet.trigonometric.getDegree() + 270;
+        if (atkAngle < 60) {
+            this.cannonDirection = CANNON_DIRECTION.FrontLeft;
+        } else if (atkAngle <= 120) {
+            this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
+        } else if (atkAngle <= 180) {
+            this.cannonDirection = CANNON_DIRECTION.FrontRight;
+        } else if (atkAngle < 240) {
+            this.cannonDirection = CANNON_DIRECTION.BackRight;
+        } else if (atkAngle <= 300) {
+            this.cannonDirection = CANNON_DIRECTION.BackMiddle;
+        } else if (atkAngle < 360) {
+            this.cannonDirection = CANNON_DIRECTION.BackLeft;
+        }
+    }
     @Override
     public Global.ActorType getType() {
         return Global.ActorType.BOSS;

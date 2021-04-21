@@ -55,16 +55,17 @@ public class Global {
         final int skillButtonUnit = 64;
         final int SkillButtonDis = 128;
         final int skillButtonHeight = 700;
+        final int skillButtonLeft=460;
         if (skillButtons == null) {
             //技能按鈕
             skillButtons = new ArrayList<>();
-            SkillButton attackSkillButton = new AttackUp(100, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.gif"))), Global.SkillName.ATTACKUP, 300);
-            SkillButton defSkillButton = new DefUp(100 + SkillButtonDis, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-def.gif"))), Global.SkillName.DEFUP, 250);
-            SkillButton speedButton = new SpeedUp(100 + SkillButtonDis * 2, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-speed.gif"))), Global.SkillName.MOVESPEEDUP, 200);
-            SkillButton hpButton = new HpUp(100 + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.HPUP, 300);
-            SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.gif"))), Global.SkillName.REINFORCEMENTS, 350);
-            SkillButton electWave=new ElectWave(100+SkillButtonDis, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-electWave.gif"))), Global.SkillName.ELECTWAVE, 300);
-            SkillButton atkSpeedUp=new AtkSpeedUp(100+SkillButtonDis*2, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-atkSpeedUp.gif"))), Global.SkillName.ATKSPEEDUP, 350);
+            SkillButton attackSkillButton = new AttackUp(skillButtonLeft, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.gif"))), Global.SkillName.ATTACKUP, 300);
+            SkillButton defSkillButton = new DefUp(skillButtonLeft + SkillButtonDis, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-def.gif"))), Global.SkillName.DEFUP, 250);
+            SkillButton speedButton = new SpeedUp(skillButtonLeft+ SkillButtonDis * 2, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-speed.gif"))), Global.SkillName.MOVESPEEDUP, 200);
+            SkillButton hpButton = new HpUp(skillButtonLeft + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.HPUP, 300);
+            SkillButton reinforcement=new Reinforcements(skillButtonLeft, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.gif"))), Global.SkillName.REINFORCEMENTS, 350);
+            SkillButton electWave=new ElectWave(skillButtonLeft+SkillButtonDis, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-electWave.gif"))), Global.SkillName.ELECTWAVE, 300);
+            SkillButton atkSpeedUp=new AtkSpeedUp(skillButtonLeft+SkillButtonDis*2, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-atkSpeedUp.gif"))), Global.SkillName.ATKSPEEDUP, 350);
             skillButtons.add(attackSkillButton);
             skillButtons.add(defSkillButton);
             skillButtons.add(speedButton);

@@ -23,7 +23,7 @@ public class TestScene extends Scene{
     private int egety;
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/m2.png"); //場景圖
+        image = ImageController.getInstance().tryGet("/GameScene2.png"); //場景圖
         alliance = new ArrayList();
         enemys = new ArrayList();
         bullets = new ArrayList();

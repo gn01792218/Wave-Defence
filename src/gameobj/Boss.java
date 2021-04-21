@@ -29,7 +29,7 @@ public class Boss extends Actor {
         this.debuff = ImageController.getInstance().tryGet("/AE-Boss_S6.png");
         hpLimit = 6000;//血量上限
         hp = hpLimit; //血量
-        atk = 100; //攻擊力
+        atk = 300; //攻擊力
         this.chargeAtk = 5;//衝鋒攻擊傷害 每秒扣60
         atkSpeed = new Delay(20); //攻速
         this.atkSpeedLimit = atkSpeed.getCountLimit();

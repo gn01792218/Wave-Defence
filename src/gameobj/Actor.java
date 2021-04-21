@@ -67,6 +67,10 @@ public abstract class Actor extends GameObject {
         this.isOnDebuff=false;
         this.image_hp= ImageController.getInstance().tryGet("/Blood3.png"); //血條大家都一樣
         flag=new Flag(x1,y1);
+        atkSpeed.loop();
+
+
+        
     }
 
 
@@ -441,9 +445,6 @@ public abstract class Actor extends GameObject {
         public void straightAttack(ArrayList < Actor > actors, ArrayList<Actor> castles) {
             Rect target = null;
 
-            if (atkSpeed.isPause()) {
-                atkSpeed.loop();
-            }
             if (actors.size() > 0) {
                 //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
                 float a;
@@ -531,9 +532,6 @@ public abstract class Actor extends GameObject {
         public void standAttack(ArrayList < Actor > actors, ArrayList < Actor > alliance){
             Rect target = null;
 
-            if (atkSpeed.isPause()) {
-                atkSpeed.loop();
-            }
             if (actors.size() > 0) {
                 //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
                 float a;
@@ -576,9 +574,7 @@ public abstract class Actor extends GameObject {
         if(this.isOnDebuff && this.skillName== Global.SkillName.ELECTWAVE){
             return; //中deBuff，且是ELECTWAVE時，就直接停止移動和攻擊
         }
-            if (atkSpeed.isPause()) {
-                atkSpeed.loop();
-            }
+
             if (actors.size() > 0) {
                 //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
                 float a ;

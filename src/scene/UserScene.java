@@ -40,7 +40,6 @@ public class UserScene extends Scene{
             skillButtons=Global.getSkillButtons();//得到Global的技能按鈕
         arrowR=new Button(1200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRU.png"))));
         arrowL=new Button(200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLU.png"))));
-
     }
     @Override
     public void sceneEnd() {
@@ -53,7 +52,7 @@ public class UserScene extends Scene{
                 if(state!=null){
                     switch (state){
                         case MOVED: //負責監聽浮現的資訊欄
-                            System.out.println(e.getX()+" "+e.getY());
+//                            System.out.println(e.getX()+" "+e.getY());
                             for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
                                 if(actorButtons.get(i).isTouch(e.getX(),e.getY())){ //移動到角色上會有訊息欄
                                     //座標產生資訊圖片-->把角色圖片資訊設成visabl
@@ -153,10 +152,8 @@ public class UserScene extends Scene{
     public CommandSolver.KeyListener keyListener() {
         return null;
     }
-
     @Override
     public void paint(Graphics g) {
-
         Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
@@ -169,26 +166,24 @@ public class UserScene extends Scene{
                 actorButtons.get(i).paint(g);
             }
         }
-        if(actorButtons.get(0).left()<=500 && actorButtons.get(0).left()>-1000){
-            arrowLUseable=true;
-            arrowRUseable=false;
-        }else if(actorButtons.get(0).left()==-1000){
-            arrowLUseable=false;
-            arrowRUseable=true;
+
+        if(arrowRUseable){
+            arrowR.paint(g);
         }
-        if(!arrowRUseable){
-            arrowR.setStyleNormal(new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRN.png"))));
+        if(arrowLUseable){
+            arrowL.paint(g);
         }
-        if(!arrowLUseable){
-            arrowL.setStyleNormal(new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLN.png"))));
-        }
-        arrowR.paint(g);
-        arrowL.paint(g);
-        System.out.println(actorButtons.get(0).left());
     }
     @Override
     public void update() {
-
+        if(actorButtons.get(0).left()<=500 && actorButtons.get(0).left()>=-500){ //當T1在第一張時
+            System.out.println("左箭頭亮"+actorButtons.get(0).left());
+            arrowLUseable=true;
+        }else{arrowLUseable=false;}
+        if(actorButtons.get(3).right()>=1000 && actorButtons.get(3).right()<=2000) {
+            arrowRUseable = true;
+            System.out.println("右箭頭亮" + actorButtons.get(3).right());
+        }else{arrowRUseable=false;}
     }
 
 }

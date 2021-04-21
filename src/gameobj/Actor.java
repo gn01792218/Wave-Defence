@@ -260,7 +260,6 @@ public abstract class Actor extends GameObject {
                 if (y < this.collider().centerY()) {
                     yM =-yM;
                 }
-
                 boolean leftIsTouch = false;
                 boolean rightIsTouch = false;
                 boolean topIsTouch = false;
@@ -292,23 +291,23 @@ public abstract class Actor extends GameObject {
                 //假設只有一個方面沒有碰撞
                 if(leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
                     offSet(0,0);
-                    System.out.println("leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch");
+
                     return;
                 }else if(leftIsTouch && rightIsTouch && !topIsTouch && bottomIsTouch){
                     offSet(0,-speed);
-                    System.out.println("leftIsTouch && rightIsTouch && !topIsTouch && bottomIsTouch");
+
                     return;
                 }else if(leftIsTouch && !rightIsTouch && topIsTouch && bottomIsTouch){
                     offSet(speed,0);
-                    System.out.println("leftIsTouch && !rightIsTouch && topIsTouch && bottomIsTouch");
+
                     return;
                 }else if(!leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch){
                     offSet(-speed,0);
-                    System.out.println("!leftIsTouch && rightIsTouch && topIsTouch && bottomIsTouch");
+
                     return;
                 }else if(leftIsTouch && rightIsTouch && topIsTouch && !bottomIsTouch){
                     offSet(0,speed);
-                    System.out.println("leftIsTouch && rightIsTouch && topIsTouch && !bottomIsTouch");
+
                     return;
                 }
 
@@ -364,7 +363,7 @@ public abstract class Actor extends GameObject {
                         xM=0;
                         yM=-speed;
                     }
-                    System.out.println("leftIsTouch && bottomIsTouch");
+
                 }else if(rightIsTouch && bottomIsTouch){
                     if(xM<0){
                         if(yM>0){
@@ -375,7 +374,7 @@ public abstract class Actor extends GameObject {
                         xM=0;
                         yM=speed;
                     }
-                    System.out.println("rightIsTouch && bottomIsTouch");
+
                 }else if(topIsTouch){
                     if(x>top.centerX()){
                         xM=speed;
@@ -383,7 +382,7 @@ public abstract class Actor extends GameObject {
                         xM=-speed;
                     }
                     yM=0;
-                    System.out.println("topIsTouch");
+
                 }else if(bottomIsTouch){
                     if(x>bottom.centerX()){
                         xM=speed;
@@ -391,7 +390,7 @@ public abstract class Actor extends GameObject {
                         xM=-speed;
                     }
                     yM=0;
-                    System.out.println("bottomIsTouch");
+
                 }else if(leftIsTouch){
                     if(y>left.centerY()){
                         yM=speed;
@@ -399,7 +398,6 @@ public abstract class Actor extends GameObject {
                         yM=-speed;
                     }
                     xM=0;
-                    System.out.println("leftIsTouch");
                 }else if(rightIsTouch){
                     if(y>right.centerY()){
                         yM=speed;
@@ -407,13 +405,10 @@ public abstract class Actor extends GameObject {
                         yM=-speed;
                     }
                     xM=0;
-                    System.out.println("rightIsTouch");
                 }
                 if(!leftIsTouch &&!rightIsTouch &&!topIsTouch &&!bottomIsTouch){
-                    System.out.println("SAFE");
-                }
 
-                System.out.println("X："+xM+"/Y:"+yM);
+                }
                 this.offSet(xM,yM);
             }
         }
@@ -585,6 +580,5 @@ public abstract class Actor extends GameObject {
             return true;
         }
         public void update(){
-
         }
     }

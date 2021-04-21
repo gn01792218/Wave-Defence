@@ -241,12 +241,13 @@ public class GameScene extends Scene {
                         }
                     }
                     alliance.remove(i);
+                    i--;
                     break;
                 }
         }
         //敵軍update
         for (int i = 0; i < enemys.size(); i++) {
-            enemys.get(i).autoAttack(alliance, enemys);
+                enemys.get(i).autoAttack(alliance, enemys);
             enemys.get(i).bulletsUpdate(alliance);
             if (!enemys.get(i).isAlive()) {
                 enemys.remove(i);
@@ -294,12 +295,8 @@ public class GameScene extends Scene {
         if (Global.getLevel()==1 && step==2) {//敵軍可 以移動時
             if(count==1){
                 //做敵軍第一波
-                for (int i = 0; i < Global.random(1,5); i++) {  //第一波敵人5-10隻
-                    if(i>1){
-                        enemys.add(new Enemy4(Global.random(500, 1000), Global.random(350, 400), true));
-                    }else{
+                for (int i = 0; i < 1; i++) {  //第一波敵人5-10隻
                         enemys.add(new Boss(Global.random(500, 1000), Global.random(350, 400), true));
-                    }
                 }
             }
             if (count == 2) {  //

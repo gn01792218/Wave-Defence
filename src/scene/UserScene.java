@@ -36,7 +36,7 @@ public class UserScene extends Scene{
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         backCover=ImageController.getInstance().tryGet("/UserBackCover.png");
-        roundStart=new Button(900,600,new Style.StyleRect(150,150,
+        roundStart=new Button(900,500,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         secrt=new Button(1350, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));

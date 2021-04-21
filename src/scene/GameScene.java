@@ -81,15 +81,21 @@ public class GameScene extends Scene {
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case REINFORCEMENTS:
-                        skill.add(new Reinforcements(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        SkillButton s1=new Reinforcements(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        s1.setUnLocked(true);
+                        skill.add(s1); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case  ELECTWAVE:
-                        skill.add(new ElectWave(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost()));
+                        SkillButton s2=new ElectWave(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        s2.setUnLocked(true);
+                        skill.add(s2);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case ATKSPEEDUP:
-                        skill.add(new AtkSpeedUp(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost()));
+                        SkillButton s3=new AtkSpeedUp(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        s3.setUnLocked(true);
+                        skill.add(s3);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                 }
@@ -153,7 +159,6 @@ public class GameScene extends Scene {
                                             skill.get(i).skillExection(alliance); //執行技能~
                                         }
                                         skill.get(i).setUsed(true);
-                                        System.out.println("技能已經啟動一次，不會再有下一次~~");
                                     }
                                 }
                                 System.out.println("左鍵");
@@ -219,8 +224,8 @@ public class GameScene extends Scene {
                         if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
                             skill.get(i).skillReset(enemys);
                         }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
+                      //完成後移除技能
                         skill.remove(i); //移除技能~
-                        System.out.println("移除技能");
                     }
                 }
             }
@@ -249,7 +254,6 @@ public class GameScene extends Scene {
                 break;
             }
         }
-
         if (step == 3 && enemys.size() <= 0) { //挑戰成功條件
             delay.play();
             if(delay.count()) {

@@ -23,7 +23,7 @@ public class Reinforcements extends SkillButton{
                 setTextFont(new Font("標楷體",Font.ITALIC,22));
         infoVisable=false; //一開始不顯現
         this.lockLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock1.png"))));
-        this.unLockCost=650;//花500可以解鎖
+        this.unLockCost=250;//花500可以解鎖
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null));
         this.isUnLocked=false;//需要解鎖
     }

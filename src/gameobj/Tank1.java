@@ -5,8 +5,15 @@ import utils.Delay;
 import utils.Global;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Tank1 extends Actor{
+    protected BufferedImage image_S1;//技能1圖片
+    protected BufferedImage image_S2;// 技能2圖片
+    protected BufferedImage image_S3;//技能3圖片
+    protected BufferedImage image_S4;//技能4圖片
+    protected BufferedImage image_S5;//技能5圖片
+    protected BufferedImage image_S7;//技能7圖片
 
     public Tank1(float x, float y,boolean isenemy){
         super(x,y,50,50,x,y,75,90);
@@ -17,6 +24,7 @@ public class Tank1 extends Actor{
         this.image_S3=ImageController.getInstance().tryGet("/AATank1_S3.png");
         this.image_S4=ImageController.getInstance().tryGet("/AATank1_S4.png");
         this.image_S5=ImageController.getInstance().tryGet("/AATank1_S5.png");
+        this.image_S7=ImageController.getInstance().tryGet("/AATank1_S7.png");
         hpLimit=300;//血量上限
         hp=hpLimit; //初始血量
         atk=250; //攻擊力
@@ -26,7 +34,6 @@ public class Tank1 extends Actor{
         def=0.5; //防禦力
         atkdis=200; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
-
     }
 
     @Override
@@ -60,6 +67,12 @@ public class Tank1 extends Actor{
                             break;
                         case HPUP:
                             g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                            break;
+                        case ATKSPEEDUP:
+                            System.out.println("畫技能7");
+                            g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                                     this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                                     this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;

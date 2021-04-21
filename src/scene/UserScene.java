@@ -26,6 +26,8 @@ public class UserScene extends Scene{
     private Button secrt;//機密檔案(敵軍資料)按鈕
     private Button arrowR;
     private Button arrowL;
+    private boolean arrowRUseable;  //在坦克1位置在大於500前都可以用
+    private boolean arrowLUseable; //在火箭車位置小於500前可以用
 
     @Override
     public void sceneBegin() {
@@ -36,8 +38,9 @@ public class UserScene extends Scene{
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
             skillButtons=Global.getSkillButtons();//得到Global的技能按鈕
-        arrowR=new Button(1200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/ButtonR.png"))));
-        arrowL=new Button(200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/ButtonL.png"))));
+        arrowR=new Button(1200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRU.png"))));
+        arrowL=new Button(200,280,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLU.png"))));
+
     }
     @Override
     public void sceneEnd() {
@@ -75,8 +78,9 @@ public class UserScene extends Scene{
                                     if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
                                         //產生確認框
                                         //購買軍隊
-                                        if(Player.getInstance().getMoney()>0 && Player.getInstance().getMoney()>=actorButtons.get(i).getCostMoney()) { //金錢大於0才可以買唷!-->問題:必須要現有的錢>要買的單位的錢
+                                        if(Player.getInstance().getMoney()>0 && Player.getInstance().getMoney()>=actorButtons.get(i).getCostMoney() && actorButtons.get(i).left()>=400 && actorButtons.get(i).right()<=1000) { //金錢大於0才可以買唷!-->問題:必須要現有的錢>要買的單位的錢
                                             actorButtons.get(i).offSetNumber(1); //點一下增加一單位
+                                            AudioResourceController.getInstance().shot("/skillSound.wav");
                                             switch (actorButtons.get(i).getActorType()){
                                                 case TANK1:
                                                     Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
@@ -165,8 +169,22 @@ public class UserScene extends Scene{
                 actorButtons.get(i).paint(g);
             }
         }
+        if(actorButtons.get(0).left()<=500 && actorButtons.get(0).left()>-1000){
+            arrowLUseable=true;
+            arrowRUseable=false;
+        }else if(actorButtons.get(0).left()==-1000){
+            arrowLUseable=false;
+            arrowRUseable=true;
+        }
+        if(!arrowRUseable){
+            arrowR.setStyleNormal(new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRN.png"))));
+        }
+        if(!arrowLUseable){
+            arrowL.setStyleNormal(new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLN.png"))));
+        }
         arrowR.paint(g);
         arrowL.paint(g);
+        System.out.println(actorButtons.get(0).left());
     }
     @Override
     public void update() {

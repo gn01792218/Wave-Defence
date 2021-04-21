@@ -63,8 +63,8 @@ public class Global {
             SkillButton speedButton = new SpeedUp(100 + SkillButtonDis * 2, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-speed.gif"))), Global.SkillName.MOVESPEEDUP, 200);
             SkillButton hpButton = new HpUp(100 + SkillButtonDis * 3, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-hp.gif"))), Global.SkillName.HPUP, 300);
             SkillButton reinforcement=new Reinforcements(100, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.gif"))), Global.SkillName.REINFORCEMENTS, 350);
-            SkillButton electWave=new ElectWave(100+SkillButtonDis, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-electWave.gif"))), SkillName.ELECTWAVE, 300);
-            SkillButton atkSpeedUp=new AtkSpeedUp(100+SkillButtonDis*2, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-atkSpeedUp.gif"))), SkillName.ATKSPEEDUP, 350);
+            SkillButton electWave=new ElectWave(100+SkillButtonDis, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-electWave.gif"))), Global.SkillName.ELECTWAVE, 300);
+            SkillButton atkSpeedUp=new AtkSpeedUp(100+SkillButtonDis*2, skillButtonHeight+SkillButtonDis, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-atkSpeedUp.gif"))), Global.SkillName.ATKSPEEDUP, 350);
             skillButtons.add(attackSkillButton);
             skillButtons.add(defSkillButton);
             skillButtons.add(speedButton);

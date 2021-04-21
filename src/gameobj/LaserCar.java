@@ -5,9 +5,15 @@ import utils.Delay;
 import utils.Global;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class LaserCar extends Actor{
-
+    protected BufferedImage image_S1;//技能1圖片
+    protected BufferedImage image_S2;// 技能2圖片
+    protected BufferedImage image_S3;//技能3圖片
+    protected BufferedImage image_S4;//技能4圖片
+    protected BufferedImage image_S5;//技能5圖片
+    protected BufferedImage image_S7;//技能7圖片
     public LaserCar(float x,float y,boolean isEnemy){
         super(x,y,50,50,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AALaserCar.png");
@@ -17,6 +23,7 @@ public class LaserCar extends Actor{
         this.image_S3=ImageController.getInstance().tryGet("/AALaserCar_S3.png");
         this.image_S4=ImageController.getInstance().tryGet("/AALaserCar_S4.png");
         this.image_S5=ImageController.getInstance().tryGet("/AALaserCar_S5.png");
+        this.image_S7=ImageController.getInstance().tryGet("/AALaserCar_S7.png");
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=150; //攻擊力
@@ -60,6 +67,11 @@ public class LaserCar extends Actor{
                             break;
                         case HPUP:
                             g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                            break;
+                        case ATKSPEEDUP:
+                            g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                                     this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                                     this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;

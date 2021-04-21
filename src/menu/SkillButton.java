@@ -85,5 +85,6 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
 
     @Override
     public void paint(Graphics g){
+
     }
 }

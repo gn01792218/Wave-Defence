@@ -6,6 +6,7 @@ import utils.Delay;
 import utils.Global;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Boss extends Actor{
@@ -17,13 +18,14 @@ public class Boss extends Actor{
     public float tempX; //儲存上一動的位置
     public float tempY; //儲存上一動的位置
     private boolean isCharge;//假如使用了衝鋒攻擊後，就馬上改成普通攻擊
+    private BufferedImage debuff;//被deBuff的圖
 
     //三角飛彈-->普通攻擊
     public Boss(float x,float y,boolean isEnemy){
         super(x,y,80,150,x,y,150,180);
         this.image= ImageController.getInstance().tryGet("/AE-Boss.png");
         this.image2=ImageController.getInstance().tryGet("/AE-Boss_S1.png");
-        this.image_S5=ImageController.getInstance().tryGet("/AE-Boss_S6.png");
+        this.debuff=ImageController.getInstance().tryGet("/AE-Boss_S6.png");
         hpLimit=6000;//血量上限
         hp=hpLimit; //血量
         atk=100; //攻擊力
@@ -56,9 +58,6 @@ public class Boss extends Actor{
     @Override
     //選最短距離者追蹤並攻擊，敵方死亡後回到原位
     public void autoAttack (ArrayList< Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
-        float tempx=this.painter().exactCenterX(); //儲存上一動的動作
-        float tempy=this.painter().exactCenterY(); //儲存上一棟的動作
-        System.out.println("起始位置"+tempx+" "+tempy);
         if (atkSpeed.isPause()) {
             atkSpeed.loop();
         }
@@ -92,8 +91,6 @@ public class Boss extends Actor{
                     float targetY = target.centerY();
                     if (isInAtkdis(targetX,targetY)) {
                         fire(targetX,targetY);
-                        tempx=this.painter().centerX();
-                        tempy=this.painter().centerY();
                     }else{
                         move(targetX,targetY,alliance);
                     }
@@ -109,7 +106,7 @@ public class Boss extends Actor{
                     float max = Integer.MIN_VALUE;
                     Rect target = null;
                     for (int i = 0; i <alliance.size(); i++) {
-                        a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
+                        a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());   //這裡會IndexOutOfBounds Index1 size1
                         b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
                         d = (float) Math.sqrt(a * a + b * b);
                         if (d > max) { //最長距離者 ，取他的XY值
@@ -142,7 +139,7 @@ public class Boss extends Actor{
                     this.cannonDirection.getValue() / 3 * 150, 0,
                     this.cannonDirection.getValue() / 3 * 150 + 150, 180, null);
         }else  if(isOnDebuff){
-            g.drawImage(image_S5,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
+            g.drawImage(debuff,(int)this.painter().left(),(int)this.painter().top(),(int)this.painter().right(),(int)this.painter().bottom(),
                     this.cannonDirection.getValue()/3*150,0,
                     this.cannonDirection.getValue()/3*150+150,180,null);
         }else {

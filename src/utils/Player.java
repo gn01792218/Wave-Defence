@@ -28,7 +28,16 @@ public class Player implements GameKernel.UpdateInterface,GameKernel.PaintInterf
         }
         return player;
     }
-   public  int getMoney(){return this.money;}
+
+    public void setHonor(int honor) {
+        this.honor = honor;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public  int getMoney(){return this.money;}
    public  int getHonor(){return this.honor;}
    public  void offsetMoney(int x){this.money+=x;}
    public  void offsetHonor(int x){this.honor+=x;}

@@ -28,6 +28,7 @@ public abstract class Actor extends GameObject {
     protected boolean isOnBuff;//是否是Buff狀態
     protected boolean isOnDebuff;//是否是減益狀態
     protected Flag flag;
+    boolean set = false;
 
 
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
@@ -436,6 +437,140 @@ public abstract class Actor extends GameObject {
                 }
             }
         }
+
+        public void straightAttack(ArrayList < Actor > actors, ArrayList<Actor> castles) {
+            Rect target = null;
+
+            if (atkSpeed.isPause()) {
+                atkSpeed.loop();
+            }
+            if (actors.size() > 0) {
+                //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
+                float a;
+                float b;
+                float d;
+                float mind = (float) this.atkdis;
+                for (int i = 0; i < actors.size(); i++) {
+                    a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
+                    b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
+                    d = (float) Math.sqrt(a * a + b * b);
+                    if (d < mind) { //最短距離者 ，取他的XY值
+                        mind = d;
+                        target = actors.get(i).collider();
+                    }
+                }
+            }
+            //移動至攻擊範圍內則開火
+            if (target != null) {
+                float targetX = target.centerX();
+                float targetY = target.centerY();
+                fire(targetX, targetY);
+            } else {
+
+                if(set){
+                    autoAttack(castles, actors);
+                    return;
+                }
+
+                if(this.collider().overlap(flag.collider())){
+                    set = true;
+                }else{
+                    //角色的translate根據x/y的斜率來走
+                    float a = Math.abs(painter().centerX() - flag.collider().centerX());//x座標差值 對邊
+                    float b = Math.abs(painter().centerY() - flag.collider().centerY()); //y座標差值 臨邊
+                    float d = (float) Math.sqrt(a * a + b * b); //斜邊
+                    //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
+                    //但需要解決和我軍重疊的問題
+                    // 大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+                    float xM = (float) a / d * speed;  //x向量
+                    float yM = (float) b / d * speed; //y向量
+                    if (painter().centerX() > flag.collider().centerX()) {
+                        xM = -xM;
+                    }
+                    if (painter().centerY() > flag.collider().centerY()) {
+                        yM = -yM;
+                    }
+                    this.painter().offSet((int) xM, (int) yM);
+                    this.collider().offSet((int) xM, (int) yM);
+                }
+            }
+        }
+//            else{
+//
+//                if(set){
+//                    System.out.println(111);
+//                    return;
+//                }
+//
+//                if(this.collider().overlap(flag.collider())){
+//                    System.out.println(222);
+//                    set = true;
+//                }else{
+//                    System.out.println(333);
+//                    //角色的translate根據x/y的斜率來走
+//                    float a = Math.abs(painter().centerX() - flag.collider().centerX());//x座標差值 對邊
+//                    float b = Math.abs(painter().centerY() - flag.collider().centerY()); //y座標差值 臨邊
+//                    float d = (float) Math.sqrt(a * a + b * b); //斜邊
+//                    //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
+//                    //但需要解決和我軍重疊的問題
+//                    // 大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
+//                    float xM = (float) a / d * speed;  //x向量
+//                    float yM = (float) b / d * speed; //y向量
+//                    if (painter().centerX() > flag.collider().centerX()) {
+//                        xM = -xM;
+//                    }
+//                    if (painter().centerY() > flag.collider().centerY()) {
+//                        yM = -yM;
+//                    }
+//                    this.painter().offSet((int) xM, (int) yM);
+//                    this.collider().offSet((int) xM, (int) yM);
+//                }
+//            }
+//        }
+
+        public void standAttack(ArrayList < Actor > actors, ArrayList < Actor > alliance){
+            Rect target = null;
+
+            if (atkSpeed.isPause()) {
+                atkSpeed.loop();
+            }
+            if (actors.size() > 0) {
+                //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
+                float a;
+                float b;
+                float d;
+                float mind = 400;
+                for (int i = 0; i < actors.size(); i++) {
+                    a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
+                    b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
+                    d = (float) Math.sqrt(a * a + b * b);
+                    if (d < mind) { //最短距離者 ，取他的XY值
+                        mind = d;
+                        target = actors.get(i).collider();
+                    }
+                }
+            }
+            //移動至攻擊範圍內則開火
+            if(target!=null) {
+                float targetX = target.centerX();
+                float targetY = target.centerY();
+
+                if (isInAtkdis(targetX,targetY)) {
+                    fire(targetX,targetY);
+                } else {
+                    move(targetX,targetY,alliance);
+                }
+            }else{
+                if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
+                    if (atkSpeed.getCount() < 119) {
+                        atkSpeed.count();
+                    }
+                } else {
+                    move(flag.collider().centerX(),flag.collider().centerY(), alliance);
+                }
+            }
+        }
+
         //選最短距離者追蹤並攻擊，敵方死亡後回到原位
         public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
         if(this.isOnDebuff && this.skillName== Global.SkillName.ELECTWAVE){
@@ -468,6 +603,8 @@ public abstract class Actor extends GameObject {
                     fire(targetX,targetY);
                 } else {
                     move(targetX,targetY,alliance);
+                    System.out.println(targetX);
+                    System.out.println(targetY);
                 }
             }
             if (actors.size() <= 0 && !this.isEnemy) {
@@ -484,7 +621,7 @@ public abstract class Actor extends GameObject {
         }
         //開火
         public void fire (float x,float y){
-            Bullet bullet = new Bullet(this.painter().centerX(), this.painter().centerY(), x, y);
+            Bullet bullet = new Bullet(this.collider().centerX(), this.collider().centerY(), x, y);
 //        根據角度變換砲管方向的狀態
             int atkAngle = bullet.trigonometric.getDegree() + 270;
             if (atkAngle < 60) {
@@ -528,6 +665,16 @@ public abstract class Actor extends GameObject {
                         }
                     }
                 }
+            }
+        }
+
+
+        public void moveToField(){
+            if(this.collider().centerY()<100){
+                this.offSet(0,speed);
+            }
+            if(this.collider().centerY()>750){
+                this.offSet(0,-speed);
             }
         }
 

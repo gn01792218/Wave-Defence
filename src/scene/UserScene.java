@@ -5,6 +5,7 @@ import controllers.ImageController;
 import controllers.SceneController;
 import menu.*;
 import menu.Button;
+import menu.Label;
 import utils.CommandSolver;
 import utils.Global;
 import utils.Player;
@@ -28,22 +29,28 @@ public class UserScene extends Scene{
     private Button secrt;//機密檔案(敵軍資料)按鈕
     private Button arrowR;
     private Button arrowL;
-    private boolean arrowRUseable;  //在坦克1位置在大於500前都可以用
-    private boolean arrowLUseable; //在火箭車位置小於500前可以用
+    private boolean arrowRUseable;
+    private boolean arrowLUseable;
+    private Label armyLabel; //購買軍隊的標籤
+    private Label skillLabel; //購買技能的標籤
+    private Label enemyLabel; //敵軍機密的標籤
 
     @Override
     public void sceneBegin() {
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         backCover=ImageController.getInstance().tryGet("/UserBackCover.png");
-        roundStart=new Button(900,500,new Style.StyleRect(150,150,
+        roundStart=new Button(950,500,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
-        secrt=new Button(1350, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
+        secrt=new Button(1230, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
             skillButtons=Global.getSkillButtons();//得到Global的技能按鈕
         arrowR=new Button(1000,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
         arrowL=new Button(300,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
+        armyLabel=new Label(390,80,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
+        skillLabel=new Label(735,810,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
+        enemyLabel=new Label(1200,550,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
     }
     @Override
     public void sceneEnd() {
@@ -161,21 +168,22 @@ public class UserScene extends Scene{
     }
     @Override
     public void paint(Graphics g) {
-        g.drawImage(backGround,0,0,null);
+        g.drawImage(backGround,160,0,null);
         g.drawImage(backCover,500,180,null);
         Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
+        armyLabel.paint(g);
+        skillLabel.paint(g);
+        enemyLabel.paint(g);
         for(int i=0;i<skillButtons.size();i++){
                 skillButtons.get(i).paint(g);
         }
-
         for(int i=0;i<actorButtons.size();i++){
             if(actorButtons.get(i).left()<900 && actorButtons.get(i).right()>500) {
                 actorButtons.get(i).paint(g);
             }
         }
-
         if(arrowRUseable){
             arrowR.paint(g);
         }

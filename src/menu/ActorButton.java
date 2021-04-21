@@ -29,7 +29,7 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
     public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost) { //輸入的xy是左上角
         super(x, y, style);
         this.actorType=actorType;
-        numberLabel=new Label(850,150,new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
+        numberLabel=new Label(850,200,new Style.StyleRect(0,0,true,null));//畫在這個按鈕的右下方；不要設寬高，就可以精準畫在要的位置
         this.costMoney=cost;
         costLabel=new Label(850,250,new Style.StyleRect(0,0,true,null));
         info=new Button(350,100,new Style.StyleRect(300,468

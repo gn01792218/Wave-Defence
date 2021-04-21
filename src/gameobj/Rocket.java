@@ -40,7 +40,7 @@ public class Rocket extends Actor{
         reloaddelay=new Delay(120);
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
-        atk=300; //攻擊力-->全域傷害~!!!!!
+        atk=150; //攻擊力-->全域傷害~!!!!!
         atkSpeed = new Delay(240); //4秒一發
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         speed=1.2f; //移動速度

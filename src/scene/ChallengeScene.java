@@ -8,6 +8,7 @@ import menu.*;
 import utils.CommandSolver;
 import utils.Delay;
 import utils.Global;
+import utils.Player;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -35,8 +36,7 @@ public class ChallengeScene extends Scene{
     private int count = 0;//回合數
     private float mouseX;
     private float mouseY;
-    private int money;
-    private int honor;
+    private Player player;
 
     @Override
     public void sceneBegin() {
@@ -50,20 +50,25 @@ public class ChallengeScene extends Scene{
         rewardLoop=new Delay(600);
         gameBegin.play();
         count=1;
-        money=600;
-        honor=200;
+        player = Player.getInstance();
+        player.setMoney(600);
+        player.setHonor(200);
+
 //        作技能
         skill=new ArrayList<>();
         ArrayList<SkillButton> temp=Global.getSkillButtons(); //從世界技能紐中下訂單
-        for(int i=0;i<temp.size();i++) {
-            skill.add(new AttackUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
-            skill.add(new HpUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
-            skill.add(new DefUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
-            skill.add(new SpeedUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
-            skill.add(new Reinforcements(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
-            skill.add(new ElectWave(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost()));
-            skill.add(new AtkSpeedUp(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost()));
-        }
+
+        int skillCount=0;
+        skill.add(new AttackUp(500+(skillCount)*128,100,temp.get(skillCount).getStyleNormal(),temp.get((skillCount)).getSkillName(),temp.get((skillCount++)).getCost())); //設置在場中的位置
+        skill.add(new HpUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost())); //設置在場中的位置
+        skill.add(new DefUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost())); //設置在場中的位置
+        skill.add(new SpeedUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost())); //設置在場中的位置
+        skill.add(new Reinforcements(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost()));
+        skill.add(new ElectWave(500+ skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost()));
+        skill.add(new AtkSpeedUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost()));
+        skill.get(4).setUnLocked(true);
+        skill.get(5).setUnLocked(true);
+        skill.get(6).setUnLocked(true);
 
 
         //做軍隊
@@ -96,36 +101,36 @@ public class ChallengeScene extends Scene{
             public void keyReleased(int commandCode, long trigTime) {
                 switch (commandCode){
                     case 11:
-                        if(money>250){
+                        if(player.getMoney()>250){
                             Actor temp = new Tank1(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            money -=250;
+                            player.offsetMoney(-250);
                         }
                         break;
                     case 12:
-                        if(money>280){
+                        if(player.getMoney()>280){
                             Actor temp = new Tank2(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            money -=280;
+                            player.offsetMoney(-280);
                         }
 
                         break;
                     case 13:
-                        if(money>250){
+                        if(player.getMoney()>250){
                             Actor temp = new LaserCar(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            money -=300;
+                            player.offsetMoney(-300);
                         }
                         break;
                     case 14:
-                        if(money>500){
+                        if(player.getMoney()>500){
                             Actor temp = new Rocket(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            money-=500;
+                            player.offsetMoney(-500);
                         }
                         break;
                 }
@@ -159,15 +164,16 @@ public class ChallengeScene extends Scene{
                                 }
                                 for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
                                     if(skill.get(i).isTouch(e.getX(),e.getY()) && skill.size()>0 && !skill.get(i).isUsed()){ //按鈕被點時 且 還有按鈕時
-                                        AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
-                                        skill.get(i).skillBufftimePlay();// 才啟動技能
-                                        if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){
-                                            skill.get(i).skillExection(enemys);
-                                        }else{
-                                            skill.get(i).skillExection(alliance); //執行技能~
+                                        if(player.getHonor()>skill.get(i).getCost()){
+                                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                                            skill.get(i).skillBufftimePlay();// 才啟動技能
+                                            if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){
+                                                skill.get(i).skillExection(enemys);
+                                            }else{
+                                                skill.get(i).skillExection(alliance); //執行技能~
+                                            }
+                                            player.offsetHonor(-skill.get(i).getCost());
                                         }
-                                        skill.get(i).setUsed(true);
-                                        System.out.println("技能已經啟動一次，不會再有下一次~~");
                                     }
                                 }
                                 System.out.println("左鍵");
@@ -193,8 +199,8 @@ public class ChallengeScene extends Scene{
     public void paint(Graphics g) {
 
         g.drawImage(image, 0, -150, null);
-
-
+        player.paint(g);
+        g.drawString("WAVE："+count,50,100);
 
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).paint(g); //畫我軍
@@ -226,19 +232,18 @@ public class ChallengeScene extends Scene{
     @Override
     public void update() {
 
-//        if(skill.size()>0) {
-//            for (int i = 0; i < skill.size(); i++) {
-//                if (skill.get(i).isUsed()) { //沒有被施放過
-//                    if (skill.get(i).getBuffTime().count()) {
-//                        if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
-//                            skill.get(i).skillReset(enemys);
-//                        }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
-//                        skill.remove(i); //移除技能~
-//                        System.out.println("移除技能");
-//                    }
-//                }
-//            }
-//        }
+        //技能update
+        if(skill.size()>0) {
+            for (int i = 0; i < skill.size(); i++) {
+                if (skill.get(i).isUsed()) { //沒有被施放過
+                    if (skill.get(i).getBuffTime().count()) {
+                        if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
+                            skill.get(i).skillReset(enemys);
+                        }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
+                    }
+                }
+            }
+        }
         //我軍的update
         for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
             if(alliance.get(i).collider().centerY()>Global.BOUNDARY_Y2){
@@ -247,7 +252,6 @@ public class ChallengeScene extends Scene{
                 alliance.get(i).standAttack(enemys, alliance);
                 alliance.get(i).bulletsUpdate(enemys); //發射子彈
             }
-
             if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
                 alliance.remove(i);
                 break;
@@ -275,7 +279,7 @@ public class ChallengeScene extends Scene{
 
             if (!enemys.get(i).isAlive()) {
                 enemys.remove(i);
-                money +=100;
+                player.offsetMoney(100);
                 break;
             }
         }
@@ -283,8 +287,8 @@ public class ChallengeScene extends Scene{
 
         //REWARD
         if(rewardLoop.count()){
-            money+=600;
-            honor+=150;
+            player.offsetMoney(600);
+            player.offsetHonor(150);
         }
 
         //第一回合
@@ -305,7 +309,7 @@ public class ChallengeScene extends Scene{
             AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major");
             count++;
             for(int i=0;i<(count+1)*2;i++){
-                enemys.add(new Enemy1(Global.random(650, 950), -Global.random(0,150), true));
+                enemys.add(new Enemy4(Global.random(650, 950), -Global.random(0,150), true));
             }
             if(count>2){
                 for(int i=0;i<(count-1)*2;i++){
@@ -319,7 +323,7 @@ public class ChallengeScene extends Scene{
             }
             if(count>5){
                 for(int i=0;i<count-5;i++){
-                    enemys.add(new Enemy3(Global.random(400, 1000), Global.random(-100,50), true));
+                    enemys.add(new Enemy4(Global.random(400, 1000), -Global.random(50,200), true));
                 }
             }
             //隨機給予敵人攻擊位置

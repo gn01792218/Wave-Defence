@@ -12,7 +12,7 @@ public class Castle extends Actor{
         super(x, y, 300, 150, x, y, 1, 270);
         hpLimit=1000;//血量上限
         hp=hpLimit; //初始血量
-        atk=350; //攻擊力
+        atk=550; //攻擊力
         atkSpeed = new Delay(240);      //攻速
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         def=0.5; //防禦力

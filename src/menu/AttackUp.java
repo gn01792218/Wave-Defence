@@ -1,5 +1,6 @@
 package menu;
 
+import controllers.ImageController;
 import gameobj.Actor;
 
 import utils.Delay;
@@ -13,6 +14,7 @@ public class AttackUp extends SkillButton {
     private final float atkEffect=1.5f;//要把攻擊力*幾倍
     private final int bufftime=300; //持續X/60秒
     private Label label;
+    private Label selectedLabel;//被選中後的按鈕
 
     //圖畫的怪怪的!!
     public AttackUp(int x, int y, Style style, Global.SkillName skillName, int cost){
@@ -22,6 +24,7 @@ public class AttackUp extends SkillButton {
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22)));
         infoVisable=false; //一開始不顯現
         this.isUnLocked=true;//一開始就是被解鎖的
+        selectedLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.png"))));
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {  //施放技能，場景中會用到
@@ -52,6 +55,10 @@ public class AttackUp extends SkillButton {
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
         if(info!=null && infoVisable){info.paint(g);}
+
+        if(this.isSelect){
+            selectedLabel.paint(g); //被選中後畫灰色圖
+        }
         if(label!=null  && infoVisable){
             label.paint(g);
         }

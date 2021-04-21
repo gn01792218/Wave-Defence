@@ -13,6 +13,7 @@ public class Reinforcements extends SkillButton{
     private Label label;
     private final int reinforcementsNum=2; //召喚兩隻援軍
     private final int bufftime=600; //持續X/60秒
+    private Label selectedLabel;//被選中後的按鈕
     public int getReinforcementsNum() {
         return reinforcementsNum;
     }
@@ -26,6 +27,7 @@ public class Reinforcements extends SkillButton{
         this.unLockCost=250;//花500可以解鎖
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null));
         this.isUnLocked=false;//需要解鎖
+        selectedLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.png"))));
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {
@@ -92,15 +94,21 @@ public class Reinforcements extends SkillButton{
         if (super.getPaintStyle() != null) {
             super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
         }
-        if(info!=null && infoVisable){ info.paint(g);}
+        if(info!=null && infoVisable){info.paint(g);}
 
+        if(this.isSelect){
+            selectedLabel.paint(g); //被選中後畫灰色圖
+        }
         if(!isUnLocked && lockLabel!=null){
             lockLabel.paint(g);
             label.getPaintStyle().setText("解鎖花費:"+this.unLockCost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
+            label.getPaintStyle().setTextColor(Color.RED);
         }else{
+
             label.getPaintStyle().setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
+            label.getPaintStyle().setTextColor(Color.WHITE);
         }
-        if(label!=null && infoVisable){
+        if(label!=null  && infoVisable){
             label.paint(g);
         }
     }

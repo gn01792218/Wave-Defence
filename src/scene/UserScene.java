@@ -108,11 +108,12 @@ public class UserScene extends Scene{
                                     if(skillButtons.get(i).isTouch(e.getX(),e.getY()) &&
                                             !skillButtons.get(i).getIsSelect()){ //被點中 且還沒被點過時
                                          if(skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor()>=skillButtons.get(i).getCost()) { //且已經解鎖了  且有榮譽職
+                                             AudioResourceController.getInstance().shot("/skillSound.wav");
                                              skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
                                              Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
                                          }else if(!skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor()>=skillButtons.get(i).getUnLockCost()){
                                              //還沒解鎖 且 榮譽值大於等於解鎖的錢時
-                                             AudioResourceController.getInstance().shot("/skillSound.wav");
+                                             AudioResourceController.getInstance().shot("/unLock.wav");
                                              skillButtons.get(i).setUnLocked(true); //設定成已經解鎖
                                              Player.getInstance().offsetHonor(-skillButtons.get(i).getUnLockCost()); //扣榮譽值!
                                          }
@@ -166,7 +167,7 @@ public class UserScene extends Scene{
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
         for(int i=0;i<skillButtons.size();i++){
-            skillButtons.get(i).paint(g);
+                skillButtons.get(i).paint(g);
         }
 
         for(int i=0;i<actorButtons.size();i++){

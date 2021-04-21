@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 
 public class OpenScene extends Scene {
     private Button startButton; //開始遊戲的按鈕
+    private Button endlessModeButton;//無盡模式按鈕
     private Button endButton; //結束遊戲的按鈕
     private BufferedImage image;//背景圖
 
@@ -21,6 +22,7 @@ public class OpenScene extends Scene {
     public void paint(Graphics g) {
         g.drawImage(image,150,0,null);
         startButton.paint(g);
+        endlessModeButton.paint(g);
         endButton.paint(g);
     }
     @Override
@@ -31,9 +33,11 @@ public class OpenScene extends Scene {
         //背景圖
         image =ImageController.getInstance().tryGet("/OpenScene.png");
         //Button的第三個參數可newStyle；Style的三個參數為寬 高 背景圖片。
-        startButton=new Button(800,550,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart1.png"))));
+        startButton=new Button(650,600,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart1.png"))));
         startButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart2.png"))));
-        endButton=new Button(780,650,new Style.StyleRect(300,300,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
+        endlessModeButton=new Button(1000,600,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessModeB.png"))));
+        endlessModeButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessMode.png"))));
+        endButton=new Button(780,750,new Style.StyleRect(300,300,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
     }
 
     @Override
@@ -51,6 +55,9 @@ public class OpenScene extends Scene {
                                 if (startButton.isTouch(e.getX(),e.getY())) { //開始遊戲按鈕
                                     SceneController.getInstance().changeScene(new UserScene());
                                 }
+                                if(endlessModeButton.isTouch(e.getX(),e.getY())){ //切換無盡模式
+                                    SceneController.getInstance().changeScene(new ChallengeScene());
+                                }
                                 if(endButton.isTouch(e.getX(),e.getY())){  //離開按鈕
                                     System.exit(0);
                                 }
@@ -59,6 +66,9 @@ public class OpenScene extends Scene {
                                 if (startButton.isTouch(e.getX(),e.getY())) { //開始遊戲按鈕的hover
                                     startButton.isHover(true);
                                 }else{startButton.isHover(false);}
+                                if(endlessModeButton.isTouch(e.getX(),e.getY())){
+                                    endlessModeButton.isHover(true);
+                                }else{endlessModeButton.isHover(false);}
                     }
                 }
             }

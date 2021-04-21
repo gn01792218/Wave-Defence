@@ -166,7 +166,7 @@ public class UserScene extends Scene{
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
         for(int i=0;i<skillButtons.size();i++){
-            skillButtons.get(i).paint(g);
+                skillButtons.get(i).paint(g);
         }
 
         for(int i=0;i<actorButtons.size();i++){

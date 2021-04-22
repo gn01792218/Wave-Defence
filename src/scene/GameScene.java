@@ -65,35 +65,35 @@ public class GameScene extends Scene {
             if(temp.get(i).getIsSelect()) { //有被選中的才new出來
                 switch (temp.get(i).getSkillName()) {
                     case ATTACKUP:
-                        skill.add(new AttackUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new AttackUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //把Global的技能按鈕設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case HPUP:
-                        skill.add(new HpUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new HpUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case DEFUP:
-                        skill.add(new DefUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new DefUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case MOVESPEEDUP:
-                        skill.add(new SpeedUp(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.add(new SpeedUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case REINFORCEMENTS:
-                        SkillButton s1=new Reinforcements(500+skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        SkillButton s1=new Reinforcements(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
                         s1.setUnLocked(true);
                         skill.add(s1); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case  ELECTWAVE:
-                        SkillButton s2=new ElectWave(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        SkillButton s2=new ElectWave(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
                         s2.setUnLocked(true);
                         skill.add(s2);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         break;
                     case ATKSPEEDUP:
-                        SkillButton s3=new AtkSpeedUp(500+ skill.size()*128,100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        SkillButton s3=new AtkSpeedUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
                         s3.setUnLocked(true);
                         skill.add(s3);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
@@ -172,6 +172,11 @@ public class GameScene extends Scene {
                                 }
                             }
                         case MOVED:
+                            for(int i=0;i<skill.size();i++){
+                                if(skill.get(i).isTouch(e.getX(),e.getY())){
+                                    skill.get(i).setInfoVisable(true);
+                                }else{ skill.get(i).setInfoVisable(false);}
+                            }
                     }
                 }
             }

@@ -23,6 +23,7 @@ public class Enemy2 extends Actor{
         def=0.3; //防禦力
         atkdis= 150; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
+        atkSpeed.loop();
     }
     @Override
     public void autoAttack (ArrayList< Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來

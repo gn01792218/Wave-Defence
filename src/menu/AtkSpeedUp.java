@@ -32,12 +32,14 @@ public class AtkSpeedUp extends SkillButton{
                 System.out.println("原本攻擊速度"+actors.get(i).getAtkSpeed().getCountLimit());
                 actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                 actors.get(i).setAtkSpeed(new Delay(6));
+                actors.get(i).getAtkSpeed().loop();//啟動循環攻擊
                 actors.get(i).setOnBuff(true); //標示為Buff狀態
                 System.out.println("提升為"+actors.get(i).getAtkSpeed().getCountLimit());
             }else {
                 System.out.println("原本攻擊速度" + actors.get(i).getAtkSpeed().getCountLimit());
                 actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                 actors.get(i).setAtkSpeed(new Delay(actors.get(i).getAtkSpeed().getCountLimit() - 60));
+                actors.get(i).getAtkSpeed().loop();//啟動循環攻擊
                 actors.get(i).setOnBuff(true); //標示為Buff狀態
                 System.out.println("提升為" + actors.get(i).getAtkSpeed().getCountLimit());
             }
@@ -49,6 +51,7 @@ public class AtkSpeedUp extends SkillButton{
     public void skillReset(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
             actors.get(i).setAtkSpeed(new Delay(actors.get(i).getAtkSpeedLimit()));
+            actors.get(i).getAtkSpeed().loop();//啟動循環攻擊
             actors.get(i).setOnBuff(false); //標示為非Buff狀態
             System.out.println("攻擊速度回復為"+actors.get(i).getAtkSpeed().getCountLimit());
         }

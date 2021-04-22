@@ -23,6 +23,7 @@ public class MouseTriggerImpl {
     }
 
     public static void mouseTrig(Label obj, MouseEvent e, CommandSolver.MouseState state) {
+
         boolean isOval = (obj.getPaintStyle() instanceof Style.StyleOval);
         if (state == CommandSolver.MouseState.RELEASED && (obj instanceof Button)) {
             obj.unFocus();

@@ -55,7 +55,7 @@ public class OpenScene extends Scene {
                         case CLICKED:
                             if(e.getButton()==1) {
                                 if (startButton.isTouch(e.getX(),e.getY())) { //開始遊戲按鈕
-                                    SceneController.getInstance().changeScene(new UserScene());
+                                    SceneController.getInstance().changeScene(UserScene.getInstance());
                                 }
                                 if(endlessModeButton.isTouch(e.getX(),e.getY())){ //切換無盡模式
                                     SceneController.getInstance().changeScene(new ChallengeScene());

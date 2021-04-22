@@ -23,6 +23,7 @@ import java.util.ArrayList;
 //判斷打輸的條件是全滅，但假如沒$$買軍隊時，直接進場，就會直接走失敗畫面然後+$$-->變成洗錢的Bug
 //部隊卡住時，會無法移動(敵軍也是)-->解方 控制敵軍出生時候的位置不要距離太近(開啟deBug模式)
 public class GameScene extends Scene {
+    public static GameScene gameScene;
     //場地左上角X Y(380,180)；場地右下角xy (1060,700) 。
     private BufferedImage image; //背景圖
     private BufferedImage image1_1;
@@ -42,7 +43,13 @@ public class GameScene extends Scene {
     private int changePic = 50; //倒數動畫
     private Actor allianceControl;//受旗子控制的我軍
     private int count = 0;//共三波(SceneBegin+2)
-
+    private GameScene(){}
+    public static GameScene getInstance(){
+        if(gameScene==null){
+            gameScene=new GameScene();
+        }
+        return gameScene;
+    }
     @Override
     public void sceneBegin() {
         if(Global.getLevel()==1){
@@ -279,7 +286,7 @@ public class GameScene extends Scene {
                 Player.getInstance().offsetHonor(+1000); //榮譽值+1000
                 Player.getInstance().offsetMoney(1000); //金錢+1000
                 Global.addLevel();
-                SceneController.getInstance().changeScene(new UserScene());
+                SceneController.getInstance().changeScene(UserScene.getInstance());
             }
         }
 
@@ -288,7 +295,7 @@ public class GameScene extends Scene {
             if(delay.count()) {
                 Player.getInstance().offsetMoney(250); //錢值+250
                 Player.getInstance().offsetHonor(250); //榮譽值+50
-                SceneController.getInstance().changeScene(new UserScene());
+                SceneController.getInstance().changeScene(UserScene.getInstance());
             }
         }
 

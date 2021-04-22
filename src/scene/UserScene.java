@@ -21,7 +21,8 @@ import java.util.Map;
 //做確認訊息視窗
 //買技能要扣榮譽值
 
-public class UserScene extends Scene{
+public class UserScene extends Scene{ //改成單例模式!!!
+    public static UserScene userScene;
     private BufferedImage backGround;//背景圖
     private BufferedImage backCover;//背景透明板
     private BufferedImage barImage;//
@@ -38,7 +39,15 @@ public class UserScene extends Scene{
     private Label enemyLabel; //敵軍機密的標籤
     private PopWindowScene popupWindow;//敵方資訊場景
     private IntroPopupWindow introPopupWindow;//進入回合前的教學視窗
+    private int introCount; //控制第一次玩的時候教學提示只會出現一次
     //關於彈跳視窗內的按鈕位置問題:1.就算按鈕做在PopWindow內部，也必須要在外面的場景中paint出來(做出getButton方法)，否則按鈕位置會有誤差。
+    private UserScene(){}
+    public static UserScene getInstance(){
+        if(userScene==null){
+            userScene=new UserScene();
+        }
+        return userScene;
+    }
     @Override
     public void sceneBegin() {
         //進入回合的按鈕
@@ -59,6 +68,7 @@ public class UserScene extends Scene{
         popupWindow=new PopWindowScene(130,50,1000,600);
         introPopupWindow=new IntroPopupWindow(100,0,1500,1000);
         introPopupWindow.setCancelable();
+        introCount=0;
     }
     @Override
     public void sceneEnd() {
@@ -100,9 +110,13 @@ public class UserScene extends Scene{
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
-                                    if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
-                                        introPopupWindow.sceneBegin();
+                                    if (roundStart.isTouch(e.getX(), e.getY()) && !introPopupWindow.isPassed()) {//1.觸發換場的按鈕
+                                        System.out.println("教學場景尚未過場時"+introPopupWindow.isPassed());
+                                        introPopupWindow.sceneBegin();//記得初始化場景，否則會nullPoint!
                                         introPopupWindow.show();
+                                    }else if(roundStart.isTouch(e.getX(), e.getY()) && introPopupWindow.isPassed()){ //第二次之後 直接換場
+                                        System.out.println("教學場景已經過場，直接換場"+introPopupWindow.isPassed());
+                                        SceneController.getInstance().changeScene(GameScene.getInstance());
                                     }
                                     for (int i = 0; i < actorButtons.size(); i++) { //2.角色購買
                                         if (actorButtons.get(i).isTouch(e.getX(), e.getY())) {
@@ -216,7 +230,7 @@ public class UserScene extends Scene{
                 popupWindow.getArrowL().paint(g);
             }
         }
-        if(introPopupWindow.isShow()){
+        if(introPopupWindow.isShow() && !introPopupWindow.isPassed()){
             introPopupWindow.paint(g);
             if(introPopupWindow.getButton()!=null) {
                 introPopupWindow.getButton().paint(g);

@@ -5,10 +5,11 @@ import gameobj.Actor;
 import utils.Global;
 import java.awt.*;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 //帶有角色種類的Button
-public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!!!!!!!!!!!
+public class ActorButton extends Button{
     private ArrayList<Actor> alliances=Global.getAllianceActors();//得到Global的角色
     private ArrayList<Actor> enemys=Global.getEnemyActors();//得到Enemy的角色
 
@@ -25,6 +26,9 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
     private int costMoney;//這種角色要花多少錢-->要改的話去Global改唷~~~~
     private Button info;//角色資訊欄位。在User監聽滑鼠移動後，將角色按鈕設置成顯示Info true，否則為false；資訊欄都固定畫在左側。
     private boolean infoVisable; //是否顯示資訊欄
+    private boolean isUnLocked;// 是否被解鎖
+    private BufferedImage lockImage;//被鎖住的圖片
+    private Label unLockInfo;//解鎖條件的說明
 
     public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost) { //輸入的xy是左上角
         super(x, y, style);
@@ -34,8 +38,8 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
         costLabel=new Label(850,250,new Style.StyleRect(0,0,true,null));
         info=new Button(350,100,new Style.StyleRect(300,468
                 ,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/InfoB2-300.png"))));
+        unLockInfo=new Label(680,630,new Style.StyleRect(0,0,true,null).setText("解鎖條件:完成第一關挑戰").setTextColor(Color.RED).setTextFont(new Font("標楷體",Font.ITALIC,22)));
         infoVisable=false;
-
         for(int i=0;i<this.alliances.size();i++){
             if(alliances.get(i).getType()==this.actorType){
                 for(int j=0;j<6;j++) {
@@ -77,6 +81,10 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
         return costMoney;
     }
 
+    public boolean isUnLocked() {
+        return isUnLocked;
+    }
+
     public Global.ActorType getActorType(){
         return this.actorType;
     }
@@ -86,6 +94,14 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
     public void offSetNumber(int number){
         this.number+=number;
     }
+
+    public void setUnLocked(boolean unLocked) {
+        isUnLocked = unLocked;
+    }
+    public void setLockImage(BufferedImage image){
+        this.lockImage=image;
+    }
+
     //offsetNum
     public void offSetNum(int x){  //記得在場景中有我軍死掉被移除的話要--
         this.number+=x;
@@ -96,26 +112,33 @@ public class ActorButton extends Button{  //可以改成單例模式!!!!!!!!!!!!
 
     @Override
     public void paint(Graphics g){
-        if (super.getPaintStyle() != null) {
-            super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
-        }
-        if(numberLabel!=null){
-            numberLabel.getPaintStyle().setText("目前數量"+this.number+"").setTextFont(new Font("標楷體",Font.ITALIC,42));  //一定要用Style設置，才會顯示文字唷!!
-            numberLabel.paint(g);
-        }
-        if(costLabel!=null) {
-            costLabel.getPaintStyle().setText("花費: "+costMoney).setTextFont(new Font("標楷體",Font.ITALIC,42));
-            costLabel.paint(g);
-        }
-        if(infoVisable){ //是顯示的時候才要畫出來
-            info.paint(g);
-            //畫出訊息
-            hpLimit.paint(g);
-            atk.paint(g);
-            def.paint(g);
-            atkdis.paint(g);
-            atkSpeed.paint(g);
-            speed.paint(g);
+
+
+        if(!isUnLocked && this.lockImage!=null){ //被鎖住時 且 有圖片時
+            g.drawImage(lockImage,this.left()-20,this.top()+75,500,500,null); //就畫LockImage
+            unLockInfo.paint(g);
+        }else{
+            if (super.getPaintStyle() != null) {
+                super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+            }
+            if(numberLabel!=null){
+                numberLabel.getPaintStyle().setText("目前數量"+this.number+"").setTextFont(new Font("標楷體",Font.ITALIC,42));  //一定要用Style設置，才會顯示文字唷!!
+                numberLabel.paint(g);
+            }
+            if(costLabel!=null) {
+                costLabel.getPaintStyle().setText("花費: "+costMoney).setTextFont(new Font("標楷體",Font.ITALIC,42));
+                costLabel.paint(g);
+            }
+            if(infoVisable){ //是顯示的時候才要畫出來
+                info.paint(g);
+                //畫出訊息
+                hpLimit.paint(g);
+                atk.paint(g);
+                def.paint(g);
+                atkdis.paint(g);
+                atkSpeed.paint(g);
+                speed.paint(g);
+            }
         }
     }
 }

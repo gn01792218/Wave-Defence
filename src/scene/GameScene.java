@@ -258,6 +258,8 @@ public class GameScene extends Scene {
         if (step == 3 && enemys.size() <= 0) { //挑戰成功條件
             delay.play();
             if(delay.count()) {
+                Global.getActorButtons().get(2).setUnLocked(true); //解鎖雷射車
+                Global.getActorButtons().get(3).setUnLocked(true); //解鎖火箭車
                 Player.getInstance().offsetHonor(+1000); //榮譽值+1000
                 Player.getInstance().offsetMoney(1000); //金錢+1000
                 SceneController.getInstance().changeScene(new UserScene());

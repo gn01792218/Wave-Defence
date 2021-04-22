@@ -4,6 +4,7 @@ import controllers.ImageController;
 import gameobj.*;
 import menu.*;
 
+import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -98,6 +99,10 @@ public class Global {
                     Global.ActorType.LASERCAR,300);
             ActorButton rocket=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
                     ActorType.ROCKET,500);
+            tank1.setUnLocked(true); //坦1
+            tank2.setUnLocked(true); //坦2 都是被解鎖的
+            laserCar.setLockImage(ImageController.getInstance().tryGet("/AALaserCar_Lock.png"));
+            rocket.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
             actorButtons.add(tank1);
             actorButtons.add(tank2);
             actorButtons.add(laserCar);

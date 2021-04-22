@@ -19,8 +19,8 @@ public class Player implements GameKernel.UpdateInterface,GameKernel.PaintInterf
     private Player(){
         money=2000;
         honor=2000;
-        moneyLabel=new Label(1250,50,new Style.StyleRect(350,87,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))).setTextFont(new Font("標楷體",Font.ITALIC,42)));
-        honorLabel=new Label(1250,150,new Style.StyleRect(350,87,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))).setTextFont(new Font("標楷體",Font.ITALIC,42)));
+        moneyLabel=new Label(1230,50,new Style.StyleRect(350,87,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))).setTextFont(new Font("標楷體",Font.ITALIC,42)));
+        honorLabel=new Label(1230,150,new Style.StyleRect(350,87,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))).setTextFont(new Font("標楷體",Font.ITALIC,42)));
     }
     public static Player getInstance(){
         if(player==null){

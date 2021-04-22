@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class BossHornBullet extends Bullet{
     public BossHornBullet(float x, float y, float targetX, float targetY) {
-        super(x, y, targetX, targetY);
+        super(x, y,45,60 ,targetX, targetY);
         this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/BossHorn.png"),trigonometric.getDegree());
     }
 }

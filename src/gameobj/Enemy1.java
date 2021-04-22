@@ -15,6 +15,7 @@ public class Enemy1 extends Actor{
         hp=hpLimit; //血量
         atk=150; //攻擊力
         atkSpeed=new Delay(120); //攻速
+        atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         speed=3; //移動速度
         def=0.45; //防禦力

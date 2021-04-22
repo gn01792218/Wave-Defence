@@ -28,6 +28,7 @@ public class LaserCar extends Actor{
         hp=hpLimit; //初始血量
         atk=150; //攻擊力
         atkSpeed = new Delay(40);      //攻速
+        atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         speed=3f; //移動速度
         def=0.2; //防禦力

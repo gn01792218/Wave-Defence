@@ -63,7 +63,6 @@ public class UserScene extends Scene{
                 if(state!=null){
                     switch (state){
                         case MOVED: //負責監聽浮現的資訊欄
-//                            System.out.println(e.getX()+" "+e.getY());
                             for(int i=0;i<actorButtons.size();i++){ //每個按鈕監聽滑鼠移動
                                 if(actorButtons.get(i).isTouch(e.getX(),e.getY())){ //移動到角色上會有訊息欄
                                     //座標產生資訊圖片-->把角色圖片資訊設成visabl
@@ -79,7 +78,7 @@ public class UserScene extends Scene{
                                 secrt.isHover(true);
                             }else{secrt.isHover(false);}
                             break;
-                        case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵升級
+                        case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                             if(e.getButton()==1){ //左鍵
                                 if(roundStart.isTouch(e.getX(),e.getY())){//1.觸發換場的按鈕
                                     SceneController.getInstance().changeScene(new GameScene());
@@ -91,23 +90,7 @@ public class UserScene extends Scene{
                                         if(Player.getInstance().getMoney()>0 && Player.getInstance().getMoney()>=actorButtons.get(i).getCostMoney() && actorButtons.get(i).left()>=400 && actorButtons.get(i).right()<=1000) { //金錢大於0才可以買唷!-->問題:必須要現有的錢>要買的單位的錢
                                             actorButtons.get(i).offSetNumber(1); //點一下增加一單位
                                             AudioResourceController.getInstance().shot("/skillSound.wav");
-                                            switch (actorButtons.get(i).getActorType()){
-                                                case TANK1:
-                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                    break;
-                                                case TANK2:
-                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                    break;
-                                                case LASERCAR:
-                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                    break;
-                                                case ROCKET:
-                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                    break;
-                                                case ENEMY1:
-                                                    Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney());
-                                                    break;
-                                            }
+                                            Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney()); //扣錢
                                         }
                                     }
                                 }
@@ -147,11 +130,20 @@ public class UserScene extends Scene{
                                 }
                             }
 
-                            if(e.getButton()==3){//點擊右鍵
-                                for(int i=0;i<actorButtons.size();i++){ //1.角色升級
-                                    if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
-                                        //產生確認框
-                                        //升級軍隊
+                            if(e.getButton()==3){//點擊右鍵 取消
+                                for(int i=0;i<actorButtons.size();i++){ //1.角色取消購買
+                                    if(actorButtons.get(i).isTouch(e.getX(),e.getY()) && actorButtons.get(i).getNumber()>0){ //觸碰到 且數量大於0時，才可以取消
+                                        AudioResourceController.getInstance().shot("/buttonSound2.wav");
+                                        actorButtons.get(i).offSetNumber(-1); //點一下增加一單位
+                                        Player.getInstance().offsetMoney(+actorButtons.get(i).getCostMoney());  //把錢+回來
+                                    }
+                                }
+                                for(int i=0;i<skillButtons.size();i++){  //2.技能取消購買  (解鎖無法取消)
+                                    if (skillButtons.get(i).isTouch(e.getX(),e.getY()) && skillButtons.get(i).getIsSelect()){ //已經被選過的
+                                        skillButtons.get(i).setSelect(false); //設成未被選中
+                                        Player.getInstance().offsetHonor(+skillButtons.get(i).getCost()); //把錢+回來
+
+
                                     }
                                 }
                             }

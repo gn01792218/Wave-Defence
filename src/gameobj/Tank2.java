@@ -30,6 +30,7 @@ public class Tank2 extends Actor{
         hp=hpLimit; //初始血量
         atk=150; //攻擊力
         atkSpeed = new Delay(120);      //攻速
+        atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         speed=3.3f; //移動速度
         def=0.65; //防禦力

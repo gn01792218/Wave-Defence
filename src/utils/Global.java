@@ -22,6 +22,8 @@ public class Global {
     public static void addLevel(){
         level++;
     }
+    public static RankList rankList = new RankList();
+
     public enum SkillName {
         ATTACKUP,
         DEFUP,

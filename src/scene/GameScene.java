@@ -65,38 +65,46 @@ public class GameScene extends Scene {
             if(temp.get(i).getIsSelect()) { //有被選中的才new出來
                 switch (temp.get(i).getSkillName()) {
                     case ATTACKUP:
-                        skill.add(new AttackUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //把Global的技能按鈕設成非選，才不會在下一場又免費出現!!!!!!!
+                        skill.add(new AttackUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         break;
                     case HPUP:
-                        skill.add(new HpUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        skill.add(new HpUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         break;
                     case DEFUP:
-                        skill.add(new DefUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        skill.add(new DefUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         break;
                     case MOVESPEEDUP:
-                        skill.add(new SpeedUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        skill.add(new SpeedUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
                         break;
                     case REINFORCEMENTS:
                         SkillButton s1=new Reinforcements(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        s1.setInfoVisable(false);
                         s1.setUnLocked(true);
-                        skill.add(s1); //設置在場中的位置
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        skill.add(s1); //設置在場中的位置
                         break;
                     case  ELECTWAVE:
                         SkillButton s2=new ElectWave(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
+                        s2.setInfoVisable(false);
                         s2.setUnLocked(true);
-                        skill.add(s2);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        skill.add(s2);
                         break;
                     case ATKSPEEDUP:
                         SkillButton s3=new AtkSpeedUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
                         s3.setUnLocked(true);
-                        skill.add(s3);
+                        s3.setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
+                        skill.add(s3);
+
                         break;
                 }
             }
@@ -188,7 +196,7 @@ public class GameScene extends Scene {
         g.drawImage(image, 0, -150, null);
 
         int tx = this.countNum * 74;  //0-74 1-74*2 2-74*3
-        if(delayCount.isPlaying()){
+        if(delayCount.isPlaying()&&count<3){
             g.drawImage(image3, 750 - changePic, 100 - changePic, 750 + 74 + changePic, 100 + 90 + changePic,
                     tx, 0, tx + 74, 90, null); //倒數的圖片
         }
@@ -260,16 +268,20 @@ public class GameScene extends Scene {
                 break;
             }
         }
-        if (step == 3 && enemys.size() <= 0) { //挑戰成功條件
+        if (count >= 3 && enemys.size() <= 0) { //挑戰成功條件
             delay.play();
             if(delay.count()) {
                 Global.getActorButtons().get(2).setUnLocked(true); //解鎖雷射車
                 Global.getActorButtons().get(3).setUnLocked(true); //解鎖火箭車
                 Player.getInstance().offsetHonor(+1000); //榮譽值+1000
                 Player.getInstance().offsetMoney(1000); //金錢+1000
+                Global.addLevel();
+                System.out.println("!!!!!!");
                 SceneController.getInstance().changeScene(new UserScene());
             }
-        } else if (alliance.size() <= 0) { //挑戰失敗
+        }
+
+         if (alliance.size() <= 0) { //挑戰失敗
             delay.play();
             if(delay.count()) {
                 Player.getInstance().offsetMoney(250); //錢值+250
@@ -278,7 +290,7 @@ public class GameScene extends Scene {
             }
         }
 
-        if(step ==1){
+        if(step ==1 && count<3 ){
             AudioResourceController.getInstance().play("/boomy-sizzling.wav");
             if (delayCount.count()) {  //每1秒播放圖片
                 countNum++;

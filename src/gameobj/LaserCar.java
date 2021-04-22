@@ -56,9 +56,8 @@ public class LaserCar extends Actor{
         } else if (atkAngle < 360) {
             this.cannonDirection = CANNON_DIRECTION.BackLeft;
         }
-        System.out.println("!!!!!"+atkSpeed.count());
+
         if (atkSpeed.count()) {
-            System.out.println("?????");
             AudioResourceController.getInstance().shot("/LaserSound.wav");
             bullets.add(bullet);
         }

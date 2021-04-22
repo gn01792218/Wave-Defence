@@ -38,6 +38,8 @@ public class ChallengeScene extends Scene{
     private float mouseY;
     private Player player;
 
+    private Image imageTank1;
+
     @Override
     public void sceneBegin() {
         image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
@@ -52,20 +54,23 @@ public class ChallengeScene extends Scene{
         count=1;
         player = Player.getInstance();
         player.setMoney(600);
-        player.setHonor(200);
+        player.setHonor(250);
+
+//        imageTank1= ImageController.getInstance().tryGet();
 
 //        作技能
         skill=new ArrayList<>();
         ArrayList<SkillButton> temp=Global.getSkillButtons(); //從世界技能紐中下訂單
 
         int skillCount=0;
-        skill.add(new AttackUp(500+(skillCount)*128,100,temp.get(skillCount).getStyleNormal(),temp.get((skillCount)).getSkillName(),temp.get((skillCount++)).getCost())); //設置在場中的位置
-        skill.add(new HpUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost())); //設置在場中的位置
-        skill.add(new DefUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost())); //設置在場中的位置
-        skill.add(new SpeedUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost())); //設置在場中的位置
-        skill.add(new Reinforcements(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost()));
-        skill.add(new ElectWave(500+ skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost()));
-        skill.add(new AtkSpeedUp(500+skillCount*128,100,temp.get(skillCount).getStyleNormal(),temp.get(skillCount).getSkillName(),temp.get(skillCount++).getCost()));
+        skill.add(new SpeedUp(1390,325,temp.get(2).getStyleNormal(),temp.get(2).getSkillName(),temp.get(2).getCost())); //設置在場中的位置
+        skill.add(new HpUp(1490,325,temp.get(3).getStyleNormal(),temp.get(3).getSkillName(),temp.get(3).getCost())); //設置在場中的位置
+        skill.add(new AttackUp(1590,325,temp.get(0).getStyleNormal(),temp.get((0)).getSkillName(),temp.get((0)).getCost())); //設置在場中的位置
+        skill.add(new DefUp(1690,325,temp.get(1).getStyleNormal(),temp.get(1).getSkillName(),temp.get(1).getCost())); //設置在場中的位置
+
+        skill.add(new Reinforcements(1440,425,temp.get(4).getStyleNormal(),temp.get(4).getSkillName(),temp.get(4).getCost()));
+        skill.add(new ElectWave(1540,425,temp.get(5).getStyleNormal(),temp.get(5).getSkillName(),temp.get(5).getCost()));
+        skill.add(new AtkSpeedUp(1640,425,temp.get(6).getStyleNormal(),temp.get(6).getSkillName(),temp.get(6).getCost()));
         skill.get(4).setUnLocked(true);
         skill.get(5).setUnLocked(true);
         skill.get(6).setUnLocked(true);
@@ -73,10 +78,10 @@ public class ChallengeScene extends Scene{
 
         //做軍隊
         alliance = new ArrayList<>();
-//        alliance.add(new Tank1(850,600,false));
-//        alliance.add(new Tank1(750,600,false));
-//        alliance.add(new Tank1(950,700,false));
-//        alliance.add(new Tank1(650,700,false));
+        alliance.add(new Tank1(850,600,false));
+        alliance.add(new Tank1(750,600,false));
+        alliance.add(new Tank1(950,700,false));
+        alliance.add(new Tank1(650,700,false));
         castles = new ArrayList<>();
         castles.add(new Castle(400,730));
         castles.get(0).painter().setLeft(100);
@@ -172,6 +177,7 @@ public class ChallengeScene extends Scene{
                                             }else{
                                                 skill.get(i).skillExection(alliance); //執行技能~
                                             }
+//                                            skill.get(i).setUsed(true);
                                             player.offsetHonor(-skill.get(i).getCost());
                                         }
                                     }
@@ -189,6 +195,12 @@ public class ChallengeScene extends Scene{
                         case MOVED:
                             mouseX = e.getX();
                             mouseY = e.getY();
+
+                            for(int i=0;i<skill.size();i++){
+                                if(skill.get(i).isTouch(e.getX(),e.getY())){
+                                    skill.get(i).setInfoVisable(true);
+                                }else{ skill.get(i).setInfoVisable(false);}
+                            }
                     }
                 }
             }
@@ -332,18 +344,11 @@ public class ChallengeScene extends Scene{
             }
         }
 
-//
-//        if (step == 3 && enemys.size() <= 0) { //挑戰成功條件
-//            delay.play();
-//            if(delay.count()) {
-//                Player.getInstance().offsetHonor(+1000); //榮譽值+1000
-//                Player.getInstance().offsetMoney(1000); //金錢+1000
-//                SceneController.getInstance().changeScene(new UserScene());
-//            }
+
         if (castles.size() <= 0) { //挑戰失敗
             gameOver.play();
             if(gameOver.count()) {
-                SceneController.getInstance().changeScene(new UserScene());
+                SceneController.getInstance().changeScene(new OpenScene());
             }
         }
 

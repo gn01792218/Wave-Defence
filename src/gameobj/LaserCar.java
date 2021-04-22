@@ -33,6 +33,7 @@ public class LaserCar extends Actor{
         def=0.2; //防禦力
         atkdis=300; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
+        atkSpeed.loop();
     }
 
     @Override

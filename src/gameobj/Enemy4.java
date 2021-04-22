@@ -20,6 +20,7 @@ public class Enemy4 extends Actor{
         def=0.35; //防禦力
         atkdis= 150; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
+        atkSpeed.loop();
     }
     @Override
     public Global.ActorType getType() {

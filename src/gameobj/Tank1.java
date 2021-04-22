@@ -34,6 +34,7 @@ public class Tank1 extends Actor{
         def=0.5; //防禦力
         atkdis=200; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
+        atkSpeed.loop();
     }
 
     @Override

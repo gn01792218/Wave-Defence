@@ -38,7 +38,10 @@ public class ChallengeScene extends Scene{
     private float mouseY;
     private Player player;
 
-    private Image imageTank1;
+    private BufferedImage imageTank1;
+    private BufferedImage imageTank2;
+    private BufferedImage imageLaserCar;
+    private BufferedImage imageRocket;
 
     @Override
     public void sceneBegin() {
@@ -56,7 +59,10 @@ public class ChallengeScene extends Scene{
         player.setMoney(600);
         player.setHonor(250);
 
-//        imageTank1= ImageController.getInstance().tryGet();
+        imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
+        imageTank2= ImageController.getInstance().tryGet("/AB-Tank2-Small.png");
+        imageLaserCar= ImageController.getInstance().tryGet("/AB-LaserCar-Small.png");
+        imageRocket= ImageController.getInstance().tryGet("/AB-Rocket-Small.png");
 
 //        作技能
         skill=new ArrayList<>();
@@ -214,6 +220,15 @@ public class ChallengeScene extends Scene{
         player.paint(g);
         g.drawString("WAVE："+count,50,100);
 
+        g.drawImage(imageTank1, 1700, 410, null);
+        g.drawImage(imageTank2, 1700,560 , null);
+        g.drawImage(imageLaserCar, 1700, 680, null);
+        g.drawImage(imageRocket, 1700, 830, null);
+        g.drawString("1",1850,570);
+        g.drawString("2",1850,720);
+        g.drawString("3",1850,850);
+        g.drawString("4",1850,990);
+
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).paint(g); //畫我軍
         }
@@ -239,6 +254,8 @@ public class ChallengeScene extends Scene{
         if(castles.size()<=0){
             g.drawImage(image2, 350, 250, null);
         }
+
+
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override

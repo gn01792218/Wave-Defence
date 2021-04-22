@@ -87,7 +87,8 @@ public class UserScene extends Scene{
                                     if(actorButtons.get(i).isTouch(e.getX(),e.getY())){
                                         //產生確認框
                                         //購買軍隊
-                                        if(Player.getInstance().getMoney()>0 && Player.getInstance().getMoney()>=actorButtons.get(i).getCostMoney() && actorButtons.get(i).left()>=400 && actorButtons.get(i).right()<=1000) { //金錢大於0才可以買唷!-->問題:必須要現有的錢>要買的單位的錢
+                                        if(Player.getInstance().getMoney()>0 && Player.getInstance().getMoney()>=actorButtons.get(i).getCostMoney()
+                                                && actorButtons.get(i).left()>=400 && actorButtons.get(i).right()<=1000 && actorButtons.get(i).isUnLocked()) { //金錢大於0才可以
                                             actorButtons.get(i).offSetNumber(1); //點一下增加一單位
                                             AudioResourceController.getInstance().shot("/skillSound.wav");
                                             Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney()); //扣錢

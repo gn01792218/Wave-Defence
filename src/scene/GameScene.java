@@ -292,7 +292,6 @@ public class GameScene extends Scene {
                 step++;
             }
         }
-
         //產生敵軍
         if (Global.getLevel()==1 && step==2) {//敵軍可 以移動時
             if(count==1){

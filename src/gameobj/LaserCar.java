@@ -1,11 +1,13 @@
 package gameobj;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 import utils.Delay;
 import utils.Global;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class LaserCar extends Actor{
     protected BufferedImage image_S1;//技能1圖片
@@ -34,6 +36,59 @@ public class LaserCar extends Actor{
         def=0.2; //防禦力
         atkdis=300; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
+    }
+    @Override
+    public void fire (float x,float y){
+        Bullet bullet = new LaserBullet(this.painter().centerX(), this.painter().centerY(), x, y);
+//        根據角度變換砲管方向的狀態
+        int atkAngle = bullet.trigonometric.getDegree() + 270;
+        if (atkAngle < 60) {
+            this.cannonDirection = CANNON_DIRECTION.FrontLeft;
+        } else if (atkAngle <= 120) {
+            this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
+        } else if (atkAngle <= 180) {
+            this.cannonDirection = CANNON_DIRECTION.FrontRight;
+        } else if (atkAngle < 240) {
+            this.cannonDirection = CANNON_DIRECTION.BackRight;
+        } else if (atkAngle <= 300) {
+            this.cannonDirection = CANNON_DIRECTION.BackMiddle;
+        } else if (atkAngle < 360) {
+            this.cannonDirection = CANNON_DIRECTION.BackLeft;
+        }
+        if (atkSpeed.count()) {
+            AudioResourceController.getInstance().shot("/LaserSound.wav");
+            bullets.add(bullet);
+        }
+    }
+    @Override
+    public void bulletsUpdate (ArrayList< Actor > actors) {
+        ////飛彈爆炸後一定時間後消失
+        for (int i = 0; i < this.bullets.size(); i++) {
+            this.bullets.get(i).update(); //子彈移動
+            if (bullets.get(i).isExplored()) {
+                if (bullets.get(i).isTime()) {
+                    bullets.remove(i);
+                    i--;
+                }
+            } else if (isTouchBattleEdge(bullets.get(i).collider().centerX(), bullets.get(i).collider().centerY())) {
+                bullets.get(i).explored();
+                AudioResourceController.getInstance().shot("/explosion.wav");   //音效改核彈音效
+            }else {
+                for(int j=0;j<actors.size();j++) {   //攻擊敵機
+                    if (bullets.get(i).isCollision(actors.get(j))) {
+                        bullets.get(i).explored();
+                        AudioResourceController.getInstance().shot("/explosion.wav");  //炮炸改爆炸音效
+                    }
+                    if(bullets.get(i).isExplored()){  //造成範圍攻擊
+                        for(int k=0;k<actors.size();k++){
+                            if(Math.abs(actors.get(k).painter().centerX()-bullets.get(i).painter().centerX())<=150
+                                    && Math.abs(actors.get(k).painter().centerY()-bullets.get(i).painter().centerY())<=200)  //子彈左右100  下上80的距離 敵軍都會被扣血
+                                actors.get(k).offsetHp(-this.atk);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

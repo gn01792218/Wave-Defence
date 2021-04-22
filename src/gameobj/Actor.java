@@ -613,7 +613,7 @@ public abstract class Actor extends GameObject {
         }
         //開火
         public void fire (float x,float y){
-            Bullet bullet = new Bullet(this.collider().centerX(), this.collider().centerY(), x, y);
+            Bullet bullet = new Bullet(this.collider().centerX(), this.collider().centerY(),35,70, x, y);
 //        根據角度變換砲管方向的狀態
             int atkAngle = bullet.trigonometric.getDegree() + 270;
             if (atkAngle < 60) {

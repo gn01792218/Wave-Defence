@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class RocketBullet extends Bullet{
     public RocketBullet(float x, float y, float targetX, float targetY) {
-        super(x, y, targetX, targetY);
+        super(x, y,42,84, targetX, targetY);
         this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/bullet_Rocket.png"),trigonometric.getDegree());
         this.image2 = ImageController.getInstance().tryGet("/Boom_Rocket.png");
     }

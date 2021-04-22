@@ -6,6 +6,8 @@ import menu.BackgroundType;
 import menu.Button;
 import menu.Style;
 import utils.CommandSolver;
+import utils.Global;
+import utils.RankList;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

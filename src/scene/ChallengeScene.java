@@ -322,7 +322,8 @@ public class ChallengeScene extends Scene{
 
         //第一回合
         if(gameBegin.count()){
-            AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major");
+            System.out.println("111");
+            AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
             for(int i=0;i<(count+1)*2;i++){
                 enemys.add(new Enemy1(Global.random(650, 950), -Global.random(0, 50), true));
             }
@@ -335,7 +336,8 @@ public class ChallengeScene extends Scene{
 
         //回合++
         if(enemyLoop.count()){
-            AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major");
+            System.out.println("111");
+            AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
             count++;
             for(int i=0;i<(count+1)*2;i++){
                 enemys.add(new Enemy4(Global.random(650, 950), -Global.random(0,150), true));
@@ -364,6 +366,7 @@ public class ChallengeScene extends Scene{
 
         if (castles.size() <= 0) { //挑戰失敗
             gameOver.play();
+
             if(gameOver.count()) {
                 SceneController.getInstance().changeScene(new OpenScene());
             }

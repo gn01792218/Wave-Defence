@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Global {
     private static ArrayList<ActorButton> actorButtons;//角色按鈕，可以儲存玩家擁有的角色種類和數量；在選單中畫出來，在遊戲場景不畫出來，只是存放屬性。-->多個Scene會需要，故放此
+    private static ArrayList<ActorButton> enemyButtons;//
     private static ArrayList<SkillButton> skillButtons=null;// 技能按鈕
     private static ArrayList<Actor> allianceActors;//我軍角色陣列，提供選單的角色資訊用
     private static ArrayList<Actor> enemyActors;//敵軍角色陣列，提供選單角色資訊用
@@ -52,7 +53,6 @@ public class Global {
         allianceActors.add(new Rocket(0,0,false));
         return allianceActors;
     }
-
     //做取得技能按鈕陣列的實體。
     public static ArrayList<SkillButton> getSkillButtons() {
         final int skillButtonUnit = 64;
@@ -113,6 +113,36 @@ public class Global {
             actorButtons.add(rocket);
         }
         return actorButtons;
+    }
+    public static ArrayList<ActorButton> getEnemyButtons(){
+        if (enemyButtons == null) { //假如沒有 才做角色按鈕
+            enemyButtons= new ArrayList<>();//角色參數: 座標 Style Type Cost
+            ActorButton enemy1 = new ActorButton(500, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy1.png"))),
+                    ActorType.ENEMY1, 250);
+            ActorButton enemy2 = new ActorButton(1000, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy2.png"))),
+                    ActorType.ENEMY2, 280);
+            ActorButton enemy3=new ActorButton(1500,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy3.png"))),
+                    ActorType.ENEMY3,300);
+            ActorButton enemy4=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy4.png"))),
+                    ActorType.ENEMY4,500);
+            ActorButton boss=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Boss.png"))),
+                    ActorType.BOSS,500);
+//            enemy1.setUnLocked(true);
+//            enemy4.setUnLocked(true);
+//            enemy3.setLockImage(ImageController.getInstance().tryGet("/AALaserCar_Lock.png"));
+//            enemy2.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
+//            boss.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
+            for(int i=0;i<enemyButtons.size();i++){
+                enemyButtons.get(i).setNumberLabel(null);
+                enemyButtons.get(i).setCostLabel(null);
+            }
+            enemyButtons.add(enemy1);
+            enemyButtons.add(enemy2);
+            enemyButtons.add(enemy3);
+            enemyButtons.add(enemy4);
+            enemyButtons.add(boss);
+        }
+        return enemyButtons;
     }
 
     public static DecimalFormat getFrmt() {  //單例化
@@ -210,7 +240,7 @@ public class Global {
         }
     }
 
-    public static final boolean IS_DEBUG = true;
+    public static final boolean IS_DEBUG = false;
 
     public static void log(String str) {
         if (IS_DEBUG) {

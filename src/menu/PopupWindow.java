@@ -8,10 +8,8 @@ import scene.Scene;
 import utils.CommandSolver;
 //彈跳視窗
 public abstract class PopupWindow extends Scene {
-
     private boolean isShow;
     private boolean isCancelable;
-
     private int x;
     private int y;
     private int width;
@@ -62,31 +60,24 @@ public abstract class PopupWindow extends Scene {
     public int getX() {
         return x;
     }
-
     public int getY() {
         return y;
     }
-
     public int getWidth() {
         return width;
     }
-
     public int getHeight() {
         return height;
     }
-
     public void setX(int x) {
         this.x = x;
     }
-
     public void setY(int y) {
         this.y = y;
     }
-
     public void setWidth(int width) {
         this.width = width;
     }
-
     public void setHeight(int height) {
         this.height = height;
     }
@@ -103,7 +94,7 @@ public abstract class PopupWindow extends Scene {
             if (isCancelable) { //滑鼠點外面他會hide()
                 isCancelableHide(e, state, trigTime);
             }
-            e.translatePoint(-x, -y);
+//            e.translatePoint(-x, -y);
             mouseTrig(e, state, trigTime);
             if (isShow == false) {
                 sceneEnd();

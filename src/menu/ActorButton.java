@@ -81,6 +81,14 @@ public class ActorButton extends Button{
         return costMoney;
     }
 
+    public void setNumberLabel(Label numberLabel) {
+        this.numberLabel = numberLabel;
+    }
+
+    public void setCostLabel(Label costLabel) {
+        this.costLabel = costLabel;
+    }
+
     public boolean isUnLocked() {
         return isUnLocked;
     }

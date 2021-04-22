@@ -29,6 +29,7 @@ public class GameScene extends Scene {
     private BufferedImage image2; //失敗的圖片
     private BufferedImage image3;//倒數10秒圖片
     private BufferedImage image4;// 挑戰成功的圖片
+
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
@@ -51,6 +52,7 @@ public class GameScene extends Scene {
         }
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
+
         delayRound = new Delay(600); //開場前delay前20秒
         delayCount = new Delay(60);
         delay=new Delay(240); //過場delay
@@ -226,6 +228,7 @@ public class GameScene extends Scene {
             g.drawImage(image2, 350, 250, null);
         }
         Player.getInstance().paint(g);
+
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override

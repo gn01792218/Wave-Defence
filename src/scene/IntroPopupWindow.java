@@ -27,7 +27,7 @@ public class IntroPopupWindow extends PopupWindow {
 
     @Override
     public void sceneBegin() {
-        button=new Button(750,650,new Style.StyleRect(150,150, //畫出確認按鈕
+        button=new Button(800,650,new Style.StyleRect(150,150, //畫出確認按鈕
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         image1=ImageController.getInstance().tryGet("/intro1.png");
         image2= ImageController.getInstance().tryGet("/intro2.png");
@@ -41,6 +41,10 @@ public class IntroPopupWindow extends PopupWindow {
 
     public Button getButton() {
         return button;
+    }
+
+    public void setPassed(boolean passed) {
+        isPassed = passed;
     }
 
     public boolean isPassed() {
@@ -69,7 +73,7 @@ public class IntroPopupWindow extends PopupWindow {
                 case CLICKED:
                     if(e.getButton()==1){
                         if(button.isTouch(e.getX(),e.getY())){
-                            isPassed=true;
+                            isPassed=true; //點擊到就變成true
                             SceneController.getInstance().changeScene(GameScene.getInstance());
                         }
                     }

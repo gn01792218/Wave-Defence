@@ -66,6 +66,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
         enemyLabel=new Label(1200,550,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1000,600);
+        popupWindow.setCancelable();
         introPopupWindow=new IntroPopupWindow(100,0,1500,1000);
         introPopupWindow.setCancelable();
         introCount=0;
@@ -81,8 +82,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 if (state != null) {
                     if (popupWindow.isShow()) {
                         popupWindow.mouseListener().mouseTrig(e, state, trigTime);
-                    } else if (introPopupWindow.isShow()) {
-                        introPopupWindow.mouseListener().mouseTrig(e, state, trigTime);
+                    } else if (introPopupWindow.isShow()) { //show出popWindow時，
+                        introPopupWindow.mouseListener().mouseTrig(e, state, trigTime); //將Popwindow的監聽丟給本地監聽
                     } else {
                         switch (state) {
                             case MOVED: //負責監聽浮現的資訊欄
@@ -165,6 +166,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                         }
                                     }
                                     if (secrt.isTouch(e.getX(), e.getY())) {
+                                        popupWindow.sceneBegin();
                                         popupWindow.show();
                                     } else {
                                         popupWindow.hide();
@@ -224,11 +226,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
         g.drawImage(barImage,200,850,null);
         if(popupWindow.isShow()) {
             popupWindow.paint(g);
-            if(popupWindow.isArrowRUseable()){
-                popupWindow.getArrowR().paint(g);
-            }else if(popupWindow.isArrowLUseable()){
-                popupWindow.getArrowL().paint(g);
-            }
+            popupWindow.getArrowR().paint(g);
+            popupWindow.getArrowL().paint(g);
         }
         if(introPopupWindow.isShow() && !introPopupWindow.isPassed()){
             introPopupWindow.paint(g);

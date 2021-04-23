@@ -238,8 +238,8 @@ public class Rocket extends Actor{
                             break;
                         case ATKSPEEDUP:
                             g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    0, 0,
+                                    140, 180, null);
                             break;
                     }
                 }

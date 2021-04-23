@@ -1,9 +1,7 @@
 package scene;
 
 import controllers.AudioResourceController;
-
 import controllers.ImageController;
-
 import controllers.SceneController;
 import gameobj.*;
 
@@ -30,6 +28,8 @@ public class GameScene extends Scene {
     private BufferedImage image2; //失敗的圖片
     private BufferedImage image3;//倒數10秒圖片
     private BufferedImage image4;// 挑戰成功的圖片
+    private BufferedImage laserUnlock;//解鎖雷射車
+    private BufferedImage rocketUnlock;//解鎖火箭車
 
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
@@ -39,6 +39,7 @@ public class GameScene extends Scene {
     private Delay delayRound;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
     private Delay delay; //過場秒數
+    private Delay delayUnlock;//勝離圖和解所圖的過場
     private int countNum; //倒數的播放號碼
     private int changePic = 50; //倒數動畫
     private Actor allianceControl;//受旗子控制的我軍
@@ -226,9 +227,13 @@ public class GameScene extends Scene {
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
         g.drawImage(image1_1,0,-150,null);
-        if (count > 2 && enemys.size() <= 0) { //挑戰成功條件
+        if (count > 2 && enemys.size() <= 0 && delay.isPlaying()) { //挑戰成功且正在Delay中
             image4=ImageController.getInstance().tryGet("/Victory.png");
             g.drawImage(image4,350,250,null);
+                laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
+                rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
+                g.drawImage(laserUnlock, 100, 250, null);
+                g.drawImage(rocketUnlock, 750, 250, null);
         }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");

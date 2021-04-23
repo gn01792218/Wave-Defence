@@ -23,13 +23,14 @@ public class PopWindowScene extends PopupWindow {
 
     public PopWindowScene(int x, int y, int width, int height){
         super(x,y,width,height);
-        enemyButtons= Global.getEnemyButtons();//得到Global的角色按紐
-        arrowR=new Button(1000,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
-        arrowL=new Button(300,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
     }
 
     @Override
     public void sceneBegin() {
+
+        enemyButtons= Global.getEnemyButtons();//得到Global的角色按紐
+        arrowR=new Button(1000,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
+        arrowL=new Button(300,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
 
     }
 
@@ -61,7 +62,7 @@ public class PopWindowScene extends PopupWindow {
 
     @Override
     public void paintWindow(Graphics g) {
-        g.setColor(new Color(0xBC0C0CB1, true));
+        g.setColor(new Color(0x7A2B2B34, true));
         g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
         for(int i=0;i<enemyButtons.size();i++){
             if(enemyButtons.get(i).left()<900 && enemyButtons.get(i).right()>500) {
@@ -81,8 +82,7 @@ public class PopWindowScene extends PopupWindow {
     }
     @Override
     protected void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
-        MouseTriggerImpl.mouseTrig(arrowR,e,state);
-        System.out.println(state);
+        System.out.println("進入敵軍資訊監聽");
         if(state!=null){
             switch (state){
                 case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消

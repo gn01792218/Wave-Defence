@@ -125,7 +125,7 @@ public class Global {
                     ActorType.ENEMY3,300);
             ActorButton enemy4=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy4.png"))),
                     ActorType.ENEMY4,500);
-            ActorButton boss=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Boss.png"))),
+            ActorButton boss=new ActorButton(2500,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Boss.png"))),
                     ActorType.BOSS,500);
 //            enemy1.setUnLocked(true);
 //            enemy4.setUnLocked(true);
@@ -240,7 +240,7 @@ public class Global {
         }
     }
 
-    public static final boolean IS_DEBUG = false;
+    public static final boolean IS_DEBUG = true;
 
     public static void log(String str) {
         if (IS_DEBUG) {

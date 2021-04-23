@@ -80,13 +80,7 @@ public class LaserCar extends Actor{
                     if (bullets.get(i).isCollision(actors.get(j))) {
                         bullets.get(i).explored();
                         AudioResourceController.getInstance().shot("/explosion.wav");  //炮炸改爆炸音效
-                    }
-                    if(bullets.get(i).isExplored()){  //造成範圍攻擊
-                        for(int k=0;k<actors.size();k++){
-                            if(Math.abs(actors.get(k).painter().centerX()-bullets.get(i).painter().centerX())<=150
-                                    && Math.abs(actors.get(k).painter().centerY()-bullets.get(i).painter().centerY())<=200)  //子彈左右100  下上80的距離 敵軍都會被扣血
-                                actors.get(k).offsetHp(-this.atk);
-                        }
+                        actors.get(j).offsetHp(-(this.atk) * (1 - actors.get(j).def));
                     }
                 }
             }

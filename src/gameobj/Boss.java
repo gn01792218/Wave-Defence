@@ -36,7 +36,7 @@ public class Boss extends Actor {
         ammoReload = new Delay(60);
         ammo = 0;
         chargeSpeed = 6;//衝鋒速度
-        speed = 1.2f; //移動速度
+        speed = 3.6f; //移動速度
         def = 0.55; //防禦力
         atkdis = 250; //攻擊距離
         this.isEnemy = isEnemy; //敵我單位

@@ -16,9 +16,11 @@ public class RankList {
     Path path = Paths.get("");
     String directoryName = path.toAbsolutePath().toString();
 
-    //讀取紀錄檔
+
     public RankList(){
-        System.out.println(directoryName);
+
+        System.out.println(directoryName);//Class檔案位置
+        //讀取紀錄檔
         try{
             String s;
             BufferedReader br = new BufferedReader(new FileReader(directoryName+"\\output.txt"));
@@ -28,6 +30,7 @@ public class RankList {
                 score.add(Integer.valueOf(s.substring(ch+1)));
             }
         }catch (Exception e){
+            //若找不到檔案則創建
             try{
                 BufferedWriter bw = new BufferedWriter(
                         new FileWriter(directoryName+"\\output.txt"));
@@ -39,7 +42,7 @@ public class RankList {
             }catch (Exception ee){
                 return;
             }
-
+            //再讀取空白資料
             try {
                 String s;
                 BufferedReader br = new BufferedReader(new FileReader(directoryName+"\\output.txt"));

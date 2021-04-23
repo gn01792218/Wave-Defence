@@ -24,6 +24,7 @@ public class ChallengeScene extends Scene{
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> castles; //城堡陣列
     private ArrayList<Actor> enemys; //敵軍
+    private ArrayList<Actor> boss; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
     private boolean isFlagUsable;
     private int step;
@@ -84,15 +85,16 @@ public class ChallengeScene extends Scene{
 
         //做軍隊
         alliance = new ArrayList<>();
-//        alliance.add(new Tank1(850,600,false));
-//        alliance.add(new Tank1(750,600,false));
-//        alliance.add(new Tank1(950,700,false));
-//        alliance.add(new Tank1(650,700,false));
+        alliance.add(new Tank1(850,600,false));
+        alliance.add(new Tank1(750,600,false));
+        alliance.add(new Tank1(950,700,false));
+        alliance.add(new Tank1(650,700,false));
         castles = new ArrayList<>();
         castles.add(new Castle(400,730));
         castles.get(0).painter().setLeft(100);
         castles.add(new Castle(1150,730));
         enemys = new ArrayList<>();
+        boss = new ArrayList<>();
 
     }
 
@@ -308,6 +310,15 @@ public class ChallengeScene extends Scene{
 
             if (!enemys.get(i).isAlive()) {
                 enemys.remove(i);
+                player.offsetMoney(25);
+                break;
+            }
+        }
+        //boss update
+        for(int i=0;i<boss.size();i++){
+            boss.get(i).autoAttack(alliance,castles);
+            if (!boss.get(i).isAlive()) {
+                boss.remove(i);
                 player.offsetMoney(100);
                 break;
             }
@@ -322,7 +333,6 @@ public class ChallengeScene extends Scene{
 
         //第一回合
         if(gameBegin.count()){
-            System.out.println("111");
             AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
             for(int i=0;i<(count+1)*2;i++){
                 enemys.add(new Enemy1(Global.random(650, 950), -Global.random(0, 50), true));
@@ -336,25 +346,29 @@ public class ChallengeScene extends Scene{
 
         //回合++
         if(enemyLoop.count()){
-            System.out.println("111");
             AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
             count++;
-            for(int i=0;i<(count+1)*2;i++){
-                enemys.add(new Enemy4(Global.random(650, 950), -Global.random(0,150), true));
+            for(int i=0;i<count*4;i++){
+                enemys.add(new Enemy1(Global.random(650, 950), -Global.random(0,150), true));
             }
             if(count>2){
-                for(int i=0;i<(count-1)*2;i++){
+                for(int i=0;i<(count-1)*4;i++){
                     enemys.add(new Enemy2(Global.random(650, 950), -Global.random(50,200), true));
                 }
             }
+            if(count>3){
+                for(int i=0;i<(count-1)*3;i++){
+                    enemys.add(new Enemy3(Global.random(650, 950), -Global.random(50,200), true));
+                }
+            }
             if(count>4){
-                for(int i=0;i<(count-2)*2;i++){
-                    enemys.add(new Enemy3(Global.random(650, 950), -Global.random(150,300), true));
+                for(int i=0;i<(count-2)*3;i++){
+                    enemys.add(new Enemy4(Global.random(650, 950), -Global.random(0,400), true));
                 }
             }
             if(count>5){
                 for(int i=0;i<count-5;i++){
-                    enemys.add(new Enemy4(Global.random(400, 1000), -Global.random(50,200), true));
+                    enemys.add(new Boss(Global.random(650, 950), -Global.random(50,200), true));
                 }
             }
             //隨機給予敵人攻擊位置
@@ -365,13 +379,12 @@ public class ChallengeScene extends Scene{
 
 
         if (castles.size() <= 0) { //挑戰失敗
-//            gameOver.play();
-//
-//            if(gameOver.count()) {
-//                SceneController.getInstance().changeScene(new OpenScene());
-//            }
-            Global.rankList.newScore(count);
-            SceneController.getInstance().changeScene(new OpenScene());
+            gameOver.play();
+
+            if(gameOver.count()) {
+                Global.rankList.newScore(count);
+                SceneController.getInstance().changeScene(new OpenScene());
+            }
         }
 
     }

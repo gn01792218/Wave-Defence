@@ -1,6 +1,7 @@
 package scene;
 
 import controllers.ImageController;
+import controllers.SceneController;
 import gameobj.*;
 import utils.CommandSolver;
 import utils.Flag;
@@ -14,20 +15,27 @@ import java.util.EmptyStackException;
 
 public class TestScene extends Scene{
     private BufferedImage image; //背景圖
+    private BufferedImage rocketUnlock; //背景圖
+    private BufferedImage laserUnlock; //背景圖
+    private BufferedImage image4; //背景圖
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<Bullet> bullets;
     private Actor allianceControl;//受旗子控制的我軍
     private boolean isFlagUsable;
+    private boolean gameComplete;
+    private int completeStep;
     private int egetx;
     private int egety;
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/GameScene2.png"); //場景圖
+        image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         alliance = new ArrayList();
         enemys = new ArrayList();
         bullets = new ArrayList();
         isFlagUsable = true;
+        gameComplete=true;
+        completeStep=0;
     }
     @Override
     public void sceneEnd() {
@@ -41,6 +49,9 @@ public class TestScene extends Scene{
                 if(state!=null){
                     switch (state){
                         case CLICKED:
+                            if(gameComplete){
+                                completeStep++;
+                            }
                             if(e.getButton() == e.BUTTON1){
                                 if (isFlagUsable) {  //當旗子還可以使用的時候
                                     for (int i = 0; i < alliance.size(); i++) { //控制權現在在誰身上
@@ -102,6 +113,8 @@ public class TestScene extends Scene{
 
     @Override
     public void paint(Graphics g) {
+
+
         g.drawImage(image, 0, -150, null);
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).paint(g);
@@ -114,6 +127,21 @@ public class TestScene extends Scene{
         }
         if(allianceControl!=null){
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
+        }
+
+        if(gameComplete){
+            if(completeStep==3){
+                SceneController.getInstance().changeScene(UserScene.getInstance());
+            }else if(completeStep==2){
+                rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
+                g.drawImage(rocketUnlock, 550, 250, null);
+            }else if(completeStep==1){
+                laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
+                g.drawImage(laserUnlock, 550, 250, null);
+            }else{
+                image4=ImageController.getInstance().tryGet("/Victory.png");
+                g.drawImage(image4,400,250,null);
+            }
         }
 
     }

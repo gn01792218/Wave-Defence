@@ -35,6 +35,8 @@ public class GameScene extends Scene {
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
     private boolean isFlagUsable;
+    private boolean gameComplete;
+    private int completeStep;
     private int step;
     private Delay delayRound;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
@@ -67,6 +69,8 @@ public class GameScene extends Scene {
         delayRound.play();
         delayCount.loop();//倒數計時每1秒觸發一次換圖片
         isFlagUsable = true;
+        gameComplete =false;
+        completeStep=0;
         step=1;
         //作技能
         skill=new ArrayList<>();
@@ -156,6 +160,9 @@ public class GameScene extends Scene {
                     switch (state) {
                         case CLICKED:
                             if (e.getButton() == e.BUTTON1) {
+                                if(gameComplete){
+                                    completeStep++;
+                                }
                                 if (isFlagUsable) {  //當旗子還可以使用的時候
                                     for (int i = 0; i < alliance.size(); i++) { //控制權現在在誰身上
                                         if (alliance.get(i).isTouch(e.getX(), e.getY())) { //假如被點到了
@@ -227,14 +234,30 @@ public class GameScene extends Scene {
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
         g.drawImage(image1_1,0,-150,null);
-        if (count > 2 && enemys.size() <= 0 && delay.isPlaying()) { //挑戰成功且正在Delay中
-            image4=ImageController.getInstance().tryGet("/Victory.png");
-            g.drawImage(image4,350,250,null);
-                laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
+
+        //當獲勝的時候
+        if(gameComplete){
+            if(completeStep==3){
+                SceneController.getInstance().changeScene(UserScene.getInstance());
+            }else if(completeStep==2){
                 rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
-                g.drawImage(laserUnlock, 100, 100, null);
                 g.drawImage(rocketUnlock, 1000, 100, null);
+            }else if(completeStep==1){
+                laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
+                g.drawImage(laserUnlock, 100, 100, null);
+            }else{
+                image4=ImageController.getInstance().tryGet("/Victory.png");
+                g.drawImage(image4,350,250,null);
+            }
         }
+//        if (count > 2 && enemys.size() <= 0 && delay.isPlaying()) { //挑戰成功且正在Delay中
+//            image4=ImageController.getInstance().tryGet("/Victory.png");
+//            g.drawImage(image4,350,250,null);
+//                laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
+//                rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
+//                g.drawImage(laserUnlock, 100, 100, null);
+//                g.drawImage(rocketUnlock, 1000, 100, null);
+//        }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);
@@ -281,26 +304,6 @@ public class GameScene extends Scene {
                 enemys.remove(i);
                 Player.getInstance().offsetMoney(+100); //殺一隻敵軍100元
                 break;
-            }
-        }
-        if (count >= 3 && enemys.size() <= 0) { //挑戰成功條件
-            delay.play();
-            if(delay.count()) {
-                Global.getActorButtons().get(2).setUnLocked(true); //解鎖雷射車
-                Global.getActorButtons().get(3).setUnLocked(true); //解鎖火箭車
-                Player.getInstance().offsetHonor(+1000); //榮譽值+1000
-                Player.getInstance().offsetMoney(1000); //金錢+1000
-                Global.addLevel();
-                SceneController.getInstance().changeScene(UserScene.getInstance());
-            }
-        }
-
-         if (alliance.size() <= 0) { //挑戰失敗
-            delay.play();
-            if(delay.count()) {
-                Player.getInstance().offsetMoney(250); //錢值+250
-                Player.getInstance().offsetHonor(250); //榮譽值+50
-                SceneController.getInstance().changeScene(UserScene.getInstance());
             }
         }
 
@@ -381,6 +384,24 @@ public class GameScene extends Scene {
                 delayRound.play();
                 delayCount.loop();//倒數計時每1秒觸發一次換圖片
                 isFlagUsable = true;
+            }
+        }
+
+        if (count >= 3 && enemys.size() <= 0 &&!gameComplete) { //挑戰成功條件
+            Global.getActorButtons().get(2).setUnLocked(true); //解鎖雷射車
+            Global.getActorButtons().get(3).setUnLocked(true); //解鎖火箭車
+            Player.getInstance().offsetHonor(+1000); //榮譽值+1000
+            Player.getInstance().offsetMoney(1000); //金錢+1000
+            Global.addLevel();
+            gameComplete=true;
+        }
+
+        if (alliance.size() <= 0) { //挑戰失敗
+            delay.play();
+            if(delay.count()) {
+                Player.getInstance().offsetMoney(250); //錢值+250
+                Player.getInstance().offsetHonor(250); //榮譽值+50
+                SceneController.getInstance().changeScene(UserScene.getInstance());
             }
         }
     }

@@ -3,12 +3,14 @@ package utils;
 import controllers.ImageController;
 import gameobj.*;
 import menu.*;
+import scene.IntroPopupWindow;
 
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Global {
+    private static IntroPopupWindow introPopupWindow;
     private static ArrayList<ActorButton> actorButtons;//角色按鈕，可以儲存玩家擁有的角色種類和數量；在選單中畫出來，在遊戲場景不畫出來，只是存放屬性。-->多個Scene會需要，故放此
     private static ArrayList<ActorButton> enemyButtons;//
     private static ArrayList<SkillButton> skillButtons=null;// 技能按鈕
@@ -44,6 +46,12 @@ public class Global {
         ENEMY4,
         BOSS,
 
+    }
+    public static IntroPopupWindow getIntroPopupWindow(){
+        if(introPopupWindow==null) {
+            introPopupWindow = new IntroPopupWindow(100,0,1500,1000);
+        }
+        return introPopupWindow;
     }
     public static ArrayList<Actor> getAllianceActors() {
         allianceActors = new ArrayList<>(); //每次需要的時候new新的以更新資訊

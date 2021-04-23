@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 //按鈕必須要在外面畫才不會走鐘
 
 public class IntroPopupWindow extends PopupWindow {
+
     private Button button;//確認按鈕
     private BufferedImage image1;//教學圖片1
     private BufferedImage image2;//教學圖片
@@ -24,7 +25,6 @@ public class IntroPopupWindow extends PopupWindow {
         super(x,y,width,height);
 
     }
-
     @Override
     public void sceneBegin() {
         button=new Button(800,650,new Style.StyleRect(150,150, //畫出確認按鈕

@@ -67,7 +67,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1000,600);
         popupWindow.setCancelable();
-        introPopupWindow=new IntroPopupWindow(100,0,1500,1000);
+        introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
         introCount=0;
     }
@@ -87,7 +87,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
                     } else {
                         switch (state) {
                             case MOVED: //負責監聽浮現的資訊欄
-                                System.out.println(e.getX()+" "+e.getY());
                                 for (int i = 0; i < actorButtons.size(); i++) {    //每個按鈕監聽滑鼠移動
                                     if (actorButtons.get(i).isTouch(e.getX(), e.getY())) { //移動到角色上會有訊息欄
                                         //座標產生資訊圖片-->把角色圖片資訊設成visabl

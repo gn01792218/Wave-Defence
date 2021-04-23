@@ -102,13 +102,13 @@ public class Global {
         if (actorButtons == null) { //假如沒有 才做角色按鈕
             actorButtons = new ArrayList<>();//角色參數: 座標 Style Type Cost
             ActorButton tank1 = new ActorButton(500, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
-                    Global.ActorType.TANK1, 250);
+                    Global.ActorType.TANK1, 250,false);
             ActorButton tank2 = new ActorButton(1000, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
-                    Global.ActorType.TANK2, 280);
+                    Global.ActorType.TANK2, 280,false);
             ActorButton laserCar=new ActorButton(1500,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
-                    Global.ActorType.LASERCAR,300);
+                    Global.ActorType.LASERCAR,300,false);
             ActorButton rocket=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
-                    ActorType.ROCKET,500);
+                    ActorType.ROCKET,500,false);
             tank1.setUnLocked(true); //坦1
             tank2.setUnLocked(true); //坦2 都是被解鎖的
 //            laserCar.setUnLocked(true); //測試用
@@ -125,18 +125,21 @@ public class Global {
     public static ArrayList<ActorButton> getEnemyButtons(){
         if (enemyButtons == null) { //假如沒有 才做角色按鈕
             enemyButtons= new ArrayList<>();//角色參數: 座標 Style Type Cost
-            ActorButton enemy1 = new ActorButton(500, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy1.png"))),
-                    ActorType.ENEMY1, 250);
-            ActorButton enemy2 = new ActorButton(1000, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy2.png"))),
-                    ActorType.ENEMY2, 280);
-            ActorButton enemy3=new ActorButton(1500,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy3.png"))),
-                    ActorType.ENEMY3,300);
-            ActorButton enemy4=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy4.png"))),
-                    ActorType.ENEMY4,500);
-            ActorButton boss=new ActorButton(2500,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Boss.png"))),
-                    ActorType.BOSS,500);
-//            enemy1.setUnLocked(true);
-//            enemy4.setUnLocked(true);
+            ActorButton enemy1 = new ActorButton(550, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy1.png"))),
+                    ActorType.ENEMY1, 0,true);
+            ActorButton enemy2 = new ActorButton(1050, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy2.png"))),
+                    ActorType.ENEMY2, 0,true);
+            ActorButton enemy3=new ActorButton(1550,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy3.png"))),
+                    ActorType.ENEMY3,0,true);
+            ActorButton enemy4=new ActorButton(2050,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy4.png"))),
+                    ActorType.ENEMY4,0,true);
+            ActorButton boss=new ActorButton(2550,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Boss.png"))),
+                    ActorType.BOSS,0,true);
+            enemy1.setUnLocked(true);
+            enemy4.setUnLocked(true);
+            enemy3.setUnLocked(true);
+            enemy4.setUnLocked(true);
+            boss.setUnLocked(false);
 //            enemy3.setLockImage(ImageController.getInstance().tryGet("/AALaserCar_Lock.png"));
 //            enemy2.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
 //            boss.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));

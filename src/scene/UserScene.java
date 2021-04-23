@@ -65,7 +65,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
         skillLabel=new Label(735,810,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
         enemyLabel=new Label(1200,550,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
         barImage=ImageController.getInstance().tryGet("/bar.png");
-        popupWindow=new PopWindowScene(130,50,1000,600);
+        popupWindow=new PopWindowScene(130,50,1300,600);
         popupWindow.setCancelable();
         popupWindow.hide();
         introPopupWindow=Global.getIntroPopupWindow();
@@ -113,11 +113,9 @@ public class UserScene extends Scene{ //改成單例模式!!!
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
                                     if (roundStart.isTouch(e.getX(), e.getY()) && !introPopupWindow.isPassed()) {//1.觸發換場的按鈕
-                                        System.out.println("教學場景尚未過場時"+introPopupWindow.isPassed());
                                         introPopupWindow.sceneBegin();//記得初始化場景，否則會nullPoint!
                                         introPopupWindow.show();
                                     }else if(roundStart.isTouch(e.getX(), e.getY()) && introPopupWindow.isPassed()){ //第二次之後 直接換場
-                                        System.out.println("教學場景已經過場，直接換場"+introPopupWindow.isPassed());
                                         SceneController.getInstance().changeScene(GameScene.getInstance());
                                     }
                                     for (int i = 0; i < actorButtons.size(); i++) { //2.角色購買
@@ -244,7 +242,5 @@ public class UserScene extends Scene{ //改成單例模式!!!
         if(actorButtons.get(3).right()>=1000 && actorButtons.get(3).right()<=2000) {
             arrowRUseable = true;
         }else{arrowRUseable=false;}
-        System.out.println("pop"+popupWindow.isShow());
-        System.out.println("info"+introPopupWindow.isShow());
     }
 }

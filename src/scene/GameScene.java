@@ -232,8 +232,8 @@ public class GameScene extends Scene {
             g.drawImage(image4,350,250,null);
                 laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
                 rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
-                g.drawImage(laserUnlock, 100, 250, null);
-                g.drawImage(rocketUnlock, 750, 250, null);
+                g.drawImage(laserUnlock, 100, 100, null);
+                g.drawImage(rocketUnlock, 1000, 100, null);
         }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");

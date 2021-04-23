@@ -452,8 +452,10 @@ public abstract class Actor extends GameObject {
                     b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
                     d = (float) Math.sqrt(a * a + b * b);
                     if (d < mind) { //最短距離者 ，取他的XY值
-                        mind = d;
-                        target = actors.get(i).collider();
+                        if(targetIsInBattleField(actors.get(i).collider().centerX(),actors.get(i).collider().centerY())){
+                            mind = d;
+                            target = actors.get(i).collider();
+                        }
                     }
                 }
             }
@@ -492,38 +494,6 @@ public abstract class Actor extends GameObject {
                 }
             }
         }
-//            else{
-//
-//                if(set){
-//                    System.out.println(111);
-//                    return;
-//                }
-//
-//                if(this.collider().overlap(flag.collider())){
-//                    System.out.println(222);
-//                    set = true;
-//                }else{
-//                    System.out.println(333);
-//                    //角色的translate根據x/y的斜率來走
-//                    float a = Math.abs(painter().centerX() - flag.collider().centerX());//x座標差值 對邊
-//                    float b = Math.abs(painter().centerY() - flag.collider().centerY()); //y座標差值 臨邊
-//                    float d = (float) Math.sqrt(a * a + b * b); //斜邊
-//                    //當d的距離大於10時才執行，所以會在距離敵軍100的地方停下來
-//                    //但需要解決和我軍重疊的問題
-//                    // 大於0會精準回到原點，且所有人會重疊，亦可能顫抖  ；大於自己的攻擊距離會回到原點+攻擊距離的位置。值不能大於所有角色中射程最短的角色(否則他會無法發射子彈)
-//                    float xM = (float) a / d * speed;  //x向量
-//                    float yM = (float) b / d * speed; //y向量
-//                    if (painter().centerX() > flag.collider().centerX()) {
-//                        xM = -xM;
-//                    }
-//                    if (painter().centerY() > flag.collider().centerY()) {
-//                        yM = -yM;
-//                    }
-//                    this.painter().offSet((int) xM, (int) yM);
-//                    this.collider().offSet((int) xM, (int) yM);
-//                }
-//            }
-//        }
 
         public void standAttack(ArrayList < Actor > actors, ArrayList < Actor > alliance){
             Rect target = null;
@@ -539,8 +509,10 @@ public abstract class Actor extends GameObject {
                     b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
                     d = (float) Math.sqrt(a * a + b * b);
                     if (d < mind) { //最短距離者 ，取他的XY值
-                        mind = d;
-                        target = actors.get(i).collider();
+                        if(targetIsInBattleField(actors.get(i).collider().centerX(),actors.get(i).collider().centerY())){
+                            mind = d;
+                            target = actors.get(i).collider();
+                        }
                     }
                 }
             }
@@ -570,23 +542,28 @@ public abstract class Actor extends GameObject {
         if(this.isOnDebuff && this.skillName== Global.SkillName.ELECTWAVE){
             return; //中deBuff，且是ELECTWAVE時，就直接停止移動和攻擊
         }
+            Rect target = null;
 
             if (actors.size() > 0) {
                 //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
-                float a ;
-                float b ;
-                float d ;
+                float a;
+                float b;
+                float d;
                 float mind = Integer.MAX_VALUE;
-                Rect target = null;
                 for (int i = 0; i < actors.size(); i++) {
                     a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
                     b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
                     d = (float) Math.sqrt(a * a + b * b);
                     if (d < mind) { //最短距離者 ，取他的XY值
-                        mind = d;
-                        target = actors.get(i).collider();
+                        if (targetIsInBattleField(actors.get(i).collider().centerX(), actors.get(i).collider().centerY())) {
+                            mind = d;
+                            target = actors.get(i).collider();
+                        }
                     }
                 }
+            }
+            if(target!=null){
+
                 //移動至攻擊範圍內則開火
                 float targetX = target.centerX();
                 float targetY = target.centerY();
@@ -598,8 +575,8 @@ public abstract class Actor extends GameObject {
                     System.out.println(targetX);
                     System.out.println(targetY);
                 }
-            }
-            if (actors.size() <= 0 && !this.isEnemy) {
+            }else if(!this.isEnemy){
+//            if (actors.size() <= 0 && !this.isEnemy) {
                 //回到自己原本的位置並導正砲管
                 if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
                     if (atkSpeed.getCount() < 119) {

@@ -241,23 +241,16 @@ public class GameScene extends Scene {
                 SceneController.getInstance().changeScene(UserScene.getInstance());
             }else if(completeStep==2){
                 rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
-                g.drawImage(rocketUnlock, 1000, 100, null);
+                g.drawImage(rocketUnlock, 550, 250, null);
             }else if(completeStep==1){
                 laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
-                g.drawImage(laserUnlock, 100, 100, null);
+                g.drawImage(laserUnlock, 550, 250, null);
             }else{
                 image4=ImageController.getInstance().tryGet("/Victory.png");
-                g.drawImage(image4,350,250,null);
+                g.drawImage(image4,400,250,null);
             }
         }
-//        if (count > 2 && enemys.size() <= 0 && delay.isPlaying()) { //挑戰成功且正在Delay中
-//            image4=ImageController.getInstance().tryGet("/Victory.png");
-//            g.drawImage(image4,350,250,null);
-//                laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
-//                rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
-//                g.drawImage(laserUnlock, 100, 100, null);
-//                g.drawImage(rocketUnlock, 1000, 100, null);
-//        }
+
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);

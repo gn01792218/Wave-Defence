@@ -84,10 +84,10 @@ public class ChallengeScene extends Scene{
 
         //做軍隊
         alliance = new ArrayList<>();
-        alliance.add(new Tank1(850,600,false));
-        alliance.add(new Tank1(750,600,false));
-        alliance.add(new Tank1(950,700,false));
-        alliance.add(new Tank1(650,700,false));
+//        alliance.add(new Tank1(850,600,false));
+//        alliance.add(new Tank1(750,600,false));
+//        alliance.add(new Tank1(950,700,false));
+//        alliance.add(new Tank1(650,700,false));
         castles = new ArrayList<>();
         castles.add(new Castle(400,730));
         castles.get(0).painter().setLeft(100);
@@ -365,11 +365,13 @@ public class ChallengeScene extends Scene{
 
 
         if (castles.size() <= 0) { //挑戰失敗
-            gameOver.play();
-
-            if(gameOver.count()) {
-                SceneController.getInstance().changeScene(new OpenScene());
-            }
+//            gameOver.play();
+//
+//            if(gameOver.count()) {
+//                SceneController.getInstance().changeScene(new OpenScene());
+//            }
+            Global.rankList.newScore(count);
+            SceneController.getInstance().changeScene(new OpenScene());
         }
 
     }

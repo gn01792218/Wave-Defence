@@ -73,9 +73,9 @@ public class Rocket extends Actor{
         }
         if (actors.size() > 0) {
             //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
-            float a ;
-            float b ;
-            float d ;
+            float a;
+            float b;
+            float d;
             float mind = Integer.MAX_VALUE;
             Rect target = null;
             for (int i = 0; i < actors.size(); i++) {
@@ -83,30 +83,34 @@ public class Rocket extends Actor{
                 b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
                 d = (float) Math.sqrt(a * a + b * b);
                 if (d < mind) { //最短距離者 ，取他的XY值
-                    mind = d;
-                    target = actors.get(i).collider();
+                    if (targetIsInBattleField(actors.get(i).collider().centerX(), actors.get(i).collider().centerY())) {
+                        mind = d;
+                        target = actors.get(i).collider();
+                    }
                 }
             }
-            //移動至攻擊範圍內則開火
-            float targetX = target.centerX();
-            float targetY = target.centerY();
+            if (target != null) {
+                //移動至攻擊範圍內則開火
+                float targetX = target.centerX();
+                float targetY = target.centerY();
 
-            if (isInAtkdis(targetX,targetY)) {
-                fire(targetX,targetY);
-            } else {
-                move(targetX,targetY,alliance);
-            }
-        }
-        if (actors.size() <= 0 && !this.isEnemy) {
-            //回到自己原本的位置並導正砲管
-            if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
-                if (atkSpeed.getCount() < 119) {
-                    atkSpeed.count();
+                if (isInAtkdis(targetX, targetY)) {
+                    fire(targetX, targetY);
+                } else {
+                    move(targetX, targetY, alliance);
                 }
             } else {
-                move(flag.collider().centerX(),flag.collider().centerY(), alliance);
-            }
+
+                //回到自己原本的位置並導正砲管
+                if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
+                    if (atkSpeed.getCount() < 119) {
+                        atkSpeed.count();
+                    }
+                } else {
+                    move(flag.collider().centerX(), flag.collider().centerY(), alliance);
+                }
 //                this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
+            }
         }
 
     }

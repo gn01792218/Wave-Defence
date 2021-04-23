@@ -327,7 +327,7 @@ public abstract class Actor extends GameObject {
                         }
                     }
                     xM=0;
-                    System.out.println("eftIsTouch && rightIsTouch");
+//                    System.out.println("eftIsTouch && rightIsTouch");
                 }else if(topIsTouch && rightIsTouch){
                     if(xM<0){
                         xM=-speed;
@@ -336,7 +336,7 @@ public abstract class Actor extends GameObject {
                         xM=0;
                         yM=-speed;
                     }
-                    System.out.println("topIsTouch && rightIsTouch");
+//                    System.out.println("topIsTouch && rightIsTouch");
                 }else if(topIsTouch && leftIsTouch){
                     if(xM>0){
                         xM=speed;
@@ -345,7 +345,7 @@ public abstract class Actor extends GameObject {
                         xM=0;
                         yM=-speed;
                     }
-                    System.out.println("leftIsTouch && topIsTouch");
+//                    System.out.println("leftIsTouch && topIsTouch");
                 }else if(topIsTouch && bottomIsTouch){
                     if(xM>0){
                         xM=speed;
@@ -353,7 +353,7 @@ public abstract class Actor extends GameObject {
                         xM=-speed;
                     }
                     yM=0;
-                    System.out.println("rightIsTouch && topIsTouch");
+//                    System.out.println("rightIsTouch && topIsTouch");
                 }else if(leftIsTouch && bottomIsTouch){
                     if(xM>0){
                         if(yM>0){
@@ -406,9 +406,6 @@ public abstract class Actor extends GameObject {
                         yM=-speed;
                     }
                     xM=0;
-                }
-                if(!leftIsTouch &&!rightIsTouch &&!topIsTouch &&!bottomIsTouch){
-
                 }
                 this.offSet(xM,yM);
             }
@@ -572,8 +569,8 @@ public abstract class Actor extends GameObject {
                     fire(targetX,targetY);
                 } else {
                     move(targetX,targetY,alliance);
-                    System.out.println(targetX);
-                    System.out.println(targetY);
+//                    System.out.println(targetX);
+//                    System.out.println(targetY);
                 }
             }else if(!this.isEnemy){
 //            if (actors.size() <= 0 && !this.isEnemy) {

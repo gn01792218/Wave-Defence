@@ -207,6 +207,10 @@ public class UserScene extends Scene{ //改成單例模式!!!
         skillLabel.paint(g);
         enemyLabel.paint(g);
         for(int i=0;i<skillButtons.size();i++){
+            System.out.println(skillButtons.get(i).getIsSelect());
+            System.out.println(skillButtons.get(i).getCanUsed());
+            System.out.println(Player.getInstance().getHonor()<skillButtons.get(i).getCost());
+            System.out.println("======");
                 skillButtons.get(i).paint(g);
         }
         for(int i=0;i<actorButtons.size();i++){
@@ -236,6 +240,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     }
     @Override
     public void update() {
+
         if(actorButtons.get(0).left()<=500 && actorButtons.get(0).left()>=-500){ //當T1在第一張時
             arrowLUseable=true;
         }else{arrowLUseable=false;}

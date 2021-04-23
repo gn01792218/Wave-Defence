@@ -22,6 +22,13 @@ public class EditText extends Label{
     //edit
     private int editLimit;
     private String editText;
+    public boolean isTouch(float x,float y){
+        if(x<=this.left()){return false;}
+        if(x>=this.right()){return false;}
+        if(y<=this.top()){return false;}
+        if(y>=this.bottom()){return false;}
+        return true;
+    }
 
     private void init(String hint) {
         isEditable = true;

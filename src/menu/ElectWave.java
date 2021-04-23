@@ -4,6 +4,7 @@ import controllers.ImageController;
 import gameobj.Actor;
 import utils.Delay;
 import utils.Global;
+import utils.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -41,29 +42,44 @@ public class ElectWave extends SkillButton{
             actors.get(i).setOnDebuff(false);
         }
         setUsed(true); //被施放過了
+        if (Player.getInstance().getHonor() >= this.getCost()) {
+            this.setCanUsed(true);
+        }
     }
     @Override
     public void paint(Graphics g){
-        if (super.getPaintStyle() != null) {
-            super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
-        }
         if(info!=null && infoVisable){info.paint(g);}
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+            if(isInGameScene()){
+                if (super.getPaintStyle() != null) { //畫原本的圖
+                    super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+                }
 
-        if(this.isSelect){
-            selectedLabel.paint(g); //被選中後畫灰色圖
+            }else{
+                selectedLabel.paint(g);} //被選中後畫灰色圖
+        }else{
+            if (super.getPaintStyle() != null) { //畫原本的圖
+                super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+            }
         }
         if(!isUnLocked && lockLabel!=null){
             lockLabel.paint(g);
             label.getPaintStyle().setText("解鎖花費:"+this.unLockCost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
             label.getPaintStyle().setTextColor(Color.RED);
         }else{
-
             label.getPaintStyle().setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
             label.getPaintStyle().setTextColor(Color.WHITE);
         }
-        if(label!=null  && infoVisable){
+        if(label!=null  && infoVisable && !isInGameScene){
             label.paint(g);
         }
-
+    }
+    @Override
+    public void update() {
+//        if (Player.getInstance().getHonor() >= this.getCost()) {  //玩家錢小於這個技能的時候也不能使用
+//            System.out.println(Player.getInstance().getHonor());
+//            setCanUsed(true);
+//            setUsed(false);
+//        }
     }
 }

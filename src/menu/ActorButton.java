@@ -62,10 +62,11 @@ public class ActorButton extends Button{
                             atkdis = new Label(340 + 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                     setText("攻擊距離 :" + Global.getFrmt().format(alliances.get(i).getAtkdis())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         } else if (j == 4) {
+                            Global.getFrmt().setMaximumFractionDigits(1);
                             atkSpeed = new Label(340 + 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
-                                    setText("攻擊速度 :" + 60 / alliances.get(i).getAtkSpeed().getCountLimit()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
+                                    setText("攻擊速度 :" + Global.getFrmt().format(60 / alliances.get(i).getAtkSpeed().getCountLimit())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         } else {
-                            Global.getFrmt().setMaximumFractionDigits(2);
+                            Global.getFrmt().setMaximumFractionDigits(1);
                             speed = new Label(340 + 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                     setText("移動速度 :" + Global.getFrmt().format(alliances.get(i).getSpeed())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         }
@@ -92,10 +93,11 @@ public class ActorButton extends Button{
                             atkdis = new Label(340 + 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                     setText("攻擊距離 :" + Global.getFrmt().format(enemys.get(i).getAtkdis())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         } else if (j == 4) {
+                            Global.getFrmt().setMaximumFractionDigits(1);
                             atkSpeed = new Label(340 + 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
-                                    setText("攻擊速度 :" + 60 / enemys.get(i).getAtkSpeed().getCountLimit()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
+                                    setText("攻速/秒 :" + Global.getFrmt().format(60 / enemys.get(i).getAtkSpeed().getCountLimit())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         } else {
-                            Global.getFrmt().setMaximumFractionDigits(2);
+                            Global.getFrmt().setMaximumFractionDigits(1);
                             speed = new Label(340 + 60, 125 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                     setText("移動速度 :" + Global.getFrmt().format(enemys.get(i).getSpeed())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         }

@@ -384,7 +384,7 @@ public class ChallengeScene extends Scene{
             }
         }
         if (castles.size() <= 0) { //挑戰失敗
-<<<<<<< HEAD
+
 //            gameOver.play();
 //
 //            if(gameOver.count()) {
@@ -417,14 +417,14 @@ public class ChallengeScene extends Scene{
             String s=editText.getEditText();
             Global.rankList.newScore(count);
 //            SceneController.getInstance().changeScene(new OpenScene());
-=======
+
             gameOver.play();
 
             if(gameOver.count()) {
                 Global.rankList.newScore(count);
                 SceneController.getInstance().changeScene(new OpenScene());
             }
->>>>>>> feff79ba88c9bef0aaf4e85cb909855f0ed370dd
+
         }
 
     }

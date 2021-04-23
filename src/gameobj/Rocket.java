@@ -247,7 +247,6 @@ public class Rocket extends Actor{
                             break;
                     }
                 }
-
             }else if(isReinforcement){ //要換圖
                 if(isempty){
                     g.drawImage(empty_ES5,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),

@@ -38,7 +38,7 @@ public class Reinforcements extends SkillButton{
             switch (temp.get(Global.random(0, temp.size() - 1)).getType()) {
                 case TANK1:
                     Actor actor1=new Tank1(600+i*100,700,false);
-                    actor1.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
+//                    actor1.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor1.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
@@ -47,7 +47,7 @@ public class Reinforcements extends SkillButton{
                     break;
                 case TANK2:
                     Actor actor2=new Tank2(600+i*100,700,false);
-                    actor2.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
+//                    actor2.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor2.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
@@ -56,7 +56,7 @@ public class Reinforcements extends SkillButton{
                     break;
                 case LASERCAR:
                     Actor actor3= new LaserCar(600, 700, false);
-                    actor3.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
+//                    actor3.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor3.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());

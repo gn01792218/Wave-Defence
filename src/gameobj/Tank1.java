@@ -80,8 +80,7 @@ public class Tank1 extends Actor{
                             break;
                     }
                 }
-            }else if(isReinforcement  && isOnBuff){
-                System.out.println("畫坦克的援軍技能圖");
+            }else if(isReinforcement){
                 g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                         this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                         this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);

@@ -233,7 +233,9 @@ public class GameScene extends Scene {
         if (isFlagUsable && allianceControl!=null) {
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
-        g.drawImage(image1_1,0,-150,null);
+        if(Global.getLevel()==1) { //只有在第一關才畫
+            g.drawImage(image1_1, 0, -150, null);
+        }
 
         //當獲勝的時候
         if(gameComplete){

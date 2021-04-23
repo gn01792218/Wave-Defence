@@ -37,9 +37,9 @@ public class OpenScene extends Scene {
         //背景圖
         image =ImageController.getInstance().tryGet("/OpenScene.png");
         //Button的第三個參數可newStyle；Style的三個參數為寬 高 背景圖片。
-        startButton=new Button(650,550,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart1.png"))));
+        startButton=new Button(650,520,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart1.png"))));
         startButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart2.png"))));
-        endlessModeButton=new Button(1000,550,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessModeB.png"))));
+        endlessModeButton=new Button(1000,520,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessModeB.png"))));
         endlessModeButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessMode.png"))));
         endButton=new Button(780,750,new Style.StyleRect(300,300,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
         leaderBoard=new Button(825,650,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/LeaderBoardB.png"))));

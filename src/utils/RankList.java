@@ -13,13 +13,13 @@ public class RankList {
     public ArrayList<Integer> score = new ArrayList<>();
     int rankCount =5;//排行榜上限
 
+    //Class檔案位置
     Path path = Paths.get("");
     String directoryName = path.toAbsolutePath().toString();
 
 
     public RankList(){
-
-        System.out.println(directoryName);//Class檔案位置
+        System.out.println(directoryName);//印出Class檔案位置
         //讀取紀錄檔
         try{
             String s;
@@ -60,7 +60,7 @@ public class RankList {
     public void newScore(int x){
 
         int newScore= x;
-        int min= (int) score.get(score.size()-1);;
+        int min= (int) score.get(rankCount-1);;
 
         if(newScore>min){
 
@@ -69,7 +69,7 @@ public class RankList {
                 rank++;
             }
 
-            for(int i=4;i>rank;i--){
+            for(int i=rankCount-1;i>rank;i--){
                 score.set(i,score.get(i-1));
                 name.set(i,name.get(i-1));
             }

@@ -6,6 +6,7 @@ import controllers.SceneController;
 import gameobj.*;
 
 import menu.*;
+import menu.Button;
 import utils.*;
 
 import java.awt.*;
@@ -30,6 +31,8 @@ public class GameScene extends Scene {
     private BufferedImage image4;// 挑戰成功的圖片
     private BufferedImage laserUnlock;//解鎖雷射車
     private BufferedImage rocketUnlock;//解鎖火箭車
+    private Button roundStart;// 進入回合的按鈕
+    private Boolean isReady;// 進入回合的按鈕
 
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
@@ -38,12 +41,14 @@ public class GameScene extends Scene {
     private boolean gameComplete;
     private int completeStep;
     private int step;
-    private Delay delayRound;//回合前20秒的delay
+
+    private Delay starDelayCount;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
+    private Delay changePicDelay;//每秒鐘圖片變化
     private Delay delay; //過場秒數
-    private Delay delayUnlock;//勝離圖和解所圖的過場
+
     private int countNum; //倒數的播放號碼
-    private int changePic = 50; //倒數動畫
+    private int changePic; //倒數動畫
     private Actor allianceControl;//受旗子控制的我軍
     private int count;//共三波(SceneBegin+2)
     private GameScene(){}
@@ -63,11 +68,16 @@ public class GameScene extends Scene {
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
 
-        delayRound = new Delay(600); //開場前delay前20秒
-        delayCount = new Delay(60);
+        roundStart=new Button(1450,500,new Style.StyleRect(150,150,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
+        isReady = false;
+
+        starDelayCount = new Delay(1200);//倒數前20秒
+        delayCount = new Delay(600);//倒數10秒
+        changePicDelay = new Delay(60);//每秒鐘圖片變化
         delay=new Delay(240); //過場delay
-        delayRound.play();
-        delayCount.loop();//倒數計時每1秒觸發一次換圖片
+        starDelayCount.play();
+
         isFlagUsable = true;
         gameComplete =false;
         completeStep=0;
@@ -161,6 +171,9 @@ public class GameScene extends Scene {
                     switch (state) {
                         case CLICKED:
                             if (e.getButton() == e.BUTTON1) {
+                                if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
+                                    isReady = true;
+                                }
                                 if(gameComplete){
                                     completeStep++;
                                 }
@@ -214,7 +227,8 @@ public class GameScene extends Scene {
         g.drawImage(image, 0, -150, null);
 
         int tx = this.countNum * 74;  //0-74 1-74*2 2-74*3
-        if(delayCount.isPlaying()&&count<3){
+
+        if(delayCount.isPlaying()){
             g.drawImage(image3, 750 - changePic, 100 - changePic, 750 + 74 + changePic, 100 + 90 + changePic,
                     tx, 0, tx + 74, 90, null); //倒數的圖片
         }
@@ -237,6 +251,7 @@ public class GameScene extends Scene {
         if(Global.getLevel()==1) { //只有在第一關才畫
             g.drawImage(image1_1, 0, -150, null);
         }
+        roundStart.paint(g); //畫出開始回合的按鈕
 
         //當獲勝的時候
         if(gameComplete){
@@ -264,6 +279,8 @@ public class GameScene extends Scene {
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
+        System.out.println("STEP："+step);
+
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
@@ -303,19 +320,30 @@ public class GameScene extends Scene {
             }
         }
 
-        if(step ==1 && count<3 ){
-            AudioResourceController.getInstance().play("/boomy-sizzling.wav");
-            if (delayCount.count()) {  //每1秒播放圖片
-                countNum++;
-                changePic = 50;
+        if(starDelayCount.count()){
+            delayCount.play();
+            changePicDelay.loop();
+            changePic=50;
+        }
+
+
+        if(step ==1 && count<3){
+//            AudioResourceController.getInstance().play("/boomy-sizzling.wav");
+            if(delayCount.isPlaying()){
+                if (changePicDelay.count()) {  //每1秒播放圖片
+                    countNum++;
+                    changePic = 50;
+                }
+                changePic--;
             }
-            changePic--;
-            if (delayRound.count()) { //開場20秒後
+
+            if (delayCount.count() || isReady) { //開場30秒後
                 isFlagUsable = false; //旗子不能用
                 count++;
-                delayRound.stop();
                 countNum=0;
                 delayCount.stop();
+                changePicDelay.stop();
+                isReady =false;
                 if(allianceControl!=null) {
                     allianceControl.setControl(false);
                 }
@@ -398,8 +426,8 @@ public class GameScene extends Scene {
         if (step == 3) {
             if(enemys.size()==0){
                 step=1;
-                delayRound.play();
-                delayCount.loop();//倒數計時每1秒觸發一次換圖片
+                delayCount.play();
+                changePicDelay.loop();//倒數計時每1秒觸發一次換圖片
                 isFlagUsable = true;
             }
         }

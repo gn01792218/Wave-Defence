@@ -59,6 +59,7 @@ public class Delay {
         return isPause;
     }
 
+
     // 這個方法需要反覆在更新中被呼叫，並通過被呼叫的次數來進行延遲的判斷
     public boolean count(){  //會回傳是否觸發目標動作 的計時器
         if(isPause){ //假如現在是暫停記時狀態

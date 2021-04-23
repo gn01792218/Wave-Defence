@@ -67,8 +67,10 @@ public class UserScene extends Scene{ //改成單例模式!!!
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1000,600);
         popupWindow.setCancelable();
+        popupWindow.hide();
         introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
+        introPopupWindow.hide();
         introCount=0;
     }
     @Override
@@ -167,9 +169,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     if (secrt.isTouch(e.getX(), e.getY())) {
                                         popupWindow.sceneBegin();
                                         popupWindow.show();
-                                    } else {
-                                        popupWindow.hide();
-                                    }
+                                    }else{popupWindow.hide();}
                                 }
                                 if (e.getButton() == 3) {//點擊右鍵 取消
                                     for (int i = 0; i < actorButtons.size(); i++) { //1.角色取消購買
@@ -244,5 +244,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
         if(actorButtons.get(3).right()>=1000 && actorButtons.get(3).right()<=2000) {
             arrowRUseable = true;
         }else{arrowRUseable=false;}
+        System.out.println("pop"+popupWindow.isShow());
+        System.out.println("info"+introPopupWindow.isShow());
     }
 }

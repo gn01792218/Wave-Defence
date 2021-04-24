@@ -27,7 +27,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private BufferedImage backCover;//背景透明板
     private BufferedImage barImage;//
     private ArrayList<ActorButton> actorButtons;
-    private ArrayList<SkillButton> skillButtons;
     private Button roundStart;// 進入回合的按鈕
     private Button secrt;//機密檔案(敵軍資料)按鈕
     private Button arrowR;
@@ -35,11 +34,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private boolean arrowRUseable;
     private boolean arrowLUseable;
     private Label armyLabel; //購買軍隊的標籤
-    private Label skillLabel; //購買技能的標籤
     private Label enemyLabel; //敵軍機密的標籤
     private PopWindowScene popupWindow;//敵方資訊場景
-    private IntroPopupWindow introPopupWindow;//進入回合前的教學視窗
-    private int introCount; //控制第一次玩的時候教學提示只會出現一次
     //關於彈跳視窗內的按鈕位置問題:1.就算按鈕做在PopWindow內部，也必須要在外面的場景中paint出來(做出getButton方法)，否則按鈕位置會有誤差。
     private UserScene(){}
     public static UserScene getInstance(){
@@ -58,22 +54,16 @@ public class UserScene extends Scene{ //改成單例模式!!!
         secrt=new Button(1230, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
-            skillButtons=Global.getSkillButtons();//得到Global的技能按鈕
         arrowR=new Button(1370,380,new Style.StyleRect(187,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
         arrowR.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRH.png"))));
         arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
         arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
         armyLabel=new Label(390,80,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
-        skillLabel=new Label(735,810,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
         enemyLabel=new Label(1200,550,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1300,600);
         popupWindow.setCancelable();
         popupWindow.hide();
-        introPopupWindow=Global.getIntroPopupWindow();
-        introPopupWindow.setCancelable();
-        introPopupWindow.hide();
-        introCount=0;
     }
     @Override
     public void sceneEnd() {
@@ -86,9 +76,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 if (state != null) {
                     if (popupWindow.isShow()) {
                         popupWindow.mouseListener().mouseTrig(e, state, trigTime);
-                    } else if (introPopupWindow.isShow()) { //show出popWindow時，
-                        introPopupWindow.mouseListener().mouseTrig(e, state, trigTime); //將Popwindow的監聽丟給本地監聽
-                    } else {
+                    }else {
                         switch (state) {
                             case MOVED: //負責監聽浮現的資訊欄
                                 for (int i = 0; i < actorButtons.size(); i++) {    //每個按鈕監聽滑鼠移動
@@ -97,13 +85,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                         actorButtons.get(i).setInfoVisable(true);
                                     } else {
                                         actorButtons.get(i).setInfoVisable(false);
-                                    }
-                                }
-                                for (int i = 0; i < skillButtons.size(); i++) {
-                                    if (skillButtons.get(i).isTouch(e.getX(), e.getY())) {
-                                        skillButtons.get(i).setInfoVisable(true);
-                                    } else {
-                                        skillButtons.get(i).setInfoVisable(false);
                                     }
                                 }
                                 if (secrt.isTouch(e.getX(), e.getY())) { //機密文件
@@ -120,36 +101,19 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
-                                    if (roundStart.isTouch(e.getX(), e.getY()) && !introPopupWindow.isPassed()) {//1.觸發換場的按鈕
-                                        introPopupWindow.sceneBegin();//記得初始化場景，否則會nullPoint!
-                                        introPopupWindow.show();
-                                    }else if(roundStart.isTouch(e.getX(), e.getY()) && introPopupWindow.isPassed()){ //第二次之後 直接換場
-                                        SceneController.getInstance().changeScene(GameScene.getInstance());
+                                    if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
+                                        SceneController.getInstance().changeScene(new SkillScene());
                                     }
                                     for (int i = 0; i < actorButtons.size(); i++) { //2.角色購買
                                         if (actorButtons.get(i).isTouch(e.getX(), e.getY())) {
-                                            //產生確認框
+                                            System.out.println("點到了!!!");
                                             //購買軍隊
-                                            if (Player.getInstance().getMoney() > 0 && Player.getInstance().getMoney() >= actorButtons.get(i).getCostMoney()
-                                                    && actorButtons.get(i).left() >= 400 && actorButtons.get(i).right() <= 1000 && actorButtons.get(i).isUnLocked()) { //金錢大於0才可以
+                                            if (Player.getInstance().getMoney() >= actorButtons.get(i).getCostMoney()
+                                                    && actorButtons.get(i).left() >= 830 && actorButtons.get(i).right() <= 1330 && actorButtons.get(i).isUnLocked()) { //金錢大於0才可以
+                                                System.out.println("買到了!!!");
                                                 actorButtons.get(i).offSetNumber(1); //點一下增加一單位
                                                 AudioResourceController.getInstance().shot("/skillSound.wav");
                                                 Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney()); //扣錢
-                                            }
-                                        }
-                                    }
-                                    for (int i = 0; i < skillButtons.size(); i++) {  //3.技能購買
-                                        if (skillButtons.get(i).isTouch(e.getX(), e.getY()) &&
-                                                !skillButtons.get(i).getIsSelect()) { //被點中 且還沒被點過時
-                                            if (skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor() >= skillButtons.get(i).getCost()) { //且已經解鎖了  且有榮譽職
-                                                AudioResourceController.getInstance().shot("/skillSound.wav");
-                                                skillButtons.get(i).setSelect(true); //設定為被選中的，在場景中只要new出被選中的技能即可
-                                                Player.getInstance().offsetHonor(-skillButtons.get(i).getCost()); //扣榮譽值!
-                                            } else if (!skillButtons.get(i).isUnLocked() && Player.getInstance().getHonor() >= skillButtons.get(i).getUnLockCost()) {
-                                                //還沒解鎖 且 榮譽值大於等於解鎖的錢時
-                                                AudioResourceController.getInstance().shot("/unLock.wav");
-                                                skillButtons.get(i).setUnLocked(true); //設定成已經解鎖
-                                                Player.getInstance().offsetHonor(-skillButtons.get(i).getUnLockCost()); //扣榮譽值!
                                             }
                                         }
                                     }
@@ -183,12 +147,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                             Player.getInstance().offsetMoney(+actorButtons.get(i).getCostMoney());  //把錢+回來
                                         }
                                     }
-                                    for (int i = 0; i < skillButtons.size(); i++) {  //2.技能取消購買  (解鎖無法取消)
-                                        if (skillButtons.get(i).isTouch(e.getX(), e.getY()) && skillButtons.get(i).getIsSelect()) { //已經被選過的
-                                            skillButtons.get(i).setSelect(false); //設成未被選中
-                                            Player.getInstance().offsetHonor(+skillButtons.get(i).getCost()); //把錢+回來
-                                        }
-                                    }
                                 }
                                 break;
                         }
@@ -210,11 +168,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
         armyLabel.paint(g);
-        skillLabel.paint(g);
         enemyLabel.paint(g);
-        for(int i=0;i<skillButtons.size();i++){
-                skillButtons.get(i).paint(g);
-        }
         for(int i=0;i<actorButtons.size();i++){
             if(actorButtons.get(i).left()<1230 && actorButtons.get(i).right()>830) {
                 actorButtons.get(i).paint(g);
@@ -232,17 +186,9 @@ public class UserScene extends Scene{ //改成單例模式!!!
             popupWindow.getArrowR().paint(g);
             popupWindow.getArrowL().paint(g);
         }
-        if(introPopupWindow.isShow() && !introPopupWindow.isPassed()){
-            introPopupWindow.paint(g);
-            if(introPopupWindow.getButton()!=null) {
-                introPopupWindow.getButton().paint(g);
-            }
-        }
-
     }
     @Override
     public void update() {
-
         if(actorButtons.get(0).left()<=830 && actorButtons.get(0).left()>=-170){ //當T1在第一張時
             arrowLUseable=true;
         }else{arrowLUseable=false;}

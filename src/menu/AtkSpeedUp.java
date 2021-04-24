@@ -15,20 +15,18 @@ public class AtkSpeedUp extends SkillButton {
     private final int bufftime = 180; //持續X/60秒
     private Label label;
     private Label selectedLabel;//被選中後的按鈕
-
     public AtkSpeedUp(int x, int y, Style style, Global.SkillName skillName, int cost) {
         super(x, y, style, skillName, cost);
         this.buffTime = new Delay(bufftime);//增基攻擊力時間持續5秒
         info.getPaintStyle().setText("全體攻擊速提高，持續" + bufftime / 60 + "秒");
-        this.lockLabel = new Label(getX(), getY(), new Style.StyleRect(64, 64, true, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock3.png"))));
-        this.label = new Label(this.getCenterX(), this.bottom(), new Style.StyleRect(10, 10, true, null));
+        this.lockLabel = new Label(getX(), getY(), new Style.StyleRect(128, 128, true, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock3.png"))));
+        this.label = new Label(this.getCenterX()+20, this.top()-20, new Style.StyleRect(10, 10, true, null));
         infoVisable = false; //一開始不顯現
         this.isUnLocked = false;//需要解鎖
         this.unLockCost = 250;//花500可以解鎖
         selectedLabel = new Label(getX(), getY(), new Style.StyleRect(64, 64, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-atkSpeedUp2.png"))));
     }
-
     @Override
     public void skillExection(ArrayList<Actor> actors) {
         for (int i = 0; i < actors.size(); i++) {

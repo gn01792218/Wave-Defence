@@ -22,7 +22,7 @@ public class AttackUp extends SkillButton {
         super(x,y,style,skillName,cost);
         this.buffTime=new Delay(bufftime);//增基攻擊力時間持續5秒
         info.getPaintStyle().setText("全體攻擊力*"+atkEffect+"倍，持續"+bufftime/60+"秒");
-        this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        this.label=new Label(this.getCenterX()+20,this.top()-20,new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22)));
         infoVisable=false; //一開始不顯現
         this.isUnLocked=true;//一開始就是被解鎖的
         selectedLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.png"))));

@@ -158,6 +158,14 @@ public abstract class Style {
         return this;
     }
 
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public String getText() {
         return text;
     }

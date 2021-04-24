@@ -19,6 +19,7 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     protected int unLockCost;//解鎖的錢-->需要再弄
     protected boolean canUsed;//是否可以使用
     protected boolean isInGameScene;//是否是在故事模式
+    protected boolean isInSkillScene;//是否在購買技能區
 
 
     //在User場景中new就好了
@@ -31,7 +32,7 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
         this.cost=cost;
         this.isSelect=false;
         this.isUsed=false; //還沒被施放
-        info=new Button(this.left(),this.top()-50,new Style.StyleRect(100,60,
+        info=new Button(this.left()+10,this.bottom()+50,new Style.StyleRect(100,60,
                 null).setTextFont(new Font("標楷體",Font.ITALIC,22)));
     }
 
@@ -41,6 +42,10 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
 
     public boolean isInGameScene() {
         return isInGameScene;
+    }
+
+    public void setInSkillScene(boolean inSkillScene) {
+        isInSkillScene = inSkillScene;
     }
 
     public void setInGameScene(boolean inGameScene) {

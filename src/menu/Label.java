@@ -170,7 +170,7 @@ public class Label implements GameKernel.PaintInterface,GameKernel.UpdateInterfa
     @Override
     public void paint(Graphics g) {
         if (getPaintStyle() != null) {
-            getPaintStyle().paintComponent(g, getCenterX(), getCenterY());
+            getPaintStyle().paintComponent(g, getX(), getY());
         }
     }
     @Override

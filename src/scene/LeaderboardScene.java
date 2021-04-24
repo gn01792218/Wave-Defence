@@ -42,13 +42,13 @@ public class LeaderboardScene extends Scene{
     public void paint(Graphics g) {
         g.drawImage(backGround,150,0,null);
         g.drawImage(leaderBoard,550,150,null);
-//        for(int i=0;i<labelsList.size();i++){
-//            if(labelsList.get(i)!=null){
-//                labelsList.get(i).getPaintStyle().setText("玩家: "+ Global.rankList.name.get(i)+" 波數:"+Global.rankList.score.get(i))
-//                        .setTextFont(new Font("標楷體",Font.ITALIC,32));
-//                labelsList.get(i).paint(g);
-//            }
-//        }
+        for(int i=0;i<labelsList.size();i++){
+            if(labelsList.get(i)!=null){
+                labelsList.get(i).getPaintStyle().setText("玩家: "+ Global.rankList.name.get(i)+" 波數:"+Global.rankList.score.get(i))
+                        .setTextFont(new Font("標楷體",Font.ITALIC,32));
+                labelsList.get(i).paint(g);
+            }
+        }
     }
 
     @Override

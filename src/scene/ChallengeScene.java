@@ -90,10 +90,10 @@ public class ChallengeScene extends Scene{
 
         //做軍隊
         alliance = new ArrayList<>();
-        alliance.add(new Tank1(850,600,false));
-        alliance.add(new Tank1(750,600,false));
-        alliance.add(new Tank1(950,700,false));
-        alliance.add(new Tank1(650,700,false));
+//        alliance.add(new Tank1(850,600,false));
+//        alliance.add(new Tank1(750,600,false));
+//        alliance.add(new Tank1(950,700,false));
+//        alliance.add(new Tank1(650,700,false));
         castles = new ArrayList<>();
         castles.add(new Castle(400,730));
         castles.get(0).painter().setLeft(100);
@@ -384,46 +384,48 @@ public class ChallengeScene extends Scene{
             }
         }
         if (castles.size() <= 0) { //挑戰失敗
-
 //            gameOver.play();
 //
 //            if(gameOver.count()) {
 //                SceneController.getInstance().changeScene(new OpenScene());
 //            }
-            editText=new EditText(100,100,"請輸入姓名");
-            editText.setStyleNormal(new Style.StyleRect(200, 50, true
-                    , new BackgroundType.BackgroundColor(new Color(2, 10, 19)))
-                    .setTextColor(new Color(128, 128, 128))
-                    .setHaveBorder(true)
-                    .setBorderColor(new Color(97, 113, 110))
-                    .setBorderThickness(5)
-                    .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-            editText.setStyleHover(new Style.StyleRect(200, 50, true
-                    , new BackgroundType.BackgroundColor(new Color(83, 95, 47)))
-                    .setTextColor(new Color(128, 128, 128))
-                    .setHaveBorder(true)
-                    .setBorderColor(new Color(97, 113, 110))
-                    .setBorderThickness(5)
-                    .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-            editText.setStyleFocus(new Style.StyleRect(200, 50, true
-                    , new BackgroundType.BackgroundColor(new Color(199, 178, 153)))
-                    .setTextColor(new Color(128, 128, 128))
-                    .setHaveBorder(true)
-                    .setBorderColor(new Color(97, 113, 110))
-                    .setBorderThickness(5)
-                    .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-            editText.isFocus();
-            editText.setClickedActionPerformed((x, y)->{});
-            String s=editText.getEditText();
+            if(editText==null) {
+                editText = new EditText(500, 500, "請輸入姓名");
+                editText.setStyleNormal(new Style.StyleRect(200, 50, true
+                        , new BackgroundType.BackgroundColor(new Color(2, 10, 19)))
+                        .setTextColor(new Color(128, 128, 128))
+                        .setHaveBorder(true)
+                        .setBorderColor(new Color(97, 113, 110))
+                        .setBorderThickness(5)
+                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText.setStyleHover(new Style.StyleRect(200, 50, true
+                        , new BackgroundType.BackgroundColor(new Color(83, 95, 47)))
+                        .setTextColor(new Color(128, 128, 128))
+                        .setHaveBorder(true)
+                        .setBorderColor(new Color(97, 113, 110))
+                        .setBorderThickness(5)
+                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText.setStyleFocus(new Style.StyleRect(200, 50, true
+                        , new BackgroundType.BackgroundColor(new Color(199, 178, 153)))
+                        .setTextColor(new Color(128, 128, 128))
+                        .setHaveBorder(true)
+                        .setBorderColor(new Color(97, 113, 110))
+                        .setBorderThickness(5)
+                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText.isFocus();
+                editText.setClickedActionPerformed((x, y) -> {
+                });
+                String s = editText.getEditText();
+            }
             Global.rankList.newScore(count);
 //            SceneController.getInstance().changeScene(new OpenScene());
 
-            gameOver.play();
-
-            if(gameOver.count()) {
-                Global.rankList.newScore(count);
-                SceneController.getInstance().changeScene(new OpenScene());
-            }
+//            gameOver.play();
+//
+//            if(gameOver.count()) {
+//                Global.rankList.newScore(count);
+//                SceneController.getInstance().changeScene(new OpenScene());
+//            }
 
         }
 

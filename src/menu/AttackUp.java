@@ -25,7 +25,7 @@ public class AttackUp extends SkillButton {
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22)));
         infoVisable=false; //一開始不顯現
         this.isUnLocked=true;//一開始就是被解鎖的
-        selectedLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.png"))));
+        selectedLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.png"))));
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {  //施放技能，場景中會用到

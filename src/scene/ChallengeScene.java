@@ -30,7 +30,7 @@ public class ChallengeScene extends Scene{
     private boolean isFlagUsable;
     private int step;
     private Delay gameBegin; //過場秒數
-    private Delay gameOver; //過場秒數
+    private Boolean gameOver; //遊戲失敗
     private Delay enemyLoop;
     private Delay rewardLoop;
 
@@ -57,7 +57,7 @@ public class ChallengeScene extends Scene{
         image2 = ImageController.getInstance().tryGet("/fail2.png");
         isFlagUsable = true;
         gameBegin=new Delay(300);
-        gameOver=new Delay(180);
+        gameOver=false;
         enemyLoop=new Delay(1200);
         rewardLoop=new Delay(600);
         gameBegin.play();
@@ -115,8 +115,10 @@ public class ChallengeScene extends Scene{
         return new CommandSolver.KeyListener() {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
-                if(commandCode==1 && editText.getIsFocus()){
+                if(commandCode==1){
                     name=editText.getEditText(); //按下Enter後，取得edit輸入的內容
+                    Global.rankList.newScore(count,name);
+                    SceneController.getInstance().changeScene(new LeaderboardScene());
                 }
             }
             @Override
@@ -160,7 +162,7 @@ public class ChallengeScene extends Scene{
 
             @Override
             public void keyTyped(char c, long trigTime) {
-                if(editText.getIsFocus()) {
+                if(editText!=null && editText.getIsFocus()) {
                     editText.keyTyped(c);
                 }
             }
@@ -241,10 +243,10 @@ public class ChallengeScene extends Scene{
         g.drawImage(imageTank2, 1700,560 , null);
         g.drawImage(imageLaserCar, 1700, 680, null);
         g.drawImage(imageRocket, 1700, 830, null);
-        g.drawString("1",1850,570);
-        g.drawString("2",1850,720);
-        g.drawString("3",1850,850);
-        g.drawString("4",1850,990);
+        g.drawString("快捷鍵：1",1700,570);
+        g.drawString("快捷鍵：2",1700,720);
+        g.drawString("快捷鍵：3",1700,850);
+        g.drawString("快捷鍵：4",1700,990);
 
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).paint(g); //畫我軍
@@ -288,55 +290,56 @@ public class ChallengeScene extends Scene{
                 System.out.println(skill.get(i).getSkillName()+" "+skill.get(i).isInGameScene());
             }
         }
-        //我軍的update
-        for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
-            if(alliance.get(i).collider().centerY()>Global.BOUNDARY_Y2){
-                alliance.get(i).moveToField();
-            }else {
-                alliance.get(i).standAttack(enemys, alliance);
-                alliance.get(i).bulletsUpdate(enemys); //發射子彈
+        if(!gameOver){
+            //我軍的update
+            for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動
+                if(alliance.get(i).collider().centerY()>Global.BOUNDARY_Y2){
+                    alliance.get(i).moveToField();
+                }else {
+                    alliance.get(i).standAttack(enemys, alliance);
+                    alliance.get(i).bulletsUpdate(enemys); //發射子彈
+                }
+                if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
+                    alliance.remove(i);
+                    break;
+                }
             }
-            if (!alliance.get(i).isAlive()) { //沒有活著的時候移除
-                alliance.remove(i);
-                break;
-            }
-        }
-        for(int i = 0; i< castles.size(); i++){
-            //攻擊條件
-            castles.get(i).autoAttack(enemys,alliance);
-            castles.get(i).bulletsUpdate(enemys); //發射子彈
+            for(int i = 0; i< castles.size(); i++){
+                //攻擊條件
+                castles.get(i).autoAttack(enemys,alliance);
+                castles.get(i).bulletsUpdate(enemys); //發射子彈
 
-            if (!castles.get(i).isAlive()) { //沒有活著的時候移除
-                castles.remove(i);
-                break;
+                if (!castles.get(i).isAlive()) { //沒有活著的時候移除
+                    castles.remove(i);
+                    break;
+                }
             }
-        }
-        //敵軍update
-        for (int i = 0; i < enemys.size(); i++) {
-            if(enemys.get(i).collider().centerY()<100){
-                enemys.get(i).moveToField();
-            }else {
-                enemys.get(i).straightAttack(alliance,castles);
-                enemys.get(i).bulletsUpdate(alliance);
-                enemys.get(i).bulletsUpdate(castles);
-            }
+            //敵軍update
+            for (int i = 0; i < enemys.size(); i++) {
+                if(enemys.get(i).collider().centerY()<100){
+                    enemys.get(i).moveToField();
+                }else {
+                    enemys.get(i).straightAttack(alliance,castles);
+                    enemys.get(i).bulletsUpdate(alliance);
+                    enemys.get(i).bulletsUpdate(castles);
+                }
 
-            if (!enemys.get(i).isAlive()) {
-                enemys.remove(i);
-                player.offsetMoney(25);
-                break;
+                if (!enemys.get(i).isAlive()) {
+                    enemys.remove(i);
+                    player.offsetMoney(25);
+                    break;
+                }
+            }
+            //boss update
+            for(int i=0;i<boss.size();i++){
+                boss.get(i).autoAttack(alliance,castles);
+                if (!boss.get(i).isAlive()) {
+                    boss.remove(i);
+                    player.offsetMoney(100);
+                    break;
+                }
             }
         }
-        //boss update
-        for(int i=0;i<boss.size();i++){
-            boss.get(i).autoAttack(alliance,castles);
-            if (!boss.get(i).isAlive()) {
-                boss.remove(i);
-                player.offsetMoney(100);
-                break;
-            }
-        }
-
 
         //REWARD
         if(rewardLoop.count()){
@@ -358,7 +361,7 @@ public class ChallengeScene extends Scene{
         }
 
         //回合++
-        if(enemyLoop.count()){
+        if(enemyLoop.count() && !gameOver){
             AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
             count++;
             for(int i=0;i<count*4;i++){
@@ -390,12 +393,9 @@ public class ChallengeScene extends Scene{
             }
         }
         if (castles.size() <= 0) { //挑戰失敗
-//            gameOver.play();
-//
-//            if(gameOver.count()) {
-//                SceneController.getInstance().changeScene(new OpenScene());
-//            }
-            if(editText==null) {
+            gameOver=true;
+            if(Global.rankList.newRecord(count)){
+                if(editText==null) {
                 editText = new EditText(500, 500, "請輸入姓名");
                 editText.setStyleNormal(new Style.StyleRect(200, 50, true
                         , new BackgroundType.BackgroundColor(new Color(2, 10, 19)))
@@ -418,8 +418,34 @@ public class ChallengeScene extends Scene{
                         .setBorderColor(new Color(97, 113, 110))
                         .setBorderThickness(5)
                         .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                }
+                editText.isFocus();
             }
-            Global.rankList.newScore(count);
+//            if(editText==null) {
+//                editText = new EditText(500, 500, "請輸入姓名");
+//                editText.setStyleNormal(new Style.StyleRect(200, 50, true
+//                        , new BackgroundType.BackgroundColor(new Color(2, 10, 19)))
+//                        .setTextColor(new Color(128, 128, 128))
+//                        .setHaveBorder(true)
+//                        .setBorderColor(new Color(97, 113, 110))
+//                        .setBorderThickness(5)
+//                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+//                editText.setStyleHover(new Style.StyleRect(200, 50, true
+//                        , new BackgroundType.BackgroundColor(new Color(83, 95, 47)))
+//                        .setTextColor(new Color(128, 128, 128))
+//                        .setHaveBorder(true)
+//                        .setBorderColor(new Color(97, 113, 110))
+//                        .setBorderThickness(5)
+//                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+//                editText.setStyleFocus(new Style.StyleRect(200, 50, true
+//                        , new BackgroundType.BackgroundColor(new Color(199, 178, 153)))
+//                        .setTextColor(new Color(128, 128, 128))
+//                        .setHaveBorder(true)
+//                        .setBorderColor(new Color(97, 113, 110))
+//                        .setBorderThickness(5)
+//                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+//            }
+//            Global.rankList.newScore(count,name);
 //            SceneController.getInstance().changeScene(new OpenScene());
 //            gameOver.play();
 //

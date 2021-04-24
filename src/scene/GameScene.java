@@ -156,7 +156,7 @@ public class GameScene extends Scene {
                         alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-90*i,false));
                         break;
                     case ROCKET:
-                        alliance.add(new Rocket(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-90*i,false));
+                        alliance.add(new Rocket(Global.BOUNDARY_X1+j*120,Global.BOUNDARY_Y2-90*i,false));
                 }
             }
         }

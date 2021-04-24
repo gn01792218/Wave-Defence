@@ -1,5 +1,4 @@
 package scene;
-
 import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
@@ -15,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class ChallengeScene extends Scene{
     private BufferedImage image; //背景圖
     private BufferedImage image1_1;
@@ -109,14 +107,14 @@ public class ChallengeScene extends Scene{
     @Override
     public void sceneEnd() {
     }
-
     @Override
     public CommandSolver.KeyListener keyListener() {
         return new CommandSolver.KeyListener() {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
-                if(commandCode==1 && editText.getIsFocus()){
+                if(commandCode==1){
                     name=editText.getEditText(); //按下Enter後，取得edit輸入的內容
+                        SceneController.getInstance().changeScene(new OpenScene());
                 }
             }
             @Override
@@ -160,7 +158,7 @@ public class ChallengeScene extends Scene{
 
             @Override
             public void keyTyped(char c, long trigTime) {
-                if(editText.getIsFocus()) {
+                if(editText!=null && editText.getIsFocus()) {
                     editText.keyTyped(c);
                 }
             }
@@ -418,6 +416,7 @@ public class ChallengeScene extends Scene{
                         .setBorderColor(new Color(97, 113, 110))
                         .setBorderThickness(5)
                         .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText.isFocus();
             }
             Global.rankList.newScore(count);
 //            SceneController.getInstance().changeScene(new OpenScene());

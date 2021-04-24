@@ -142,7 +142,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                                 actorButtons.get(i).offSetXY(500, 0);
                                             }
                                         }
-
                                     }
                                     if (arrowL.isTouch(e.getX(), e.getY())) { //左箭頭-->最底是Tank1
                                         AudioResourceController.getInstance().shot("/skillSound.wav");

@@ -62,17 +62,19 @@ public class UserScene extends Scene{ //改成單例模式!!!
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         backCover=ImageController.getInstance().tryGet("/UserBackCover.png");
-        roundStart=new Button(950,800,new Style.StyleRect(150,150,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
-        secrt=new Button(1230, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
-        secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
+        roundStart=new Button(1350,750,new Style.StyleRect(225,151,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
+        roundStart.setStyleHover(new Style.StyleRect(225,159,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
+        secrt=new Button(1350, 480, new Style.StyleRect(250,154,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
+        secrt.setStyleHover(new Style.StyleRect(250,162,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
         arrowR=new Button(1370,380,new Style.StyleRect(187,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
         arrowR.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRH.png"))));
         arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
         arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
-        armyLabel=new Label(390,80,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
-        enemyLabel=new Label(1200,550,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
+        armyLabel=new Label(370,50,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
+        enemyLabel=new Label(1350,380,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1300,600);
         popupWindow.setCancelable();
@@ -111,6 +113,9 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                 if(arrowL.isTouch(e.getX(),e.getY())){
                                     arrowL.isHover(true);
                                 }else{arrowL.isHover(false);}
+                                if(roundStart.isTouch(e.getX(),e.getY())){
+                                    roundStart.isHover(true);
+                                }else{roundStart.isHover(false);}
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵

@@ -33,7 +33,7 @@ public class SkillScene extends Scene {
         introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
         introPopupWindow.hide();
-        skillLabel=new Label(435,110,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
+        skillLabel=new Label(435,110,new Style.StyleRect(959,119,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Main {
                         .add(KeyEvent.VK_2,12)
                         .add(KeyEvent.VK_3,13)
                         .add(KeyEvent.VK_4,14)
-                        .next().keyTypedMode().subscribe(sceneController)
+                        .next().trackChar().keyTypedMode().subscribe(sceneController)
         ).paint(sceneController).update(sceneController).gen();
         jframe.setSize(1920,1080);
         jframe.setTitle("打飛機遊戲");

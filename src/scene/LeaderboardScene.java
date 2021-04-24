@@ -20,9 +20,17 @@ public class LeaderboardScene extends Scene{
         backGround = ImageController.getInstance().tryGet("/UserSceneBack.png");
         leaderBoard=ImageController.getInstance().tryGet("/leaderBoardBar.png");
         labelsList=new ArrayList<>();
-        for(int i=0;i<6;i++){
-            menu.Label label=new menu.Label(850,250+(114*i),new Style.StyleRect(0,0,true,null));
-            labelsList.add(label);
+        for(int i=0;i<5;i++){
+            if (i == 0) {
+                menu.Label label = new menu.Label(950, 370, new Style.StyleRect(0, 0, true, null));
+                labelsList.add(label);
+            }else if(i==1){
+                menu.Label label = new menu.Label(950, 465, new Style.StyleRect(0, 0, true, null));
+                labelsList.add(label);
+            }else {
+                menu.Label label = new menu.Label(950, 350 + (100 * i), new Style.StyleRect(0, 0, true, null));
+                labelsList.add(label);
+            }
         }
     }
     @Override
@@ -45,7 +53,7 @@ public class LeaderboardScene extends Scene{
         for(int i=0;i<labelsList.size();i++){
             if(labelsList.get(i)!=null){
                 labelsList.get(i).getPaintStyle().setText("玩家: "+ Global.rankList.name.get(i)+" 波數:"+Global.rankList.score.get(i))
-                        .setTextFont(new Font("標楷體",Font.ITALIC,32));
+                        .setTextFont(new Font("標楷體",Font.ITALIC,42));
                 labelsList.get(i).paint(g);
             }
         }

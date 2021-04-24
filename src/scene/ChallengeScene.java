@@ -6,6 +6,7 @@ import controllers.SceneController;
 import gameobj.*;
 import menu.*;
 import menu.Button;
+import menu.Label;
 import menu.impl.MouseTriggerImpl;
 import utils.*;
 
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ChallengeScene extends Scene{
     private BufferedImage image; //背景圖
@@ -44,6 +46,7 @@ public class ChallengeScene extends Scene{
     private BufferedImage imageRocket;
     private RankList rankList;
     private EditText editText;
+    private String name;//存名字的
 
 
     @Override
@@ -112,9 +115,10 @@ public class ChallengeScene extends Scene{
         return new CommandSolver.KeyListener() {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
-
+                if(commandCode==1 && editText.getIsFocus()){
+                    name=editText.getEditText(); //按下Enter後，取得edit輸入的內容
+                }
             }
-
             @Override
             public void keyReleased(int commandCode, long trigTime) {
                 switch (commandCode){
@@ -156,7 +160,9 @@ public class ChallengeScene extends Scene{
 
             @Override
             public void keyTyped(char c, long trigTime) {
-
+                if(editText.getIsFocus()) {
+                    editText.keyTyped(c);
+                }
             }
         };
     }
@@ -412,14 +418,9 @@ public class ChallengeScene extends Scene{
                         .setBorderColor(new Color(97, 113, 110))
                         .setBorderThickness(5)
                         .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-                editText.isFocus();
-                editText.setClickedActionPerformed((x, y) -> {
-                });
-                String s = editText.getEditText();
             }
             Global.rankList.newScore(count);
 //            SceneController.getInstance().changeScene(new OpenScene());
-
 //            gameOver.play();
 //
 //            if(gameOver.count()) {

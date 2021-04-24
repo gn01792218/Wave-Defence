@@ -15,6 +15,7 @@ public class RankList implements GameKernel.PaintInterface {
     public ArrayList<String> name = new ArrayList<>();
     public ArrayList<Integer> score = new ArrayList<>();
     public EditText editText;
+    public
     int rankCount =5;//排行榜上限
 
     //Class檔案位置

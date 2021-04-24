@@ -1,5 +1,6 @@
 package scene;
 
+import com.sun.scenario.effect.Color4f;
 import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
@@ -23,17 +24,24 @@ public class SkillScene extends Scene {
     private Button roundStart;// 進入回合的按鈕
     private IntroPopupWindow introPopupWindow;//進入回合前的教學視窗
     private Label skillLabel; //購買技能的標籤
+    private BufferedImage barImage;//
+    private Label playerMoney;//玩家的錢
+    private Label playerHorn;//玩家榮譽
+
 
     @Override
     public void sceneBegin() {
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
+        barImage=ImageController.getInstance().tryGet("/bar.png");
+        playerMoney=new Label(1320,910,new Style.StyleRect(100,100,true,null));
+        playerHorn=new Label(1520,910,new Style.StyleRect(100,100,true,null));
         skillButtons = Global.getSkillButtons();//得到Global的技能按鈕
         roundStart=new Button(1350,650,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
         introPopupWindow.hide();
-        skillLabel=new Label(435,110,new Style.StyleRect(959,119,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
+        skillLabel=new Label(490,110,new Style.StyleRect(959,119,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
     }
 
     @Override
@@ -113,7 +121,6 @@ public class SkillScene extends Scene {
             skillButtons.get(i).paint(g);
         }
         roundStart.paint(g); //畫出開始回合的按鈕
-        Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         skillLabel.paint(g);
         if(introPopupWindow.isShow() && !introPopupWindow.isPassed()){
             introPopupWindow.paint(g);
@@ -121,6 +128,13 @@ public class SkillScene extends Scene {
                 introPopupWindow.getButton().paint(g);
             }
         }
+        g.drawImage(barImage,200,850,null);
+        //畫玩家金錢和榮譽
+        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerMoney.paint(g);
+        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerHorn.paint(g);
+
     }
     @Override
     public void update() {

@@ -15,6 +15,7 @@ public class Player implements GameKernel.UpdateInterface,GameKernel.PaintInterf
     public   Label  moneyLabel;
     public   Label honorLabel;
     private static Player player;
+    public int level; //故事模式的關卡等級
 
     private Player(){
         money=2000;

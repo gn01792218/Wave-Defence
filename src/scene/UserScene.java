@@ -35,6 +35,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private boolean arrowLUseable;
     private Label armyLabel; //購買軍隊的標籤
     private Label enemyLabel; //敵軍機密的標籤
+    private Label playerMoney;//玩家的錢
+    private Label playerHorn;//玩家榮譽
     private PopWindowScene popupWindow;//敵方資訊場景
     //關於彈跳視窗內的按鈕位置問題:1.就算按鈕做在PopWindow內部，也必須要在外面的場景中paint出來(做出getButton方法)，否則按鈕位置會有誤差。
     private UserScene(){}
@@ -66,7 +68,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
-        secrt=new Button(1350, 580, new Style.StyleRect(250,154,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
+        secrt=new Button(1350, 250, new Style.StyleRect(250,154,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(250,162,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
         arrowR=new Button(1370,380,new Style.StyleRect(187,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
@@ -74,7 +76,9 @@ public class UserScene extends Scene{ //改成單例模式!!!
         arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
         arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
         armyLabel=new Label(570,50,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
-        enemyLabel=new Label(1350,380,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
+        enemyLabel=new Label(1350,160,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
+        playerMoney=new Label(1320,910,new Style.StyleRect(100,100,true,null));
+                playerHorn=new Label(1520,910,new Style.StyleRect(100,100,true,null));
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1300,600);
         popupWindow.setCancelable();
@@ -181,7 +185,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
     public void paint(Graphics g) {
         g.drawImage(backGround,160,0,null);
         g.drawImage(backCover,830,180,null);
-        Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
         armyLabel.paint(g);
@@ -228,7 +231,11 @@ public class UserScene extends Scene{ //改成單例模式!!!
             g.drawString(actorButtons.get(3).getNumber()+"",350+armyCount*200,700);
             armyCount++;
         }
-
+        //畫玩家金錢和榮譽
+        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerMoney.paint(g);
+        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerHorn.paint(g);
 
     }
     @Override

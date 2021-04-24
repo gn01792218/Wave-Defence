@@ -52,7 +52,7 @@ public class ActorButton extends Button{
         if(!isEnemy) {
             for (int i = 0; i < this.alliances.size(); i++) {
                 if (alliances.get(i).getType() == this.actorType) {
-                    this.name=new Label(580,150,new Style.StyleRect(100,100,true,null).setText(name).setTextFont(new Font("標楷體", Font.BOLD, 32)).setTextColor(Color.CYAN));
+                    this.name=new Label(580,150,new Style.StyleRect(100,100,true,null).setText(name).setTextFont(new Font("標楷體", Font.BOLD, 32)).setTextColor(Color.orange));
                     for (int j = 0; j < 6; j++) {
                         if (j == 0) {
                             Global.getFrmt().setMaximumFractionDigits(0);

@@ -35,6 +35,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private boolean arrowLUseable;
     private Label armyLabel; //購買軍隊的標籤
     private Label enemyLabel; //敵軍機密的標籤
+    private Label playerLevel;//目前在第幾關
     private Label playerMoney;//玩家的錢
     private Label playerHorn;//玩家榮譽
     private PopWindowScene popupWindow;//敵方資訊場景
@@ -77,8 +78,9 @@ public class UserScene extends Scene{ //改成單例模式!!!
         arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
         armyLabel=new Label(570,50,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
         enemyLabel=new Label(1350,160,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
-        playerMoney=new Label(1320,910,new Style.StyleRect(100,100,true,null));
-                playerHorn=new Label(1520,910,new Style.StyleRect(100,100,true,null));
+        playerLevel=new Label(1120,915,new Style.StyleRect(100,100,true,null));
+        playerMoney=new Label(1320,915,new Style.StyleRect(100,100,true,null));
+        playerHorn=new Label(1550,915,new Style.StyleRect(100,100,true,null));
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1300,600);
         popupWindow.setCancelable();
@@ -232,6 +234,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
             armyCount++;
         }
         //畫玩家金錢和榮譽
+        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,52)).setTextColor(new Color(0xFC246CC6, true));
+        playerLevel.paint(g);
         playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
         playerMoney.paint(g);
         playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));

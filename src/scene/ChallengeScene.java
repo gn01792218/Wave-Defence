@@ -4,8 +4,6 @@ import controllers.ImageController;
 import controllers.SceneController;
 import gameobj.*;
 import menu.*;
-import menu.Button;
-import menu.Label;
 import menu.impl.MouseTriggerImpl;
 import utils.*;
 
@@ -13,7 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 public class ChallengeScene extends Scene{
     private BufferedImage image; //背景圖
     private BufferedImage image1_1;
@@ -52,7 +50,7 @@ public class ChallengeScene extends Scene{
 //        test = new EditText(0,0,"請輸入文字",new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))));
         image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
-        image2 = ImageController.getInstance().tryGet("/fail2.png");
+        image2 = ImageController.getInstance().tryGet("/fail1.png");
         isFlagUsable = true;
         gameBegin=new Delay(300);
         gameOver=false;

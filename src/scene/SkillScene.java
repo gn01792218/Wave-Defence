@@ -25,6 +25,7 @@ public class SkillScene extends Scene {
     private IntroPopupWindow introPopupWindow;//進入回合前的教學視窗
     private Label skillLabel; //購買技能的標籤
     private BufferedImage barImage;//
+    private Label playerLevel;//目前在第幾關
     private Label playerMoney;//玩家的錢
     private Label playerHorn;//玩家榮譽
 
@@ -33,8 +34,9 @@ public class SkillScene extends Scene {
     public void sceneBegin() {
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         barImage=ImageController.getInstance().tryGet("/bar.png");
-        playerMoney=new Label(1320,910,new Style.StyleRect(100,100,true,null));
-        playerHorn=new Label(1520,910,new Style.StyleRect(100,100,true,null));
+        playerLevel=new Label(1120,915,new Style.StyleRect(100,100,true,null));
+        playerMoney=new Label(1320,915,new Style.StyleRect(100,100,true,null));
+        playerHorn=new Label(1550,915,new Style.StyleRect(100,100,true,null));
         skillButtons = Global.getSkillButtons();//得到Global的技能按鈕
         roundStart=new Button(1350,650,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
@@ -130,6 +132,8 @@ public class SkillScene extends Scene {
         }
         g.drawImage(barImage,200,850,null);
         //畫玩家金錢和榮譽
+        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,52)).setTextColor(new Color(0xFC246CC6, true));
+        playerLevel.paint(g);
         playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
         playerMoney.paint(g);
         playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));

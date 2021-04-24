@@ -275,8 +275,13 @@ public class GameScene extends Scene {
             }
         }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
-            image2 = ImageController.getInstance().tryGet("/fail2.png");
+            if(Global.getLevel()==1){
+            image2 = ImageController.getInstance().tryGet("/fail1.png");
             g.drawImage(image2, 350, 250, null);
+            }else if(Global.getLevel()==2){
+                image2 = ImageController.getInstance().tryGet("/fail2.png");
+                g.drawImage(image2, 350, 250, null);
+            }
         }
         Player.getInstance().paint(g);
 
@@ -285,7 +290,6 @@ public class GameScene extends Scene {
     @Override
     public void update() {
         System.out.println("STEP："+step);
-
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過

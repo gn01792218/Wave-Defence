@@ -1,16 +1,20 @@
 package utils;
 
+import menu.EditText;
+
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class RankList {
-    public Scanner sc= new Scanner(System.in);
+public class RankList implements GameKernel.PaintInterface {
+//    public Scanner sc= new Scanner(System.in);
 
     public ArrayList<String> name = new ArrayList<>();
     public ArrayList<Integer> score = new ArrayList<>();
+    public EditText editText;
     int rankCount =5;//排行榜上限
 
     //Class檔案位置
@@ -78,9 +82,10 @@ public class RankList {
                 name.set(i,name.get(i-1));
             }
 
-            //設定新紀錄
+
             System.out.println("Pleas type in your name");
-            name.set(rank,sc.next());
+//            name.set(rank,sc.next());
+            name.set(rank,"");
             score.set(rank,newScore);
 
             //寫入新資料
@@ -96,5 +101,10 @@ public class RankList {
                 return;
             }
         }
+    }
+
+    @Override
+    public void paint(Graphics g) {
+
     }
 }

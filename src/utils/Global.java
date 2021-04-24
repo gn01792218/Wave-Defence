@@ -62,7 +62,7 @@ public class Global {
         return allianceActors;
     }
     //做取得技能按鈕陣列的實體。
-    public static ArrayList<SkillButton> getSkillButtons() {
+    public static ArrayList<SkillButton> getSkillButtons() {  //在此調整按鈕顯示位置
         final int skillButtonUnit = 64;
         final int SkillButtonDis = 128;
         final int skillButtonHeight = 700;
@@ -101,18 +101,18 @@ public class Global {
     public static ArrayList<ActorButton> getActorButtons() {
         if (actorButtons == null) { //假如沒有 才做角色按鈕
             actorButtons = new ArrayList<>();//角色參數: 座標 Style Type Cost
-            ActorButton tank1 = new ActorButton(500, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
+            ActorButton tank1 = new ActorButton(830, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
                     Global.ActorType.TANK1, 250,false);
-            ActorButton tank2 = new ActorButton(1000, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
+            ActorButton tank2 = new ActorButton(1330, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
                     Global.ActorType.TANK2, 280,false);
-            ActorButton laserCar=new ActorButton(1500,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
+            ActorButton laserCar=new ActorButton(1830,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
                     Global.ActorType.LASERCAR,300,false);
-            ActorButton rocket=new ActorButton(2000,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
+            ActorButton rocket=new ActorButton(2330,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
                     ActorType.ROCKET,500,false);
             tank1.setUnLocked(true); //坦1
             tank2.setUnLocked(true); //坦2 都是被解鎖的
-//            laserCar.setUnLocked(true); //測試用
-//            rocket.setUnLocked(true);
+            laserCar.setUnLocked(true); //測試用
+            rocket.setUnLocked(true);
             laserCar.setLockImage(ImageController.getInstance().tryGet("/AALaserCar_Lock.png"));
             rocket.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
             actorButtons.add(tank1);
@@ -125,15 +125,15 @@ public class Global {
     public static ArrayList<ActorButton> getEnemyButtons(){
         if (enemyButtons == null) { //假如沒有 才做角色按鈕
             enemyButtons= new ArrayList<>();//角色參數: 座標 Style Type Cost
-            ActorButton enemy1 = new ActorButton(550, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy1.png"))),
+            ActorButton enemy1 = new ActorButton(650, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy1.png"))),
                     ActorType.ENEMY1, 0,true);
-            ActorButton enemy2 = new ActorButton(1050, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy2.png"))),
+            ActorButton enemy2 = new ActorButton(1150, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy2.png"))),
                     ActorType.ENEMY2, 0,true);
-            ActorButton enemy3=new ActorButton(1550,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy3.png"))),
+            ActorButton enemy3=new ActorButton(1650,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy3.png"))),
                     ActorType.ENEMY3,0,true);
-            ActorButton enemy4=new ActorButton(2050,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy4.png"))),
+            ActorButton enemy4=new ActorButton(2150,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Enemy4.png"))),
                     ActorType.ENEMY4,0,true);
-            ActorButton boss=new ActorButton(2550,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Boss.png"))),
+            ActorButton boss=new ActorButton(2650,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EB-Boss.png"))),
                     ActorType.BOSS,0,true);
             enemy1.setUnLocked(true);
             enemy4.setUnLocked(true);

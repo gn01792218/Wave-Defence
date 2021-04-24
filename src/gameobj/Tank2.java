@@ -81,7 +81,7 @@ public class Tank2 extends Actor{
                     }
                 }
 
-            }else if(isReinforcement){
+            }else if(isReinforcement  && isOnBuff){
                 g.drawImage(image_S5, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                         this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
                         this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);

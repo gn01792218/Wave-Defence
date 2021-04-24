@@ -93,21 +93,25 @@ public class GameScene extends Scene {
                         temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //把Global的技能按鈕設成非選，才不會在下一場又免費出現!!!!!!!
                         skill.add(new AttackUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.get(skill.size()-1).setInGameScene(true);
                         break;
                     case HPUP:
                         temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         skill.add(new HpUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.get(skill.size()-1).setInGameScene(true);
                         break;
                     case DEFUP:
                         temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         skill.add(new DefUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.get(skill.size()-1).setInGameScene(true);
                         break;
                     case MOVESPEEDUP:
                         temp.get(i).setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         skill.add(new SpeedUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost())); //設置在場中的位置
+                        skill.get(skill.size()-1).setInGameScene(true);
                         break;
                     case REINFORCEMENTS:
                         SkillButton s1=new Reinforcements(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
@@ -115,6 +119,7 @@ public class GameScene extends Scene {
                         s1.setUnLocked(true);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         skill.add(s1); //設置在場中的位置
+                        skill.get(skill.size()-1).setInGameScene(true);
                         break;
                     case  ELECTWAVE:
                         SkillButton s2=new ElectWave(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
@@ -122,6 +127,7 @@ public class GameScene extends Scene {
                         s2.setUnLocked(true);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         skill.add(s2);
+                        skill.get(skill.size()-1).setInGameScene(true);
                         break;
                     case ATKSPEEDUP:
                         SkillButton s3=new AtkSpeedUp(1390+skill.size()%4*100+skill.size()/4*100,350+skill.size()/4*100,temp.get(i).getStyleNormal(),temp.get(i).getSkillName(),temp.get(i).getCost());
@@ -129,7 +135,7 @@ public class GameScene extends Scene {
                         s3.setInfoVisable(false);
                         temp.get(i).setSelect(false); //設成非選，才不會在下一場又免費出現!!!!!!!
                         skill.add(s3);
-
+                        skill.get(skill.size()-1).setInGameScene(true);
                         break;
                 }
             }
@@ -240,7 +246,7 @@ public class GameScene extends Scene {
         }
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
-                if(!skill.get(i).isUsed()) {
+                if(!skill.get(i).isUsed()) {  //沒被使用過的時候，畫技能
                     skill.get(i).paint(g); //畫技能
                 }
             }
@@ -268,7 +274,6 @@ public class GameScene extends Scene {
                 g.drawImage(image4,400,250,null);
             }
         }
-
         if (alliance.size() <= 0) { //死光時畫失敗畫面
             image2 = ImageController.getInstance().tryGet("/fail2.png");
             g.drawImage(image2, 350, 250, null);

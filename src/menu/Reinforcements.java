@@ -4,6 +4,7 @@ import controllers.ImageController;
 import gameobj.*;
 import utils.Delay;
 import utils.Global;
+import utils.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ public class Reinforcements extends SkillButton{
         info.getPaintStyle().setText("隨機呼叫"+reinforcementsNum+"個援軍"+bufftime/60+"秒後離開").
                 setTextFont(new Font("標楷體",Font.ITALIC,22));
         infoVisable=false; //一開始不顯現
-        this.lockLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock1.png"))));
+        this.lockLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock1.png"))));
         this.unLockCost=250;//花500可以解鎖
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null));
         this.isUnLocked=false;//需要解鎖
-        selectedLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.png"))));
+        selectedLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.png"))));
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {
@@ -37,7 +38,7 @@ public class Reinforcements extends SkillButton{
             switch (temp.get(Global.random(0, temp.size() - 1)).getType()) {
                 case TANK1:
                     Actor actor1=new Tank1(600+i*100,700,false);
-                    actor1.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
+//                    actor1.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor1.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
@@ -46,7 +47,7 @@ public class Reinforcements extends SkillButton{
                     break;
                 case TANK2:
                     Actor actor2=new Tank2(600+i*100,700,false);
-                    actor2.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
+//                    actor2.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor2.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
@@ -55,7 +56,7 @@ public class Reinforcements extends SkillButton{
                     break;
                 case LASERCAR:
                     Actor actor3= new LaserCar(600, 700, false);
-                    actor3.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
+//                    actor3.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor3.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
@@ -83,33 +84,48 @@ public class Reinforcements extends SkillButton{
             if(actors.get(i).isReinforcement()){
                 actors.get(i).moveToTarget(500,1080); //從場地邊緣離開
                 actors.remove(i);
-//                i--;
+                i--;
                 System.out.println("刪除了第"+(i+1)+"隻援軍");
             }
-
+        }
+        if (Player.getInstance().getHonor() >= this.getCost()) {
+            this.setCanUsed(true);
         }
     }
     @Override
     public void paint(Graphics g){
-        if (super.getPaintStyle() != null) {
-            super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
-        }
         if(info!=null && infoVisable){info.paint(g);}
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+            if(isInGameScene()){
+                if (super.getPaintStyle() != null) { //畫原本的圖
+                    super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+                }
 
-        if(this.isSelect){
-            selectedLabel.paint(g); //被選中後畫灰色圖
+            }else{
+                selectedLabel.paint(g);} //被選中後畫灰色圖
+        }else{
+            if (super.getPaintStyle() != null) { //畫原本的圖
+                super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+            }
         }
         if(!isUnLocked && lockLabel!=null){
             lockLabel.paint(g);
             label.getPaintStyle().setText("解鎖花費:"+this.unLockCost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
             label.getPaintStyle().setTextColor(Color.RED);
         }else{
-
             label.getPaintStyle().setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22));//顯示解鎖的畫面
             label.getPaintStyle().setTextColor(Color.WHITE);
         }
-        if(label!=null  && infoVisable){
+        if(label!=null  && infoVisable && !isInGameScene){
             label.paint(g);
         }
+    }
+    @Override
+    public void update() {
+//        if (Player.getInstance().getHonor() >= this.getCost()) {  //玩家錢小於這個技能的時候也不能使用
+//            System.out.println(Player.getInstance().getHonor());
+//            setCanUsed(true);
+//            setUsed(false);
+//        }
     }
 }

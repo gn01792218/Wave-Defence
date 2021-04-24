@@ -5,10 +5,9 @@ import controllers.ImageController;
 import controllers.SceneController;
 import gameobj.*;
 import menu.*;
-import utils.CommandSolver;
-import utils.Delay;
-import utils.Global;
-import utils.Player;
+import menu.Button;
+import menu.impl.MouseTriggerImpl;
+import utils.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -43,9 +42,13 @@ public class ChallengeScene extends Scene{
     private BufferedImage imageTank2;
     private BufferedImage imageLaserCar;
     private BufferedImage imageRocket;
+    private RankList rankList;
+    private EditText editText;
+
 
     @Override
     public void sceneBegin() {
+//        test = new EditText(0,0,"請輸入文字",new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))));
         image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image2 = ImageController.getInstance().tryGet("/fail2.png");
@@ -81,14 +84,16 @@ public class ChallengeScene extends Scene{
         skill.get(4).setUnLocked(true);
         skill.get(5).setUnLocked(true);
         skill.get(6).setUnLocked(true);
-
+        for(int i=0;i<skill.size();i++){
+            skill.get(i).setInGameScene(false);
+        }
 
         //做軍隊
         alliance = new ArrayList<>();
-        alliance.add(new Tank1(850,600,false));
-        alliance.add(new Tank1(750,600,false));
-        alliance.add(new Tank1(950,700,false));
-        alliance.add(new Tank1(650,700,false));
+//        alliance.add(new Tank1(850,600,false));
+//        alliance.add(new Tank1(750,600,false));
+//        alliance.add(new Tank1(950,700,false));
+//        alliance.add(new Tank1(650,700,false));
         castles = new ArrayList<>();
         castles.add(new Castle(400,730));
         castles.get(0).painter().setLeft(100);
@@ -160,6 +165,10 @@ public class ChallengeScene extends Scene{
         return new CommandSolver.MouseListener() {
             @Override
             public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
+                if(editText!=null){
+                    MouseTriggerImpl.mouseTrig(editText,e,state);
+                    System.out.println(editText.getIsFocus());
+                }
                 if (state != null) {
                     switch (state) {
                         case CLICKED:
@@ -185,7 +194,7 @@ public class ChallengeScene extends Scene{
                                             }else{
                                                 skill.get(i).skillExection(alliance); //執行技能~
                                             }
-//                                            skill.get(i).setUsed(true);
+                                            skill.get(i).setUsed(true);
                                             player.offsetHonor(-skill.get(i).getCost());
                                         }
                                     }
@@ -203,8 +212,8 @@ public class ChallengeScene extends Scene{
                         case MOVED:
                             mouseX = e.getX();
                             mouseY = e.getY();
-
                             for(int i=0;i<skill.size();i++){
+                                skill.get(i).update();
                                 if(skill.get(i).isTouch(e.getX(),e.getY())){
                                     skill.get(i).setInfoVisable(true);
                                 }else{ skill.get(i).setInfoVisable(false);}
@@ -238,13 +247,9 @@ public class ChallengeScene extends Scene{
         for (int i = 0; i < enemys.size(); i++) {
             enemys.get(i).paint(g); //畫敵軍
         }
-        if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
-                if(!skill.get(i).isUsed()) {
                     skill.get(i).paint(g); //畫技能
-                }
             }
-        }
         if (isFlagUsable && allianceControl!=null) {
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
@@ -256,23 +261,25 @@ public class ChallengeScene extends Scene{
         if(castles.size()<=0){
             g.drawImage(image2, 350, 250, null);
         }
-
-
+        if(editText!=null) {
+            editText.paint(g);
+        }
+//        if(this.test!=null){
+//            test.paint(g);
+//        }
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
-
         //技能update
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
-                if (skill.get(i).isUsed()) { //沒有被施放過
                     if (skill.get(i).getBuffTime().count()) {
                         if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
                             skill.get(i).skillReset(enemys);
                         }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
                     }
-                }
+                System.out.println(skill.get(i).getSkillName()+" "+skill.get(i).isInGameScene());
             }
         }
         //我軍的update
@@ -376,15 +383,50 @@ public class ChallengeScene extends Scene{
                 enemys.get(i).setStrategyXY(Global.random(Global.BOUNDARY_X1,Global.BOUNDARY_X2),200);
             }
         }
-
-
         if (castles.size() <= 0) { //挑戰失敗
-            gameOver.play();
-
-            if(gameOver.count()) {
-                Global.rankList.newScore(count);
-                SceneController.getInstance().changeScene(new OpenScene());
+//            gameOver.play();
+//
+//            if(gameOver.count()) {
+//                SceneController.getInstance().changeScene(new OpenScene());
+//            }
+            if(editText==null) {
+                editText = new EditText(500, 500, "請輸入姓名");
+                editText.setStyleNormal(new Style.StyleRect(200, 50, true
+                        , new BackgroundType.BackgroundColor(new Color(2, 10, 19)))
+                        .setTextColor(new Color(128, 128, 128))
+                        .setHaveBorder(true)
+                        .setBorderColor(new Color(97, 113, 110))
+                        .setBorderThickness(5)
+                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText.setStyleHover(new Style.StyleRect(200, 50, true
+                        , new BackgroundType.BackgroundColor(new Color(83, 95, 47)))
+                        .setTextColor(new Color(128, 128, 128))
+                        .setHaveBorder(true)
+                        .setBorderColor(new Color(97, 113, 110))
+                        .setBorderThickness(5)
+                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText.setStyleFocus(new Style.StyleRect(200, 50, true
+                        , new BackgroundType.BackgroundColor(new Color(199, 178, 153)))
+                        .setTextColor(new Color(128, 128, 128))
+                        .setHaveBorder(true)
+                        .setBorderColor(new Color(97, 113, 110))
+                        .setBorderThickness(5)
+                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText.isFocus();
+                editText.setClickedActionPerformed((x, y) -> {
+                });
+                String s = editText.getEditText();
             }
+            Global.rankList.newScore(count);
+//            SceneController.getInstance().changeScene(new OpenScene());
+
+//            gameOver.play();
+//
+//            if(gameOver.count()) {
+//                Global.rankList.newScore(count);
+//                SceneController.getInstance().changeScene(new OpenScene());
+//            }
+
         }
 
     }

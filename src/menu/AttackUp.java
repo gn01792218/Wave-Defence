@@ -5,6 +5,7 @@ import gameobj.Actor;
 
 import utils.Delay;
 import utils.Global;
+import utils.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class AttackUp extends SkillButton {
         this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null).setText("花費:"+this.cost+"榮譽").setTextFont(new Font("標楷體",Font.ITALIC,22)));
         infoVisable=false; //一開始不顯現
         this.isUnLocked=true;//一開始就是被解鎖的
-        selectedLabel=new Label(this.getCenterX()-64,this.getCenterY()-64,new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.png"))));
+        selectedLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.png"))));
     }
     @Override
     public void skillExection(ArrayList<Actor> actors) {  //施放技能，場景中會用到
@@ -47,20 +48,37 @@ public class AttackUp extends SkillButton {
         }
         setUsed(true); //被施放過了
         System.out.println("技能: "+this.getSkillName()+"施放結束");
+        if (Player.getInstance().getHonor() >= this.getCost()) {
+            this.setCanUsed(true);
+        }
     }
 
     @Override
     public void paint(Graphics g){
-        if (super.getPaintStyle() != null) {
-            super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
-        }
-        if(info!=null && infoVisable){info.paint(g);}
+        if(info!=null && infoVisable){info.paint(g);}  //招式資訊
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+            if(isInGameScene()){
+                if (super.getPaintStyle() != null) { //畫原本的圖
+                    super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+                }
 
-        if(this.isSelect){
-            selectedLabel.paint(g); //被選中後畫灰色圖
+            }else{
+                selectedLabel.paint(g);} //被選中後畫灰色圖
+        }else{
+            if (super.getPaintStyle() != null) { //畫原本的圖
+                super.getPaintStyle().paintComponent(g, super.getX(), super.getY());
+            }
         }
-        if(label!=null  && infoVisable){
+        if(label!=null  && infoVisable && !isInGameScene){ //花費顯示
             label.paint(g);
         }
+    }
+    @Override
+    public void update() {
+//        if (Player.getInstance().getHonor() >= this.getCost()) {  //玩家錢小於這個技能的時候也不能使用
+//            System.out.println(Player.getInstance().getHonor());
+//            setCanUsed(true);
+//            setUsed(false);
+//        }
     }
 }

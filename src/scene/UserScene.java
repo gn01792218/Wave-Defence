@@ -53,14 +53,16 @@ public class UserScene extends Scene{ //改成單例模式!!!
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         backCover=ImageController.getInstance().tryGet("/UserBackCover.png");
-        roundStart=new Button(950,500,new Style.StyleRect(150,150,
+        roundStart=new Button(950,800,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         secrt=new Button(1230, 600, new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
         secrt.setStyleHover(new Style.StyleRect(548,356,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
             skillButtons=Global.getSkillButtons();//得到Global的技能按鈕
-        arrowR=new Button(1000,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
-        arrowL=new Button(300,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
+        arrowR=new Button(1370,380,new Style.StyleRect(187,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
+        arrowR.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRH.png"))));
+        arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
+        arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
         armyLabel=new Label(390,80,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
         skillLabel=new Label(735,810,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/skill.png"))));
         enemyLabel=new Label(1200,550,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
@@ -109,6 +111,12 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                 } else {
                                     secrt.isHover(false);
                                 }
+                                if(arrowR.isTouch(e.getX(),e.getY())){
+                                    arrowR.isHover(true);
+                                }else{arrowR.isHover(false);}
+                                if(arrowL.isTouch(e.getX(),e.getY())){
+                                    arrowL.isHover(true);
+                                }else{arrowL.isHover(false);}
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
@@ -147,9 +155,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     }
                                     if (arrowR.isTouch(e.getX(), e.getY())) {//右箭頭-->最底是火箭
                                         AudioResourceController.getInstance().shot("/skillSound.wav");
-                                        if (actorButtons.get(0).left() < 500) {
+                                        if (actorButtons.get(0).left() < 700) {
                                             for (int i = 0; i < actorButtons.size(); i++) {//全部都不能動
-                                                System.out.println("右鍵+++");
                                                 actorButtons.get(i).offSetXY(500, 0);
                                             }
                                         }
@@ -157,9 +164,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     }
                                     if (arrowL.isTouch(e.getX(), e.getY())) { //左箭頭-->最底是Tank1
                                         AudioResourceController.getInstance().shot("/skillSound.wav");
-                                        if (actorButtons.get(3).left() > 500) {
+                                        if (actorButtons.get(3).left() > 700) {
                                             for (int i = 0; i < actorButtons.size(); i++) {
-                                                System.out.println("左鍵+++++");
                                                 actorButtons.get(i).offSetXY(-500, 0);
                                             }
                                         }
@@ -199,7 +205,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     @Override
     public void paint(Graphics g) {
         g.drawImage(backGround,160,0,null);
-        g.drawImage(backCover,500,180,null);
+        g.drawImage(backCover,830,180,null);
         Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
         secrt.paint(g);//化機密檔案
@@ -210,7 +216,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 skillButtons.get(i).paint(g);
         }
         for(int i=0;i<actorButtons.size();i++){
-            if(actorButtons.get(i).left()<900 && actorButtons.get(i).right()>500) {
+            if(actorButtons.get(i).left()<1230 && actorButtons.get(i).right()>830) {
                 actorButtons.get(i).paint(g);
             }
         }
@@ -236,10 +242,11 @@ public class UserScene extends Scene{ //改成單例模式!!!
     }
     @Override
     public void update() {
-        if(actorButtons.get(0).left()<=500 && actorButtons.get(0).left()>=-500){ //當T1在第一張時
+
+        if(actorButtons.get(0).left()<=830 && actorButtons.get(0).left()>=-170){ //當T1在第一張時
             arrowLUseable=true;
         }else{arrowLUseable=false;}
-        if(actorButtons.get(3).right()>=1000 && actorButtons.get(3).right()<=2000) {
+        if(actorButtons.get(3).right()>=1330 && actorButtons.get(3).right()<=2330) {
             arrowRUseable = true;
         }else{arrowRUseable=false;}
     }

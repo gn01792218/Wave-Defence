@@ -28,8 +28,10 @@ public class PopWindowScene extends PopupWindow {
     @Override
     public void sceneBegin() {
         enemyButtons= Global.getEnemyButtons();//得到Global的角色按紐
-        arrowR=new Button(1250,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
-        arrowL=new Button(300,380,new Style.StyleRect(150,113,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
+        arrowR=new Button(1350,380,new Style.StyleRect(187,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
+        arrowR.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRH.png"))));
+        arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
+        arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
     }
 
     @Override
@@ -60,10 +62,10 @@ public class PopWindowScene extends PopupWindow {
 
     @Override
     public void paintWindow(Graphics g) {
-        g.setColor(new Color(0x2B2B34, false));
+        g.setColor(new Color(0x242428, false));
         g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
         for(int i=0;i<enemyButtons.size();i++){
-            if(enemyButtons.get(i).left()<950 && enemyButtons.get(i).right()>550) {
+            if(enemyButtons.get(i).left()<1050 && enemyButtons.get(i).right()>650) {
                 enemyButtons.get(i).paint(g);
             }
         }
@@ -76,16 +78,15 @@ public class PopWindowScene extends PopupWindow {
     }
     @Override
     public void update() {
-        if(enemyButtons.get(0).left()<=-350 && enemyButtons.get(0).left()>=-1350){ //當T1在第一張時
+        if(enemyButtons.get(0).left()<=-450 && enemyButtons.get(0).left()>=-1250){ //當T1在第一張時
             this.arrowLUseable=true;
         }else{this.arrowLUseable=false;}
-        if(enemyButtons.get(4).right()>=1550 && enemyButtons.get(4).right()<=2550) {
+        if(enemyButtons.get(4).right()>=1650 && enemyButtons.get(4).right()<=2650) {
             this.arrowRUseable = true;
         }else{this.arrowRUseable=false;}
     }
     @Override
     protected void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
-        System.out.println("進入敵軍資訊監聽");
         if(state!=null){
             switch (state){
                 case MOVED:
@@ -97,22 +98,26 @@ public class PopWindowScene extends PopupWindow {
                             enemyButtons.get(i).setInfoVisable(false);
                         }
                     }
+                    if(arrowR.isTouch(e.getX(),e.getY())){
+                        arrowR.isHover(true);
+                    }else{arrowR.isHover(false);}
+                    if(arrowL.isTouch(e.getX(),e.getY())){
+                        arrowL.isHover(true);
+                    }else{arrowL.isHover(false);}
                 case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                     if(e.getButton()==1){ //左鍵
                         if(arrowR.isTouch(e.getX(),e.getY())){//右箭頭-->最底是火箭
                             AudioResourceController.getInstance().shot("/skillSound.wav");
-                            if(enemyButtons.get(0).left()<550 ) {
+                            if(enemyButtons.get(0).left()<650 ) {
                                 for (int i = 0; i < enemyButtons.size(); i++) {//全部都不能動
-                                    System.out.println("右鍵+++");
                                     enemyButtons.get(i).offSetXY(500, 0);
                                 }
                             }
                         }
                         if(arrowL.isTouch(e.getX(),e.getY())){ //左箭頭-->最底是Tank1
                             AudioResourceController.getInstance().shot("/skillSound.wav");
-                            if(enemyButtons.get(4).left()>550) {
+                            if(enemyButtons.get(4).left()>650) {
                                 for (int i = 0; i < enemyButtons.size(); i++) {
-                                    System.out.println("左鍵+++++");
                                    enemyButtons.get(i).offSetXY(-500, 0);
                                 }
                             }

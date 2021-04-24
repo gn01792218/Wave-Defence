@@ -62,24 +62,30 @@ public class RankList implements GameKernel.PaintInterface {
         }
     }
 
+    //將分數傳入newScore
     public void newScore(int x){
 
         int newScore= x;
         int min= (int) score.get(rankCount-1);;
 
+        //如果新城雞高於排行榜最低紀錄則紀錄名稱
         if(newScore>min){
 
+            //判斷新紀錄第幾名
             int rank =0;
             while(newScore<score.get(rank)){
                 rank++;
             }
 
+            //將原有紀錄往後移
             for(int i=rankCount-1;i>rank;i--){
                 score.set(i,score.get(i-1));
                 name.set(i,name.get(i-1));
             }
 
-//            System.out.println("Pleas type in your name");
+
+            System.out.println("Pleas type in your name");
+//            name.set(rank,sc.next());
             name.set(rank,"");
             score.set(rank,newScore);
 

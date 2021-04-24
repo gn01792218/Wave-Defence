@@ -44,8 +44,21 @@ public class UserScene extends Scene{ //改成單例模式!!!
         }
         return userScene;
     }
+    private BufferedImage imageTank1;
+    private BufferedImage imageTank2;
+    private BufferedImage imageLaserCar;
+    private BufferedImage imageRocket;
+    private int armyCount;
+
     @Override
     public void sceneBegin() {
+        //加入軍隊數量
+        imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
+        imageTank2= ImageController.getInstance().tryGet("/AB-Tank2-Small.png");
+        imageLaserCar= ImageController.getInstance().tryGet("/AB-LaserCar-Small.png");
+        imageRocket= ImageController.getInstance().tryGet("/AB-Rocket-Small.png");
+//        armyCount =0;
+
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         backCover=ImageController.getInstance().tryGet("/UserBackCover.png");
@@ -191,6 +204,33 @@ public class UserScene extends Scene{ //改成單例模式!!!
             popupWindow.getArrowR().paint(g);
             popupWindow.getArrowL().paint(g);
         }
+
+
+
+//        畫菜籃
+        armyCount =0;
+        if(actorButtons.get(0).getNumber()>0){
+            g.drawImage(imageTank1,350+armyCount*200,620,null);
+            g.drawString(actorButtons.get(0).getNumber()+"",350+armyCount*200,700);
+            armyCount++;
+        }
+        if(actorButtons.get(1).getNumber()>0){
+            g.drawImage(imageTank2,350+armyCount*200,620,null);
+            g.drawString(actorButtons.get(1).getNumber()+"",350+armyCount*200,700);
+            armyCount++;
+        }
+        if(actorButtons.get(2).getNumber()>0){
+            g.drawImage(imageLaserCar,350+armyCount*200,600,null);
+            g.drawString(actorButtons.get(2).getNumber()+"",350+armyCount*200,700);
+            armyCount++;
+        }
+        if(actorButtons.get(3).getNumber()>0){
+            g.drawImage(imageRocket,350+armyCount*200,620,null);
+            g.drawString(actorButtons.get(3).getNumber()+"",350+armyCount*200,700);
+            armyCount++;
+        }
+
+
     }
     @Override
     public void update() {

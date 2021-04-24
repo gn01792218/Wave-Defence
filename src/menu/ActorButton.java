@@ -14,6 +14,7 @@ public class ActorButton extends Button{
     private ArrayList<Actor> enemys=Global.getEnemyActors();//得到Enemy的角色
     private Global.ActorType actorType;
     private int number;//存放這個角色的數量
+    private Label name;//角色名稱
     private Label numberLabel;// 目前數量顯示器
     private Label costLabel;//需要花費的標籤
     private Label hpLimit;//hp上限資訊
@@ -30,7 +31,8 @@ public class ActorButton extends Button{
     private Label unLockInfo;//解鎖條件的說明
     private boolean isEnemy=false;
 
-    public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost,boolean isEnemy) { //輸入的xy是左上角
+    public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost,boolean isEnemy,String name) { //輸入的xy是左上角
+
         super(x, y, style);
         this.actorType=actorType;
         if(cost>0) { //不是敵人才畫花費
@@ -50,6 +52,7 @@ public class ActorButton extends Button{
         if(!isEnemy) {
             for (int i = 0; i < this.alliances.size(); i++) {
                 if (alliances.get(i).getType() == this.actorType) {
+                    this.name=new Label(580,150,new Style.StyleRect(100,100,true,null).setText(name).setTextFont(new Font("標楷體", Font.BOLD, 32)).setTextColor(Color.CYAN));
                     for (int j = 0; j < 6; j++) {
                         if (j == 0) {
                             Global.getFrmt().setMaximumFractionDigits(0);
@@ -81,6 +84,7 @@ public class ActorButton extends Button{
         }else {
             for (int i = 0; i < this.enemys.size(); i++) {
                 if (enemys.get(i).getType() == this.actorType) {
+                    this.name=new Label(450,120,new Style.StyleRect(100,100,true,null).setText(name).setTextFont(new Font("標楷體", Font.BOLD, 32)).setTextColor(Color.GREEN));
                     for (int j = 0; j < 6; j++) {
                         if (j == 0) {
                             Global.getFrmt().setMaximumFractionDigits(0);
@@ -176,6 +180,7 @@ public class ActorButton extends Button{
             }
                 info.paint(g);
                 //畫出訊息
+                name.paint(g);
                 hpLimit.paint(g);
                 atk.paint(g);
                 def.paint(g);

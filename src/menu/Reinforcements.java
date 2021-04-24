@@ -24,9 +24,9 @@ public class Reinforcements extends SkillButton{
         info.getPaintStyle().setText("隨機呼叫"+reinforcementsNum+"個援軍"+bufftime/60+"秒後離開").
                 setTextFont(new Font("標楷體",Font.ITALIC,22));
         infoVisable=false; //一開始不顯現
-        this.lockLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock1.png"))));
+        this.lockLabel=new Label(getX(),getY(),new Style.StyleRect(128,128,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock1.png"))));
         this.unLockCost=250;//花500可以解鎖
-        this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null));
+        this.label=new Label(this.getCenterX()+20,this.top()-20,new Style.StyleRect(10,10,true,null));
         this.isUnLocked=false;//需要解鎖
         selectedLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-reinforcement.png"))));
     }

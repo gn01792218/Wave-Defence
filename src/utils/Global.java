@@ -63,10 +63,10 @@ public class Global {
     }
     //做取得技能按鈕陣列的實體。
     public static ArrayList<SkillButton> getSkillButtons() {  //在此調整按鈕顯示位置
-        final int skillButtonUnit = 64;
-        final int SkillButtonDis = 128;
-        final int skillButtonHeight = 700;
-        final int skillButtonLeft=460;
+         int skillButtonUnit = 64;
+         int SkillButtonDis = 320;
+         int skillButtonHeight = 355;
+         int skillButtonLeft=420;
         if (skillButtons == null) {
             //技能按鈕
             skillButtons = new ArrayList<>();
@@ -111,8 +111,8 @@ public class Global {
                     ActorType.ROCKET,500,false);
             tank1.setUnLocked(true); //坦1
             tank2.setUnLocked(true); //坦2 都是被解鎖的
-            laserCar.setUnLocked(true); //測試用
-            rocket.setUnLocked(true);
+//            laserCar.setUnLocked(true); //測試用
+//            rocket.setUnLocked(true);
             laserCar.setLockImage(ImageController.getInstance().tryGet("/AALaserCar_Lock.png"));
             rocket.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
             actorButtons.add(tank1);

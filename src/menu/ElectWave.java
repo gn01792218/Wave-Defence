@@ -19,9 +19,9 @@ public class ElectWave extends SkillButton{
         super(x,y,style,skillName,cost);
         this.buffTime=new Delay(bufftime);//增基攻擊力時間持續5秒
         info.getPaintStyle().setText("使敵軍全體當機"+bufftime/60+"秒");
-        this.lockLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock2.png"))));
+        this.lockLabel=new Label(getX(),getY(),new Style.StyleRect(128,128,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SLock2.png"))));
         this.unLockCost=250;//花500可以解鎖
-        this.label=new Label(this.getCenterX(),this.bottom(),new Style.StyleRect(10,10,true,null));
+        this.label=new Label(this.getCenterX()+20,this.top()-20,new Style.StyleRect(10,10,true,null));
         infoVisable=false; //一開始不顯現
         this.isUnLocked=false;//需要解鎖
         selectedLabel=new Label(getX(),getY(),new Style.StyleRect(64,64,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-elecWave.png"))));

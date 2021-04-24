@@ -1,6 +1,6 @@
+TSZ/5
+TSZ/3
+tsz/2
 ff/2
 viv/1
 ethsn/1
-non/0
-non/0
-non/0

@@ -70,6 +70,7 @@ public class GameScene extends Scene {
 
         roundStart=new Button(1450,500,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
+        roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         isReady = false;
 
         starDelayCount = new Delay(1200);//倒數前20秒
@@ -178,6 +179,7 @@ public class GameScene extends Scene {
                         case CLICKED:
                             if (e.getButton() == e.BUTTON1) {
                                 if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
+                                    roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
                                     isReady = true;
                                 }
                                 if(gameComplete){
@@ -222,6 +224,10 @@ public class GameScene extends Scene {
                                     skill.get(i).setInfoVisable(true);
                                 }else{ skill.get(i).setInfoVisable(false);}
                             }
+                            if(roundStart.isTouch(e.getX(),e.getY())){
+                                roundStart.isHover(true);
+                            }else{roundStart.isHover(false);}
+                            break;
                     }
                 }
             }

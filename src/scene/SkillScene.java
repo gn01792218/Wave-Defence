@@ -40,6 +40,7 @@ public class SkillScene extends Scene {
         skillButtons = Global.getSkillButtons();//得到Global的技能按鈕
         roundStart=new Button(1350,650,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
+        roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
         introPopupWindow.hide();
@@ -68,10 +69,14 @@ public class SkillScene extends Scene {
                                 for (int i = 0; i < skillButtons.size(); i++) {
                                         skillButtons.get(i).setInfoVisable(true);
                                 }
+                                if(roundStart.isTouch(e.getX(),e.getY())){
+                                    roundStart.isHover(true);
+                                }else{roundStart.isHover(false);}
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
                                     if (roundStart.isTouch(e.getX(), e.getY()) && !introPopupWindow.isPassed()) {//1.觸發換場的按鈕
+                                        AudioResourceController.getInstance().shot("/skillSound.wav");
                                         introPopupWindow.sceneBegin();//記得初始化場景，否則會nullPoint!
                                         introPopupWindow.show();
                                     } else if (roundStart.isTouch(e.getX(), e.getY()) && introPopupWindow.isPassed()) { //第二次之後 直接換場
@@ -132,7 +137,7 @@ public class SkillScene extends Scene {
         }
         g.drawImage(barImage,200,850,null);
         //畫玩家金錢和榮譽
-        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,52)).setTextColor(new Color(0xFC246CC6, true));
+        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
         playerLevel.paint(g);
         playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
         playerMoney.paint(g);

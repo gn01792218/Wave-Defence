@@ -1,5 +1,6 @@
 package scene;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
 import menu.BackgroundType;
@@ -29,6 +30,7 @@ public class IntroPopupWindow extends PopupWindow {
     public void sceneBegin() {
         button=new Button(800,650,new Style.StyleRect(150,150, //畫出確認按鈕
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
+        button.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         image1=ImageController.getInstance().tryGet("/intro1.png");
         image2= ImageController.getInstance().tryGet("/intro2.png");
     }
@@ -70,10 +72,15 @@ public class IntroPopupWindow extends PopupWindow {
     protected void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
         if(state!=null){
             switch (state){
+                case MOVED:
+                    if(button.isTouch(e.getX(),e.getY())){
+                        button.isHover(true);
+                    }else{button.isHover(false);}
                 case CLICKED:
                     if(e.getButton()==1){
                         if(button.isTouch(e.getX(),e.getY())){
                             isPassed=true; //點擊到就變成true
+                            AudioResourceController.getInstance().shot("/skillSound.wav");
                             SceneController.getInstance().changeScene(GameScene.getInstance());
                         }
                     }

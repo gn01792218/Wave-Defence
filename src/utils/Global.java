@@ -144,7 +144,6 @@ public class Global {
 //            enemy2.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
 //            boss.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
             for(int i=0;i<enemyButtons.size();i++){
-                enemyButtons.get(i).setNumberLabel(null);
                 enemyButtons.get(i).setCostLabel(null);
             }
             enemyButtons.add(enemy1);

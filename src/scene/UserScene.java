@@ -69,15 +69,15 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
-        secrt=new Button(1350, 250, new Style.StyleRect(250,154,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
-        secrt.setStyleHover(new Style.StyleRect(250,162,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
+        secrt=new Button(1450, 250, new Style.StyleRect(236,205,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
+        secrt.setStyleHover(new Style.StyleRect(236,205,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
         arrowR=new Button(1370,380,new Style.StyleRect(187,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
         arrowR.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRH.png"))));
         arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
         arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
-        armyLabel=new Label(570,50,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
-        enemyLabel=new Label(1350,160,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
+        armyLabel=new Label(665,30,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
+        enemyLabel=new Label(1450,160,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
         playerLevel=new Label(1120,915,new Style.StyleRect(100,100,true,null));
         playerMoney=new Label(1320,915,new Style.StyleRect(100,100,true,null));
         playerHorn=new Label(1550,915,new Style.StyleRect(100,100,true,null));
@@ -109,32 +109,35 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     }
                                 }
                                 if (secrt.isTouch(e.getX(), e.getY())) { //機密文件
+                                    AudioResourceController.getInstance().play("/hover.wav");
                                     secrt.isHover(true);
                                 } else {
                                     secrt.isHover(false);
                                 }
                                 if(arrowR.isTouch(e.getX(),e.getY())){
+                                    AudioResourceController.getInstance().play("/hover.wav");
                                     arrowR.isHover(true);
                                 }else{arrowR.isHover(false);}
                                 if(arrowL.isTouch(e.getX(),e.getY())){
+                                    AudioResourceController.getInstance().play("/hover.wav");
                                     arrowL.isHover(true);
                                 }else{arrowL.isHover(false);}
                                 if(roundStart.isTouch(e.getX(),e.getY())){
+                                    AudioResourceController.getInstance().play("/hover.wav");
                                     roundStart.isHover(true);
                                 }else{roundStart.isHover(false);}
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
                                     if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
+                                        AudioResourceController.getInstance().shot("/skillSound.wav");
                                         SceneController.getInstance().changeScene(new SkillScene());
                                     }
                                     for (int i = 0; i < actorButtons.size(); i++) { //2.角色購買
                                         if (actorButtons.get(i).isTouch(e.getX(), e.getY())) {
-                                            System.out.println("點到了!!!");
                                             //購買軍隊
                                             if (Player.getInstance().getMoney() >= actorButtons.get(i).getCostMoney()
                                                     && actorButtons.get(i).left() >= 830 && actorButtons.get(i).right() <= 1330 && actorButtons.get(i).isUnLocked()) { //金錢大於0才可以
-                                                System.out.println("買到了!!!");
                                                 actorButtons.get(i).offSetNumber(1); //點一下增加一單位
                                                 AudioResourceController.getInstance().shot("/skillSound.wav");
                                                 Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney()); //扣錢
@@ -209,8 +212,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
             popupWindow.getArrowL().paint(g);
         }
 
-
-
 //        畫菜籃
         armyCount =0;
         if(actorButtons.get(0).getNumber()>0){
@@ -234,11 +235,11 @@ public class UserScene extends Scene{ //改成單例模式!!!
             armyCount++;
         }
         //畫玩家金錢和榮譽
-        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,52)).setTextColor(new Color(0xFC246CC6, true));
+        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
         playerLevel.paint(g);
-        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
         playerMoney.paint(g);
-        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
         playerHorn.paint(g);
 
     }

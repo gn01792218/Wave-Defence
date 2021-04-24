@@ -1,5 +1,4 @@
 package scene;
-
 import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
@@ -15,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class ChallengeScene extends Scene{
     private BufferedImage image; //背景圖
     private BufferedImage image1_1;
@@ -109,7 +107,6 @@ public class ChallengeScene extends Scene{
     @Override
     public void sceneEnd() {
     }
-
     @Override
     public CommandSolver.KeyListener keyListener() {
         return new CommandSolver.KeyListener() {

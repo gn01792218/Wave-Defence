@@ -73,7 +73,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
         arrowR.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRH.png"))));
         arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
         arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
-        armyLabel=new Label(370,50,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
+        armyLabel=new Label(570,50,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
         enemyLabel=new Label(1350,380,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1300,600);
@@ -137,16 +137,15 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     }
                                     if (arrowR.isTouch(e.getX(), e.getY())) {//右箭頭-->最底是火箭
                                         AudioResourceController.getInstance().shot("/skillSound.wav");
-                                        if (actorButtons.get(0).left() < 700) {
+                                        if (actorButtons.get(0).left() < 730) {
                                             for (int i = 0; i < actorButtons.size(); i++) {//全部都不能動
                                                 actorButtons.get(i).offSetXY(500, 0);
                                             }
                                         }
-
                                     }
                                     if (arrowL.isTouch(e.getX(), e.getY())) { //左箭頭-->最底是Tank1
                                         AudioResourceController.getInstance().shot("/skillSound.wav");
-                                        if (actorButtons.get(3).left() > 700) {
+                                        if (actorButtons.get(3).left() > 830) {
                                             for (int i = 0; i < actorButtons.size(); i++) {
                                                 actorButtons.get(i).offSetXY(-500, 0);
                                             }

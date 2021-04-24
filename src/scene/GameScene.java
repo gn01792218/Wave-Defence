@@ -270,8 +270,13 @@ public class GameScene extends Scene {
                 laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
                 g.drawImage(laserUnlock, 550, 250, null);
             }else{
-                image4=ImageController.getInstance().tryGet("/Victory.png");
-                g.drawImage(image4,400,250,null);
+                if(Global.getLevel()==1) {
+                    image4 = ImageController.getInstance().tryGet("/Victory.png");
+                    g.drawImage(image4, 400, 250, null);
+                }else if(Global.getLevel()==2){
+                    image4 = ImageController.getInstance().tryGet("/Victory2.png");
+                    g.drawImage(image4, 400, 250, null);
+                }
             }
         }
         if (alliance.size() <= 0) { //死光時畫失敗畫面

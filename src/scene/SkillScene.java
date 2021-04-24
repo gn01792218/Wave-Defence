@@ -44,7 +44,6 @@ public class SkillScene extends Scene {
         }
 
     }
-
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return new CommandSolver.MouseListener() {

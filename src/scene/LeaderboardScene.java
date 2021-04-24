@@ -1,11 +1,13 @@
 package scene;
 
 import controllers.ImageController;
+import controllers.SceneController;
 import menu.Style;
 import utils.CommandSolver;
 import utils.Global;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -38,7 +40,19 @@ public class LeaderboardScene extends Scene{
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {
-        return null;
+        return new CommandSolver.MouseListener() {
+            @Override
+            public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
+               if(state!=null){
+                   switch (state){
+                       case CLICKED:
+                           if (e.getButton() == e.BUTTON1) {
+                               SceneController.getInstance().changeScene(new OpenScene());
+                           }
+                   }
+               }
+            }
+        };
     }
 
     @Override
@@ -52,9 +66,12 @@ public class LeaderboardScene extends Scene{
         g.drawImage(leaderBoard,550,150,null);
         for(int i=0;i<labelsList.size();i++){
             if(labelsList.get(i)!=null){
-                labelsList.get(i).getPaintStyle().setText("玩家: "+ Global.rankList.name.get(i)+" 波數:"+Global.rankList.score.get(i))
-                        .setTextFont(new Font("標楷體",Font.ITALIC,42));
-                labelsList.get(i).paint(g);
+                //如果大於0才畫出
+                if(Global.rankList.score.get(i)>0){
+                    labelsList.get(i).getPaintStyle().setText("玩家: "+ Global.rankList.name.get(i)+" 波數:"+Global.rankList.score.get(i))
+                            .setTextFont(new Font("標楷體",Font.ITALIC,42));
+                    labelsList.get(i).paint(g);
+                }
             }
         }
     }

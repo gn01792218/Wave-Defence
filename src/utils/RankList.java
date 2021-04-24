@@ -16,7 +16,7 @@ public class RankList implements GameKernel.PaintInterface {
     public ArrayList<Integer> score = new ArrayList<>();
     public EditText editText;
     public
-    int rankCount =5;//排行榜上限
+    int rankCount =6;//排行榜上限
 
     //Class檔案位置
     Path path = Paths.get("");
@@ -39,7 +39,7 @@ public class RankList implements GameKernel.PaintInterface {
             try{
                 BufferedWriter bw = new BufferedWriter(
                         new FileWriter(directoryName+"\\output.txt"));
-                for(int i=0;i<5;i++){
+                for(int i=0;i<rankCount;i++){
                     bw.write("non/0");
                     bw.write("\n");
                 }
@@ -62,14 +62,21 @@ public class RankList implements GameKernel.PaintInterface {
         }
     }
 
+    public boolean newRecord(int x){
+        int newScore= x;
+        int min= (int) score.get(rankCount-1);
+        return newScore>min;
+
+    }
+
     //將分數傳入newScore
-    public void newScore(int x){
+    public void newScore(int x,String playerName){
 
         int newScore= x;
-        int min= (int) score.get(rankCount-1);;
-
-        //如果新城雞高於排行榜最低紀錄則紀錄名稱
-        if(newScore>min){
+//        int min= (int) score.get(rankCount-1);
+//
+//        //如果新城雞高於排行榜最低紀錄則紀錄名稱
+//        if(newScore>min){
 
             //判斷新紀錄第幾名
             int rank =0;
@@ -84,16 +91,14 @@ public class RankList implements GameKernel.PaintInterface {
             }
 
 
-            System.out.println("Pleas type in your name");
-//            name.set(rank,sc.next());
-            name.set(rank,"");
+            name.set(rank,playerName);
             score.set(rank,newScore);
 
             //寫入新資料
             try{
                 BufferedWriter bw = new BufferedWriter(
                         new FileWriter(directoryName+"\\output.txt"));
-                for(int i=0;i<5;i++){
+                for(int i=0;i<rankCount;i++){
                     bw.write(name.get(i)+'/'+score.get(i));
                     bw.write("\n");
                 }
@@ -101,7 +106,7 @@ public class RankList implements GameKernel.PaintInterface {
             }catch (Exception e){
                 return;
             }
-        }
+//        }
     }
 
     @Override

@@ -62,7 +62,7 @@ public class ChallengeScene extends Scene{
         count=1;
         player = Player.getInstance();
         player.setMoney(600);
-        player.setHonor(250);
+        player.setHonor(2000);
 
         imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
         imageTank2= ImageController.getInstance().tryGet("/AB-Tank2-Small.png");
@@ -91,10 +91,10 @@ public class ChallengeScene extends Scene{
 
         //做軍隊
         alliance = new ArrayList<>();
-//        alliance.add(new Tank1(850,600,false));
-//        alliance.add(new Tank1(750,600,false));
-//        alliance.add(new Tank1(950,700,false));
-//        alliance.add(new Tank1(650,700,false));
+        alliance.add(new Tank1(850,600,false));
+        alliance.add(new Tank1(750,600,false));
+        alliance.add(new Tank1(950,700,false));
+        alliance.add(new Tank1(650,700,false));
         castles = new ArrayList<>();
         castles.add(new Castle(400,730));
         castles.get(0).painter().setLeft(100);
@@ -152,6 +152,69 @@ public class ChallengeScene extends Scene{
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
                             player.offsetMoney(-500);
+                        }
+                        break;
+                    case 6:
+                        if(player.getHonor()>skill.get(0).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(0).skillBufftimePlay();// 才啟動技能
+                            skill.get(0).skillExection(alliance); //執行技能~
+                            skill.get(0).setUsed(true);
+                            player.offsetHonor(-skill.get(0).getCost());
+                        }
+                        break;
+                    case 7:
+                        if(player.getHonor()>skill.get(1).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(1).skillBufftimePlay();// 才啟動技能
+                            skill.get(1).skillExection(alliance); //執行技能~
+                            skill.get(1).setUsed(true);
+                            player.offsetHonor(-skill.get(1).getCost());
+                        }
+                        break;
+                    case 8:
+                        if(player.getHonor()>skill.get(2).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(2).skillBufftimePlay();// 才啟動技能
+                            skill.get(2).skillExection(alliance); //執行技能~
+                            skill.get(2).setUsed(true);
+                            player.offsetHonor(-skill.get(2).getCost());
+                        }
+                        break;
+                    case 9:
+                        if(player.getHonor()>skill.get(3).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(3).skillBufftimePlay();// 才啟動技能
+                            skill.get(3).skillExection(alliance); //執行技能~
+                            skill.get(3).setUsed(true);
+                            player.offsetHonor(-skill.get(3).getCost());
+                        }
+                        break;
+                    case 5:
+                        if(player.getHonor()>skill.get(4).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(4).skillBufftimePlay();// 才啟動技能
+                            skill.get(4).skillExection(alliance); //執行技能~
+                            skill.get(4).setUsed(true);
+                            player.offsetHonor(-skill.get(4).getCost());
+                        }
+                        break;
+                    case 15:
+                        if(player.getHonor()>skill.get(5).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(5).skillBufftimePlay();// 才啟動技能
+                            skill.get(5).skillExection(enemys); //執行技能~
+                            skill.get(5).setUsed(true);
+                            player.offsetHonor(-skill.get(5).getCost());
+                        }
+                        break;
+                    case 16:
+                        if(player.getHonor()>skill.get(6).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(6).skillBufftimePlay();// 才啟動技能
+                            skill.get(6).skillExection(alliance); //執行技能~
+                            skill.get(6).setUsed(true);
+                            player.offsetHonor(-skill.get(6).getCost());
                         }
                         break;
                 }
@@ -283,6 +346,7 @@ public class ChallengeScene extends Scene{
                         if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
                             skill.get(i).skillReset(enemys);
                         }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
+                        skill.get(i).setUsed(false);
                     }
                 System.out.println(skill.get(i).getSkillName()+" "+skill.get(i).isInGameScene());
             }
@@ -417,6 +481,8 @@ public class ChallengeScene extends Scene{
                         .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
                 }
                 editText.isFocus();
+            }else{
+                SceneController.getInstance().changeScene(new LeaderboardScene());
             }
 //            if(editText==null) {
 //                editText = new EditText(500, 500, "請輸入姓名");

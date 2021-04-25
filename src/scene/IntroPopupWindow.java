@@ -38,8 +38,8 @@ public class IntroPopupWindow extends PopupWindow {
         button.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         image1=ImageController.getInstance().tryGet("/intro1.png");
         image2= ImageController.getInstance().tryGet("/intro2.png");
-        rule=new Label(this.getX() + 350,this.getY() + 250,new Style.StyleRect(0,0,true,null).setText("回合說明").setTextFont(new Font("標楷體",Font.BOLD,62)).setTextColor(Color.ORANGE));
-        army=new Label(this.getX() + 1050,this.getY() + 250,new Style.StyleRect(0,0,true,null).setText("軍隊部署").setTextFont(new Font("標楷體",Font.BOLD,62)).setTextColor(Color.ORANGE));
+        rule=new Label(this.getX() + 350,this.getY() + 250,new Style.StyleRect(0,0,true,null).setText("軍隊部署").setTextFont(new Font("標楷體",Font.BOLD,62)).setTextColor(Color.ORANGE));
+        army=new Label(this.getX() + 1050,this.getY() + 250,new Style.StyleRect(0,0,true,null).setText("回合說明").setTextFont(new Font("標楷體",Font.BOLD,62)).setTextColor(Color.ORANGE));
         armyIsReady=false;
     }
     @Override
@@ -79,8 +79,8 @@ public class IntroPopupWindow extends PopupWindow {
         if(armyIsReady) {  //準備好的時候畫教學提醒
             g.setColor(new Color(0xDC72696C, true));
             g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
-            g.drawImage(image1, this.getX() + 100, this.getY() + 300, null);
-            g.drawImage(image2, this.getX() + 800, this.getY() + 300, null);
+            g.drawImage(image1, this.getX() + 800, this.getY() + 300, null);
+            g.drawImage(image2, this.getX() + 100, this.getY() + 300, null);
             rule.paint(g);
             army.paint(g);
         }else{ //否則跳出警告視窗

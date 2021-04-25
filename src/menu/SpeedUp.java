@@ -71,10 +71,6 @@ public class SpeedUp extends SkillButton{
     }
     @Override
     public void update() {
-//        if (Player.getInstance().getHonor() >= this.getCost()) {  //玩家錢小於這個技能的時候也不能使用
-////            setCanUsed(true);
-//            setUsed(false);
-//        }
     }
 
 

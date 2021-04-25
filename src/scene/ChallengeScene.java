@@ -188,8 +188,8 @@ public class ChallengeScene extends Scene{
                                     }
                                 }
                                 for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
-                                    if(skill.get(i).isTouch(e.getX(),e.getY()) && skill.size()>0 && !skill.get(i).isUsed()){ //按鈕被點時 且 還有按鈕時
-                                        if(player.getHonor()>skill.get(i).getCost()){
+                                    if(skill.get(i).isTouch(e.getX(),e.getY())){ //按鈕被點時 且 還有按鈕時
+                                        if(player.getHonor()>=skill.get(i).getCost()){
                                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                                             skill.get(i).skillBufftimePlay();// 才啟動技能
                                             if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){
@@ -197,7 +197,6 @@ public class ChallengeScene extends Scene{
                                             }else{
                                                 skill.get(i).skillExection(alliance); //執行技能~
                                             }
-                                            skill.get(i).setUsed(true);
                                             player.offsetHonor(-skill.get(i).getCost());
                                         }
                                     }
@@ -274,17 +273,6 @@ public class ChallengeScene extends Scene{
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
-        //技能update
-        if(skill.size()>0) {
-            for (int i = 0; i < skill.size(); i++) {
-                    if (skill.get(i).getBuffTime().count()) {
-                        if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
-                            skill.get(i).skillReset(enemys);
-                        }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
-                    }
-                System.out.println(skill.get(i).getSkillName()+" "+skill.get(i).isInGameScene());
-            }
-        }
         if(!gameOver){
             //我軍的update
             for (int i = 0; i < alliance.size(); i++) {  //我軍自己移動

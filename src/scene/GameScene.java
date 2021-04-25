@@ -70,6 +70,7 @@ public class GameScene extends Scene {
 
         roundStart=new Button(1450,500,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
+        roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         isReady = false;
 
         starDelayCount = new Delay(1200);//倒數前20秒
@@ -178,6 +179,7 @@ public class GameScene extends Scene {
                         case CLICKED:
                             if (e.getButton() == e.BUTTON1) {
                                 if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
+                                    roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
                                     isReady = true;
                                 }
                                 if(gameComplete){
@@ -222,6 +224,10 @@ public class GameScene extends Scene {
                                     skill.get(i).setInfoVisable(true);
                                 }else{ skill.get(i).setInfoVisable(false);}
                             }
+                            if(roundStart.isTouch(e.getX(),e.getY())){
+                                roundStart.isHover(true);
+                            }else{roundStart.isHover(false);}
+                            break;
                     }
                 }
             }
@@ -270,13 +276,23 @@ public class GameScene extends Scene {
                 laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
                 g.drawImage(laserUnlock, 550, 250, null);
             }else{
-                image4=ImageController.getInstance().tryGet("/Victory.png");
-                g.drawImage(image4,400,250,null);
+                if(Global.getLevel()==1) {
+                    image4 = ImageController.getInstance().tryGet("/Victory.png");
+                    g.drawImage(image4, 400, 250, null);
+                }else if(Global.getLevel()==2){
+                    image4 = ImageController.getInstance().tryGet("/Victory2.png");
+                    g.drawImage(image4, 400, 250, null);
+                }
             }
         }
         if (alliance.size() <= 0) { //死光時畫失敗畫面
-            image2 = ImageController.getInstance().tryGet("/fail2.png");
+            if(Global.getLevel()==1){
+            image2 = ImageController.getInstance().tryGet("/fail1.png");
             g.drawImage(image2, 350, 250, null);
+            }else if(Global.getLevel()==2){
+                image2 = ImageController.getInstance().tryGet("/fail2.png");
+                g.drawImage(image2, 350, 250, null);
+            }
         }
         Player.getInstance().paint(g);
 
@@ -285,7 +301,6 @@ public class GameScene extends Scene {
     @Override
     public void update() {
         System.out.println("STEP："+step);
-
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
@@ -368,7 +383,7 @@ public class GameScene extends Scene {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
                 }
                 for (int i = 0; i < 3; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
                 }
             }
             if(count ==3){
@@ -376,7 +391,7 @@ public class GameScene extends Scene {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
                 }
                 for (int i = 0; i < 4; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
                 }
             }
             step++;

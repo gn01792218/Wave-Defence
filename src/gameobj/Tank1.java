@@ -59,13 +59,13 @@ public class Tank1 extends Actor{
                             break;
                         case DEFUP:
                             g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    this.cannonDirection.getValue() % 3 * 72, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 72 + 72, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;
                         case MOVESPEEDUP:
                             g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    this.cannonDirection.getValue() % 3 * 73, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 73 + 73, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;
                         case HPUP:
                             g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),

@@ -1,5 +1,6 @@
 package scene;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
 import menu.BackgroundType;
@@ -59,9 +60,11 @@ public class OpenScene extends Scene {
                         case CLICKED:
                             if(e.getButton()==1) {
                                 if (startButton.isTouch(e.getX(),e.getY())) { //開始遊戲按鈕
+
                                     SceneController.getInstance().changeScene(UserScene.getInstance());
                                 }
                                 if(endlessModeButton.isTouch(e.getX(),e.getY())){ //切換無盡模式
+
                                     SceneController.getInstance().changeScene(new ChallengeScene());
                                 }
                                 if(endButton.isTouch(e.getX(),e.getY())){  //離開按鈕
@@ -73,14 +76,20 @@ public class OpenScene extends Scene {
                             }
                         case MOVED:
                                 if (startButton.isTouch(e.getX(),e.getY())) { //開始遊戲按鈕的hover
+                                    AudioResourceController.getInstance().play("/metel.wav");
                                     startButton.isHover(true);
                                 }else{startButton.isHover(false);}
                                 if(endlessModeButton.isTouch(e.getX(),e.getY())){
+                                    AudioResourceController.getInstance().play("/metel.wav");
                                     endlessModeButton.isHover(true);
                                 }else{endlessModeButton.isHover(false);}
                                 if(leaderBoard.isTouch(e.getX(),e.getY())){
+                                    AudioResourceController.getInstance().play("/metel.wav");
                                     leaderBoard.isHover(true);
                                 }else{leaderBoard.isHover(false);}
+                                if(endButton.isTouch(e.getX(),e.getY())){
+                                    AudioResourceController.getInstance().play("/hover.wav");
+                                }
                     }
                 }
             }

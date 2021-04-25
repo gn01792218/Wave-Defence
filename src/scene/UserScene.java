@@ -28,6 +28,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private BufferedImage barImage;//
     private ArrayList<ActorButton> actorButtons;
     private Button roundStart;// 進入回合的按鈕
+    private Button previous;//上一頁
     private Button secrt;//機密檔案(敵軍資料)按鈕
     private Button arrowR;
     private Button arrowL;
@@ -35,7 +36,11 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private boolean arrowLUseable;
     private Label armyLabel; //購買軍隊的標籤
     private Label enemyLabel; //敵軍機密的標籤
+    private Label playerLevel;//目前在第幾關
+    private Label playerMoney;//玩家的錢
+    private Label playerHorn;//玩家榮譽
     private PopWindowScene popupWindow;//敵方資訊場景
+    private IntroPopupWindow introPopupWindow;
     //關於彈跳視窗內的按鈕位置問題:1.就算按鈕做在PopWindow內部，也必須要在外面的場景中paint出來(做出getButton方法)，否則按鈕位置會有誤差。
     private UserScene(){}
     public static UserScene getInstance(){
@@ -66,19 +71,29 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
-        secrt=new Button(1350, 480, new Style.StyleRect(250,154,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
-        secrt.setStyleHover(new Style.StyleRect(250,162,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
+        previous=new Button(350,750,new Style.StyleRect(225,150,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous.png"))));
+        previous.setStyleHover(new Style.StyleRect(225,150,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous1.png"))));
+        secrt=new Button(1450, 250, new Style.StyleRect(236,205,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-1.png"))));
+        secrt.setStyleHover(new Style.StyleRect(236,205,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/secret-2.png"))));
             actorButtons=Global.getActorButtons();//得到Global的角色按鈕
         arrowR=new Button(1370,380,new Style.StyleRect(187,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowR.png"))));
         arrowR.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowRH.png"))));
         arrowL=new Button(280,380,new Style.StyleRect(182,189,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowL.png"))));
         arrowL.setStyleHover(new Style.StyleRect(187,187,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/arrowLH.png"))));
-        armyLabel=new Label(570,50,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
-        enemyLabel=new Label(1350,380,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
+        armyLabel=new Label(665,30,new Style.StyleRect(600,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/army.png"))));
+        enemyLabel=new Label(1450,160,new Style.StyleRect(214,58,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/enemy.png"))));
+        playerLevel=new Label(1120,915,new Style.StyleRect(100,100,true,null));
+        playerMoney=new Label(1320,915,new Style.StyleRect(100,100,true,null));
+        playerHorn=new Label(1550,915,new Style.StyleRect(100,100,true,null));
         barImage=ImageController.getInstance().tryGet("/bar.png");
         popupWindow=new PopWindowScene(130,50,1300,600);
         popupWindow.setCancelable();
         popupWindow.hide();
+        introPopupWindow=Global.getIntroPopupWindow();
+        introPopupWindow.setCancelable();
+        introPopupWindow.hide();
     }
     @Override
     public void sceneEnd() {
@@ -91,6 +106,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 if (state != null) {
                     if (popupWindow.isShow()) {
                         popupWindow.mouseListener().mouseTrig(e, state, trigTime);
+                    }else if(introPopupWindow.isShow()){
+                        introPopupWindow.mouseListener().mouseTrig(e, state, trigTime); //將Popwindow的監聽丟給本地監聽
                     }else {
                         switch (state) {
                             case MOVED: //負責監聽浮現的資訊欄
@@ -103,6 +120,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     }
                                 }
                                 if (secrt.isTouch(e.getX(), e.getY())) { //機密文件
+
                                     secrt.isHover(true);
                                 } else {
                                     secrt.isHover(false);
@@ -114,21 +132,35 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     arrowL.isHover(true);
                                 }else{arrowL.isHover(false);}
                                 if(roundStart.isTouch(e.getX(),e.getY())){
+                                    if(!introPopupWindow.isArmyIsReady()) {
+//                                        AudioResourceController.getInstance().play("/hover2.wav");
+                                    }
                                     roundStart.isHover(true);
                                 }else{roundStart.isHover(false);}
+                                if(previous.isTouch(e.getX(),e.getY())){
+                                    previous.isHover(true);
+                                }else{previous.isHover(false);}
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
                                     if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
-                                        SceneController.getInstance().changeScene(new SkillScene());
+                                        AudioResourceController.getInstance().shot("/skillSound.wav");
+                                        if(introPopupWindow.isArmyIsReady()){ //準備好才換場
+                                            SceneController.getInstance().changeScene(new SkillScene());
+                                        }else { //否則叫他買軍隊
+                                            introPopupWindow.sceneBegin();//記得初始化場景，否則會nullPoint!
+                                            introPopupWindow.show();
+                                        }
+                                    }
+                                    if(previous.isTouch(e.getX(),e.getY())){
+                                        AudioResourceController.getInstance().shot("/buttonSound2.wav");
+                                        SceneController.getInstance().changeScene(new OpenScene());
                                     }
                                     for (int i = 0; i < actorButtons.size(); i++) { //2.角色購買
                                         if (actorButtons.get(i).isTouch(e.getX(), e.getY())) {
-                                            System.out.println("點到了!!!");
                                             //購買軍隊
                                             if (Player.getInstance().getMoney() >= actorButtons.get(i).getCostMoney()
                                                     && actorButtons.get(i).left() >= 830 && actorButtons.get(i).right() <= 1330 && actorButtons.get(i).isUnLocked()) { //金錢大於0才可以
-                                                System.out.println("買到了!!!");
                                                 actorButtons.get(i).offSetNumber(1); //點一下增加一單位
                                                 AudioResourceController.getInstance().shot("/skillSound.wav");
                                                 Player.getInstance().offsetMoney(-actorButtons.get(i).getCostMoney()); //扣錢
@@ -181,8 +213,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
     public void paint(Graphics g) {
         g.drawImage(backGround,160,0,null);
         g.drawImage(backCover,830,180,null);
-        Player.getInstance().paint(g); //畫出 玩家金錢和榮譽
         roundStart.paint(g); //畫出開始回合的按鈕
+        previous.paint(g);
         secrt.paint(g);//化機密檔案
         armyLabel.paint(g);
         enemyLabel.paint(g);
@@ -203,8 +235,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
             popupWindow.getArrowR().paint(g);
             popupWindow.getArrowL().paint(g);
         }
-
-
 
 //        畫菜籃
         armyCount =0;
@@ -228,7 +258,17 @@ public class UserScene extends Scene{ //改成單例模式!!!
             g.drawString(actorButtons.get(3).getNumber()+"",350+armyCount*200,700);
             armyCount++;
         }
-
+        //畫玩家金錢和榮譽
+        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
+        playerLevel.paint(g);
+        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
+        playerMoney.paint(g);
+        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
+        playerHorn.paint(g);
+        //警告標語
+        if(introPopupWindow.isShow()){
+            introPopupWindow.paint(g);
+        }
 
     }
     @Override
@@ -239,5 +279,17 @@ public class UserScene extends Scene{ //改成單例模式!!!
         if(actorButtons.get(3).right()>=1330 && actorButtons.get(3).right()<=2330) {
             arrowRUseable = true;
         }else{arrowRUseable=false;}
+        int count=0;
+        for(int i=0;i<Global.getActorButtons().size();i++){
+            if(Global.getActorButtons().get(i).getNumber()>0){
+                System.out.println(Global.getActorButtons().get(0).getNumber());
+                introPopupWindow.setArmyIsReady(true);
+                break;
+            }
+            count++;
+        }
+        if(count>=Global.getActorButtons().size()){ //全部小於0時就是沒準備好
+            introPopupWindow.setArmyIsReady(false);
+        }
     }
 }

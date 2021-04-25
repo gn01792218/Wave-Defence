@@ -4,8 +4,6 @@ import controllers.ImageController;
 import controllers.SceneController;
 import gameobj.*;
 import menu.*;
-import menu.Button;
-import menu.Label;
 import menu.impl.MouseTriggerImpl;
 import utils.*;
 
@@ -13,7 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 public class ChallengeScene extends Scene{
     private BufferedImage image; //背景圖
     private BufferedImage image1_1;
@@ -52,7 +50,7 @@ public class ChallengeScene extends Scene{
 //        test = new EditText(0,0,"請輸入文字",new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))));
         image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
-        image2 = ImageController.getInstance().tryGet("/fail2.png");
+        image2 = ImageController.getInstance().tryGet("/fail1.png");
         isFlagUsable = true;
         gameBegin=new Delay(300);
         gameOver=false;
@@ -253,8 +251,8 @@ public class ChallengeScene extends Scene{
                                     }
                                 }
                                 for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
-                                    if(skill.get(i).isTouch(e.getX(),e.getY()) && skill.size()>0 && !skill.get(i).isUsed()){ //按鈕被點時 且 還有按鈕時
-                                        if(player.getHonor()>skill.get(i).getCost()){
+                                    if(skill.get(i).isTouch(e.getX(),e.getY())){ //按鈕被點時 且 還有按鈕時
+                                        if(player.getHonor()>=skill.get(i).getCost()){
                                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                                             skill.get(i).skillBufftimePlay();// 才啟動技能
                                             if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){
@@ -262,7 +260,6 @@ public class ChallengeScene extends Scene{
                                             }else{
                                                 skill.get(i).skillExection(alliance); //執行技能~
                                             }
-                                            skill.get(i).setUsed(true);
                                             player.offsetHonor(-skill.get(i).getCost());
                                         }
                                     }
@@ -346,7 +343,6 @@ public class ChallengeScene extends Scene{
                         if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
                             skill.get(i).skillReset(enemys);
                         }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
-                        skill.get(i).setUsed(false);
                     }
                 System.out.println(skill.get(i).getSkillName()+" "+skill.get(i).isInGameScene());
             }

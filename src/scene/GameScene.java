@@ -159,11 +159,10 @@ public class GameScene extends Scene {
                         alliance.add(new LaserCar(Global.BOUNDARY_X1+j*100,Global.BOUNDARY_Y2-90*i,false));
                         break;
                     case ROCKET:
-                        alliance.add(new Rocket(Global.BOUNDARY_X1+j*120,Global.BOUNDARY_Y2-90*i,false));
+                        alliance.add(new Rocket(Global.BOUNDARY_X1+50+j*100,Global.BOUNDARY_Y2-90*i,false));
                 }
             }
         }
-        System.out.println(skill.size());
     }
     @Override
     public void sceneEnd() {
@@ -279,13 +278,12 @@ public class GameScene extends Scene {
                 laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
                 g.drawImage(laserUnlock, 550, 250, null);
             }else{
-                if(Global.getLevel()==1) {
+                if(Global.getLevel()==2) {
+                    System.out.println("畫第一章場景");
                     image4 = ImageController.getInstance().tryGet("/Victory.png");
                     g.drawImage(image4, 400, 250, null);
-                }else if(Global.getLevel()==2){
-                    image4 = ImageController.getInstance().tryGet("/Victory2.png");
-                    g.drawImage(image4, 400, 250, null);
-                }else if(Global.getLevel()==3){
+                }else if(Global.getLevel()>3){
+                    System.out.println("畫第二章場幾");
                     image4 = ImageController.getInstance().tryGet("/Victory2.png");
                     g.drawImage(image4, 400, 250, null);
                 }

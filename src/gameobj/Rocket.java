@@ -101,7 +101,6 @@ public class Rocket extends Actor{
                     move(targetX, targetY, alliance);
                 }
             } else {
-
                 //回到自己原本的位置並導正砲管
                 if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
                     System.out.println("111");

@@ -54,8 +54,8 @@ public class Tank1 extends Actor{
                     switch (skillName) {
                         case ATTACKUP:
                             g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    this.cannonDirection.getValue() % 3 * 73, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 73 + 73, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;
                         case DEFUP:
                             g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
@@ -69,8 +69,8 @@ public class Tank1 extends Actor{
                             break;
                         case HPUP:
                             g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                    this.cannonDirection.getValue() % 3 * 73, cannonDirection.getValue() / 3 * 90,
+                                    this.cannonDirection.getValue() % 3 * 73 + 73, cannonDirection.getValue() / 3 * 90 + 90, null);
                             break;
                         case ATKSPEEDUP:
                             System.out.println("畫技能7");

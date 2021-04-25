@@ -285,6 +285,9 @@ public class GameScene extends Scene {
                 }else if(Global.getLevel()==2){
                     image4 = ImageController.getInstance().tryGet("/Victory2.png");
                     g.drawImage(image4, 400, 250, null);
+                }else if(Global.getLevel()==3){
+                    image4 = ImageController.getInstance().tryGet("/Victory2.png");
+                    g.drawImage(image4, 400, 250, null);
                 }
             }
         }
@@ -339,6 +342,7 @@ public class GameScene extends Scene {
             if (!enemys.get(i).isAlive()) {
                 enemys.remove(i);
                 Player.getInstance().offsetMoney(+100); //殺一隻敵軍100元
+                Player.getInstance().offsetHonor(+100); //殺一隻敵軍榮譽+100
                 break;
             }
         }
@@ -348,7 +352,6 @@ public class GameScene extends Scene {
             changePicDelay.loop();
             changePic=50;
         }
-
 
         if(step ==1 && count<3){
 //            AudioResourceController.getInstance().play("/boomy-sizzling.wav");
@@ -405,10 +408,10 @@ public class GameScene extends Scene {
             if(count==1){
                 //做敵軍第一波
                 for (int i = 0; i < 6; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < 3; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < Global.random(3, 5); i++) {
                     enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
@@ -416,10 +419,10 @@ public class GameScene extends Scene {
             }
             if (count == 2) {
                 for (int i = 0; i < 8; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < 4; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < Global.random(5, 7); i++) {
                     enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
@@ -430,16 +433,58 @@ public class GameScene extends Scene {
             }
             if(count ==3){
                 for (int i = 0; i < 12; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < 10; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < Global.random(7, 9); i++) {
                     enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
                 }
                 for (int i = 0; i < Global.random(6, 8); i++) {
                     enemys.add(new Enemy4(Global.random(400, 1200), Global.random(300, 450), true));
+                }
+            }
+            step++;
+        }
+        //第三關(魔王關)
+        //第二關
+        if (Global.getLevel()==3 && step==2) {//敵軍可 以移動時
+            if(count==1){
+                //做敵軍第一波
+                for (int i = 0; i < 6; i++) {
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
+                }
+                for (int i = 0; i < 3; i++) {
+                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(250, 350), true));
+                }
+                for (int i = 0; i < Global.random(1, 3); i++) {
+                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                }
+            }
+            if (count == 2) {
+                for (int i = 0; i < 8; i++) {
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
+                }
+                for (int i = 0; i < 4; i++) {
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
+                }
+                for (int i = 0; i < Global.random(5, 7); i++) {
+                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                }
+                for (int i = 0; i < Global.random(3, 5); i++) {
+                    enemys.add(new Enemy4(Global.random(400, 1200), Global.random(300, 450), true));
+                }
+            }
+            if(count ==3){
+                for (int i = 0; i < 5; i++) {
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
+                }
+                for (int i = 0; i < Global.random(2, 3); i++) {
+                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                }
+                for (int i = 0; i < Global.random(1, 2); i++) {
+                    enemys.add(new Boss(Global.random(400, 1200), Global.random(300, 450), true));
                 }
             }
             step++;

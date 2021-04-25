@@ -291,11 +291,9 @@ public class ChallengeScene extends Scene{
 
     @Override
     public void paint(Graphics g) {
-
         g.drawImage(image, 0, -150, null);
         player.paint(g);
         g.drawString("WAVE："+count,50,100);
-
         g.drawImage(imageTank1, 1700, 410, null);
         g.drawImage(imageTank2, 1700,560 , null);
         g.drawImage(imageLaserCar, 1700, 680, null);
@@ -348,7 +346,6 @@ public class ChallengeScene extends Scene{
     public void update() {
 
         //技能update
-
         for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).getBuffTime().count()) {
                     if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!

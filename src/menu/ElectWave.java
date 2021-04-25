@@ -33,6 +33,7 @@ public class ElectWave extends SkillButton{
         for(int i=0;i<actors.size();i++){
             actors.get(i).setSkillName(this.getSkillName());
             actors.get(i).setOnDebuff(true);
+            System.out.println(actors.get(i).getType()+"停止移動");
         }
         this.setCanUsed(false);
     }
@@ -40,8 +41,9 @@ public class ElectWave extends SkillButton{
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
-            if(actors.get(i).isOnBuff()) {
+            if(actors.get(i).isOnDebuff()) {
                 actors.get(i).setOnDebuff(false);
+                System.out.println(actors.get(i).getType()+"恢復移動");
             }
         }
         setUsed(true); //被施放過了

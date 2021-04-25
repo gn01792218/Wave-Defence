@@ -68,16 +68,15 @@ public class Rocket extends Actor{
     }
     @Override
     public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
-        if (atkSpeed.isPause()) {
-            atkSpeed.loop();
-        }
+        Rect target = null;
+
         if (actors.size() > 0) {
             //先一一算出最短距離，存進數字陣列中找出最近的敵人 = target
             float a;
             float b;
             float d;
             float mind = Integer.MAX_VALUE;
-            Rect target = null;
+
             for (int i = 0; i < actors.size(); i++) {
                 a = Math.abs(this.painter().centerX() - actors.get(i).painter().centerX());
                 b = Math.abs(this.painter().centerY() - actors.get(i).painter().centerY());
@@ -89,7 +88,9 @@ public class Rocket extends Actor{
                     }
                 }
             }
+        }
             if (target != null) {
+                System.out.println("000");
                 //移動至攻擊範圍內則開火
                 float targetX = target.centerX();
                 float targetY = target.centerY();
@@ -103,16 +104,16 @@ public class Rocket extends Actor{
 
                 //回到自己原本的位置並導正砲管
                 if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
+                    System.out.println("111");
                     if (atkSpeed.getCount() < 119) {
                         atkSpeed.count();
                     }
                 } else {
+                    System.out.println(222);
                     move(flag.collider().centerX(), flag.collider().centerY(), alliance);
                 }
 //                this.cannonDirection = CANNON_DIRECTION.FrontMiddle;
             }
-        }
-
     }
     //開火
     @Override

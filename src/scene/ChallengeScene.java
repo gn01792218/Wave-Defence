@@ -40,7 +40,6 @@ public class ChallengeScene extends Scene{
     private BufferedImage imageTank2;
     private BufferedImage imageLaserCar;
     private BufferedImage imageRocket;
-    private RankList rankList;
     private EditText editText;
     private String name;//存名字的
 
@@ -60,7 +59,7 @@ public class ChallengeScene extends Scene{
         count=1;
         player = Player.getInstance();
         player.setMoney(600);
-        player.setHonor(2000);
+        player.setHonor(300);
 
         imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
         imageTank2= ImageController.getInstance().tryGet("/AB-Tank2-Small.png");

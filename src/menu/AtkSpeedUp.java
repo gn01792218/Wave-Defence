@@ -52,10 +52,12 @@ public class AtkSpeedUp extends SkillButton {
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         for (int i = 0; i < actors.size(); i++) {
-            actors.get(i).setAtkSpeed(new Delay(actors.get(i).getAtkSpeedLimit()));
-            actors.get(i).getAtkSpeed().loop();//啟動循環攻擊
-            actors.get(i).setOnBuff(false); //標示為非Buff狀態
-            System.out.println("攻擊速度回復為" + actors.get(i).getAtkSpeed().getCountLimit());
+            if(actors.get(i).isOnBuff()) {
+                actors.get(i).setAtkSpeed(new Delay(actors.get(i).getAtkSpeedLimit()));
+                actors.get(i).getAtkSpeed().loop();//啟動循環攻擊
+                actors.get(i).setOnBuff(false); //標示為非Buff狀態
+                System.out.println("攻擊速度回復為" + actors.get(i).getAtkSpeed().getCountLimit());
+            }
         }
         setUsed(true); //被施放過了
         if (Player.getInstance().getHonor() >= this.getCost()) {

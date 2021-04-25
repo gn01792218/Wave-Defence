@@ -24,11 +24,13 @@ public class HpUp extends SkillButton{
     @Override
     public void skillExection(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
-            System.out.println("坦克血"+actors.get(i).getHp());
-            actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
-            actors.get(i).setHp(actors.get(i).getHpLimit()); //血量全滿(直接設成血量上限)
-            actors.get(i).setOnBuff(true); //標示為Buff狀態
-            System.out.println("坦克血加滿~~~"+actors.get(i).getHp());
+            if(actors.get(i).isOnBuff()) {
+                System.out.println("坦克血" + actors.get(i).getHp());
+                actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
+                actors.get(i).setHp(actors.get(i).getHpLimit()); //血量全滿(直接設成血量上限)
+                actors.get(i).setOnBuff(true); //標示為Buff狀態
+                System.out.println("坦克血加滿~~~" + actors.get(i).getHp());
+            }
         }
     }
     @Override

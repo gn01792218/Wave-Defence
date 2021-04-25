@@ -41,10 +41,12 @@ public class AttackUp extends SkillButton {
     @Override
     public void skillReset(ArrayList<Actor> actors) {   //時間到施放完畢要記得reSet技能
         for(int i=0;i<actors.size();i++){
-            System.out.println("攻擊力目前為"+actors.get(i).getAtk());
-            actors.get(i).offsetAtk(-atk*atkEffect); //把atk回復原廠設定 公式:(625-625*0.4=375)要減去的值
-            actors.get(i).setOnBuff(false); //標示為非Buff狀態
-            System.out.println("攻擊力回復原廠設定"+actors.get(i).getAtk());
+            if(actors.get(i).isOnBuff()) {
+                System.out.println("攻擊力目前為" + actors.get(i).getAtk());
+                actors.get(i).offsetAtk(-atk * atkEffect); //把atk回復原廠設定 公式:(625-625*0.4=375)要減去的值
+                actors.get(i).setOnBuff(false); //標示為非Buff狀態
+                System.out.println("攻擊力回復原廠設定" + actors.get(i).getAtk());
+            }
         }
         setUsed(true); //被施放過了
         System.out.println("技能: "+this.getSkillName()+"施放結束");

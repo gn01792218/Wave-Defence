@@ -39,7 +39,9 @@ public class ElectWave extends SkillButton{
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
-            actors.get(i).setOnDebuff(false);
+            if(actors.get(i).isOnBuff()) {
+                actors.get(i).setOnDebuff(false);
+            }
         }
         setUsed(true); //被施放過了
         if (Player.getInstance().getHonor() >= this.getCost()) {

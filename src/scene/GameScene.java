@@ -270,11 +270,15 @@ public class GameScene extends Scene {
         //當獲勝的時候
         if(gameComplete){
             if(completeStep==3){
-                SceneController.getInstance().changeScene(UserScene.getInstance());
-            }else if(completeStep==2){
+                if(Global.getLevel()<=3) {
+                    SceneController.getInstance().changeScene(UserScene.getInstance());
+                }else if(Global.getLevel()>3){
+                    SceneController.getInstance().changeScene(new OpenScene()); //回到開場
+                }
+            }else if(completeStep==2 && Global.getLevel()<=2){
                 rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
                 g.drawImage(rocketUnlock, 550, 250, null);
-            }else if(completeStep==1){
+            }else if(completeStep==1 && Global.getLevel()<=2){
                 laserUnlock = ImageController.getInstance().tryGet("/AALaserCar_UnLock.png");
                 g.drawImage(laserUnlock, 550, 250, null);
             }else{
@@ -282,7 +286,7 @@ public class GameScene extends Scene {
                     System.out.println("畫第一章場景");
                     image4 = ImageController.getInstance().tryGet("/Victory.png");
                     g.drawImage(image4, 400, 250, null);
-                }else if(Global.getLevel()>3){
+                }else if(Global.getLevel()>=3){
                     System.out.println("畫第二章場幾");
                     image4 = ImageController.getInstance().tryGet("/Victory2.png");
                     g.drawImage(image4, 400, 250, null);
@@ -379,23 +383,23 @@ public class GameScene extends Scene {
             if(count==1){
                 //做敵軍第一波
                 for (int i = 0; i <  Global.random(5, 7); i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(350, 400), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(450, 400), true));
                 }
             }
             if (count == 2) {
                 for (int i = 0; i < 6; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 450), true));
                 }
                 for (int i = 0; i < 3; i++) {
-                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(400, 400), true));
                 }
             }
             if(count ==3){
                 for (int i = 0; i < 8; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
                 for (int i = 0; i < 4; i++) {
-                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(400, 350), true));
                 }
             }
             step++;
@@ -406,41 +410,41 @@ public class GameScene extends Scene {
             if(count==1){
                 //做敵軍第一波
                 for (int i = 0; i < 6; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
                 for (int i = 0; i < 3; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(400, 350), true));
                 }
                 for (int i = 0; i < Global.random(3, 5); i++) {
-                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy3(Global.random(400, 1100), Global.random(400, 450), true));
                 }
             }
             if (count == 2) {
                 for (int i = 0; i < 8; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
                 for (int i = 0; i < 4; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(400, 350), true));
                 }
                 for (int i = 0; i < Global.random(5, 7); i++) {
-                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy3(Global.random(400, 1100), Global.random(400, 450), true));
                 }
                 for (int i = 0; i < Global.random(3, 5); i++) {
-                    enemys.add(new Enemy4(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy4(Global.random(400, 1100), Global.random(400, 450), true));
                 }
             }
             if(count ==3){
                 for (int i = 0; i < 12; i++) {
-                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
+                    enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
                 for (int i = 0; i < 10; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
+                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(400, 350), true));
                 }
                 for (int i = 0; i < Global.random(7, 9); i++) {
-                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy3(Global.random(400, 1100), Global.random(400, 450), true));
                 }
                 for (int i = 0; i < Global.random(6, 8); i++) {
-                    enemys.add(new Enemy4(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy4(Global.random(400, 1100), Global.random(400, 450), true));
                 }
             }
             step++;
@@ -457,7 +461,7 @@ public class GameScene extends Scene {
                     enemys.add(new Enemy4(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < Global.random(1, 3); i++) {
-                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy3(Global.random(400, 1100), Global.random(300, 450), true));
                 }
             }
             if (count == 2) {
@@ -468,10 +472,10 @@ public class GameScene extends Scene {
                     enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < Global.random(5, 7); i++) {
-                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy3(Global.random(400, 1100), Global.random(300, 450), true));
                 }
                 for (int i = 0; i < Global.random(3, 5); i++) {
-                    enemys.add(new Enemy4(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy4(Global.random(400, 1100), Global.random(300, 450), true));
                 }
             }
             if(count ==3){
@@ -479,10 +483,10 @@ public class GameScene extends Scene {
                     enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < Global.random(2, 3); i++) {
-                    enemys.add(new Enemy3(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Enemy3(Global.random(400, 1100), Global.random(300, 450), true));
                 }
                 for (int i = 0; i < Global.random(1, 2); i++) {
-                    enemys.add(new Boss(Global.random(400, 1200), Global.random(300, 450), true));
+                    enemys.add(new Boss(Global.random(400, 1100), Global.random(300, 450), true));
                 }
             }
             step++;

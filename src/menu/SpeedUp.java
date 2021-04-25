@@ -34,6 +34,7 @@ public class SpeedUp extends SkillButton{
             actors.get(i).setOnBuff(true); //標示為Buff狀態
             System.out.println("第"+(i+1)+"台移動加到"+actors.get(i).getSpeed());
         }
+        this.setCanUsed(false);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class SpeedUp extends SkillButton{
     @Override
     public void paint(Graphics g){
         if(info!=null && infoVisable){info.paint(g);}  //招式資訊
-        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || !canUsed) {
             if(isInGameScene()){
                 if (super.getPaintStyle() != null) { //畫原本的圖
                     super.getPaintStyle().paintComponent(g, super.getX(), super.getY());

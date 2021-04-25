@@ -67,7 +67,7 @@ public class Global {
          int SkillButtonDis = 320;
          int skillButtonHeight = 355;
          int skillButtonLeft=420;
-        if (skillButtons == null) {
+
             //技能按鈕
             skillButtons = new ArrayList<>();
             SkillButton attackSkillButton = new AttackUp(skillButtonLeft, skillButtonHeight, new Style.StyleRect(skillButtonUnit, skillButtonUnit, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/SB-attack.gif"))), Global.SkillName.ATTACKUP, 300);
@@ -84,7 +84,7 @@ public class Global {
             skillButtons.add(reinforcement);
             skillButtons.add(electWave);
             skillButtons.add(atkSpeedUp);
-        }
+
         return skillButtons;
     }
 

@@ -37,6 +37,7 @@ public class AttackUp extends SkillButton {
             actors.get(i).setOnBuff(true); //標示為Buff狀態
             System.out.println("第"+(i+1)+"台增加攻擊力為"+actors.get(i).getAtk()); //測試用，外面要記得打印攻擊力測試時間內的攻擊力
         }
+        this.setCanUsed(false);
     }
     @Override
     public void skillReset(ArrayList<Actor> actors) {   //時間到施放完畢要記得reSet技能
@@ -58,7 +59,7 @@ public class AttackUp extends SkillButton {
     @Override
     public void paint(Graphics g){
         if(info!=null && infoVisable){info.paint(g);}  //招式資訊
-        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || !canUsed) {
             if(isInGameScene()){
                 if (super.getPaintStyle() != null) { //畫原本的圖
                     super.getPaintStyle().paintComponent(g, super.getX(), super.getY());

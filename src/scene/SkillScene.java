@@ -36,7 +36,7 @@ public class SkillScene extends Scene {
         playerMoney=new Label(1320,915,new Style.StyleRect(100,100,true,null));
         playerHorn=new Label(1550,915,new Style.StyleRect(100,100,true,null));
         skillButtons = new ArrayList<>();//得到Global的技能按鈕
-//        skillButtons.add(new AtkSpeedUp());
+        skillButtons=Global.getSkillButtons();
         for(int i=0;i<skillButtons.size();i++){
             skillButtons.get(i).setInSkillScene(true);
         }

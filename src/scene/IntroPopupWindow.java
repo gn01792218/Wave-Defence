@@ -20,7 +20,9 @@ public class IntroPopupWindow extends PopupWindow {
     private Button button;//確認按鈕
     private BufferedImage image1;//教學圖片1
     private BufferedImage image2;//教學圖片
+    private BufferedImage warningimage;//警告標語
     private boolean isPassed; //已經被看過了
+    private boolean armyIsReady;//已經購買>0數量的軍隊
 
     public IntroPopupWindow(int x, int y, int width, int height){
         super(x,y,width,height);
@@ -33,6 +35,7 @@ public class IntroPopupWindow extends PopupWindow {
         button.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         image1=ImageController.getInstance().tryGet("/intro1.png");
         image2= ImageController.getInstance().tryGet("/intro2.png");
+        armyIsReady=false;
     }
     @Override
     public void sceneEnd() {
@@ -43,6 +46,14 @@ public class IntroPopupWindow extends PopupWindow {
 
     public Button getButton() {
         return button;
+    }
+
+    public boolean isArmyIsReady() {
+        return armyIsReady;
+    }
+
+    public void setArmyIsReady(boolean armyIsReady) {
+        this.armyIsReady = armyIsReady;
     }
 
     public void setPassed(boolean passed) {
@@ -60,10 +71,17 @@ public class IntroPopupWindow extends PopupWindow {
 
     @Override
     public void paintWindow(Graphics g) {
-        g.setColor(new Color(0xDC72696C, true));
-        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
-        g.drawImage(image1,this.getX()+100,this.getY()+300,null);
-        g.drawImage(image2,this.getX()+800,this.getY()+300,null);
+        if(armyIsReady) {  //準備好的時候畫教學提醒
+            g.setColor(new Color(0xDC72696C, true));
+            g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
+            g.drawImage(image1, this.getX() + 100, this.getY() + 300, null);
+            g.drawImage(image2, this.getX() + 800, this.getY() + 300, null);
+        }else{ //否則跳出警告視窗
+            if(warningimage==null){
+                warningimage=ImageController.getInstance().tryGet("/warning.png");
+            }
+            g.drawImage(warningimage,getX()+350,getY(),null);
+        }
     }
     @Override
     public void update() {

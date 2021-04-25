@@ -383,7 +383,7 @@ public class GameScene extends Scene {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
                 }
                 for (int i = 0; i < 3; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
                 }
             }
             if(count ==3){
@@ -391,7 +391,7 @@ public class GameScene extends Scene {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(200, 350), true));
                 }
                 for (int i = 0; i < 4; i++) {
-                    enemys.add(new Enemy2(Global.random(400, 1000), Global.random(200, 350), true));
+                    enemys.add(new Enemy4(Global.random(400, 1000), Global.random(200, 350), true));
                 }
             }
             step++;

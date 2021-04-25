@@ -22,6 +22,7 @@ public class SkillScene extends Scene {
     private BufferedImage backGround;//背景圖
     private ArrayList<SkillButton> skillButtons;
     private Button roundStart;// 進入回合的按鈕
+    private Button previous;//上一頁
     private IntroPopupWindow introPopupWindow;//進入回合前的教學視窗
     private Label skillLabel; //購買技能的標籤
     private BufferedImage barImage;//
@@ -41,6 +42,10 @@ public class SkillScene extends Scene {
         roundStart=new Button(1350,650,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
+        previous=new Button(50,750,new Style.StyleRect(225,150,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous.png"))));
+        previous.setStyleHover(new Style.StyleRect(225,150,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous1.png"))));
         introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
         introPopupWindow.hide();
@@ -53,7 +58,6 @@ public class SkillScene extends Scene {
             skillButtons.get(i).getPaintStyle().setWidth(64);
             skillButtons.get(i).getPaintStyle().setHeight(64);
         }
-
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {
@@ -72,6 +76,10 @@ public class SkillScene extends Scene {
                                 if(roundStart.isTouch(e.getX(),e.getY())){
                                     roundStart.isHover(true);
                                 }else{roundStart.isHover(false);}
+                                if(previous.isTouch(e.getX(),e.getY())){
+                                    AudioResourceController.getInstance().play("/hover.wav");
+                                    previous.isHover(true);
+                                }else{previous.isHover(false);}
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
@@ -81,6 +89,10 @@ public class SkillScene extends Scene {
                                         introPopupWindow.show();
                                     } else if (roundStart.isTouch(e.getX(), e.getY()) && introPopupWindow.isPassed()) { //第二次之後 直接換場
                                         SceneController.getInstance().changeScene(GameScene.getInstance());
+                                    }
+                                    if(previous.isTouch(e.getX(),e.getY())){
+                                        AudioResourceController.getInstance().shot("/buttonSound2.wav");
+                                        SceneController.getInstance().changeScene(UserScene.getInstance());
                                     }
                                     for (int i = 0; i < skillButtons.size(); i++) {  //3.技能購買
                                         if (skillButtons.get(i).isTouch(e.getX(), e.getY()) &&
@@ -128,6 +140,7 @@ public class SkillScene extends Scene {
             skillButtons.get(i).paint(g);
         }
         roundStart.paint(g); //畫出開始回合的按鈕
+        previous.paint(g);
         skillLabel.paint(g);
         if(introPopupWindow.isShow() && !introPopupWindow.isPassed()){
             introPopupWindow.paint(g);
@@ -146,7 +159,14 @@ public class SkillScene extends Scene {
 
     }
     @Override
-    public void update() {
+    public void update() { //第二次近來沒有進update
+        for(int i=0;i<Global.getActorButtons().size();i++){
+            if(Global.getActorButtons().get(i).getNumber()>0){
+                System.out.println(Global.getActorButtons().get(0).getNumber());
+                introPopupWindow.setArmyIsReady(true);
+                System.out.println(introPopupWindow.isArmyIsReady());
+            }
+        }
 
     }
 }

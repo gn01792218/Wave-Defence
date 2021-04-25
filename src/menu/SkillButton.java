@@ -32,8 +32,14 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
         this.cost=cost;
         this.isSelect=false;
         this.isUsed=false; //還沒被施放
-        info=new Button(this.left()+10,this.bottom()+50,new Style.StyleRect(100,60,
-                null).setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        if(!isInSkillScene){
+            info=new Button(this.left()+10,this.bottom(),new Style.StyleRect(100,60,
+                    null).setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        }else{
+            info=new Button(this.left()+10,this.bottom()+50,new Style.StyleRect(100,60,
+                    null).setTextFont(new Font("標楷體",Font.ITALIC,22)));
+        }
+
     }
 
     public boolean getCanUsed() {

@@ -30,7 +30,7 @@ public class SpeedUp extends SkillButton{
         for (int i = 0; i < actors.size(); i++) {
             System.out.println("第"+(i+1)+"台原始移動為"+actors.get(i).getSpeed());
             actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
-            actors.get(i).offsetSpeed(5); //本身移動速度+5
+            actors.get(i).offsetSpeed(speedEffect); //本身移動速度+5
             actors.get(i).setOnBuff(true); //標示為Buff狀態
             System.out.println("第"+(i+1)+"台移動加到"+actors.get(i).getSpeed());
         }

@@ -55,7 +55,7 @@ public class Reinforcements extends SkillButton{
                     System.out.println("呼叫"+actor2.getType());
                     break;
                 case LASERCAR:
-                    Actor actor3= new LaserCar(600, 700, false);
+                    Actor actor3= new LaserCar(600+i*100, 700, false);
 //                    actor3.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor3.setReinforcement(true);  //記得將ReinforceMent設成true
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
@@ -119,6 +119,9 @@ public class Reinforcements extends SkillButton{
         }
         if(label!=null  && infoVisable && !isInGameScene){
             label.paint(g);
+        }
+        if(isInSkillScene){
+            info.getPaintStyle().setHeight(200);
         }
     }
     @Override

@@ -76,6 +76,9 @@ public class ElectWave extends SkillButton{
         if(label!=null  && infoVisable && !isInGameScene){
             label.paint(g);
         }
+        if(isInSkillScene){
+            info.getPaintStyle().setHeight(200);
+        }
     }
     @Override
     public void update() {

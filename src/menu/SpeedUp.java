@@ -71,6 +71,9 @@ public class SpeedUp extends SkillButton{
         if(label!=null  && infoVisable && !isInGameScene){ //花費顯示
             label.paint(g);
         }
+        if(isInSkillScene){
+            info.getPaintStyle().setHeight(200);
+        }
     }
     @Override
     public void update() {

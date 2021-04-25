@@ -153,24 +153,6 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 6:
-                        if(player.getHonor()>skill.get(0).getCost()){
-                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
-                            skill.get(0).skillBufftimePlay();// 才啟動技能
-                            skill.get(0).skillExection(alliance); //執行技能~
-                            skill.get(0).setUsed(true);
-                            player.offsetHonor(-skill.get(0).getCost());
-                        }
-                        break;
-                    case 7:
-                        if(player.getHonor()>skill.get(1).getCost()){
-                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
-                            skill.get(1).skillBufftimePlay();// 才啟動技能
-                            skill.get(1).skillExection(alliance); //執行技能~
-                            skill.get(1).setUsed(true);
-                            player.offsetHonor(-skill.get(1).getCost());
-                        }
-                        break;
-                    case 8:
                         if(player.getHonor()>skill.get(2).getCost()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(2).skillBufftimePlay();// 才啟動技能
@@ -179,13 +161,31 @@ public class ChallengeScene extends Scene{
                             player.offsetHonor(-skill.get(2).getCost());
                         }
                         break;
-                    case 9:
+                    case 7:
                         if(player.getHonor()>skill.get(3).getCost()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(3).skillBufftimePlay();// 才啟動技能
                             skill.get(3).skillExection(alliance); //執行技能~
                             skill.get(3).setUsed(true);
                             player.offsetHonor(-skill.get(3).getCost());
+                        }
+                        break;
+                    case 8:
+                        if(player.getHonor()>skill.get(0).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(0).skillBufftimePlay();// 才啟動技能
+                            skill.get(0).skillExection(alliance); //執行技能~
+                            skill.get(0).setUsed(true);
+                            player.offsetHonor(-skill.get(0).getCost());
+                        }
+                        break;
+                    case 9:
+                        if(player.getHonor()>skill.get(1).getCost()){
+                            AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
+                            skill.get(1).skillBufftimePlay();// 才啟動技能
+                            skill.get(1).skillExection(alliance); //執行技能~
+                            skill.get(1).setUsed(true);
+                            player.offsetHonor(-skill.get(1).getCost());
                         }
                         break;
                     case 5:

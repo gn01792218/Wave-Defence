@@ -43,7 +43,7 @@ public class SkillScene extends Scene {
         roundStart=new Button(1350,650,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
-        previous=new Button(50,750,new Style.StyleRect(225,150,
+        previous=new Button(300,20,new Style.StyleRect(225,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous.png"))));
         previous.setStyleHover(new Style.StyleRect(225,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous1.png"))));

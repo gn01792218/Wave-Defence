@@ -71,7 +71,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
-        previous=new Button(350,750,new Style.StyleRect(225,150,
+        previous=new Button(300,20,new Style.StyleRect(225,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous.png"))));
         previous.setStyleHover(new Style.StyleRect(225,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/previous1.png"))));

@@ -161,6 +161,7 @@ public class GameScene extends Scene {
                 }
             }
         }
+        System.out.println(skill.size());
     }
     @Override
     public void sceneEnd() {
@@ -300,7 +301,7 @@ public class GameScene extends Scene {
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
-        System.out.println("STEP："+step);
+//        System.out.println("STEP："+step);
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過

@@ -7,22 +7,24 @@ import menu.BackgroundType;
 import menu.Button;
 import menu.Style;
 import utils.CommandSolver;
-import utils.Player;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class EndScene extends Scene{
+public class StoryIntroScene extends Scene{
     private BufferedImage backGround;
-    private Button roundStart;// 回到首頁的按鈕
-    private BufferedImage devloper;//開發者
+    private Button roundStart;// 下一頁按鈕
+    private BufferedImage enemy1;//
+    private BufferedImage enemy2;//
+    private BufferedImage enemy3;//
 
     @Override
     public void sceneBegin() {
-        AudioResourceController.getInstance().play("/Bad Karma- Axel Thesleff.wav");
         backGround= ImageController.getInstance().tryGet("/UserSceneBack.png");
-        devloper=ImageController.getInstance().tryGet("/devloper500.png");
+        enemy1=ImageController.getInstance().tryGet("/storyIntro1.png");
+        enemy2=ImageController.getInstance().tryGet("/storyIntro2.png");
+        enemy3=ImageController.getInstance().tryGet("/storyIntro3.png");
         roundStart=new Button(1350,800,new Style.StyleRect(225,151,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
@@ -34,7 +36,7 @@ public class EndScene extends Scene{
     public void sceneEnd() {
         backGround=null;
         roundStart=null;
-        AudioResourceController.getInstance().stop("/Bad Karma- Axel Thesleff.wav");
+
     }
 
     @Override
@@ -55,7 +57,7 @@ public class EndScene extends Scene{
                             if (e.getButton() == 1) { //左鍵
                                 if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
                                     AudioResourceController.getInstance().shot("/skillSound.wav");
-                                    SceneController.getInstance().changeScene(new OpenScene());
+                                    SceneController.getInstance().changeScene(UserScene.getInstance());
                                     break;
                                 }
                             }
@@ -73,7 +75,9 @@ public class EndScene extends Scene{
     @Override
     public void paint(Graphics g) {
         g.drawImage(backGround,160,0,null);
-        g.drawImage(devloper,400,600,null);
+        g.drawImage(enemy1,160,500,null);
+        g.drawImage(enemy2,710,500,null);
+        g.drawImage(enemy3,1260,500,null);
         roundStart.paint(g); //畫出開始回合的按鈕
 
     }

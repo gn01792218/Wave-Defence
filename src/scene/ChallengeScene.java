@@ -336,25 +336,15 @@ public class ChallengeScene extends Scene{
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
-<<<<<<< HEAD
+
         //技能update
-        if(skill.size()>0) {
-            for (int i = 0; i < skill.size(); i++) {
-                    if (skill.get(i).getBuffTime().count()) {
-                        if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
-                            skill.get(i).skillReset(enemys);
-                        }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
-                    }
-                System.out.println(skill.get(i).getSkillName()+" "+skill.get(i).isInGameScene());
-            }
-=======
+
         for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).getBuffTime().count()) {
                     if(skill.get(i).getSkillName()==Global.SkillName.ELECTWAVE){//電磁波的~!
                         skill.get(i).skillReset(enemys);
                     }else{ skill.get(i).skillReset(alliance);}//時間到全軍恢復原廠設置~!
                 }
->>>>>>> ea76e9040886fccab7eaa612b334a1528084df3c
         }
         if(!gameOver){
             //我軍的update

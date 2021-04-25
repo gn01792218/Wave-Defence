@@ -64,6 +64,8 @@ public class GameScene extends Scene {
             image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         }else if(Global.getLevel()==2){
             image = ImageController.getInstance().tryGet("/GameScene2.png");
+        }else if(Global.getLevel()==3){
+            image = ImageController.getInstance().tryGet("/GameScene3.png");
         }
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片

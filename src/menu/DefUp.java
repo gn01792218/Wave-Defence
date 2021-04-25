@@ -36,6 +36,7 @@ public class DefUp extends SkillButton{
                 System.out.println("第" + (i + 1) + "台增加防禦力為" + actors.get(i).getDef()); //測試用，外面要記得打印攻擊力測試時間內的攻擊力
             }
         }
+        this.setCanUsed(false);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class DefUp extends SkillButton{
     @Override
     public void paint(Graphics g){
         if(info!=null && infoVisable){info.paint(g);}  //招式資訊
-        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || !canUsed) {
             if(isInGameScene()){
                 if (super.getPaintStyle() != null) { //畫原本的圖
                     super.getPaintStyle().paintComponent(g, super.getX(), super.getY());

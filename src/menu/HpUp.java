@@ -32,6 +32,7 @@ public class HpUp extends SkillButton{
                 System.out.println("坦克血加滿~~~" + actors.get(i).getHp());
             }
         }
+        this.setCanUsed(false);
     }
     @Override
     public void skillReset(ArrayList<Actor> actors) {
@@ -47,7 +48,7 @@ public class HpUp extends SkillButton{
     @Override
     public void paint(Graphics g){
         if(info!=null && infoVisable){info.paint(g);}  //招式資訊
-        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || !canUsed) {
             if(isInGameScene()){
                 if (super.getPaintStyle() != null) { //畫原本的圖
                     super.getPaintStyle().paintComponent(g, super.getX(), super.getY());

@@ -22,6 +22,7 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
     protected boolean isInSkillScene;//是否在購買技能區
 
 
+
     //在User場景中new就好了
     private Global.SkillName skillName;
 
@@ -33,6 +34,7 @@ public abstract class SkillButton extends Button { //目前只有UserScene場景
         this.isSelect=false;
         this.isUsed=false; //還沒被施放
         isInSkillScene=false;
+        this.canUsed=true;
         if(isInSkillScene){
             info=new Button(this.left()+10,this.bottom()+50,new Style.StyleRect(100,60,
                     null).setTextFont(new Font("標楷體",Font.ITALIC,22)));

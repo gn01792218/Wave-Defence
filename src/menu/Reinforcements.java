@@ -73,6 +73,7 @@ public class Reinforcements extends SkillButton{
                     System.out.println("呼叫"+actor4.getType());
             }
         }
+        this.setCanUsed(false);
 
     }
 
@@ -95,7 +96,7 @@ public class Reinforcements extends SkillButton{
     @Override
     public void paint(Graphics g){
         if(info!=null && infoVisable){info.paint(g);}
-        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || !canUsed) {
             if(isInGameScene()){
                 if (super.getPaintStyle() != null) { //畫原本的圖
                     super.getPaintStyle().paintComponent(g, super.getX(), super.getY());

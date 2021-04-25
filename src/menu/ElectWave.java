@@ -34,6 +34,7 @@ public class ElectWave extends SkillButton{
             actors.get(i).setSkillName(this.getSkillName());
             actors.get(i).setOnDebuff(true);
         }
+        this.setCanUsed(false);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class ElectWave extends SkillButton{
     @Override
     public void paint(Graphics g){
         if(info!=null && infoVisable){info.paint(g);}
-        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || canUsed) {
+        if ((Player.getInstance().getHonor()<this.getCost()) || isSelect || !canUsed) {
             if(isInGameScene()){
                 if (super.getPaintStyle() != null) { //畫原本的圖
                     super.getPaintStyle().paintComponent(g, super.getX(), super.getY());

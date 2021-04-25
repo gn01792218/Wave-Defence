@@ -252,7 +252,7 @@ public class ChallengeScene extends Scene{
                                 }
                                 for(int i=0;i<skill.size();i++){ //監聽玩家是否有點技能按鈕
                                     if(skill.get(i).isTouch(e.getX(),e.getY())){ //按鈕被點時 且 還有按鈕時
-                                        if(player.getHonor()>=skill.get(i).getCost()){
+                                        if(player.getHonor()>=skill.get(i).getCost() && skill.get(i).getCanUsed()){ //榮預夠 且可以使用時
                                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                                             skill.get(i).skillBufftimePlay();// 才啟動技能
                                             if(skill.get(i).getSkillName()== Global.SkillName.ELECTWAVE){

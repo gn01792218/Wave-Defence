@@ -38,6 +38,9 @@ public class SkillScene extends Scene {
         playerMoney=new Label(1320,915,new Style.StyleRect(100,100,true,null));
         playerHorn=new Label(1550,915,new Style.StyleRect(100,100,true,null));
         skillButtons = Global.getSkillButtons();//得到Global的技能按鈕
+        for(int i=0;i<skillButtons.size();i++){
+            skillButtons.get(i).setInSkillScene(true);
+        }
         roundStart=new Button(1350,650,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));

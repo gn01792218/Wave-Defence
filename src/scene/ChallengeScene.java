@@ -153,7 +153,7 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 6:
-                        if(player.getHonor()>skill.get(2).getCost()){
+                        if(player.getHonor()>skill.get(2).getCost() && skill.get(2).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(2).skillBufftimePlay();// 才啟動技能
                             skill.get(2).skillExection(alliance); //執行技能~
@@ -162,7 +162,7 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 7:
-                        if(player.getHonor()>skill.get(3).getCost()){
+                        if(player.getHonor()>skill.get(3).getCost() && skill.get(3).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(3).skillBufftimePlay();// 才啟動技能
                             skill.get(3).skillExection(alliance); //執行技能~
@@ -171,7 +171,7 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 8:
-                        if(player.getHonor()>skill.get(0).getCost()){
+                        if(player.getHonor()>skill.get(0).getCost() && skill.get(0).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(0).skillBufftimePlay();// 才啟動技能
                             skill.get(0).skillExection(alliance); //執行技能~
@@ -180,7 +180,7 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 9:
-                        if(player.getHonor()>skill.get(1).getCost()){
+                        if(player.getHonor()>skill.get(1).getCost() && skill.get(1).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(1).skillBufftimePlay();// 才啟動技能
                             skill.get(1).skillExection(alliance); //執行技能~
@@ -189,7 +189,7 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 5:
-                        if(player.getHonor()>skill.get(4).getCost()){
+                        if(player.getHonor()>skill.get(4).getCost() && skill.get(4).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(4).skillBufftimePlay();// 才啟動技能
                             skill.get(4).skillExection(alliance); //執行技能~
@@ -198,7 +198,7 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 15:
-                        if(player.getHonor()>skill.get(5).getCost()){
+                        if(player.getHonor()>skill.get(5).getCost() && skill.get(5).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(5).skillBufftimePlay();// 才啟動技能
                             skill.get(5).skillExection(enemys); //執行技能~
@@ -207,7 +207,7 @@ public class ChallengeScene extends Scene{
                         }
                         break;
                     case 16:
-                        if(player.getHonor()>skill.get(6).getCost()){
+                        if(player.getHonor()>skill.get(6).getCost() && skill.get(6).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(6).skillBufftimePlay();// 才啟動技能
                             skill.get(6).skillExection(alliance); //執行技能~
@@ -305,6 +305,15 @@ public class ChallengeScene extends Scene{
         g.drawString("快捷鍵：3",1700,850);
         g.drawString("快捷鍵：4",1700,990);
 
+        g.drawString("Q",1410,425);
+        g.drawString("W",1510,425);
+        g.drawString("E",1610,425);
+        g.drawString("R",1710,425);
+        g.drawString("A",1460,525);
+        g.drawString("S",1560,525);
+        g.drawString("D",1660,525);
+
+
         for (int i = 0; i < alliance.size(); i++) {
             alliance.get(i).paint(g); //畫我軍
         }
@@ -329,6 +338,7 @@ public class ChallengeScene extends Scene{
         if(editText!=null) {
             editText.paint(g);
         }
+
 //        if(this.test!=null){
 //            test.paint(g);
 //        }

@@ -1,6 +1,6 @@
-TSZ/5
-TSZ/5
-TSZ/5
-DDD/3
-TSZ/3
-tsz/2
+non/0
+non/0
+non/0
+non/0
+non/0
+non/0

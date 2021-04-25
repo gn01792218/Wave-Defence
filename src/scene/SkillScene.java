@@ -1,6 +1,5 @@
 package scene;
 
-import com.sun.scenario.effect.Color4f;
 import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;

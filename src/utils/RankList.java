@@ -80,7 +80,7 @@ public class RankList implements GameKernel.PaintInterface {
 
             //判斷新紀錄第幾名
             int rank =0;
-            while(newScore<score.get(rank)){
+            while(newScore<=score.get(rank)){
                 rank++;
             }
 

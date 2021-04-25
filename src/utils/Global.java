@@ -263,7 +263,7 @@ public class Global {
     public static final int BULLET_SPEED = 4;
     //場地邊際
     public static final int BOUNDARY_X1=390;
-    public static final int BOUNDARY_X2=1150;
+    public static final int BOUNDARY_X2=1200;
     public static final int BOUNDARY_Y1=180;
     public static final int BOUNDARY_Y2=750;
     public static final boolean isTouchY1(float x,float y){

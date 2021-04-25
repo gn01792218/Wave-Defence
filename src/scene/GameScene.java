@@ -273,7 +273,7 @@ public class GameScene extends Scene {
                 if(Global.getLevel()<=3) {
                     SceneController.getInstance().changeScene(UserScene.getInstance());
                 }else if(Global.getLevel()>3){
-                    SceneController.getInstance().changeScene(new OpenScene()); //回到開場
+                    SceneController.getInstance().changeScene(new EndScene()); //謝幕
                 }
             }else if(completeStep==2 && Global.getLevel()<=2){
                 rocketUnlock = ImageController.getInstance().tryGet("/AARocket_UnLock.png");
@@ -465,13 +465,13 @@ public class GameScene extends Scene {
                 }
             }
             if (count == 2) {
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < 3; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                 }
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 5; i++) {
                     enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }
-                for (int i = 0; i < Global.random(5, 7); i++) {
+                for (int i = 0; i < Global.random(3, 5); i++) {
                     enemys.add(new Enemy3(Global.random(400, 1100), Global.random(300, 450), true));
                 }
                 for (int i = 0; i < Global.random(3, 5); i++) {
@@ -479,7 +479,7 @@ public class GameScene extends Scene {
                 }
             }
             if(count ==3){
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 6; i++) {
                     enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }
                 for (int i = 0; i < Global.random(2, 3); i++) {

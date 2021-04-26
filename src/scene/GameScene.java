@@ -60,7 +60,6 @@ public class GameScene extends Scene {
     }
     @Override
     public void sceneBegin() {
-        AudioResourceController.getInstance().play("/boomy-sizzling.wav");
 
         if(Global.getLevel()==1){
             image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖

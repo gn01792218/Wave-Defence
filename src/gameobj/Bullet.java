@@ -20,7 +20,7 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface,Gam
         super(x,y,1,1,x,y,width,heigh);
         trigonometric = new Global.Trigonometric(x,y,targetX,targetY);
 //        this.image1 = ImageController.getInstance().tryGet("/bullet.png");
-//        this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/Teacher.png"),trigonometric.getDegree());
+//        this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/Teacher.png"),trigonometric.getDegree());f
         this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/bullet.png"),trigonometric.getDegree());
         this.image2 = ImageController.getInstance().tryGet("/boomb.png");
         delay = new Delay(30);

@@ -38,7 +38,7 @@ public class TestScene extends Scene{
         gameComplete=true;
         completeStep=0;
 
-        alliance.add(new Tank1(800,500,false));
+        bullets.add(new Bullet(800,500,35,70,0,0));
     }
     @Override
     public void sceneEnd() {
@@ -78,6 +78,7 @@ public class TestScene extends Scene{
                         case MOVED:
                             egetx = e.getX();
                             egety = e.getY();
+//                            bullets.get(0).trigonometric.angleBetweenTwoPointsWithFixedPoint(800,500,e.getX(),e.getY());
 //                            alliance.get(0).bullets.add(new Bullet(800,500,35,70,e.getX(),e.getY()));
 
 

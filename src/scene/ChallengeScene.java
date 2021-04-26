@@ -398,7 +398,7 @@ public class ChallengeScene extends Scene{
 
         //第一回合
         if(gameBegin.count()){
-            AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
+            AudioResourceController.getInstance().play("/Battle.wav");
             for(int i=0;i<(count+1)*2;i++){
                 enemys.add(new Enemy1(Global.random(650, 950), -Global.random(0, 50), true));
             }

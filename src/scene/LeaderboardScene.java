@@ -2,6 +2,7 @@ package scene;
 
 import controllers.ImageController;
 import controllers.SceneController;
+import menu.Label;
 import menu.Style;
 import utils.CommandSolver;
 import utils.Global;
@@ -15,12 +16,14 @@ public class LeaderboardScene extends Scene{
     private BufferedImage backGround;//背景圖場景
     private BufferedImage leaderBoard;//排行榜條
     private ArrayList<menu.Label> labelsList;
+    private Label title;//標題
 
 
     @Override
     public void sceneBegin() {
         backGround = ImageController.getInstance().tryGet("/UserSceneBack.png");
         leaderBoard=ImageController.getInstance().tryGet("/leaderBoardBar.png");
+        title=new Label(950,230,new Style.StyleRect(0,0,true,null).setText("玩家 / 波數").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xE5BF06)));
         labelsList=new ArrayList<>();
         for(int i=0;i<5;i++){
             if (i == 0) {
@@ -64,13 +67,20 @@ public class LeaderboardScene extends Scene{
     public void paint(Graphics g) {
         g.drawImage(backGround,150,0,null);
         g.drawImage(leaderBoard,550,150,null);
+        title.paint(g);
         for(int i=0;i<labelsList.size();i++){
             if(labelsList.get(i)!=null){
                 //如果大於0才畫出
                 if(Global.rankList.score.get(i)>0){
-                    labelsList.get(i).getPaintStyle().setText("玩家: "+ Global.rankList.name.get(i)+" 波數:"+Global.rankList.score.get(i))
-                            .setTextFont(new Font("標楷體",Font.ITALIC,42));
-                    labelsList.get(i).paint(g);
+                    if(i==0){
+                        labelsList.get(i).getPaintStyle().setText(Global.rankList.name.get(i) + " / " + Global.rankList.score.get(i))
+                                .setTextFont(new Font("標楷體", Font.BOLD, 42));
+                        labelsList.get(i).paint(g);
+                    }else {
+                        labelsList.get(i).getPaintStyle().setText(Global.rankList.name.get(i) + " / " + Global.rankList.score.get(i))
+                                .setTextFont(new Font("標楷體", Font.ITALIC, 42)).setTextColor(new Color(0xCFCFD4));
+                        labelsList.get(i).paint(g);
+                    }
                 }
             }
         }

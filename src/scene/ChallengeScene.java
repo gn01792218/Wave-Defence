@@ -458,28 +458,11 @@ public class ChallengeScene extends Scene{
             gameOver=true;
             if(Global.rankList.newRecord(count)){
                 if(editText==null) {
-                editText = new EditText(500, 500, "請輸入姓名");
-                editText.setStyleNormal(new Style.StyleRect(200, 50, true
-                        , new BackgroundType.BackgroundColor(new Color(2, 10, 19)))
-                        .setTextColor(new Color(128, 128, 128))
-                        .setHaveBorder(true)
-                        .setBorderColor(new Color(97, 113, 110))
-                        .setBorderThickness(5)
-                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-                editText.setStyleHover(new Style.StyleRect(200, 50, true
-                        , new BackgroundType.BackgroundColor(new Color(83, 95, 47)))
-                        .setTextColor(new Color(128, 128, 128))
-                        .setHaveBorder(true)
-                        .setBorderColor(new Color(97, 113, 110))
-                        .setBorderThickness(5)
-                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-                editText.setStyleFocus(new Style.StyleRect(200, 50, true
-                        , new BackgroundType.BackgroundColor(new Color(199, 178, 153)))
-                        .setTextColor(new Color(128, 128, 128))
-                        .setHaveBorder(true)
-                        .setBorderColor(new Color(97, 113, 110))
-                        .setBorderThickness(5)
-                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
+                editText = new EditText(770, 580, "請輸入姓名");
+                editText.setStyleNormal(new Style.StyleRect(360,87,true,
+                        new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))));
+                    editText.setStyleFocus(new Style.StyleRect(350,87,true,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))));
+                    editText.setEditLimit(10);
                 }
                 editText.isFocus();
             }else{

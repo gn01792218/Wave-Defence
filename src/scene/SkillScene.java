@@ -158,11 +158,11 @@ public class SkillScene extends Scene {
             }
         }
         //畫玩家金錢和榮譽
-        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFFFF6333, true));
         playerLevel.paint(g);
-        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFFFF6333, true));
         playerMoney.paint(g);
-        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
+        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFFFF6333, true));
         playerHorn.paint(g);
 
     }

@@ -266,11 +266,11 @@ public class UserScene extends Scene{ //改成單例模式!!!
             armyCount++;
         }
         //畫玩家金錢和榮譽
-        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
+        playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFFFF6333, true));
         playerLevel.paint(g);
-        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
+        playerMoney.getPaintStyle().setText(Player.getInstance().getMoney()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFFFF6333, true));
         playerMoney.paint(g);
-        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFF33A8FF, true));
+        playerHorn.getPaintStyle().setText(Player.getInstance().getHonor()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFFFF6333, true));
         playerHorn.paint(g);
         //警告標語
         if(introPopupWindow.isShow()){

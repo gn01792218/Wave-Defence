@@ -32,9 +32,9 @@ public class LaserCar extends Actor{
         atkSpeed = new Delay(40);      //攻速
         atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
-        speed=3f; //移動速度
-        def=0.2; //防禦力
-        atkdis=300; //攻擊距離
+        speed=2.2f; //移動速度
+        def=0.3; //防禦力
+        atkdis=270; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
         atkSpeed.loop();
     }

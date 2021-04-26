@@ -105,11 +105,11 @@ public class Global {
             ActorButton tank1 = new ActorButton(830, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank1.png"))),
                     Global.ActorType.TANK1, 250,false,"TSZ-1號坦克");
             ActorButton tank2 = new ActorButton(1330, 100, new Style.StyleRect(500, 500, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Tank2.png"))),
-                    Global.ActorType.TANK2, 280,false,"AG-2號坦克");
+                    Global.ActorType.TANK2, 300,false,"AG-2號坦克");
             ActorButton laserCar=new ActorButton(1830,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-LaserCar.png"))),
-                    Global.ActorType.LASERCAR,300,false,"ES雷射砲車");
+                    Global.ActorType.LASERCAR,350,false,"ES雷射砲車");
             ActorButton rocket=new ActorButton(2330,100,new Style.StyleRect(500,500,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/AB-Rocket.png"))),
-                    ActorType.ROCKET,500,false,"VI火箭車");
+                    ActorType.ROCKET,1200,false,"VI火箭車");
             tank1.setUnLocked(true); //坦1
             tank2.setUnLocked(true); //坦2 都是被解鎖的
 //            laserCar.setUnLocked(true); //測試用

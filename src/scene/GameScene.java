@@ -287,13 +287,13 @@ public class GameScene extends Scene {
             }else{
                 if(Global.getLevel()==2) {
                     image4 = ImageController.getInstance().tryGet("/Victory.png");
-                    g.drawImage(image4, 400, 250, null);
+                    g.drawImage(image4, 150, 150, null);
                 }else if(Global.getLevel()==3){
                     image4 = ImageController.getInstance().tryGet("/Victory2.png");
-                    g.drawImage(image4, 400, 250, null);
+                    g.drawImage(image4, 150, 150, null);
                 }else if(Global.getLevel()>3){
                     image4 = ImageController.getInstance().tryGet("/Victory3.png");
-                    g.drawImage(image4, 400, 250, null);
+                    g.drawImage(image4, 150, 100, null);
                 }
             }
         }
@@ -347,7 +347,7 @@ public class GameScene extends Scene {
             if (!enemys.get(i).isAlive()) {
                 enemys.remove(i);
                 Player.getInstance().offsetMoney(+100); //殺一隻敵軍100元
-                Player.getInstance().offsetHonor(+100); //殺一隻敵軍榮譽+100
+                Player.getInstance().offsetHonor(+50); //殺一隻敵軍榮譽+100
                 break;
             }
         }
@@ -394,18 +394,18 @@ public class GameScene extends Scene {
                 }
             }
             if (count == 2) {
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 5; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 450), true));
                 }
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 2; i++) {
                     enemys.add(new Enemy4(Global.random(400, 1000), Global.random(400, 400), true));
                 }
             }
             if(count ==3){
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < 5; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 3; i++) {
                     enemys.add(new Enemy4(Global.random(400, 1000), Global.random(400, 350), true));
                 }
             }

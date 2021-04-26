@@ -1,5 +1,6 @@
 package scene;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
 import menu.Label;
@@ -44,6 +45,7 @@ public class LeaderboardScene extends Scene{
         leaderBoard=null;
         labelsList=null;
         title=null;
+        AudioResourceController.getInstance().stop("/boomy-sizzling.wav");
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {

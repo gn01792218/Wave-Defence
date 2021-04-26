@@ -85,7 +85,6 @@ public class ChallengeScene extends Scene{
         for(int i=0;i<skill.size();i++){
             skill.get(i).setInGameScene(false);
         }
-
         //做軍隊
         alliance = new ArrayList<>();
         alliance.add(new Tank1(850,600,false));
@@ -98,7 +97,6 @@ public class ChallengeScene extends Scene{
         castles.add(new Castle(1150,730));
         enemys = new ArrayList<>();
         boss = new ArrayList<>();
-
     }
 
     @Override
@@ -119,36 +117,36 @@ public class ChallengeScene extends Scene{
             public void keyReleased(int commandCode, long trigTime) {
                 switch (commandCode){
                     case 11:
-                        if(player.getMoney()>250){
+                        if(player.getMoney()>Global.getActorButtons().get(0).getCostMoney()){
                             Actor temp = new Tank1(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(-250);
+                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
                         }
                         break;
                     case 12:
-                        if(player.getMoney()>280){
+                        if(player.getMoney()>Global.getActorButtons().get(1).getCostMoney()){
                             Actor temp = new Tank2(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(-280);
+                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
                         }
 
                         break;
                     case 13:
-                        if(player.getMoney()>250){
+                        if(player.getMoney()>Global.getActorButtons().get(2).getCostMoney()){
                             Actor temp = new LaserCar(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(-300);
+                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
                         }
                         break;
                     case 14:
-                        if(player.getMoney()>500){
+                        if(player.getMoney()>Global.getActorButtons().get(3).getCostMoney()){
                             Actor temp = new Rocket(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(-500);
+                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
                         }
                         break;
                     case 6:

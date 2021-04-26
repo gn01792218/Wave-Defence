@@ -11,13 +11,13 @@ public class Enemy1 extends Actor{
         super(x,y,60,72,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AE-Enemy1.png");
         this.image2=ImageController.getInstance().tryGet("/AE-Enemy1_S6.png");
-        hpLimit=300;//血量上限
+        hpLimit=400;//血量上限
         hp=hpLimit; //血量
-        atk=150; //攻擊力
+        atk=180; //攻擊力
         atkSpeed=new Delay(120); //攻速
         atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
-        speed=3; //移動速度
+        speed=2.5f; //移動速度
         def=0.45; //防禦力
         atkdis= 180; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位

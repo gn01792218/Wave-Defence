@@ -629,6 +629,12 @@ public abstract class Actor extends GameObject {
                             AudioResourceController.getInstance().shot("/explosion.wav");
                             actors.get(j).offsetHp(-(this.atk) * (1 - actors.get(j).def));
                         }
+//                        for (int k=0;k<actors.get(j).bullets.size();k++){
+//                            if(bullets.get(i).isCollision(actors.get(j).bullets.get(k))){
+//                                bullets.get(i).explored();
+//                                AudioResourceController.getInstance().shot("/explosion.wav");
+//                            }
+//                        }
                     }
                 }
             }

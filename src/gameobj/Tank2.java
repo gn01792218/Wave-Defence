@@ -32,9 +32,9 @@ public class Tank2 extends Actor{
         atkSpeed = new Delay(120);      //攻速
         atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
-        speed=3.3f; //移動速度
+        speed=1.5f; //移動速度
         def=0.65; //防禦力
-        atkdis=150; //攻擊距離
+        atkdis=200; //攻擊距離
         this.isEnemy=isenemy; //敵我單位
         atkSpeed.loop();
     }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Reinforcements extends SkillButton{
     private Label lockLabel;// 鎖住的圖片
     private Label label;
-    private final int reinforcementsNum=2; //召喚兩隻援軍
+    private final int reinforcementsNum=3; //召喚兩隻援軍
     private final int bufftime=600; //持續X/60秒
     private Label selectedLabel;//被選中後的按鈕
     public int getReinforcementsNum() {
@@ -39,37 +39,38 @@ public class Reinforcements extends SkillButton{
                 case TANK1:
                     Actor actor1=new Tank1(600+i*100,700,false);
 //                    actor1.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
-                    actor1.setReinforcement(true);  //記得將ReinforceMent設成true
+                    //記得將ReinforceMent設成true
+                    actor1.setReinforcement(true);
+                    actors.add(actor1);
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
-                    actors.add(actor1);
                     System.out.println("呼叫"+actor1.getType());
                     break;
                 case TANK2:
                     Actor actor2=new Tank2(600+i*100,700,false);
 //                    actor2.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor2.setReinforcement(true);  //記得將ReinforceMent設成true
+                    actors.add(actor2);
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
-                    actors.add(actor2);
                     System.out.println("呼叫"+actor2.getType());
                     break;
                 case LASERCAR:
                     Actor actor3= new LaserCar(600+i*100, 700, false);
 //                    actor3.setOnBuff(true); //設成是onBuff狀態-->才可以畫出特效圖
                     actor3.setReinforcement(true);  //記得將ReinforceMent設成true
+                    actors.add(actor3);
                     actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
                     System.out.println(this.getSkillName());
-                    actors.add(actor3);
                     System.out.println("呼叫"+actor3.getType());
                     break;
                 case ROCKET:
                     Actor actor4=new Rocket(600+i*100,700,false);
                     actor4.setOnBuff(true);
                     actor4.setReinforcement(true);
+                    actors.add(actor4);
                     actors.get(i).setSkillName(this.getSkillName());
                     System.out.println(this.getSkillName());
-                    actors.add(actor4);
                     System.out.println("呼叫"+actor4.getType());
             }
         }

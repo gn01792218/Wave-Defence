@@ -25,15 +25,15 @@ public class Tank1 extends Actor{
         this.image_S4=ImageController.getInstance().tryGet("/AATank1_S4.png");
         this.image_S5=ImageController.getInstance().tryGet("/AATank1_S5.png");
         this.image_S7=ImageController.getInstance().tryGet("/AATank1_S7.png");
-        hpLimit=300;//血量上限
+        hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=250; //攻擊力
         atkSpeed = new Delay(120);      //攻速
         atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
-        speed=2.2f; //移動速度
+        speed=1.8f; //移動速度
         def=0.5; //防禦力
-        atkdis=200; //攻擊距離
+        atkdis=250; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
         atkSpeed.loop();
     }

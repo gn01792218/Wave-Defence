@@ -251,6 +251,8 @@ public class Global {
         }
     }
 
+
+
     public static final boolean IS_DEBUG = false;
 
     public static void log(String str) {

@@ -35,6 +35,7 @@ public class OpenScene extends Scene {
     }
     @Override
     public void sceneBegin() {
+        AudioResourceController.getInstance().loop("/boomy-sizzling.wav",99);
         //背景圖
         image =ImageController.getInstance().tryGet("/OpenScene.png");
         //Button的第三個參數可newStyle；Style的三個參數為寬 高 背景圖片。
@@ -42,7 +43,7 @@ public class OpenScene extends Scene {
         startButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart2.png"))));
         endlessModeButton=new Button(1000,520,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessModeB.png"))));
         endlessModeButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessMode.png"))));
-        endButton=new Button(780,750,new Style.StyleRect(300,300,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
+        endButton=new Button(800,750,new Style.StyleRect(300,300,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
         leaderBoard=new Button(825,650,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/LeaderBoardB.png"))));
         leaderBoard.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/LeaderBoard.png"))));
     }
@@ -76,19 +77,19 @@ public class OpenScene extends Scene {
                             }
                         case MOVED:
                                 if (startButton.isTouch(e.getX(),e.getY())) { //開始遊戲按鈕的hover
-                                    AudioResourceController.getInstance().play("/metel.wav");
+                                    AudioResourceController.getInstance().play("/hover.wav");
                                     startButton.isHover(true);
                                 }else{startButton.isHover(false);}
                                 if(endlessModeButton.isTouch(e.getX(),e.getY())){
-                                    AudioResourceController.getInstance().play("/metel.wav");
+                                    AudioResourceController.getInstance().play("/hover.wav");
                                     endlessModeButton.isHover(true);
                                 }else{endlessModeButton.isHover(false);}
                                 if(leaderBoard.isTouch(e.getX(),e.getY())){
-                                    AudioResourceController.getInstance().play("/metel.wav");
+                                    AudioResourceController.getInstance().play("/hover.wav");
                                     leaderBoard.isHover(true);
                                 }else{leaderBoard.isHover(false);}
                                 if(endButton.isTouch(e.getX(),e.getY())){
-                                    AudioResourceController.getInstance().play("/hover.wav");
+                                    AudioResourceController.getInstance().play("/metel.wav");
                                 }
                     }
                 }

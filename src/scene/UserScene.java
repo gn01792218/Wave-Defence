@@ -34,7 +34,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private Button secrt;//機密檔案(敵軍資料)按鈕
     private Button arrowR;
     private Button arrowL;
-    private Button music;// 開啟/關閉音樂
     private boolean arrowRUseable;
     private boolean arrowLUseable;
     private Label armyLabel; //購買軍隊的標籤
@@ -101,8 +100,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
         introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
         introPopupWindow.hide();
-        music=new Button(1050,20,new Style.StyleRect(118,118,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/music.png"))));
-        music.setStyleFocus(new Style.StyleRect(118,118,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/musicB.png"))));
     }
     @Override
     public void sceneEnd() {
@@ -200,18 +197,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                         popupWindow.sceneBegin();
                                         popupWindow.show();
                                     }else{popupWindow.hide();}
-                                    int count=0;
-                                    if(music.isTouch(e.getX(),e.getY())){
-                                        if(count%2!=0) {
-                                            music.isFocus(); //開啟Focus
-                                            AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
-                                            count++;
-                                        }else{
-                                            music.unFocus();
-                                            AudioResourceController.getInstance().play("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
-                                            count++;
-                                        }
-                                    }
                                 }
                                 if (e.getButton() == 3) {//點擊右鍵 取消
                                     for (int i = 0; i < actorButtons.size(); i++) { //1.角色取消購買
@@ -296,8 +281,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
         if(introPopupWindow.isShow()){
             introPopupWindow.paint(g);
         }
-        music.paint(g);
-
     }
     @Override
     public void update() {

@@ -515,7 +515,7 @@ public class GameScene extends Scene {
                     for (int i = 0; i < Global.random(2, 3); i++) {
                         enemys.add(new Enemy3(Global.random(400, 1100), Global.random(300, 450), true));
                     }
-                    for (int i = 0; i < Global.random(1, 2); i++) {
+                    for (int i = 0; i < Global.random(2, 2); i++) {
                         enemys.add(new Boss(Global.random(400, 1100), Global.random(300, 450), true));
                     }
                 }

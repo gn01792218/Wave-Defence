@@ -129,7 +129,7 @@ public class ChallengeScene extends Scene{
                             Actor temp = new Tank2(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(-Global.getActorButtons().get(0).getCostMoney());
+                            player.offsetMoney(-Global.getActorButtons().get(1).getCostMoney());
                         }
 
                         break;
@@ -138,7 +138,7 @@ public class ChallengeScene extends Scene{
                             Actor temp = new LaserCar(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(-Global.getActorButtons().get(0).getCostMoney());
+                            player.offsetMoney(-Global.getActorButtons().get(2).getCostMoney());
                         }
                         break;
                     case 14:
@@ -146,7 +146,7 @@ public class ChallengeScene extends Scene{
                             Actor temp = new Rocket(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(-Global.getActorButtons().get(0).getCostMoney());
+                            player.offsetMoney(-Global.getActorButtons().get(3).getCostMoney());
                         }
                         break;
                     case 6:

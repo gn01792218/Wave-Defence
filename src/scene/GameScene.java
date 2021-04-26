@@ -283,12 +283,13 @@ public class GameScene extends Scene {
                 g.drawImage(laserUnlock, 550, 250, null);
             }else{
                 if(Global.getLevel()==2) {
-                    System.out.println("畫第一章場景");
                     image4 = ImageController.getInstance().tryGet("/Victory.png");
                     g.drawImage(image4, 400, 250, null);
-                }else if(Global.getLevel()>=3){
-                    System.out.println("畫第二章場幾");
+                }else if(Global.getLevel()==3){
                     image4 = ImageController.getInstance().tryGet("/Victory2.png");
+                    g.drawImage(image4, 400, 250, null);
+                }else if(Global.getLevel()>3){
+                    image4 = ImageController.getInstance().tryGet("/Victory3.png");
                     g.drawImage(image4, 400, 250, null);
                 }
             }

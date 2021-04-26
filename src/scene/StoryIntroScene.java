@@ -15,6 +15,9 @@ import java.awt.image.BufferedImage;
 public class StoryIntroScene extends Scene{
     private BufferedImage backGround;
     private Button roundStart;// 下一頁按鈕
+    private BufferedImage say;//對話框
+    private BufferedImage introImage;//對話內容
+    private BufferedImage woman;//秘書
     private BufferedImage enemy1;//
     private BufferedImage enemy2;//
     private BufferedImage enemy3;//
@@ -25,7 +28,10 @@ public class StoryIntroScene extends Scene{
         enemy1=ImageController.getInstance().tryGet("/storyIntro1.png");
         enemy2=ImageController.getInstance().tryGet("/storyIntro2.png");
         enemy3=ImageController.getInstance().tryGet("/storyIntro3.png");
-        roundStart=new Button(1350,800,new Style.StyleRect(225,151,
+        woman=ImageController.getInstance().tryGet("/commander.png");
+        say=ImageController.getInstance().tryGet("/say.png");
+        introImage=ImageController.getInstance().tryGet("/introImage.png");
+        roundStart=new Button(1350,850,new Style.StyleRect(225,151,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
@@ -36,6 +42,12 @@ public class StoryIntroScene extends Scene{
     public void sceneEnd() {
         backGround=null;
         roundStart=null;
+        enemy1=null;
+        enemy2=null;
+        enemy3=null;
+        woman=null;
+        say=null;
+        introImage=null;
 
     }
 
@@ -75,9 +87,12 @@ public class StoryIntroScene extends Scene{
     @Override
     public void paint(Graphics g) {
         g.drawImage(backGround,160,0,null);
-        g.drawImage(enemy1,160,500,null);
-        g.drawImage(enemy2,710,500,null);
-        g.drawImage(enemy3,1260,500,null);
+        g.drawImage(enemy1,160,550,null);
+        g.drawImage(enemy2,710,550,null);
+        g.drawImage(enemy3,1260,550,null);
+        g.drawImage(say,560,50,null);
+        g.drawImage(woman,560,50,null);
+        g.drawImage(introImage,680,130,null);
         roundStart.paint(g); //畫出開始回合的按鈕
 
     }

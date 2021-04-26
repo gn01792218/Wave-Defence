@@ -40,6 +40,10 @@ public class LeaderboardScene extends Scene{
     }
     @Override
     public void sceneEnd() {
+        backGround=null;
+        leaderBoard=null;
+        labelsList=null;
+        title=null;
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {
@@ -78,7 +82,7 @@ public class LeaderboardScene extends Scene{
                         labelsList.get(i).paint(g);
                     }else {
                         labelsList.get(i).getPaintStyle().setText(Global.rankList.name.get(i) + " / " + Global.rankList.score.get(i))
-                                .setTextFont(new Font("標楷體", Font.ITALIC, 42)).setTextColor(new Color(0xCFCFD4));
+                                .setTextFont(new Font("標楷體", Font.ITALIC, 42));
                         labelsList.get(i).paint(g);
                     }
                 }

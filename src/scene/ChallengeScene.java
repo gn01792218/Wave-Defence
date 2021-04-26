@@ -117,98 +117,91 @@ public class ChallengeScene extends Scene{
             public void keyReleased(int commandCode, long trigTime) {
                 switch (commandCode){
                     case 11:
-                        if(player.getMoney()>Global.getActorButtons().get(0).getCostMoney()){
+                        if(player.getMoney()>=Global.getActorButtons().get(0).getCostMoney()){
                             Actor temp = new Tank1(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
+                            player.offsetMoney(-Global.getActorButtons().get(0).getCostMoney());
                         }
                         break;
                     case 12:
-                        if(player.getMoney()>Global.getActorButtons().get(1).getCostMoney()){
+                        if(player.getMoney()>=Global.getActorButtons().get(1).getCostMoney()){
                             Actor temp = new Tank2(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
+                            player.offsetMoney(-Global.getActorButtons().get(1).getCostMoney());
                         }
 
                         break;
                     case 13:
-                        if(player.getMoney()>Global.getActorButtons().get(2).getCostMoney()){
+                        if(player.getMoney()>=Global.getActorButtons().get(2).getCostMoney()){
                             Actor temp = new LaserCar(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
+                            player.offsetMoney(-Global.getActorButtons().get(2).getCostMoney());
                         }
                         break;
                     case 14:
-                        if(player.getMoney()>Global.getActorButtons().get(3).getCostMoney()){
+                        if(player.getMoney()>=Global.getActorButtons().get(3).getCostMoney()){
                             Actor temp = new Rocket(800,1100,false);
                             alliance.add(temp);
                             temp.setStrategyXY(mouseX,mouseY);
-                            player.offsetMoney(Global.getActorButtons().get(0).getCostMoney());
+                            player.offsetMoney(-Global.getActorButtons().get(3).getCostMoney());
                         }
                         break;
                     case 6:
-                        if(player.getHonor()>skill.get(2).getCost() && skill.get(2).getCanUsed()){
+                        if(player.getHonor()>=skill.get(2).getCost() && skill.get(2).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(2).skillBufftimePlay();// 才啟動技能
                             skill.get(2).skillExection(alliance); //執行技能~
-                            skill.get(2).setUsed(true);
                             player.offsetHonor(-skill.get(2).getCost());
                         }
                         break;
                     case 7:
-                        if(player.getHonor()>skill.get(3).getCost() && skill.get(3).getCanUsed()){
+                        if(player.getHonor()>=skill.get(3).getCost() && skill.get(3).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(3).skillBufftimePlay();// 才啟動技能
                             skill.get(3).skillExection(alliance); //執行技能~
-                            skill.get(3).setUsed(true);
                             player.offsetHonor(-skill.get(3).getCost());
                         }
                         break;
                     case 8:
-                        if(player.getHonor()>skill.get(0).getCost() && skill.get(0).getCanUsed()){
+                        if(player.getHonor()>=skill.get(0).getCost() && skill.get(0).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(0).skillBufftimePlay();// 才啟動技能
                             skill.get(0).skillExection(alliance); //執行技能~
-                            skill.get(0).setUsed(true);
                             player.offsetHonor(-skill.get(0).getCost());
                         }
                         break;
                     case 9:
-                        if(player.getHonor()>skill.get(1).getCost() && skill.get(1).getCanUsed()){
+                        if(player.getHonor()>=skill.get(1).getCost() && skill.get(1).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(1).skillBufftimePlay();// 才啟動技能
                             skill.get(1).skillExection(alliance); //執行技能~
-                            skill.get(1).setUsed(true);
                             player.offsetHonor(-skill.get(1).getCost());
                         }
                         break;
                     case 5:
-                        if(player.getHonor()>skill.get(4).getCost() && skill.get(4).getCanUsed()){
+                        if(player.getHonor()>=skill.get(4).getCost() && skill.get(4).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(4).skillBufftimePlay();// 才啟動技能
                             skill.get(4).skillExection(alliance); //執行技能~
-                            skill.get(4).setUsed(true);
                             player.offsetHonor(-skill.get(4).getCost());
                         }
                         break;
                     case 15:
-                        if(player.getHonor()>skill.get(5).getCost() && skill.get(5).getCanUsed()){
+                        if(player.getHonor()>=skill.get(5).getCost() && skill.get(5).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(5).skillBufftimePlay();// 才啟動技能
                             skill.get(5).skillExection(enemys); //執行技能~
-                            skill.get(5).setUsed(true);
                             player.offsetHonor(-skill.get(5).getCost());
                         }
                         break;
                     case 16:
-                        if(player.getHonor()>skill.get(6).getCost() && skill.get(6).getCanUsed()){
+                        if(player.getHonor()>=skill.get(6).getCost() && skill.get(6).getCanUsed()){
                             AudioResourceController.getInstance().play("/skillSound.wav");// 音效聲音，可以大聲點嗎?
                             skill.get(6).skillBufftimePlay();// 才啟動技能
                             skill.get(6).skillExection(alliance); //執行技能~
-                            skill.get(6).setUsed(true);
                             player.offsetHonor(-skill.get(6).getCost());
                         }
                         break;
@@ -333,10 +326,6 @@ public class ChallengeScene extends Scene{
         if(editText!=null) {
             editText.paint(g);
         }
-
-//        if(this.test!=null){
-//            test.paint(g);
-//        }
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
@@ -466,40 +455,6 @@ public class ChallengeScene extends Scene{
             }else{
                 SceneController.getInstance().changeScene(new LeaderboardScene());
             }
-//            if(editText==null) {
-//                editText = new EditText(500, 500, "請輸入姓名");
-//                editText.setStyleNormal(new Style.StyleRect(200, 50, true
-//                        , new BackgroundType.BackgroundColor(new Color(2, 10, 19)))
-//                        .setTextColor(new Color(128, 128, 128))
-//                        .setHaveBorder(true)
-//                        .setBorderColor(new Color(97, 113, 110))
-//                        .setBorderThickness(5)
-//                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-//                editText.setStyleHover(new Style.StyleRect(200, 50, true
-//                        , new BackgroundType.BackgroundColor(new Color(83, 95, 47)))
-//                        .setTextColor(new Color(128, 128, 128))
-//                        .setHaveBorder(true)
-//                        .setBorderColor(new Color(97, 113, 110))
-//                        .setBorderThickness(5)
-//                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-//                editText.setStyleFocus(new Style.StyleRect(200, 50, true
-//                        , new BackgroundType.BackgroundColor(new Color(199, 178, 153)))
-//                        .setTextColor(new Color(128, 128, 128))
-//                        .setHaveBorder(true)
-//                        .setBorderColor(new Color(97, 113, 110))
-//                        .setBorderThickness(5)
-//                        .setTextFont(new Font("", Font.TYPE1_FONT, 30)));
-//            }
-//            Global.rankList.newScore(count,name);
-//            SceneController.getInstance().changeScene(new OpenScene());
-//            gameOver.play();
-//
-//            if(gameOver.count()) {
-//                Global.rankList.newScore(count);
-//                SceneController.getInstance().changeScene(new OpenScene());
-//            }
-
         }
-
     }
 }

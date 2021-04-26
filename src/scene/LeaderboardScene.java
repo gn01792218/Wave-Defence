@@ -19,14 +19,13 @@ public class LeaderboardScene extends Scene{
     private ArrayList<menu.Label> labelsList;
     private Label title;//標題
 
-
     @Override
     public void sceneBegin() {
         backGround = ImageController.getInstance().tryGet("/UserSceneBack.png");
         leaderBoard=ImageController.getInstance().tryGet("/leaderBoardBar.png");
         title=new Label(950,230,new Style.StyleRect(0,0,true,null).setText("玩家 / 波數").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xE5BF06)));
         labelsList=new ArrayList<>();
-        for(int i=0;i<5;i++){
+        for(int i=0;i<Global.rankList.rankCount;i++){
             if (i == 0) {
                 menu.Label label = new menu.Label(950, 370, new Style.StyleRect(0, 0, true, null));
                 labelsList.add(label);

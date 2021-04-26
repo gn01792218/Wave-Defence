@@ -90,7 +90,6 @@ public class Rocket extends Actor{
             }
         }
             if (target != null) {
-                System.out.println("000");
                 //移動至攻擊範圍內則開火
                 float targetX = target.centerX();
                 float targetY = target.centerY();
@@ -103,12 +102,10 @@ public class Rocket extends Actor{
             } else {
                 //回到自己原本的位置並導正砲管
                 if (collider().centerX() == flag.collider().centerX() && collider().centerY() == flag.collider().centerY()) {
-                    System.out.println("111");
                     if (atkSpeed.getCount() < 119) {
                         atkSpeed.count();
                     }
                 } else {
-                    System.out.println(222);
                     move(flag.collider().centerX(), flag.collider().centerY(), alliance);
                 }
 //                this.cannonDirection = CANNON_DIRECTION.FrontMiddle;

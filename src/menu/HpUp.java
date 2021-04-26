@@ -35,7 +35,6 @@ public class HpUp extends SkillButton{
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         setUsed(true); //被施放過了
-
         for(int i=0;i<actors.size();i++){
             if(actors.get(i).isOnBuff()) {
                 actors.get(i).setOnBuff(false); //標示為非Buff狀態

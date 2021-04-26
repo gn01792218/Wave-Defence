@@ -268,38 +268,42 @@ public class Global {
     public static final int BOUNDARY_Y2=750;
     public static final boolean isTouchY1(float x,float y){
         Boolean result=false;
-        if(Global.getLevel()==1){
-            result = (y<=200);
-        }else if(Global.getLevel()==2){
-            result= (y<=308);
-        }
+        result = (y<=200);
+//        if(Global.getLevel()==1){
+//            result = (y<=200);
+//        }else if(Global.getLevel()==2){
+//            result= (y<=308);
+//        }
         return result;
     }
     public static final boolean isTouchY2(float x,float y){
         Boolean result=false;
-        if(Global.getLevel()==1){
-            result = (y>=790);
-        }else if(Global.getLevel()==2){
-            result= (103*y>=x+73474);
-        }
+        result = (y>=790);
+//        if(Global.getLevel()==1){
+//            result = (y>=790);
+//        }else if(Global.getLevel()==2){
+//            result= (103*y>=x+73474);
+//        }
         return result;
     }
     public static final boolean isTouchX1(float x,float y){
         Boolean result=false;
-        if(Global.getLevel()==1){
-            result= (19*y <=52530-112*x);
-        }else if(Global.getLevel()==2){
-            result= (73*y >=204*x-42376);
-        }
+        result= (19*y <=52530-112*x);
+//        if(Global.getLevel()==1){
+//            result= (19*y <=52530-112*x);
+//        }else if(Global.getLevel()==2){
+//            result= (73*y >=204*x-42376);
+//        }
         return result;
     }
     public static final boolean isTouchX2(float x,float y){
         Boolean result=false;
-        if(Global.getLevel()==1){
-            result= (21*y <= 112*x-124530);
-        }else if(Global.getLevel()==2){
-            result= (163*y>=597120-446*x);
-        }
+        result= (21*y <= 112*x-124530);
+//        if(Global.getLevel()==1){
+//            result= (21*y <= 112*x-124530);
+//        }else if(Global.getLevel()==2){
+//            result= (163*y>=597120-446*x);
+//        }
         return result;
     }
     // 視窗大小

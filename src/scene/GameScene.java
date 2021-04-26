@@ -60,6 +60,8 @@ public class GameScene extends Scene {
     }
     @Override
     public void sceneBegin() {
+        AudioResourceController.getInstance().play("/boomy-sizzling.wav");
+
         if(Global.getLevel()==1){
             image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         }else if(Global.getLevel()==2){
@@ -182,7 +184,9 @@ public class GameScene extends Scene {
                             if (e.getButton() == e.BUTTON1) {
                                 if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
                                     roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
-                                    isReady = true;
+                                    if(delayCount.isPlaying() || starDelayCount.isPlaying()){
+                                        isReady = true;
+                                    }
                                 }
                                 if(gameComplete){
                                     completeStep++;
@@ -308,7 +312,6 @@ public class GameScene extends Scene {
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
-//        System.out.println("STEP："+step);
         if(skill.size()>0) {
             for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).isUsed()) { //沒有被施放過
@@ -352,11 +355,12 @@ public class GameScene extends Scene {
         if(starDelayCount.count()){
             delayCount.play();
             changePicDelay.loop();
+            starDelayCount.stop();
             changePic=50;
         }
 
         if(step ==1 && count<3){
-//            AudioResourceController.getInstance().play("/boomy-sizzling.wav");
+
             if(delayCount.isPlaying()){
                 if (changePicDelay.count()) {  //每1秒播放圖片
                     countNum++;
@@ -365,10 +369,13 @@ public class GameScene extends Scene {
                 changePic--;
             }
 
+
+
             if (delayCount.count() || isReady) { //開場30秒後
                 isFlagUsable = false; //旗子不能用
                 count++;
                 countNum=0;
+                starDelayCount.stop();
                 delayCount.stop();
                 changePicDelay.stop();
                 isReady =false;

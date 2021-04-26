@@ -28,13 +28,13 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private BufferedImage barImage;//
     private BufferedImage woman;//秘書
     private BufferedImage intro;//秘書說
-
     private ArrayList<ActorButton> actorButtons;
     private Button roundStart;// 進入回合的按鈕
     private Button previous;//上一頁
     private Button secrt;//機密檔案(敵軍資料)按鈕
     private Button arrowR;
     private Button arrowL;
+    private Button music;// 開啟/關閉音樂
     private boolean arrowRUseable;
     private boolean arrowLUseable;
     private Label armyLabel; //購買軍隊的標籤
@@ -44,6 +44,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private Label playerHorn;//玩家榮譽
     private PopWindowScene popupWindow;//敵方資訊場景
     private IntroPopupWindow introPopupWindow;
+    private boolean isBackToOpenscene;//是否有切回首頁
     //關於彈跳視窗內的按鈕位置問題:1.就算按鈕做在PopWindow內部，也必須要在外面的場景中paint出來(做出getButton方法)，否則按鈕位置會有誤差。
     private UserScene(){}
     public static UserScene getInstance(){
@@ -60,6 +61,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
 
     @Override
     public void sceneBegin() {
+        isBackToOpenscene=false; //剛開使沒有切回首頁
         //加入軍隊數量
         imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
         imageTank2= ImageController.getInstance().tryGet("/AB-Tank2-Small.png");
@@ -99,9 +101,15 @@ public class UserScene extends Scene{ //改成單例模式!!!
         introPopupWindow=Global.getIntroPopupWindow();
         introPopupWindow.setCancelable();
         introPopupWindow.hide();
+        music=new Button(1050,20,new Style.StyleRect(118,118,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/music.png"))));
+        music.setStyleFocus(new Style.StyleRect(118,118,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/musicB.png"))));
     }
     @Override
     public void sceneEnd() {
+        if(isBackToOpenscene){ //從這裡直接回首頁的話  要關掉音樂
+            AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
+        }
+
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {
@@ -125,7 +133,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                     }
                                 }
                                 if (secrt.isTouch(e.getX(), e.getY())) { //機密文件
-
                                     secrt.isHover(true);
                                 } else {
                                     secrt.isHover(false);
@@ -158,6 +165,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                         }
                                     }
                                     if(previous.isTouch(e.getX(),e.getY())){
+                                        isBackToOpenscene=true;//設定回到首頁，以關掉音樂
                                         AudioResourceController.getInstance().shot("/buttonSound2.wav");
                                         SceneController.getInstance().changeScene(new OpenScene());
                                     }
@@ -192,6 +200,18 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                         popupWindow.sceneBegin();
                                         popupWindow.show();
                                     }else{popupWindow.hide();}
+                                    int count=0;
+                                    if(music.isTouch(e.getX(),e.getY())){
+                                        if(count%2!=0) {
+                                            music.isFocus(); //開啟Focus
+                                            AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
+                                            count++;
+                                        }else{
+                                            music.unFocus();
+                                            AudioResourceController.getInstance().play("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
+                                            count++;
+                                        }
+                                    }
                                 }
                                 if (e.getButton() == 3) {//點擊右鍵 取消
                                     for (int i = 0; i < actorButtons.size(); i++) { //1.角色取消購買
@@ -276,6 +296,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
         if(introPopupWindow.isShow()){
             introPopupWindow.paint(g);
         }
+        music.paint(g);
 
     }
     @Override

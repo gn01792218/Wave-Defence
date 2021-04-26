@@ -36,8 +36,8 @@ public class Enemy4 extends Actor{
                     this.cannonDirection.getValue()/3*85+85,100,null);
         }else {
             g.drawImage(image, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                    this.cannonDirection.getValue() / 3 * 85, 0,
-                    this.cannonDirection.getValue() / 3 * 85 + 85, 100, null);
+                    this.cannonDirection.getValue() / 3 * 75, 0,
+                    this.cannonDirection.getValue() / 3 * 75 + 75, 100, null);
         }
         g.drawImage(image_hp,(int)this.painter().left(),(int)this.painter().bottom(),(int)(this.painter().left()+(7.5F*(this.hp*10/hpLimit))),(int)this.painter().bottom()+11,
                 0,0,75,11,null);

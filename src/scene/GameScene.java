@@ -33,7 +33,6 @@ public class GameScene extends Scene {
     private BufferedImage rocketUnlock;//解鎖火箭車
     private Button roundStart;// 進入回合的按鈕
     private Boolean isReady;// 進入回合的按鈕
-
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> enemys; //敵軍
     private ArrayList<SkillButton> skill;//技能陣列
@@ -41,7 +40,6 @@ public class GameScene extends Scene {
     private boolean gameComplete;
     private int completeStep;
     private int step;
-
     private Delay starDelayCount;//回合前20秒的delay
     private Delay delayCount;//10秒後倒數10秒的週期播放
     private Delay changePicDelay;//每秒鐘圖片變化
@@ -60,6 +58,7 @@ public class GameScene extends Scene {
     }
     @Override
     public void sceneBegin() {
+        AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
         AudioResourceController.getInstance().loop("/boomy-sizzling.wav",90);
         if(Global.getLevel()==1){
             image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
@@ -70,18 +69,15 @@ public class GameScene extends Scene {
         }
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image3 = ImageController.getInstance().tryGet("/count.png"); //倒數的圖片
-
         roundStart=new Button(1450,500,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         isReady = false;
-
         starDelayCount = new Delay(1200);//倒數前20秒
         delayCount = new Delay(600);//倒數10秒
         changePicDelay = new Delay(60);//每秒鐘圖片變化
         delay=new Delay(240); //過場delay
         starDelayCount.play();
-
         isFlagUsable = true;
         gameComplete =false;
         completeStep=0;
@@ -168,6 +164,7 @@ public class GameScene extends Scene {
     @Override
     public void sceneEnd() {
         AudioResourceController.getInstance().stop("/boomy-sizzling.wav");
+        AudioResourceController.getInstance().play("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
     }
 
     @Override
@@ -363,7 +360,6 @@ public class GameScene extends Scene {
 
         if(step ==1 && count<3){
             if(delayCount.isPlaying()){
-                AudioResourceController.getInstance().play("/countDown.wav");
                 if (changePicDelay.count()) {  //每1秒播放圖片
                     countNum++;
                     changePic = 50;

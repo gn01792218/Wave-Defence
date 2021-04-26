@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Global {
+
     private static IntroPopupWindow introPopupWindow;
     private static ArrayList<ActorButton> actorButtons;//角色按鈕，可以儲存玩家擁有的角色種類和數量；在選單中畫出來，在遊戲場景不畫出來，只是存放屬性。-->多個Scene會需要，故放此
     private static ArrayList<ActorButton> enemyButtons;//
@@ -24,13 +25,10 @@ public class Global {
     public static void addLevel(){
         level++;
     }
-
     public static void rsetLevel() {
         Global.level = 1;
     }
-
     public static RankList rankList = new RankList();
-
     public enum SkillName {
         ATTACKUP,
         DEFUP,

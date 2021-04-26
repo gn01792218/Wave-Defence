@@ -245,6 +245,7 @@ public class GameScene extends Scene {
         int tx = this.countNum * 74;  //0-74 1-74*2 2-74*3
 
         if(delayCount.isPlaying()){
+            AudioResourceController.getInstance().play("/countDown2.wav");
             g.drawImage(image3, 750 - changePic, 100 - changePic, 750 + 74 + changePic, 100 + 90 + changePic,
                     tx, 0, tx + 74, 90, null); //倒數的圖片
         }
@@ -367,7 +368,14 @@ public class GameScene extends Scene {
                 changePic--;
             }
 
+<<<<<<< HEAD
             if (delayCount.count() || isReady) { //開場30秒後
+=======
+
+
+            if (delayCount.count() || isReady) {
+                AudioResourceController.getInstance().stop("/countDown2.wav");//開場30秒後
+>>>>>>> 1e91eb5fe09edfa2779149ee2255c1546652f311
                 AudioResourceController.getInstance().play("/Battle.wav");
                 isFlagUsable = false; //旗子不能用
                 count++;

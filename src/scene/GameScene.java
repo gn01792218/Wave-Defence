@@ -372,6 +372,7 @@ public class GameScene extends Scene {
             }
 
             if (delayCount.count() || isReady) { //開場30秒後
+                AudioResourceController.getInstance().play("/Battle.wav");
                 isFlagUsable = false; //旗子不能用
                 count++;
                 countNum=0;

@@ -287,13 +287,13 @@ public class GameScene extends Scene {
             }else{
                 if(Global.getLevel()==2) {
                     image4 = ImageController.getInstance().tryGet("/Victory.png");
-                    g.drawImage(image4, 150, 150, null);
+                    g.drawImage(image4, 130, 100, null);
                 }else if(Global.getLevel()==3){
                     image4 = ImageController.getInstance().tryGet("/Victory2.png");
-                    g.drawImage(image4, 150, 150, null);
+                    g.drawImage(image4, 130, 100, null);
                 }else if(Global.getLevel()>3){
                     image4 = ImageController.getInstance().tryGet("/Victory3.png");
-                    g.drawImage(image4, 150, 100, null);
+                    g.drawImage(image4, 130, 100, null);
                 }
             }
         }
@@ -512,7 +512,7 @@ public class GameScene extends Scene {
         if (count >= 3 && enemys.size() <= 0 &&!gameComplete) { //挑戰成功條件
             Global.getActorButtons().get(2).setUnLocked(true); //解鎖雷射車
             Global.getActorButtons().get(3).setUnLocked(true); //解鎖火箭車
-            Player.getInstance().offsetHonor(+1000); //榮譽值+1000
+            Player.getInstance().offsetHonor(1000); //榮譽值+1000
             Player.getInstance().offsetMoney(1000); //金錢+1000
             Global.addLevel();
             gameComplete=true;
@@ -521,7 +521,7 @@ public class GameScene extends Scene {
         if (alliance.size() <= 0) { //挑戰失敗
             delay.play();
             if(delay.count()) {
-                Player.getInstance().offsetMoney(250); //錢值+250
+                Player.getInstance().offsetMoney(1000); //錢值+1000
                 Player.getInstance().offsetHonor(250); //榮譽值+50
                 SceneController.getInstance().changeScene(UserScene.getInstance());
             }

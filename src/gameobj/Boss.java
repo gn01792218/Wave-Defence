@@ -96,7 +96,7 @@ public class Boss extends Actor {
                 case 1: //隨機衝鋒攻擊，要回到原本的位置
                     this.isCharge = true;
                     charge(actors);
-                    AudioResourceController.getInstance().play("/AE-BossSound2.wav");
+                    AudioResourceController.getInstance().shot("/AE-BossSound2.wav");
                     move(targetX, targetY, alliance);
                     break;
             }

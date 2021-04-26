@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class SkillScene extends Scene {
     private BufferedImage backGround;//背景圖
+    private BufferedImage woman;//秘書
+    private BufferedImage intro;//秘書說
     private ArrayList<SkillButton> skillButtons;
     private Button roundStart;// 進入回合的按鈕
     private Button previous;//上一頁
@@ -40,7 +42,9 @@ public class SkillScene extends Scene {
         for(int i=0;i<skillButtons.size();i++){
             skillButtons.get(i).setInSkillScene(true);
         }
-        roundStart=new Button(1350,650,new Style.StyleRect(150,150,
+        woman=ImageController.getInstance().tryGet("/commander2.png");
+        intro=ImageController.getInstance().tryGet("/UserIntro2.png");
+        roundStart=new Button(1330,720,new Style.StyleRect(150,150,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start.png"))));
         roundStart.setStyleHover(new Style.StyleRect(150,150,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));
         previous=new Button(300,20,new Style.StyleRect(225,150,
@@ -144,13 +148,15 @@ public class SkillScene extends Scene {
         roundStart.paint(g); //畫出開始回合的按鈕
         previous.paint(g);
         skillLabel.paint(g);
+        g.drawImage(woman,1500,620,null);
+        g.drawImage(intro,1310,550,null);
+        g.drawImage(barImage,200,850,null);
         if(introPopupWindow.isShow() && !introPopupWindow.isPassed()){
             introPopupWindow.paint(g);
             if(introPopupWindow.getButton()!=null) {
                 introPopupWindow.getButton().paint(g);
             }
         }
-        g.drawImage(barImage,200,850,null);
         //畫玩家金錢和榮譽
         playerLevel.getPaintStyle().setText(Global.getLevel()+"").setTextFont(new Font("標楷體",Font.BOLD,42)).setTextColor(new Color(0xFC246CC6, true));
         playerLevel.paint(g);

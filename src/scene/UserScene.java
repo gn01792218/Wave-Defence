@@ -26,6 +26,9 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private BufferedImage backGround;//背景圖
     private BufferedImage backCover;//背景透明板
     private BufferedImage barImage;//
+    private BufferedImage woman;//秘書
+    private BufferedImage intro;//秘書說
+
     private ArrayList<ActorButton> actorButtons;
     private Button roundStart;// 進入回合的按鈕
     private Button previous;//上一頁
@@ -62,12 +65,14 @@ public class UserScene extends Scene{ //改成單例模式!!!
         imageTank2= ImageController.getInstance().tryGet("/AB-Tank2-Small.png");
         imageLaserCar= ImageController.getInstance().tryGet("/AB-LaserCar-Small.png");
         imageRocket= ImageController.getInstance().tryGet("/AB-Rocket-Small.png");
+        woman=ImageController.getInstance().tryGet("/commander2.png");
+        intro=ImageController.getInstance().tryGet("/UserIntro.png");
 //        armyCount =0;
 
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         backCover=ImageController.getInstance().tryGet("/UserBackCover.png");
-        roundStart=new Button(1350,750,new Style.StyleRect(225,151,
+        roundStart=new Button(1400,750,new Style.StyleRect(225,151,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
@@ -229,6 +234,8 @@ public class UserScene extends Scene{ //改成單例模式!!!
         if(arrowLUseable){
             arrowL.paint(g);
         }
+        g.drawImage(woman,1100,620,null);
+        g.drawImage(intro,1110,520,null);
         g.drawImage(barImage,200,850,null);
         if(popupWindow.isShow()) {
             popupWindow.paint(g);

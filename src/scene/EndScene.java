@@ -25,7 +25,7 @@ public class EndScene extends Scene{
     public void sceneBegin() {
         AudioResourceController.getInstance().play("/Bad Karma- Axel Thesleff.wav");
         backGround= ImageController.getInstance().tryGet("/UserSceneBack.png");
-        devloper=ImageController.getInstance().tryGet("/devloper500.png");
+        devloper=ImageController.getInstance().tryGet("/devloper600.png");
         woman=ImageController.getInstance().tryGet("/commander.png");
         say=ImageController.getInstance().tryGet("/say.png");
         introImage=ImageController.getInstance().tryGet("/endIntro.png");
@@ -83,7 +83,7 @@ public class EndScene extends Scene{
     @Override
     public void paint(Graphics g) {
         g.drawImage(backGround,160,0,null);
-        g.drawImage(devloper,710,580,null);
+        g.drawImage(devloper,655,550,null);
         g.drawImage(say,560,50,null);
         g.drawImage(woman,560,50,null);
         g.drawImage(introImage,680,130,null);

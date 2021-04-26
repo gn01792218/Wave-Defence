@@ -112,8 +112,8 @@ public class Global {
                     ActorType.ROCKET,500,false,"VI火箭車");
             tank1.setUnLocked(true); //坦1
             tank2.setUnLocked(true); //坦2 都是被解鎖的
-            laserCar.setUnLocked(true); //測試用
-            rocket.setUnLocked(true);
+//            laserCar.setUnLocked(true); //測試用
+//            rocket.setUnLocked(true);
             laserCar.setLockImage(ImageController.getInstance().tryGet("/AALaserCar_Lock.png"));
             rocket.setLockImage(ImageController.getInstance().tryGet("/AARocket_Lock.png"));
             actorButtons.add(tank1);

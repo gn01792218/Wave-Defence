@@ -7,6 +7,7 @@ import menu.BackgroundType;
 import menu.Button;
 import menu.Style;
 import utils.CommandSolver;
+import utils.Global;
 import utils.Player;
 
 import java.awt.*;
@@ -34,6 +35,7 @@ public class EndScene extends Scene{
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next1.png"))));
+        Global.rsetLevel();
 
     }
 

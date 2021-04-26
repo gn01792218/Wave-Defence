@@ -1,5 +1,6 @@
 package scene;
 
+import controllers.AudioResourceController;
 import controllers.ImageController;
 import controllers.SceneController;
 import gameobj.*;
@@ -29,13 +30,15 @@ public class TestScene extends Scene{
     private int egety;
     @Override
     public void sceneBegin() {
-        image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
+        image = ImageController.getInstance().tryGet("/GameScene3.png"); //場景圖
         alliance = new ArrayList();
         enemys = new ArrayList();
         bullets = new ArrayList();
         isFlagUsable = true;
         gameComplete=true;
         completeStep=0;
+
+        alliance.add(new Tank1(800,500,false));
     }
     @Override
     public void sceneEnd() {
@@ -75,6 +78,7 @@ public class TestScene extends Scene{
                         case MOVED:
                             egetx = e.getX();
                             egety = e.getY();
+//                            alliance.get(0).bullets.add(new Bullet(800,500,35,70,e.getX(),e.getY()));
 
 
                     }
@@ -167,9 +171,6 @@ public class TestScene extends Scene{
                 i--;
                 break;
             }
-        }
-        for (int i=0;i<bullets.size();i++){
-            bullets.get(i).update();
         }
     }
 }

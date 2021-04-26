@@ -16,6 +16,9 @@ import java.awt.image.BufferedImage;
 public class EndScene extends Scene{
     private BufferedImage backGround;
     private Button roundStart;// 回到首頁的按鈕
+    private BufferedImage say;//對話框
+    private BufferedImage introImage;//對話內容
+    private BufferedImage woman;//秘書
     private BufferedImage devloper;//開發者
 
     @Override
@@ -23,6 +26,9 @@ public class EndScene extends Scene{
         AudioResourceController.getInstance().play("/Bad Karma- Axel Thesleff.wav");
         backGround= ImageController.getInstance().tryGet("/UserSceneBack.png");
         devloper=ImageController.getInstance().tryGet("/devloper500.png");
+        woman=ImageController.getInstance().tryGet("/commander.png");
+        say=ImageController.getInstance().tryGet("/say.png");
+        introImage=ImageController.getInstance().tryGet("/endIntro.png");
         roundStart=new Button(1350,800,new Style.StyleRect(225,151,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
@@ -34,6 +40,10 @@ public class EndScene extends Scene{
     public void sceneEnd() {
         backGround=null;
         roundStart=null;
+        devloper=null;
+        woman=null;
+        say=null;
+        introImage=null;
         AudioResourceController.getInstance().stop("/Bad Karma- Axel Thesleff.wav");
     }
 
@@ -73,7 +83,10 @@ public class EndScene extends Scene{
     @Override
     public void paint(Graphics g) {
         g.drawImage(backGround,160,0,null);
-        g.drawImage(devloper,400,600,null);
+        g.drawImage(devloper,710,580,null);
+        g.drawImage(say,560,50,null);
+        g.drawImage(woman,560,50,null);
+        g.drawImage(introImage,680,130,null);
         roundStart.paint(g); //畫出開始回合的按鈕
 
     }

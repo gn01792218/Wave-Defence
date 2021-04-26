@@ -50,6 +50,11 @@ public class OpenScene extends Scene {
 
     @Override
     public void sceneEnd() {
+        image=null;
+//        startButton=null;
+//        endlessModeButton=null;
+//        leaderBoard=null;
+        AudioResourceController.getInstance().stop("/boomy-sizzling.wav");
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {

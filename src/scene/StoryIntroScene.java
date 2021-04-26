@@ -24,6 +24,7 @@ public class StoryIntroScene extends Scene{
 
     @Override
     public void sceneBegin() {
+        AudioResourceController.getInstance().play("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
         backGround= ImageController.getInstance().tryGet("/UserSceneBack.png");
         enemy1=ImageController.getInstance().tryGet("/storyIntro1.png");
         enemy2=ImageController.getInstance().tryGet("/storyIntro2.png");

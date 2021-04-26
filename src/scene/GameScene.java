@@ -60,7 +60,7 @@ public class GameScene extends Scene {
     }
     @Override
     public void sceneBegin() {
-
+        AudioResourceController.getInstance().loop("/boomy-sizzling.wav",90);
         if(Global.getLevel()==1){
             image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         }else if(Global.getLevel()==2){
@@ -167,7 +167,9 @@ public class GameScene extends Scene {
     }
     @Override
     public void sceneEnd() {
+        AudioResourceController.getInstance().stop("/boomy-sizzling.wav");
     }
+
     @Override
     public CommandSolver.KeyListener keyListener() {
         return null;
@@ -360,16 +362,14 @@ public class GameScene extends Scene {
         }
 
         if(step ==1 && count<3){
-
             if(delayCount.isPlaying()){
+                AudioResourceController.getInstance().play("/countDown.wav");
                 if (changePicDelay.count()) {  //每1秒播放圖片
                     countNum++;
                     changePic = 50;
                 }
                 changePic--;
             }
-
-
 
             if (delayCount.count() || isReady) { //開場30秒後
                 isFlagUsable = false; //旗子不能用
@@ -388,12 +388,14 @@ public class GameScene extends Scene {
         //產生敵軍
         if (Global.getLevel()==1 && step==2) {//敵軍可以移動時
             if(count==1){
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 //做敵軍第一波
                 for (int i = 0; i <  Global.random(5, 7); i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(450, 400), true));
                 }
             }
             if (count == 2) {
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 for (int i = 0; i < 5; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 450), true));
                 }
@@ -402,6 +404,7 @@ public class GameScene extends Scene {
                 }
             }
             if(count ==3){
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 for (int i = 0; i < 5; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
@@ -415,6 +418,7 @@ public class GameScene extends Scene {
         //第二關
         if (Global.getLevel()==2 && step==2) {//敵軍可 以移動時
             if(count==1){
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 //做敵軍第一波
                 for (int i = 0; i < 6; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
@@ -427,6 +431,7 @@ public class GameScene extends Scene {
                 }
             }
             if (count == 2) {
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 for (int i = 0; i < 8; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
@@ -441,6 +446,7 @@ public class GameScene extends Scene {
                 }
             }
             if(count ==3){
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 for (int i = 0; i < 12; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
                 }
@@ -460,6 +466,7 @@ public class GameScene extends Scene {
         //第二關
         if (Global.getLevel()==3 && step==2) {//敵軍可 以移動時
             if(count==1){
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 //做敵軍第一波
                 for (int i = 0; i < 6; i++) {
                     enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
@@ -472,6 +479,7 @@ public class GameScene extends Scene {
                 }
             }
             if (count == 2) {
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 for (int i = 0; i < 3; i++) {
                     enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                 }
@@ -486,6 +494,7 @@ public class GameScene extends Scene {
                 }
             }
             if(count ==3){
+                AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                 for (int i = 0; i < 6; i++) {
                     enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                 }

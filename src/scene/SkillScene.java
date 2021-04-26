@@ -59,6 +59,7 @@ public class SkillScene extends Scene {
 
     @Override
     public void sceneEnd() {
+        AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //從StoryIntro開始播放
         for(int i=0;i<skillButtons.size();i++){
             skillButtons.get(i).setInSkillScene(false);
             skillButtons.get(i).getPaintStyle().setWidth(64);

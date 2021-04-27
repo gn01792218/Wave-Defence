@@ -380,24 +380,23 @@ public class GameScene extends Scene {
                 }
                 changePic--;
             }
+        }
 
             if (delayCount.count() || isReady) { //開場30秒後
-                if (delayCount.count() || isReady) {
-                    AudioResourceController.getInstance().stop("/countDown2.wav");//開場30秒後
+                AudioResourceController.getInstance().stop("/countDown2.wav");//開場30秒後
 
-                    AudioResourceController.getInstance().play("/Battle.wav");
-                    isFlagUsable = false; //旗子不能用
-                    count++;
-                    countNum = 0;
-                    starDelayCount.stop();
-                    delayCount.stop();
-                    changePicDelay.stop();
-                    isReady = false;
-                    if (allianceControl != null) {
-                        allianceControl.setControl(false);
-                    }
-                    step++;
+                AudioResourceController.getInstance().play("/Battle.wav");
+                isFlagUsable = false; //旗子不能用
+                count++;
+                countNum = 0;
+                starDelayCount.stop();
+                delayCount.stop();
+                changePicDelay.stop();
+                isReady = false;
+                if (allianceControl != null) {
+                    allianceControl.setControl(false);
                 }
+                step++;
             }
             //產生敵軍
             if (Global.getLevel() == 1 && step == 2) {//敵軍可以移動時
@@ -477,7 +476,6 @@ public class GameScene extends Scene {
                 step++;
             }
             //第三關(魔王關)
-            //第二關
             if (Global.getLevel() == 3 && step == 2) {//敵軍可 以移動時
                 if (count == 1) {
                     AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
@@ -523,7 +521,7 @@ public class GameScene extends Scene {
             }
             //戰鬥中
             if (step == 3) {
-                if (enemys.size() == 0) {
+                if (enemys.size() == 0 && count<3) {
                     step = 1;
                     delayCount.play();
                     changePicDelay.loop();//倒數計時每1秒觸發一次換圖片
@@ -548,5 +546,4 @@ public class GameScene extends Scene {
             }
         }
     }
-}
 

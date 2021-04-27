@@ -13,15 +13,15 @@ public abstract class Actor extends GameObject {
     protected BufferedImage image;
     protected BufferedImage image2;// 變色圖片
     protected BufferedImage image_hp;// 血條
-    protected double hpLimit;
-    protected double hp;
-    protected double atk;
+    protected float hpLimit;
+    protected float hp;
+    protected float atk;
+    protected float atkDefault;//原始的atK
     protected Delay atkSpeed;
     protected float atkSpeedLimit;
-
     protected float speed;
-    protected double def;
-    protected double atkdis;
+    protected float def;
+    protected float atkdis;
     protected boolean isEnemy; //標示此單位是敵是我
     protected boolean isAlive; //標示是否死亡
     protected boolean isInControl; //是否 被點選
@@ -29,11 +29,8 @@ public abstract class Actor extends GameObject {
     protected boolean isOnDebuff;//是否是減益狀態
     protected Flag flag;
     boolean set = false;
-
-
     protected ArrayList<Bullet> bullets; //每個角色都有彈藥
     protected CANNON_DIRECTION cannonDirection;
-
     protected enum CANNON_DIRECTION {
         FrontLeft(3),
         FrontMiddle(4),
@@ -53,7 +50,7 @@ public abstract class Actor extends GameObject {
     }
 
     protected boolean isReinforcement;//是否是增援部隊
-    protected Global.SkillName skillName;// 會顯示最後施放的招式特效
+    protected ArrayList<Global.SkillName> skillNames;//身上七招如果有欄位
 
     public Actor(float x1, float y1, float width1, float height1,float x2, float y2, float width2, float height2) {
         super(x1, y1, width1, height1,x2, y2, width2, height2);
@@ -67,12 +64,20 @@ public abstract class Actor extends GameObject {
         this.isOnDebuff=false;
         this.image_hp= ImageController.getInstance().tryGet("/Blood3.png"); //血條大家都一樣
         flag=new Flag(x1,y1);
+        skillNames=new ArrayList<>();
     }
 
 
     //基本方法區 get
+    public ArrayList<Global.SkillName> getSkillNames(){
+        return this.skillNames;
+    }
     public double getHpLimit() {
         return hpLimit;
+    }
+
+    public float getAtkDefault() {
+        return atkDefault;
     }
 
     public float getAtkSpeedLimit() {
@@ -141,11 +146,11 @@ public abstract class Actor extends GameObject {
         this.hpLimit = hpLimit;
     }
 
-    public void setHp(double hp) {
+    public void setHp(float hp) {
         this.hp = hp;
     }
 
-    public void setAtk(double atk) {
+    public void setAtk(float atk) {
         this.atk = atk;
     }
 
@@ -157,11 +162,11 @@ public abstract class Actor extends GameObject {
         this.speed = speed;
     }
 
-    public void setDef(double def) {
+    public void setDef(float def) {
         this.def = def;
     }
 
-    public void setAtkdis(double atkdis) {
+    public void setAtkdis(float atkdis) {
         this.atkdis = atkdis;
     }
 
@@ -179,7 +184,7 @@ public abstract class Actor extends GameObject {
     }
 
     public void setSkillName(Global.SkillName skillName) {
-        this.skillName = skillName;
+        skillNames.add(skillName);// 加入名稱
     }
 
     public void setOnBuff(boolean onBuff) {
@@ -540,8 +545,11 @@ public abstract class Actor extends GameObject {
 
         //選最短距離者追蹤並攻擊，敵方死亡後回到原位
         public void autoAttack (ArrayList < Actor > actors, ArrayList < Actor > alliance){ //傳敵軍陣列近來
-        if(this.isOnDebuff && this.skillName== Global.SkillName.ELECTWAVE){
-            return; //中deBuff，且是ELECTWAVE時，就直接停止移動和攻擊
+        if(this.isOnDebuff){
+            for(int i=0;i<this.skillNames.size();i++){
+                if(skillNames.get(i)== Global.SkillName.ELECTWAVE)
+                    return; //中deBuff，且是ELECTWAVE時，就直接停止移動和攻擊
+            }
         }
             Rect target = null;
 

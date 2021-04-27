@@ -29,11 +29,12 @@ public class LaserCar extends Actor{
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=150; //攻擊力
+        atkDefault=atk;
         atkSpeed = new Delay(40);      //攻速
         atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         speed=2.2f; //移動速度
-        def=0.3; //防禦力
+        def=0.3f; //防禦力
         atkdis=270; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
         atkSpeed.loop();
@@ -100,33 +101,35 @@ public class LaserCar extends Actor{
                     this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
         } else {
             if(isOnBuff()){ //buff狀態時候的畫圖
-                if(this.skillName!=null) {
-                    switch (skillName) {
-                        case ATTACKUP:
-                            g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                            break;
-                        case DEFUP:
-                            g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                            break;
-                        case MOVESPEEDUP:
-                            g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 73, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 73 + 73, cannonDirection.getValue() / 3 * 90 + 90, null);
-                            break;
-                        case HPUP:
-                            g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                            break;
-                        case ATKSPEEDUP:
-                            g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
-                                    this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
-                            break;
+                if(this.skillNames.size()!=0) {
+                    for (int i = 0; i < skillNames.size();i++) {
+                        switch (skillNames.get(i)) {
+                            case ATTACKUP:
+                                g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                        this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                        this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                break;
+                            case DEFUP:
+                                g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                        this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                        this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                break;
+                            case MOVESPEEDUP:
+                                g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                        this.cannonDirection.getValue() % 3 * 73, cannonDirection.getValue() / 3 * 90,
+                                        this.cannonDirection.getValue() % 3 * 73 + 73, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                break;
+                            case HPUP:
+                                g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                        this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                        this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                break;
+                            case ATKSPEEDUP:
+                                g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                        this.cannonDirection.getValue() % 3 * 75, cannonDirection.getValue() / 3 * 90,
+                                        this.cannonDirection.getValue() % 3 * 75 + 75, cannonDirection.getValue() / 3 * 90 + 90, null);
+                                break;
+                        }
                     }
                 }
             }else if(isReinforcement && isOnBuff){

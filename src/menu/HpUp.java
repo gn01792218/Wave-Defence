@@ -26,7 +26,7 @@ public class HpUp extends SkillButton{
         for(int i=0;i<actors.size();i++){
                 System.out.println("坦克血" + actors.get(i).getHp());
                 actors.get(i).setSkillName(this.getSkillName()); //將該角色身上的當前招式名稱更改
-                actors.get(i).setHp(actors.get(i).getHpLimit()); //血量全滿(直接設成血量上限)
+                actors.get(i).setHp((float)actors.get(i).getHpLimit()); //血量全滿(直接設成血量上限)
                 actors.get(i).setOnBuff(true); //標示為Buff狀態
                 System.out.println("坦克血加滿~~~" + actors.get(i).getHp());
         }
@@ -36,9 +36,14 @@ public class HpUp extends SkillButton{
     public void skillReset(ArrayList<Actor> actors) {
         setUsed(true); //被施放過了
         for(int i=0;i<actors.size();i++){
-            if(actors.get(i).isOnBuff()) {
-                actors.get(i).setOnBuff(false); //標示為非Buff狀態
+            for(int j=0;j<actors.get(i).getSkillNames().size();j++) {
+                if (actors.get(i).getSkillNames().get(j) == this.getSkillName()) {
+                    actors.get(i).setOnBuff(false); //標示為非Buff狀態
+                    actors.get(i).getSkillNames().remove(j);
+                    j--;
+                }
             }
+
         }
         System.out.println("技能: "+this.getSkillName()+"施放結束");
         if (Player.getInstance().getHonor() >= this.getCost()) {

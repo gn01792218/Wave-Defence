@@ -15,7 +15,7 @@ public class Castle extends Actor{
         atk=550; //攻擊力
         atkSpeed = new Delay(240);      //攻速
         this.atkSpeedLimit=atkSpeed.getCountLimit();
-        def=0.5; //防禦力
+        def=0.5f; //防禦力
         atkdis=250; //攻擊距離
         this.isEnemy=false; //敵我單位
         atkSpeed.loop();

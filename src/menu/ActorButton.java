@@ -65,8 +65,9 @@ public class ActorButton extends Button{
                             atk = new Label(510 + 60, 230 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
                                     setText("攻擊力 :" + Global.getFrmt().format(alliances.get(i).getAtk())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         } else if (j == 2) {
+                            Global.getFrmt().setMaximumFractionDigits(1);
                             def = new Label(510 + 60, 230 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).
-                                    setText("防禦力 :" + alliances.get(i).getDef()).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
+                                    setText("防禦力 :" + Global.getFrmt().format(alliances.get(i).getDef())).setTextFont(new Font("標楷體", Font.ITALIC, 32)));
                         } else if (j == 3) {
                             Global.getFrmt().setMaximumFractionDigits(0);
                             atkdis = new Label(510 + 60, 230 + (j * 338 / 6), new Style.StyleRect(100, 100, true, null).

@@ -62,6 +62,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
 
     @Override
     public void sceneBegin() {
+        AudioResourceController.getInstance().loop("/Audio2.wav",99);
         isBackToOpenscene=false; //剛開使沒有切回首頁
         //加入軍隊數量
         imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
@@ -108,7 +109,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     @Override
     public void sceneEnd() {
         if(isBackToOpenscene){ //從這裡直接回首頁的話  要關掉音樂
-            AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
+            AudioResourceController.getInstance().stop("/Audio2.wav"); //在skillScene End切掉
         }
 
     }

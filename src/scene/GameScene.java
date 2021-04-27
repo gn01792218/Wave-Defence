@@ -62,6 +62,7 @@ public class GameScene extends Scene {
 
     @Override
     public void sceneBegin() {
+        AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
         AudioResourceController.getInstance().stop("/Radio2.wav"); //在skillScene End切掉
         AudioResourceController.getInstance().loop("/Radio3.wav", 90);
         if (Global.getLevel() == 1) {
@@ -169,7 +170,6 @@ public class GameScene extends Scene {
     @Override
     public void sceneEnd() {
         AudioResourceController.getInstance().stop("/Radio3.wav");
-        AudioResourceController.getInstance().play("/Radio2.wav"); //在skillScene End切掉
     }
 
     @Override
@@ -358,13 +358,12 @@ public class GameScene extends Scene {
             enemys.get(i).autoAttack(alliance, enemys);
             enemys.get(i).bulletsUpdate(alliance);
             if (!enemys.get(i).isAlive()) {
+                 Player.getInstance().offsetMoney(+100);
+                    Player.getInstance().offsetHonor(+50);//殺一隻敵軍榮譽+100} //殺一隻敵軍100元
                 enemys.remove(i);
-                Player.getInstance().offsetMoney(+100); //殺一隻敵軍100元
-                Player.getInstance().offsetHonor(+50); //殺一隻敵軍榮譽+100
                 break;
             }
         }
-
         if (starDelayCount.count()) {
             delayCount.play();
             changePicDelay.loop();

@@ -62,7 +62,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
 
     @Override
     public void sceneBegin() {
-        AudioResourceController.getInstance().loop("/Audio2.wav",99);
+        AudioResourceController.getInstance().play("/Radio2.wav");
         isBackToOpenscene=false; //剛開使沒有切回首頁
         //加入軍隊數量
         imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
@@ -109,8 +109,11 @@ public class UserScene extends Scene{ //改成單例模式!!!
     @Override
     public void sceneEnd() {
         if(isBackToOpenscene){ //從這裡直接回首頁的話  要關掉音樂
-            AudioResourceController.getInstance().stop("/Audio2.wav"); //在skillScene End切掉
+            AudioResourceController.getInstance().stop("/Radio2.wav"); //在skillScene End切掉
         }
+//        if(!music.getIsFocus()){
+//            AudioResourceController.getInstance().stop("/Radio2.wav");
+//        }
 
     }
     @Override
@@ -206,10 +209,12 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                         count++;
                                         if(count%2==0){
                                             music.isFocus();
-                                            AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
+                                            AudioResourceController.getInstance().stop("/Radio2.wav"); //在skillScene End切掉
+                                            System.out.println("用開關 關  觀音月");
                                         }else{
                                             music.unFocus();
-                                            AudioResourceController.getInstance().play("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
+                                            AudioResourceController.getInstance().play("/Radio2.wav"); //在skillScene End切掉
+                                            System.out.println("用開關  開  觀音月");
                                         }
                                     }
                                 }

@@ -37,7 +37,7 @@ public class Boss extends Actor {
         ammo = 0;
         chargeSpeed = 6;//衝鋒速度
         speed = 3.6f; //移動速度
-        def = 0.55f; //防禦力
+        def = 0.7f; //防禦力
         atkdis = 250; //攻擊距離
         this.isEnemy = isEnemy; //敵我單位
         this.skillNum = 0; //剛開始使用普通攻擊

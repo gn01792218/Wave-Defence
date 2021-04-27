@@ -24,7 +24,7 @@ public class EndScene extends Scene{
 
     @Override
     public void sceneBegin() {
-        AudioResourceController.getInstance().stop("/boomy-sizzling.wav");
+        AudioResourceController.getInstance().stop("/Radio3.wav");
         AudioResourceController.getInstance().play("/Bad Karma- Axel Thesleff.wav");
         backGround= ImageController.getInstance().tryGet("/UserSceneBack.png");
         devloper=ImageController.getInstance().tryGet("/devloper600.png");
@@ -38,7 +38,6 @@ public class EndScene extends Scene{
         Global.rsetLevel();
 
     }
-
     @Override
     public void sceneEnd() {
         backGround=null;

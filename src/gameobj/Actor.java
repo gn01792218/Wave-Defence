@@ -329,21 +329,25 @@ public abstract class Actor extends GameObject {
                     xM=0;
 //                    System.out.println("eftIsTouch && rightIsTouch");
                 }else if(topIsTouch && rightIsTouch){
-                    if(xM<0){
-                        xM=-speed;
-                        yM=0;
-                    }else{
-                        xM=0;
-                        yM=-speed;
-                    }
-//                    System.out.println("topIsTouch && rightIsTouch");
-                }else if(topIsTouch && leftIsTouch){
                     if(xM>0){
                         xM=speed;
                         yM=0;
                     }else{
+                        if(y<collider().centerY()){
+                            xM=-speed;
+                            yM=0;
+                        }
+                    }
+//                    System.out.println("topIsTouch && rightIsTouch");
+                }else if(topIsTouch && leftIsTouch){
+                    if(xM>0){
+                        if(y<collider().centerY()){
+                            xM=speed;
+                            yM=0;
+                        }
+                    }else{
                         xM=0;
-                        yM=-speed;
+                        yM=speed;
                     }
 //                    System.out.println("leftIsTouch && topIsTouch");
                 }else if(topIsTouch && bottomIsTouch){

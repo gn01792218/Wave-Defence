@@ -326,6 +326,9 @@ public class GameScene extends Scene {
             } else if (Global.getLevel() == 2) {
                 image2 = ImageController.getInstance().tryGet("/fail2.png");
                 g.drawImage(image2, 350, 250, null);
+            }else if(Global.getLevel()==3){
+                image2 = ImageController.getInstance().tryGet("/fail3.png");
+                g.drawImage(image2, 350, 250, null);
             }
         }
         Player.getInstance().paint(g);

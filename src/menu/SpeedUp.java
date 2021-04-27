@@ -40,11 +40,16 @@ public class SpeedUp extends SkillButton{
     @Override
     public void skillReset(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
-            if(actors.get(i).isOnBuff()) {
-                actors.get(i).offsetSpeed(-speedEffect); //把atk回復原廠設定
-                actors.get(i).setOnBuff(false); //標示為非Buff狀態
-                System.out.println("移動速度回復原廠設定" + actors.get(i).getSpeed());
+            for(int j=0;j<actors.get(i).getSkillNames().size();j++) {
+                if (actors.get(i).getSkillNames().get(j) == this.getSkillName()) {
+                    actors.get(i).offsetSpeed(-speedEffect); //把atk回復原廠設定
+                    actors.get(i).setOnBuff(false); //標示為非Buff狀態
+                    System.out.println("移動速度回復原廠設定" + actors.get(i).getSpeed());
+                    actors.get(i).getSkillNames().remove(j);
+                    j--;
+                }
             }
+
         }
         setUsed(true); //被施放過了
         System.out.println("技能: "+this.getSkillName()+"施放結束");

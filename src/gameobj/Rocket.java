@@ -48,11 +48,12 @@ public class Rocket extends Actor{
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=150; //攻擊力-->全域傷害~!!!!!
+        atkDefault=atk;
         atkSpeed = new Delay(300); //4秒一發
         atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         speed=1.4f; //移動速度
-        def=0.1; //防禦力
+        def=0.1f; //防禦力
         atkdis=450; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
         this.isempty=false;
@@ -191,57 +192,59 @@ public class Rocket extends Actor{
             }
         }else{
             if(isOnBuff()){ //buff狀態時候的畫圖
-                if(this.skillName!=null) {
-                    switch (skillName) {
-                        case ATTACKUP:
-                            if(isempty){ //要換圖，下面都要
-                                g.drawImage(empty_ES1,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                if(this.skillNames.size()!=0) {
+                    for (int i = 0; i < skillNames.size(); i++) {
+                        switch (skillNames.get(i)) {
+                            case ATTACKUP:
+                                if (isempty) { //要換圖，下面都要
+                                    g.drawImage(empty_ES1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                } else {
+                                    g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                }
+                                break;
+                            case DEFUP:
+                                if (isempty) {
+                                    g.drawImage(empty_ES2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                } else {
+                                    g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                }
+                                break;
+                            case MOVESPEEDUP:
+                                if (isempty) {
+                                    g.drawImage(empty_ES3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                } else {
+                                    g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                }
+                                break;
+                            case HPUP:
+                                if (isempty) {
+                                    g.drawImage(empty_ES4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                } else {
+                                    g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
+                                            0, 0,
+                                            140, 180, null);
+                                }
+                                break;
+                            case ATKSPEEDUP:
+                                g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
                                         0, 0,
                                         140, 180, null);
-                            }else{
-                                g.drawImage(image_S1, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                        0, 0,
-                                        140, 180, null);
-                            }
-                            break;
-                        case DEFUP:
-                            if(isempty){
-                                g.drawImage(empty_ES2,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                        0, 0,
-                                        140, 180, null);
-                            }else{
-                                g.drawImage(image_S2, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                        0, 0,
-                                        140, 180, null);
-                            }
-                            break;
-                        case MOVESPEEDUP:
-                            if(isempty){
-                                g.drawImage(empty_ES3,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                        0, 0,
-                                        140, 180, null);
-                            }else{
-                                g.drawImage(image_S3, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                        0, 0,
-                                        140, 180, null);
-                            }
-                            break;
-                        case HPUP:
-                            if(isempty){
-                                g.drawImage(empty_ES4,(int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                        0, 0,
-                                        140, 180, null);
-                            }else{
-                                g.drawImage(image_S4, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                        0, 0,
-                                        140, 180, null);
-                            }
-                            break;
-                        case ATKSPEEDUP:
-                            g.drawImage(image_S7, (int) this.painter().left(), (int) this.painter().top(), (int) this.painter().right(), (int) this.painter().bottom(),
-                                    0, 0,
-                                    140, 180, null);
-                            break;
+                                break;
+                        }
                     }
                 }
             }else if(isReinforcement){ //要換圖

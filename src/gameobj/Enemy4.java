@@ -14,11 +14,12 @@ public class Enemy4 extends Actor{
         hpLimit=300;//血量上限
         hp=hpLimit; //血量
         atk=150; //攻擊力
+        atkDefault=atk;
         atkSpeed=new Delay(45); //攻速 1.5秒
         atkSpeed.loop();
         this.atkSpeedLimit=atkSpeed.getCountLimit();
         speed=3f; //移動速度
-        def=0.3; //防禦力
+        def=0.3f; //防禦力
         atkdis= 200; //攻擊距離
         this.isEnemy=isEnemy; //敵我單位
         atkSpeed.loop();

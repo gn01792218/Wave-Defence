@@ -83,11 +83,17 @@ public class Reinforcements extends SkillButton{
         //換場了，援軍還沒死的話，會影響到Global中的actortButton數量-->解方，遊戲場景中，按下這個技能，就直接扣2
         //從陣列中刪除增援的部隊
         for(int i=0;i<actors.size();i++){
-            if(actors.get(i).isReinforcement() && actors.get(i).isOnBuff()){
-                actors.get(i).moveToTarget(500,1080); //從場地邊緣離開
-                actors.remove(i);
-                i--;
-                System.out.println("刪除了第"+(i+1)+"隻援軍");
+            if(actors.get(i).isReinforcement()) {
+                for (int j = 0; j < actors.get(i).getSkillNames().size(); j++) {
+                    if (actors.get(i).getSkillNames().get(j) == this.getSkillName()) {
+                        actors.get(i).moveToTarget(500, 1080); //從場地邊緣離開
+                        actors.remove(i);
+                        i--;
+                        System.out.println("刪除了第" + (i + 1) + "隻援軍");
+                        actors.get(i).getSkillNames().remove(j);
+                        j--;
+                    }
+                }
             }
         }
         if (Player.getInstance().getHonor() >= this.getCost()) {

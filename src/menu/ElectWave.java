@@ -42,8 +42,14 @@ public class ElectWave extends SkillButton{
     public void skillReset(ArrayList<Actor> actors) {
         for(int i=0;i<actors.size();i++){
             if(actors.get(i).isOnDebuff()) {
-                actors.get(i).setOnDebuff(false);
-                System.out.println(actors.get(i).getType()+"恢復移動");
+                for(int j=0;j<actors.get(i).getSkillNames().size();j++) {
+                    if (actors.get(i).getSkillNames().get(j) == this.getSkillName()) {
+                        actors.get(i).setOnDebuff(false);
+                        System.out.println(actors.get(i).getType() + "恢復移動");
+                        actors.get(i).getSkillNames().remove(j);
+                        j--;
+                    }
+                }
             }
         }
         setUsed(true); //被施放過了

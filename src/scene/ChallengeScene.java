@@ -330,7 +330,6 @@ public class ChallengeScene extends Scene{
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
-
         //技能update
         for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).getBuffTime().count()) {
@@ -393,7 +392,7 @@ public class ChallengeScene extends Scene{
         //REWARD
         if(rewardLoop.count()){
             player.offsetMoney(600);
-            player.offsetHonor(150);
+            player.offsetHonor(200);
         }
 
         //第一回合

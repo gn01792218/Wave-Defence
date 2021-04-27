@@ -96,9 +96,7 @@ public class Reinforcements extends SkillButton{
                 }
             }
         }
-        if (Player.getInstance().getHonor() >= this.getCost()) {
             this.setCanUsed(true);
-        }
     }
     @Override
     public void paint(Graphics g){

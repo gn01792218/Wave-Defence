@@ -52,9 +52,7 @@ public class DefUp extends SkillButton{
 
         }
         setUsed(true); //被施放過了
-        if (Player.getInstance().getHonor() >= this.getCost()) {
             this.setCanUsed(true);
-        }
         System.out.println("技能: "+this.getSkillName()+"施放結束");
     }
     @Override

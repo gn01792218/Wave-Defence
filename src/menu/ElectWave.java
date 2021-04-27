@@ -53,9 +53,7 @@ public class ElectWave extends SkillButton{
             }
         }
         setUsed(true); //被施放過了
-        if (Player.getInstance().getHonor() >= this.getCost()) {
             this.setCanUsed(true);
-        }
     }
     @Override
     public void paint(Graphics g){

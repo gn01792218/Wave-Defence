@@ -46,9 +46,7 @@ public class HpUp extends SkillButton{
 
         }
         System.out.println("技能: "+this.getSkillName()+"施放結束");
-        if (Player.getInstance().getHonor() >= this.getCost()) {
             this.setCanUsed(true);
-        }
     }
     @Override
     public void paint(Graphics g){

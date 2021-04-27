@@ -53,9 +53,8 @@ public class AttackUp extends SkillButton {
         }
         setUsed(true); //被施放過了
         System.out.println("技能: "+this.getSkillName()+"施放結束");
-        if (Player.getInstance().getHonor() >= this.getCost()) {
             this.setCanUsed(true);
-        }
+
     }
 
     @Override

@@ -59,6 +59,22 @@ public class GameScene extends Scene {
         }
         return gameScene;
     }
+    @Override
+    public void sceneEnd() {
+            image=null;
+            image1_1=null;
+            image2=null;
+            image3=null;
+            image4=null;
+            laserUnlock=null;
+            rocketUnlock=null;
+            starDelayCount=null;
+            delayCount=null;
+            changePicDelay=null;
+            delay=null;
+            allianceControl=null;
+        AudioResourceController.getInstance().stop("/Radio3.wav");
+    }
 
     @Override
     public void sceneBegin() {
@@ -167,10 +183,7 @@ public class GameScene extends Scene {
         }
     }
 
-    @Override
-    public void sceneEnd() {
-        AudioResourceController.getInstance().stop("/Radio3.wav");
-    }
+
 
     @Override
     public CommandSolver.KeyListener keyListener() {

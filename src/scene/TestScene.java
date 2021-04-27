@@ -42,6 +42,10 @@ public class TestScene extends Scene{
     }
     @Override
     public void sceneEnd() {
+        image=null;
+        rocketUnlock=null;
+        laserUnlock=null;
+        image4=null;
     }
     @Override
     public CommandSolver.MouseListener mouseListener() {

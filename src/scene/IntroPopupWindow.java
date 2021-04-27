@@ -47,6 +47,9 @@ public class IntroPopupWindow extends PopupWindow {
         button=null;
         image1=null;
         image2=null;
+        warningimage=null;
+        rule=null;
+        army=null;
     }
 
     public Button getButton() {

@@ -59,6 +59,12 @@ public class SkillScene extends Scene {
 
     @Override
     public void sceneEnd() {
+        backGround=null;
+        woman=null;
+        intro=null;
+        playerLevel=null;
+        playerHorn=null;
+        playerMoney=null;
         for(int i=0;i<skillButtons.size();i++){
             skillButtons.get(i).setInSkillScene(false);
             skillButtons.get(i).getPaintStyle().setWidth(64);

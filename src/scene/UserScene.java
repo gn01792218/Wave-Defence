@@ -46,6 +46,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     private IntroPopupWindow introPopupWindow;
     private boolean isBackToOpenscene;//是否有切回首頁
     private int count=0; //控制撥放音樂的focous
+    private boolean sceneEnd;//是否結束場警
     //關於彈跳視窗內的按鈕位置問題:1.就算按鈕做在PopWindow內部，也必須要在外面的場景中paint出來(做出getButton方法)，否則按鈕位置會有誤差。
     private UserScene(){}
     public static UserScene getInstance(){
@@ -63,6 +64,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
     @Override
     public void sceneBegin() {
         AudioResourceController.getInstance().play("/Radio2.wav");
+        sceneEnd=false;
         isBackToOpenscene=false; //剛開使沒有切回首頁
         //加入軍隊數量
         imageTank1= ImageController.getInstance().tryGet("/AB-Tank1-Small.png");
@@ -108,6 +110,19 @@ public class UserScene extends Scene{ //改成單例模式!!!
     }
     @Override
     public void sceneEnd() {
+        sceneEnd=true;
+        backGround=null;
+        backCover=null;
+        barImage=null;
+        woman=null;
+        intro=null;
+        introPopupWindow=null;
+        popupWindow=null;
+        armyLabel=null;
+        enemyLabel=null;
+        playerLevel=null;
+        playerHorn=null;
+        playerMoney=null;
         if(isBackToOpenscene){ //從這裡直接回首頁的話  要關掉音樂
             AudioResourceController.getInstance().stop("/Radio2.wav"); //在skillScene End切掉
         }
@@ -144,19 +159,24 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                 }
                                 if(arrowR.isTouch(e.getX(),e.getY())){
                                     arrowR.isHover(true);
-                                }else{arrowR.isHover(false);}
+                                }else{
+                                    arrowR.isHover(false);}
                                 if(arrowL.isTouch(e.getX(),e.getY())){
                                     arrowL.isHover(true);
-                                }else{arrowL.isHover(false);}
+                                }else{
+                                    arrowL.isHover(false);}
                                 if(roundStart.isTouch(e.getX(),e.getY())){
                                     if(!introPopupWindow.isArmyIsReady()) {
 //                                        AudioResourceController.getInstance().play("/hover2.wav");
                                     }
                                     roundStart.isHover(true);
-                                }else{roundStart.isHover(false);}
+                                }else{
+                                    if(!sceneEnd)
+                                    roundStart.isHover(false);}
                                 if(previous.isTouch(e.getX(),e.getY())){
                                     previous.isHover(true);
-                                }else{previous.isHover(false);}
+                                }else{ if(!sceneEnd)
+                                    previous.isHover(false);}
                                 break;
                             case CLICKED: //負責監聽升級和購買-->左鍵購買；右鍵取消
                                 if (e.getButton() == 1) { //左鍵
@@ -202,19 +222,21 @@ public class UserScene extends Scene{ //改成單例模式!!!
                                         }
                                     }
                                     if (secrt.isTouch(e.getX(), e.getY())) {
-                                        popupWindow.sceneBegin();
-                                        popupWindow.show();
-                                    }else{popupWindow.hide();}
+                                            popupWindow.sceneBegin();
+                                            popupWindow.show();
+
+                                    }else {
+                                        if(!sceneEnd)
+                                        popupWindow.hide();
+                                    }
                                     if(music.isTouch(e.getX(),e.getY())){
                                         count++;
                                         if(count%2==0){
                                             music.isFocus();
                                             AudioResourceController.getInstance().stop("/Radio2.wav"); //在skillScene End切掉
-                                            System.out.println("用開關 關  觀音月");
                                         }else{
-                                            music.unFocus();
-                                            AudioResourceController.getInstance().play("/Radio2.wav"); //在skillScene End切掉
-                                            System.out.println("用開關  開  觀音月");
+                                                music.unFocus();
+                                                AudioResourceController.getInstance().play("/Radio2.wav"); //在skillScene End切掉
                                         }
                                     }
                                 }

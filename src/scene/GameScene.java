@@ -75,7 +75,6 @@ public class GameScene extends Scene {
             allianceControl=null;
         AudioResourceController.getInstance().stop("/Radio3.wav");
     }
-
     @Override
     public void sceneBegin() {
         AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
@@ -416,25 +415,25 @@ public class GameScene extends Scene {
                     AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                     //做敵軍第一波
                     for (int i = 0; i < Global.random(5, 7); i++) {
-                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(450, 400), true));
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 400), true));
                     }
                 }
                 if (count == 2) {
                     AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                     for (int i = 0; i < 5; i++) {
-                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 450), true));
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 450), true));
                     }
                     for (int i = 0; i < 2; i++) {
-                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(400, 400), true));
+                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(250, 400), true));
                     }
                 }
                 if (count == 3) {
                     AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                     for (int i = 0; i < 5; i++) {
-                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < 3; i++) {
-                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy4(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                 }
                 step++;
@@ -446,43 +445,43 @@ public class GameScene extends Scene {
                     AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                     //做敵軍第一波
                     for (int i = 0; i < 6; i++) {
-                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < 3; i++) {
-                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < Global.random(3, 5); i++) {
-                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(400, 450), true));
+                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(250, 450), true));
                     }
                 }
                 if (count == 2) {
                     AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                     for (int i = 0; i < 8; i++) {
-                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < 4; i++) {
-                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < Global.random(5, 7); i++) {
-                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(400, 450), true));
+                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(250, 450), true));
                     }
                     for (int i = 0; i < Global.random(3, 5); i++) {
-                        enemys.add(new Enemy4(Global.random(400, 1100), Global.random(400, 450), true));
+                        enemys.add(new Enemy4(Global.random(400, 1100), Global.random(250, 450), true));
                     }
                 }
                 if (count == 3) {
                     AudioResourceController.getInstance().play("/cinematic-dramatic-brass-hit_G_major.wav");
                     for (int i = 0; i < 12; i++) {
-                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy1(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < 10; i++) {
-                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(400, 350), true));
+                        enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < Global.random(7, 9); i++) {
-                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(400, 450), true));
+                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(250, 450), true));
                     }
                     for (int i = 0; i < Global.random(6, 8); i++) {
-                        enemys.add(new Enemy4(Global.random(400, 1100), Global.random(400, 450), true));
+                        enemys.add(new Enemy4(Global.random(400, 1100), Global.random(250, 450), true));
                     }
                 }
                 step++;
@@ -523,10 +522,10 @@ public class GameScene extends Scene {
                         enemys.add(new Enemy2(Global.random(400, 1000), Global.random(250, 350), true));
                     }
                     for (int i = 0; i < Global.random(2, 3); i++) {
-                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(300, 450), true));
+                        enemys.add(new Enemy3(Global.random(400, 1100), Global.random(250, 450), true));
                     }
                     for (int i = 0; i < Global.random(2, 2); i++) {
-                        enemys.add(new Boss(Global.random(400, 1100), Global.random(300, 450), true));
+                        enemys.add(new Boss(Global.random(400, 1100), Global.random(250, 450), true));
                     }
                 }
                 step++;

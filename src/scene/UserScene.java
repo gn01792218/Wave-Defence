@@ -63,7 +63,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
 
     @Override
     public void sceneBegin() {
-        AudioResourceController.getInstance().play("/Radio2.wav");
+        AudioResourceController.getInstance().loop("/Radio2.wav",99);
         sceneEnd=false;
         isBackToOpenscene=false; //剛開使沒有切回首頁
         //加入軍隊數量

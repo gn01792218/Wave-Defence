@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class SpeedUp extends SkillButton{
     private Label label;
-    private final float speedEffect=5;
-    private final int bufftime=360; //持續X/60秒
+    private final float speedEffect=8;
+    private final int bufftime=480; //持續X/60秒
     private Label selectedLabel;//被選中後的按鈕
     public SpeedUp(int x, int y, Style style, Global.SkillName skillName, int cost){
         super(x,y,style,skillName,cost);

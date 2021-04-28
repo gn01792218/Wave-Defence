@@ -44,6 +44,7 @@ public class Rocket extends Actor{
         this.empty_ES5=ImageController.getInstance().tryGet("/AARocket_ES5.png");
         this.empty_EB=ImageController.getInstance().tryGet("/AARocket_EB.png");
         this.image_S7=ImageController.getInstance().tryGet("/AARocket_S7.png");
+        this.image_hp= ImageController.getInstance().tryGet("/bloodB.png"); //血條大家都一樣
         reloaddelay=new Delay(120);
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量

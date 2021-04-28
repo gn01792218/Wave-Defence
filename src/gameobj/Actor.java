@@ -62,7 +62,6 @@ public abstract class Actor extends GameObject {
         isInControl = false;
         isReinforcement=false;
         this.isOnDebuff=false;
-        this.image_hp= ImageController.getInstance().tryGet("/Blood3.png"); //血條大家都一樣
         flag=new Flag(x1,y1);
         skillNames=new ArrayList<>();
     }

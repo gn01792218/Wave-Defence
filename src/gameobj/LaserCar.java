@@ -26,6 +26,7 @@ public class LaserCar extends Actor{
         this.image_S4=ImageController.getInstance().tryGet("/AALaserCar_S4.png");
         this.image_S5=ImageController.getInstance().tryGet("/AALaserCar_S5.png");
         this.image_S7=ImageController.getInstance().tryGet("/AALaserCar_S7.png");
+        this.image_hp= ImageController.getInstance().tryGet("/bloodB.png"); //血條大家都一樣
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=150; //攻擊力

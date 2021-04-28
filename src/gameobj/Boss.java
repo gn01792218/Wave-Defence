@@ -27,6 +27,7 @@ public class Boss extends Actor {
         this.image = ImageController.getInstance().tryGet("/AE-Boss.png");
         this.image2 = ImageController.getInstance().tryGet("/AE-Boss_S1.png");
         this.debuff = ImageController.getInstance().tryGet("/AE-Boss_S6.png");
+        this.image_hp= ImageController.getInstance().tryGet("/Blood3.png"); //血條大家都一樣
         hpLimit = 6000;//血量上限
         hp = hpLimit; //血量
         atk = 300; //攻擊力

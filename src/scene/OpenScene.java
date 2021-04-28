@@ -43,7 +43,8 @@ public class OpenScene extends Scene {
         startButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/B-openStart2.png"))));
         endlessModeButton=new Button(1000,520,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessModeB.png"))));
         endlessModeButton.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/EndlessMode.png"))));
-        endButton=new Button(800,750,new Style.StyleRect(300,300,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
+        endButton=new Button(800,750,new Style.StyleRect(280,280,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/end.png"))));
+        endButton.setStyleHover(new Style.StyleRect(280,280,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/endH.png"))));
         leaderBoard=new Button(825,650,new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/LeaderBoardB.png"))));
         leaderBoard.setStyleHover(new Style.StyleRect(250,106,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/LeaderBoard.png"))));
     }
@@ -95,6 +96,9 @@ public class OpenScene extends Scene {
                                 }else{leaderBoard.isHover(false);}
                                 if(endButton.isTouch(e.getX(),e.getY())){
                                     AudioResourceController.getInstance().play("/metel.wav");
+                                    endButton.isHover(true);
+                                }else{
+                                    endButton.isHover(false);
                                 }
                     }
                 }

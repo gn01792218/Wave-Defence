@@ -11,6 +11,7 @@ public class Enemy4 extends Actor{
         super(x,y,60,72,x,y,75,90);
         this.image= ImageController.getInstance().tryGet("/AE-Enemy4.png");
         this.image2=ImageController.getInstance().tryGet("/AE-Enemy4_S6.png");
+        this.image_hp= ImageController.getInstance().tryGet("/Blood3.png"); //血條大家都一樣
         hpLimit=300;//血量上限
         hp=hpLimit; //血量
         atk=150; //攻擊力

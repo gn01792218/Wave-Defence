@@ -25,6 +25,7 @@ public class Tank1 extends Actor{
         this.image_S4=ImageController.getInstance().tryGet("/AATank1_S4.png");
         this.image_S5=ImageController.getInstance().tryGet("/AATank1_S5.png");
         this.image_S7=ImageController.getInstance().tryGet("/AATank1_S7.png");
+        this.image_hp= ImageController.getInstance().tryGet("/bloodB.png"); //血條大家都一樣
         hpLimit=250;//血量上限
         hp=hpLimit; //初始血量
         atk=250; //攻擊力

@@ -74,7 +74,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
         woman=ImageController.getInstance().tryGet("/commander2.png");
         intro=ImageController.getInstance().tryGet("/UserIntro.png");
 //        armyCount =0;
-
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
         backCover=ImageController.getInstance().tryGet("/UserBackCoverB.png");
@@ -340,7 +339,6 @@ public class UserScene extends Scene{ //改成單例模式!!!
         int count=0;
         for(int i=0;i<Global.getActorButtons().size();i++){
             if(Global.getActorButtons().get(i).getNumber()>0){
-                System.out.println(Global.getActorButtons().get(0).getNumber());
                 introPopupWindow.setArmyIsReady(true);
                 break;
             }

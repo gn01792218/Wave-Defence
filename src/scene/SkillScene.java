@@ -176,9 +176,7 @@ public class SkillScene extends Scene {
     public void update() { //第二次近來沒有進update
         for(int i=0;i<Global.getActorButtons().size();i++){
             if(Global.getActorButtons().get(i).getNumber()>0){
-                System.out.println(Global.getActorButtons().get(0).getNumber());
                 introPopupWindow.setArmyIsReady(true);
-                System.out.println(introPopupWindow.isArmyIsReady());
             }
         }
 

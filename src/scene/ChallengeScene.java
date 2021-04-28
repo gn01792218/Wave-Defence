@@ -392,7 +392,7 @@ public class ChallengeScene extends Scene{
         //REWARD
         if(rewardLoop.count()){
             player.offsetMoney(600);
-            player.offsetHonor(200);
+            player.offsetHonor(500);
         }
 
         //第一回合

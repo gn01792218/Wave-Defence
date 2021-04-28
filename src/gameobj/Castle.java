@@ -1,5 +1,6 @@
 package gameobj;
 
+import controllers.ImageController;
 import utils.Delay;
 import utils.Global;
 
@@ -10,15 +11,16 @@ public class Castle extends Actor{
 
     public Castle(float x, float y) {
         super(x, y, 300, 150, x, y, 1, 270);
-        hpLimit=1;//血量上限
+        hpLimit=1000;//血量上限
         hp=hpLimit; //初始血量
         atk=550; //攻擊力
         atkSpeed = new Delay(240);      //攻速
         this.atkSpeedLimit=atkSpeed.getCountLimit();
-        def=0.5f; //防禦力
+        def=0.6f; //防禦力
         atkdis=250; //攻擊距離
         this.isEnemy=false; //敵我單位
         atkSpeed.loop();
+        this.image_hp= ImageController.getInstance().tryGet("/bloodB.png"); //血條大家都一樣
     }
 
     @Override

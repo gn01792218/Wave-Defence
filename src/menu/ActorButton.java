@@ -29,11 +29,11 @@ public class ActorButton extends Button{
     private boolean infoVisable; //是否顯示資訊欄
     private boolean isUnLocked;// 是否被解鎖
     private BufferedImage lockImage;//被鎖住的圖片
+    protected BufferedImage plusButton;//+號
     private Label unLockInfo;//解鎖條件的說明
     private boolean isEnemy=false;
 
     public ActorButton(int x, int y, Style style,Global.ActorType actorType,int cost,boolean isEnemy,String name) { //輸入的xy是左上角
-
         super(x, y, style);
         this.actorType=actorType;
         if(cost>0) { //不是敵人才畫花費

@@ -77,7 +77,7 @@ public class UserScene extends Scene{ //改成單例模式!!!
 
         //進入回合的按鈕
         backGround=ImageController.getInstance().tryGet("/UserSceneBack.png");
-        backCover=ImageController.getInstance().tryGet("/UserBackCover.png");
+        backCover=ImageController.getInstance().tryGet("/UserBackCoverB.png");
         roundStart=new Button(1400,750,new Style.StyleRect(225,151,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/next.png"))));
         roundStart.setStyleHover(new Style.StyleRect(225,159,
@@ -123,6 +123,10 @@ public class UserScene extends Scene{ //改成單例模式!!!
         playerLevel=null;
         playerHorn=null;
         playerMoney=null;
+        imageLaserCar=null;
+        imageRocket=null;
+        imageTank1=null;
+        imageTank2=null;
         if(isBackToOpenscene){ //從這裡直接回首頁的話  要關掉音樂
             AudioResourceController.getInstance().stop("/Radio2.wav"); //在skillScene End切掉
         }

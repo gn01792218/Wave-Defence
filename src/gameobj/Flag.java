@@ -1,4 +1,4 @@
-package utils;
+package gameobj;
 
 import controllers.ImageController;
 import gameobj.GameObject;

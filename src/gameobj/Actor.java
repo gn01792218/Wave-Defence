@@ -1,9 +1,7 @@
 package gameobj;
 
 import controllers.AudioResourceController;
-import controllers.ImageController;
 import utils.Delay;
-import utils.Flag;
 import utils.Global;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -499,7 +497,6 @@ public abstract class Actor extends GameObject {
                 }
             }
         }
-
         public void standAttack(ArrayList < Actor > actors, ArrayList < Actor > alliance){
             Rect target = null;
 
@@ -650,7 +647,6 @@ public abstract class Actor extends GameObject {
                 }
             }
         }
-
 
         public void moveToField(){
             if(this.collider().centerY()<100){

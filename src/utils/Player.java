@@ -18,8 +18,8 @@ public class Player implements GameKernel.UpdateInterface,GameKernel.PaintInterf
     public int level; //故事模式的關卡等級
 
     private Player(){
-        money=3000;
-        honor=1200;
+        money=3500;
+        honor=2000;
         moneyLabel=new Label(1400,50,new Style.StyleRect(350,87,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))).setTextFont(new Font("標楷體",Font.ITALIC,42)));
         honorLabel=new Label(1400,150,new Style.StyleRect(350,87,new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/350.png"))).setTextFont(new Font("標楷體",Font.ITALIC,42)));
     }

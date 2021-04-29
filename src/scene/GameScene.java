@@ -196,7 +196,7 @@ public class GameScene extends Scene {
             public void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
                 if (state != null) {
                     switch (state) {
-                        case CLICKED:
+                        case PRESSED:
                             if (e.getButton() == e.BUTTON1) {
                                 if (roundStart.isTouch(e.getX(), e.getY())) {//1.觸發換場的按鈕
                                     roundStart.setStyleHover(new Style.StyleRect(150, 150, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/start1.png"))));

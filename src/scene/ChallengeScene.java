@@ -18,6 +18,9 @@ public class ChallengeScene extends Scene{
     private BufferedImage image2; //失敗的圖片
     private BufferedImage image3;//倒數10秒圖片
     private BufferedImage image4;// 挑戰成功的圖片
+    private BufferedImage woman;//秘書
+    private BufferedImage intro;//
+    private int womanCont=0;
     private ArrayList<Actor> alliance; //角色陣列
     private ArrayList<Actor> castles; //城堡陣列
     private ArrayList<Actor> enemys; //敵軍
@@ -29,6 +32,7 @@ public class ChallengeScene extends Scene{
     private Boolean gameOver; //遊戲失敗
     private Delay enemyLoop;
     private Delay rewardLoop;
+    private Delay introDelay;//教學的Delay
 
     private Actor allianceControl;//受旗子控制的我軍
     private int count = 0;//回合數
@@ -50,11 +54,15 @@ public class ChallengeScene extends Scene{
         image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         image1_1=ImageController.getInstance().tryGet("/GameScene1-1.png");
         image2 = ImageController.getInstance().tryGet("/fail1.png");
+        intro=ImageController.getInstance().tryGet("/introC.png");
+        AudioResourceController.getInstance().loop("/Radio3.wav", 5);
         isFlagUsable = true;
-        gameBegin=new Delay(300);
+        gameBegin=new Delay(1200);
         gameOver=false;
         enemyLoop=new Delay(1200);
         rewardLoop=new Delay(600);
+        introDelay=new Delay(1200);
+        introDelay.play();
         gameBegin.play();
         count=1;
         player = Player.getInstance();
@@ -65,7 +73,7 @@ public class ChallengeScene extends Scene{
         imageTank2= ImageController.getInstance().tryGet("/AB-Tank2-Small.png");
         imageLaserCar= ImageController.getInstance().tryGet("/AB-LaserCar-Small.png");
         imageRocket= ImageController.getInstance().tryGet("/AB-Rocket-Small.png");
-
+        woman=ImageController.getInstance().tryGet("/commander2.png");
 //        作技能
         skill=new ArrayList<>();
         ArrayList<SkillButton> temp=Global.getSkillButtons(); //從世界技能紐中下訂單
@@ -101,6 +109,18 @@ public class ChallengeScene extends Scene{
 
     @Override
     public void sceneEnd() {
+        woman=null;
+        intro=null;
+        imageRocket=null;
+        imageLaserCar=null;
+        imageTank1=null;
+        imageTank2=null;
+        image1_1=null;
+        image2=null;
+        image3=null;
+        image4=null;
+        image=null;
+        AudioResourceController.getInstance().stop("/Radio3.wav");
     }
     @Override
     public CommandSolver.KeyListener keyListener() {
@@ -315,7 +335,6 @@ public class ChallengeScene extends Scene{
         if (isFlagUsable && allianceControl!=null) {
             allianceControl.getFlag().paint(g); //旗子可以使用的時候才畫出來
         }
-
         g.drawImage(image1_1,0,-150,null);
         for(int i = 0; i< castles.size(); i++){
             castles.get(i).paint(g);
@@ -326,10 +345,17 @@ public class ChallengeScene extends Scene{
         if(editText!=null) {
             editText.paint(g);
         }
+        if(introDelay.isPlaying()) {
+            g.drawImage(woman, 250, 200, null);
+            g.drawImage(intro,50,100,null);
+        }
     }
     //當偵測到被點到，開啟可以移動，時才移動，並一直移動到目標點，然後
     @Override
     public void update() {
+        if(introDelay.count()){
+            introDelay.stop();
+        }
         //技能update
         for (int i = 0; i < skill.size(); i++) {
                 if (skill.get(i).getBuffTime().count()) {
@@ -388,7 +414,6 @@ public class ChallengeScene extends Scene{
                 }
             }
         }
-
         //REWARD
         if(rewardLoop.count()){
             player.offsetMoney(600);

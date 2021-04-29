@@ -79,11 +79,11 @@ public class LeaderboardScene extends Scene{
                 if(Global.rankList.score.get(i)>0){
                     if(i==0){
                         labelsList.get(i).getPaintStyle().setText(Global.rankList.name.get(i) + " / " + Global.rankList.score.get(i))
-                                .setTextFont(new Font("標楷體", Font.BOLD, 42));
+                                .setTextFont(new Font("Impact", Font.BOLD, 42));
                         labelsList.get(i).paint(g);
                     }else {
                         labelsList.get(i).getPaintStyle().setText(Global.rankList.name.get(i) + " / " + Global.rankList.score.get(i))
-                                .setTextFont(new Font("標楷體", Font.ITALIC, 42));
+                                .setTextFont(new Font("Impact", Font.ITALIC, 42));
                         labelsList.get(i).paint(g);
                     }
                 }

@@ -79,7 +79,7 @@ public class GameScene extends Scene {
     public void sceneBegin() {
         AudioResourceController.getInstance().stop("/Mr_Pepino_-_Spies_Girls.wav"); //在skillScene End切掉
         AudioResourceController.getInstance().stop("/Radio2.wav"); //在skillScene End切掉
-        AudioResourceController.getInstance().loop("/Radio3.wav", 90);
+        AudioResourceController.getInstance().loop("/Radio3.wav", 5);
         if (Global.getLevel() == 1) {
             image = ImageController.getInstance().tryGet("/GameScene1.png"); //場景圖
         } else if (Global.getLevel() == 2) {

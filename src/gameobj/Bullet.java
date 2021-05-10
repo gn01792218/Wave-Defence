@@ -27,7 +27,7 @@ public class Bullet extends GameObject implements GameKernel.UpdateInterface, Ga
 //        this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/Teacher.png"),trigonometric.getDegree());f
         this.image1 = ImageOperate.rotateImage(ImageController.getInstance().tryGet("/bullet.png"), trigonometric.getDegree());
         this.image2 = ImageController.getInstance().tryGet("/boom2.png");
-        delay = new Delay(7);
+        delay = new Delay(10);
         isExplored = false;
         isTime = false;
         count = 0;

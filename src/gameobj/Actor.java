@@ -621,12 +621,11 @@ public abstract class Actor extends GameObject {
             ////飛彈爆炸後一定時間後消失
             for (int i = 0; i < this.bullets.size(); i++) {
                 this.bullets.get(i).update(); //子彈移動
-                if (bullets.get(i).isExplored()) {
-                    if (bullets.get(i).isTime()) {
+                    if (bullets.get(i).isTime()) { //死了之後才消失
                         bullets.remove(i);
                         i--;
                     }
-                }else if(isTouchBattleEdge(bullets.get(i).collider().centerX(),bullets.get(i).collider().centerY())){
+                else if(isTouchBattleEdge(bullets.get(i).collider().centerX(),bullets.get(i).collider().centerY())){
                         bullets.get(i).explored();
                         AudioResourceController.getInstance().shot("/explosion.wav");
                 }else {
